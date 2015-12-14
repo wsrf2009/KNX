@@ -1,0 +1,232 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="BaseTheme" parent="@android:style/Theme.Light" />
+    
+    <style name="PromptDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!-- 边框 -->
+        <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item><!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item><!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:backgroundDimEnabled">true</item><!--activity不变暗-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item><!--边框--> 
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@drawable/dialog_login_qq_shape</item>
+        <!-- <item name="android:windowFrame">@null</item> -->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+    
+    
+
+    <!-- DefaultTheme风格 -->
+    <style name="DefaultTheme" parent="@style/BaseTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="styleRoomListDivider">@style/Default.RoomList.Divider</item>
+        <item name="styleLable">@style/Default.GrayText</item> 
+        
+        <item name="StyleToggleButton">@style/Default.ToggleButton</item>
+        <item name="styleGridLayout">@style/Default.GridLayout</item>
+        <item name="styleGroupItem">@style/Default.GroupItem</item>
+        <item name="styleDialogButton">@style/Default.Dialog.Button</item>
+        
+        <item name="styleButton">@style/Default.Button</item>
+        <item name="styleMediaButton">@style/Default.MediaButton</item>
+        <item name="styleMySilder">@style/Default.Silder</item>
+        <item name="styleSliderSwitch">@style/Default.SliderSwitch</item>
+        
+        <item name="styleBlindsDown">@style/Default.Button.Blinds.Down</item>
+        <item name="styleBlindsUp">@style/Default.Button.Blinds.Up</item>
+    </style>
+    <!-- DefaultTheme风格 -->
+    <style name="Default">
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">normal</item> 
+    </style> 
+    
+  
+    
+
+    <style name="Default.GrayTextShadow" parent="@style/Default">
+        <item name="android:shadowColor">@color/default_text_shadow_color_room_list</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style> 
+    
+    <style name="Default.GrayText" parent="@style/Default.GrayTextShadow">
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20.0sp</item>
+        <item name="android:paddingLeft">20dip</item>
+        <item name="android:textColor">@color/default_text_color_widget</item>
+    </style> 
+
+    <style name="Default.RoomList.Divider" parent="@style/Default.RoomList">
+        <item name="android:src">@drawable/listview_item_horizontal_divider</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+    <style name="Default.RoomList" parent="@style/Default.GrayTextShadow">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">@color/default_text_color_room_list</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:singleLine">true</item>
+    </style> 
+    
+    <style name="Default.GroupItem">
+        <item name="android:layout_width">@dimen/polished_width_navigation_bar</item>
+        <item name="android:layout_height">wrap_content</item> 
+        <item name="android:layout_margin">20dip</item>  
+    </style>
+    
+    <style name="Default.GridLayout" parent="@style/Default.GroupItem">
+        <item name="android:layout_width">match_parent</item>
+	    <item name="android:background">@null</item> 
+	    <item name="android:layout_gravity">center</item> 
+	</style>
+	
+    <style name="Default.ToggleButton" parent="@android:style/Widget.Button.Toggle">
+        <item name="android:shadowColor">@color/default_text_shadow_color_room_list</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">2.0</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20.0sp</item>
+        <item name="android:textColor">@color/default_text_color_widget</item>
+        
+	    <item name="android:background">@drawable/btn_toggle_bg</item>
+	    <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>  
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:layout_gravity">center</item> 
+        <!-- <item name="android:gravity">center_vertical|center_horizontal</item> -->
+	    <item name="android:disabledAlpha">?android:attr/disabledAlpha</item> 
+	</style> 
+	
+    
+	 <style name="Default.Button" parent="@style/Default.GrayText">
+	    <item name="android:background">@drawable/button_background</item>
+	    <item name="android:textColor">@color/default_text_color_room_list</item>
+	    <item name="android:layout_width">@dimen/polished_width_navigation_bar</item>
+	    <item name="android:gravity">center_vertical|center_horizontal</item>
+	    
+	    <item name="imgArrowDown">@drawable/default_blinds_symbol_arrow_down</item>
+        <item name="imgArrowUp">@drawable/default_blinds_symbol_arrow_up</item>
+        <item name="imgLightDown">@drawable/default_blinds_symbol_light_down</item>
+        <item name="imgLightUp">@drawable/default_blinds_symbol_light_up</item>
+        <item name="imgVolumeDown">@drawable/default_blinds_symbol_volume_down</item>
+        <item name="imgVolumeUp">@drawable/default_blinds_symbol_volume_up</item>
+	</style> 
+	
+	<style name="Default.MediaButton">
+	    <item name="android:background">@null</item>
+	    <item name="android:gravity">fill</item>
+        <item name="android:layout_gravity">center</item> 
+	</style> 
+	
+     <style name="Default.Dialog.Button" parent="@android:style/Widget.Button">
+	    <item name="android:background">@drawable/btn_toggle_bg</item>
+	    <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>  
+        <item name="android:gravity">fill</item>
+        <item name="android:layout_gravity">center</item> 
+        <!-- <item name="android:gravity">center_vertical|center_horizontal</item> -->
+	    <item name="android:disabledAlpha">?android:attr/disabledAlpha</item> 
+	</style> 
+	
+    <style name="Default.Silder" parent="@style/Default.GrayText"> 
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>  
+        <item name="switchTextAppearanceAttrib">@style/Default.SliderSwitchTextAppearance</item>  
+    </style>
+    
+	
+    <style name="Default.SliderSwitch"> 
+        <item name="thumb">@drawable/background_fenced</item>  
+        <item name="switchTextAppearanceAttrib">@style/Default.SliderSwitchTextAppearance</item> 
+        <item name="thumbTextPadding">0dp</item> 
+        <item name="switchMinWidth">69dp</item>
+        <item name="switchMinHeight">36dp</item>
+        <item name="switchPadding">0dp</item>
+    </style>
+    
+    <style name="Default.SliderSwitchTextAppearance">
+        <item name="textColor">#FFFFFFFF</item>
+        <item name="textColorHighlight">#FFeeFFee</item>
+        <item name="textColorHint">#FFeeFFee</item>
+        <item name="textColorLink">#FFeeFFee</item> 
+        <item name="textStyle">normal</item>
+        <item name="android:typeface">sans</item> 
+        <item name="android:textSize">20.0sp</item>
+    </style>
+    
+   <style name="Default.Widget.Button" parent="@style/Default"> 
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/default_button_background</item>
+    </style>
+     <style name="Default.Button.Blinds.Down"  parent="@style/Default.Widget.Button">
+        <item name="android:background">@drawable/default_blinds_background_down</item>
+    </style>
+    <style name="Default.Button.Blinds.Up" parent="@style/Default.Widget.Button">
+        <item name="android:background">@drawable/default_blinds_background_up</item>
+    </style>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	
+    
+    <style name="NumberPickerUpButton">
+        <item name="android:background">@null</item>
+        <item name="android:src">@drawable/numberpicker_up_btn_holo_dark</item>
+        <item name="android:paddingTop">16dip</item>
+        <item name="android:paddingBottom">22dip</item>
+    </style>
+
+    <style name="NumberPickerDownButton">
+        <item name="android:background">@null</item>
+        <item name="android:src">@drawable/numberpicker_down_btn_holo_dark</item>
+        <item name="android:paddingTop">22dip</item>
+        <item name="android:paddingBottom">16dip</item>
+    </style>
+
+    <style name="NumberPickerInputText" parent="@android:style/Widget.EditText">
+        <item name="android:paddingTop">13sp</item>
+        <item name="android:paddingBottom">13sp</item>
+        <item name="android:paddingLeft">2sp</item>
+        <item name="android:paddingRight">2sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@null</item>
+    </style>
+    
+    <style name="NumberPicker">
+        <item name="android:orientation">vertical</item>
+        <item name="android:fadingEdge">vertical</item>
+        <item name="android:fadingEdgeLength">50dip</item> 
+        <item name="android:minWidth">48dip</item>
+        <item name="android:maxHeight">200dip</item>
+    </style>
+    
+    
+
+    <!-- BrownTheme风格 -->
+    <style name="BrownTheme" parent="@style/DefaultTheme"></style>
+    <!-- WhiteTheme风格 -->
+    <style name="WhiteTheme" parent="@style/DefaultTheme"></style>
+
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources> 
+    <integer name="margin_small">4</integer>
+    <integer name="margin_medium">8</integer>
+    <integer name="margin_large">12</integer>
+    <integer name="margin_xlarge2">16</integer>
+    <integer name="margin_xlarge">0</integer>
+</resources>

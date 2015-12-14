@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:silderSwitch="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dip" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="0.8"
+            android:background="@drawable/group_bg"
+            android:orientation="vertical" >
+
+            <com.zyyknx.android.widget.ColorPicker
+                android:id="@+id/colorPicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <com.zyyknx.android.widget.AlphaSliderBar
+            style="?attr/styleSliderSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dip"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            silderSwitch:drawableLeft="@drawable/default_silder_swich_light_down"
+            silderSwitch:drawableRight="@drawable/default_silder_swich_light_up"
+            silderSwitch:sliderSwitchButtonText=""
+            silderSwitch:thumb="@drawable/btn_toggle_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="0.2"
+            android:orientation="horizontal" >
+
+            <com.zyyknx.android.widget.ColorPickerPanelView
+                android:id="@+id/white_panel"
+                android:layout_width="0px"
+                android:layout_height="wrap_content" 
+                android:layout_weight="0.5"
+                android:background="@drawable/default_button_background_color_mask" />
+
+            <com.zyyknx.android.widget.ColorPickerPanelView
+                android:id="@+id/cyan_panel"
+                android:layout_width="0px"
+                android:layout_height="wrap_content" 
+                android:layout_weight="0.5"
+                android:background="@drawable/default_button_background_color_mask" />
+
+            <com.zyyknx.android.widget.ColorPickerPanelView
+                android:id="@+id/red_panel"
+                android:layout_width="0px"
+                android:layout_height="wrap_content" 
+                android:layout_weight="0.5"
+                android:background="@drawable/default_button_background_color_mask" />
+
+            <com.zyyknx.android.widget.ColorPickerPanelView
+                android:id="@+id/green_panel"
+                android:layout_width="0px"
+                android:layout_height="wrap_content" 
+                android:layout_weight="0.5"
+                android:background="@drawable/default_button_background_color_mask" />
+
+            <com.zyyknx.android.widget.ColorPickerPanelView
+                android:id="@+id/yellow_panel"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@drawable/default_button_background_color_mask" />
+        </LinearLayout>
+    </LinearLayout>
+
+</merge>
