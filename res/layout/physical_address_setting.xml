@@ -23,7 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
-            android:text="0" />
+            android:text="0"
+        	android:inputType="datetime" />
+        
           <EditText
             android:id="@+id/txtSecond"
             style="@android:style/Widget.EditText"
@@ -31,7 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
-            android:text="0" />
+            android:text="0"
+        	android:inputType="datetime" />
         
             <EditText
             android:id="@+id/txtThree"
@@ -40,7 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
-            android:text="0" />
+            android:text="0"
+        	android:inputType="datetime" />
           
     </LinearLayout>
 

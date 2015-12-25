@@ -1,12 +1,29 @@
 package com.zyyknx.android.util; 
 
+import java.util.Iterator;
+import java.util.Map;
+
+import com.zyyknx.android.ZyyKNXApp;
+import com.zyyknx.android.ZyyKNXConstant;
+import com.zyyknx.android.models.KNXGroupAddress;
+import com.zyyknx.android.models.KNXResponse;
+import com.zyyknx.android.services.KXNResponseService;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.content.Context;
+import android.content.ContextWrapper;
+
 public class KNX0X01Lib {
-	
+	private static Context mContext;
 	/**
 	 * Libreria a cargar para poder usar la llamadas a methodos nativos
 	 */
 	static{
 		System.loadLibrary("KNX0X01lib");
+		KNX0X01Lib KNX0X01LibClass = new KNX0X01Lib();
+		KNX0X01LibClass.StartKNX0X01Lib();
 	}
 	
 	public static void loadLibrary(){  
@@ -18,8 +35,33 @@ public class KNX0X01Lib {
 //	    Log.i(tag, "test1");  
 //		log .info( "into one method" );
 		;
-	} 
+	}
 	
+	public static void setContext(Context context) {
+		mContext = context;
+	}
+	
+	public char SendGroupValue(int asap, int lenArray, byte[] Value) {
+		if (1 == lenArray) {
+			int value8 = (int)Value[0];
+			
+			Log.d("ZyyKNXApp", "KNX0X01Lib.SendGroupValue() 索引号为"+ asap +"的值改变后为:"+ String.valueOf(value8) +""); 
+	    	
+	    	Intent intent = new Intent();
+			intent.setAction(ZyyKNXConstant.BROADCAST_UPDATE_DEVICE_STATUS);
+	    	intent.putExtra(ZyyKNXConstant.GROUP_ADDRESS_INDEX, asap);
+	    	intent.putExtra(ZyyKNXConstant.GROUP_ADDRESS_NEW_VALUE_LENGTH, lenArray);
+	    	intent.putExtra(ZyyKNXConstant.GROUP_ADDRESS_NEW_VALUE, value8);
+	    	mContext.sendBroadcast(intent); 
+		}
+
+    	
+ 
+    	return 1;
+    }
+	    
+	public native boolean StartKNX0X01Lib(); 
+
 	/******************************************************************************
 	* 描述   :  打开并初始化协议栈工作。
 	*

@@ -16,7 +16,9 @@ public class ZyyKNXConstant {
 	public final static int NETWORK_NOTIFICATION = 110119;
 	 
 	public static final String BROADCAST_UPDATE_DEVICE_STATUS = "com.zyyknx.android.BROADCAST_UPDATE_DEVICE_STATUS";
-	   
+	public static final String GROUP_ADDRESS_INDEX = "GroupAddressIndex";
+	public static final String GROUP_ADDRESS_NEW_VALUE = "GroupAddressNewValue";
+	public static final String GROUP_ADDRESS_NEW_VALUE_LENGTH = "GroupAddressNewValueLength";
 	
 	public static String FILEPATH = Environment.getExternalStorageDirectory() + "/ZyyKNX/cache";
 	public static final String LONG_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -25,8 +27,25 @@ public class ZyyKNXConstant {
 	public static final String SETTING_FILE = "ZyyKNX_Config";
 	public static final String LOCALVERSION = "localVersion";
 	
-	public static final String KNX_GETEWAY_IP = "KNX_GetWay_IP"; 
-	public static final String KNX_GETEWAY_Port = "KNX_GetWay_Port";
+	/** KNX网关IP */
+	public static final String KNX_GATEWAY_IP = "KNX_Gateway_IP"; 
+	/** 缺省网关: 224.0.23.12 */
+	public static final String KNX_GATEWAY_DEFAULT = "224.0.23.12";
+	
+	/** KNX网关端口 */
+	public static final String KNX_GATEWAY_PORT = "KNX_Gateway_Port";
+	/** 缺省网关端口：3617 */
+	public static final int KNX_GATEWAY_PORT_DEFAULT = 3671;
+	
+	/** UDP工作方式 */
+	public static final String KNX_UDP_WORK_WAY = "KNX_UDP_Work_Way";
+	/** UDP工作方式---组播 */
+	public static final int KNX_UDP_WORK_WAY_GROUP_BROADCAST = 2;
+	/** UDP工作方式---点对点 */
+	public static final int KNX_UDP_WORK_WAY_PEER_TO_PEER = 3;
+	/** UDP默认的工作方式：组播 */
+	public static final int KNX_UDP_WORK_WAY_DEFAULT = KNX_UDP_WORK_WAY_GROUP_BROADCAST;
+	
 	public static final String KNX_REFRESH_STATUS_TIMESPAN = "KNX_Refresh_Status_Timespan";
 	
 	

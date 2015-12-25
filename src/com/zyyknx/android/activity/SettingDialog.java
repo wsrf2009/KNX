@@ -28,9 +28,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.View; 
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
  
 
@@ -80,12 +85,47 @@ public class SettingDialog {
 				// TODO Auto-generated method stub
 				final View view = LayoutInflater.from(mContext).inflate(R.layout.knx_gateway_setting, null);  
 				final EditText txtIP = (EditText) view.findViewById(R.id.txtIP);
+//				txtIP.setInputType(InputType.TYPE_CLASS_DATETIME);
 				final EditText txtPort = (EditText) view.findViewById(R.id.txtPort);
+//				txtPort.setInputType(InputType.TYPE_CLASS_DATETIME);
+				final RadioButton rbGroupBroadcast = (RadioButton) view.findViewById(R.id.radioButtonUDPGroupBroadcast);
+				final RadioButton rbPeerToPeer = (RadioButton) view.findViewById(R.id.radioButtonUDPPeerToPeer);
+				rbGroupBroadcast.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						if(isChecked) {
+							rbPeerToPeer.setChecked(false);
+						}
+					}
+					
+				});
+				rbPeerToPeer.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						if(isChecked) {
+							rbGroupBroadcast.setChecked(false);
+						}
+					}
+					
+				});
 				
-				String mKNXGetWayIP = settings.getString(ZyyKNXConstant.KNX_GETEWAY_IP, "192.168.1.222");
-				int mKNXGetWayPort = settings.getInt(ZyyKNXConstant.KNX_GETEWAY_Port, 3671);
-				txtIP.setText(mKNXGetWayIP);
-				txtPort.setText(String.valueOf(mKNXGetWayPort));
+				String mKNXGatewayIP = settings.getString(ZyyKNXConstant.KNX_GATEWAY_IP, ZyyKNXConstant.KNX_GATEWAY_DEFAULT);
+				int mKNXGatewayPort = settings.getInt(ZyyKNXConstant.KNX_GATEWAY_PORT, ZyyKNXConstant.KNX_GATEWAY_PORT_DEFAULT);
+				int mKNXUDPWorkWay = settings.getInt(ZyyKNXConstant.KNX_UDP_WORK_WAY, ZyyKNXConstant.KNX_UDP_WORK_WAY_DEFAULT);
+				txtIP.setText(mKNXGatewayIP);
+				txtPort.setText(String.valueOf(mKNXGatewayPort));
+				if(ZyyKNXConstant.KNX_UDP_WORK_WAY_GROUP_BROADCAST == mKNXUDPWorkWay) {
+					rbGroupBroadcast.setChecked(true);
+					rbPeerToPeer.setChecked(false);
+				} else if (ZyyKNXConstant.KNX_UDP_WORK_WAY_PEER_TO_PEER == mKNXUDPWorkWay) {
+					rbGroupBroadcast.setChecked(false);
+					rbPeerToPeer.setChecked(true);
+				} else {
+					rbGroupBroadcast.setChecked(false);
+					rbPeerToPeer.setChecked(false);
+				}
 				
 				new PromptDialog.Builder(mContext)
 				.setTitle("KXN网关设置") 
@@ -106,8 +146,15 @@ public class SettingDialog {
 							@Override
 							public void onClick(Dialog dialog, int which) { 
 								SharedPreferences.Editor editor = settings.edit(); 
-								editor.putString(ZyyKNXConstant.KNX_GETEWAY_IP, txtIP.getText().toString());
-								editor.putInt(ZyyKNXConstant.KNX_GETEWAY_Port, Integer.valueOf(txtPort.getText().toString()));
+								editor.putString(ZyyKNXConstant.KNX_GATEWAY_IP, txtIP.getText().toString());
+								editor.putInt(ZyyKNXConstant.KNX_GATEWAY_PORT, Integer.valueOf(txtPort.getText().toString()));
+								if(rbGroupBroadcast.isChecked()) { // 选中组播的工作方式
+									editor.putInt(ZyyKNXConstant.KNX_UDP_WORK_WAY, ZyyKNXConstant.KNX_UDP_WORK_WAY_GROUP_BROADCAST);
+								} else if (rbPeerToPeer.isChecked()) { // 选中点对点的工作方式
+									editor.putInt(ZyyKNXConstant.KNX_UDP_WORK_WAY, ZyyKNXConstant.KNX_UDP_WORK_WAY_PEER_TO_PEER);
+								} else { // 默认情况：谁都没选中
+									editor.putInt(ZyyKNXConstant.KNX_UDP_WORK_WAY, ZyyKNXConstant.KNX_UDP_WORK_WAY_GROUP_BROADCAST);
+								}
 								editor.commit(); 
 								dialog.dismiss(); 
 								//重启启动
@@ -127,8 +174,11 @@ public class SettingDialog {
 				
 				final View view = LayoutInflater.from(mContext).inflate(R.layout.physical_address_setting, null);  
 				final EditText txtFirst = (EditText) view.findViewById(R.id.txtFirst);
+//				txtFirst.setInputType(InputType.TYPE_CLASS_DATETIME);
 				final EditText txtSecond = (EditText) view.findViewById(R.id.txtSecond);
+//				txtSecond.setInputType(InputType.TYPE_CLASS_DATETIME);
 				final EditText txtThree = (EditText) view.findViewById(R.id.txtThree);
+//				txtThree.setInputType(InputType.TYPE_CLASS_DATETIME);
 				
 				int physicalAddressFirst = settings.getInt(ZyyKNXConstant.KNX_PHYSICAL_ADDRESS_FIRST, 0);
 				int physicalAddressSecond = settings.getInt(ZyyKNXConstant.KNX_PHYSICAL_ADDRESS_SECOND, 0);
@@ -180,6 +230,7 @@ public class SettingDialog {
 				// TODO Auto-genera 	  {
 				final View view = LayoutInflater.from(mContext).inflate(R.layout.knx_refresh_status_setting, null);  
 				final EditText txtTimeSpan = (EditText) view.findViewById(R.id.txtTimeSpan);
+//				txtTimeSpan.setInputType(InputType.TYPE_CLASS_DATETIME);
 				
 				int knxRefreshStatusTimespan = settings.getInt(ZyyKNXConstant.KNX_REFRESH_STATUS_TIMESPAN, 1000); 
 				txtTimeSpan.setText(String.valueOf(knxRefreshStatusTimespan));

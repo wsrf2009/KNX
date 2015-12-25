@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zyyknx.android"
     android:sharedUserLabel="@string/uid_label"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.01.001" >
 
     <supports-screens
         android:largeScreens="true"
@@ -84,15 +84,13 @@
             android:configChanges="keyboardHidden"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".activity.RoomDetailsActivity2"
-            android:configChanges="keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <activity
             android:name=".activity.SetttingActivity"
             android:configChanges="keyboardHidden"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
-        
-        
+        <activity 
+            android:name=".activity.TimingTaskActivity" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
         <service
             android:name=".services.RestartService"
             android:description="@null" >
@@ -113,6 +111,12 @@
 		        <category android:name="android.intent.category.DEFAULT" />
 	        </intent-filter>
 	    </receiver>
+	    
+        <receiver android:name=".services.TimingTaskService">
+       		<intent-filter>
+          		<action android:name="ELITOR_CLOCK" />
+       		</intent-filter>
+		</receiver>
 	    
     </application>
 

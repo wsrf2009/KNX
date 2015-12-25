@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
@@ -20,16 +21,22 @@ import android.support.v7.widget.Space;
 import android.util.DisplayMetrics;
 import android.util.Log; 
 import android.view.Gravity;
-import android.view.View; 
-import android.view.ViewGroup;  
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout; 
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
    
 import com.zyyknx.android.R;
 import com.zyyknx.android.ZyyKNXApp;
-import com.zyyknx.android.ZyyKNXConstant; 
+import com.zyyknx.android.ZyyKNXConstant;
+import com.zyyknx.android.adapter.TimingTaskListAdapter;
 import com.zyyknx.android.control.*;
 import com.zyyknx.android.models.*;
 import com.zyyknx.android.util.ByteUtil;
@@ -38,6 +45,7 @@ import com.zyyknx.android.util.KNX0X01Lib;
 import com.zyyknx.android.widget.*;
 import com.zyyknx.android.widget.MyBlinds.OnBlindsListener;
 
+@SuppressLint("Override")
 public class RoomDetailsActivity extends BaseActivity implements OnBlindsListener {
 	
 	int screenWidth = 0;
@@ -46,21 +54,33 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 	List<KNXControlBase> currentPageKNXControlBase = new ArrayList<KNXControlBase>();
 	Map<String, KNXControlBase> currentPageKNXControlBaseMap = new HashMap<String, KNXControlBase>(); 
 	
+	private TimingTaskDialog.Builder builder;
+//	private Map<Integer, KNXControlBase> mapControls;
+	private List<TimingTaskItem> timingTaskList;
+	private TimingTaskListAdapter mTimingTaskListAdapter;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState); 
 		setContentView(R.layout.room_details_layout);
 		
+		KNX0X01Lib.setContext(this);
 		IntentFilter intentFilter = new IntentFilter();
 		//设备状态的广播
 		intentFilter.addAction(ZyyKNXConstant.BROADCAST_UPDATE_DEVICE_STATUS); 
 		registerReceiver(updateDeviceStateReceiver, intentFilter);
 
+//		mapControls = ZyyKNXApp.getInstance().getCurrentPageKNXControlBaseMap();
+		timingTaskList = ZyyKNXApp.getInstance().getTimingTaskList();
+//		ListView lvTimingTaskList = (ListView)findViewById(R.id.listViewTimingTasks);
+//		mTimingTaskListAdapter = new TimingTaskListAdapter(this, timingTaskList);
+//		lvTimingTaskList.setAdapter(mTimingTaskListAdapter);
+//		
 		// 获取参数
 		KNXRoom mKNXRoom = (KNXRoom) getIntent().getSerializableExtra(ZyyKNXConstant.REMOTE_PARAM_KEY);
 
 		 
-		LinearLayout layContent = (LinearLayout) findViewById(R.id.layContent); // 获取LinearLayout控件
+		RelativeLayout layContent = (RelativeLayout) findViewById(R.id.layContent); // 获取LinearLayout控件
 		 
 		
 		final GridLayout rootGridLayout = (GridLayout) findViewById(R.id.gridLayout); // 获取GridLayout控件  
@@ -108,22 +128,30 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 					pageControlGridLayoutParams.leftMargin = getResources().getInteger(R.integer.margin_xlarge);
 					pageControlGridLayoutParams.setGravity(Gravity.CENTER_VERTICAL);
 					
-					//生成控件
-					ComponentView componentView = KNXControlBase.buildWithControl(this, mKNXControlBase);
-					if (componentView != null) {
-						LayoutParams pageLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
-						//componentView.setGravity(Gravity.CENTER_VERTICAL);
-						pageLayoutParams.height = rowHeight * mKNXControlBase.getRowSpan();
-						pageLayoutParams.width = rowWidth * mKNXControlBase.getColumnSpan();
-						//pageLayoutParams.leftMargin = R.dimen.margin_large;
-						componentView.setLayoutParams(pageLayoutParams);
-						rootGridLayout.addView(componentView, pageControlGridLayoutParams);
-			        }
-					 
+					LayoutParams pageLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
+					pageLayoutParams.height = rowHeight * mKNXControlBase.getRowSpan();
+					pageLayoutParams.width = rowWidth * mKNXControlBase.getColumnSpan();
+					
+					if((mKNXControlBase instanceof KNXLabel) && (mKNXControlBase.getText().equals("编辑"))) {
+						Button addTimingTask = new Button(this);
+						addTimingTask.setText(mKNXControlBase.getText());
+						addTimingTask.setOnClickListener(buttonAddTimingTaskOnClickListener);
+						
+						addTimingTask.setLayoutParams(pageLayoutParams);
+						rootGridLayout.addView(addTimingTask, pageControlGridLayoutParams);
+					} else {
+						//生成控件
+						ComponentView componentView = KNXControlBase.buildWithControl(this, mKNXControlBase);
+						if (componentView != null) {
+							componentView.setLayoutParams(pageLayoutParams);
+							rootGridLayout.addView(componentView, pageControlGridLayoutParams);
+				        }
+					}
 			   } 
 				
 				List<KNXGrid> mKNXGridList = mKNXPage.getGrids();  
 				for (int j = 0; j < mKNXGridList.size(); j++) {
+					
 					KNXGrid mKNXGrid = mKNXGridList.get(j); 
 			        
 			        //每个分组的名字
@@ -190,15 +218,37 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 						
 						//Log.d("Test", String.format("%s的位置：row: %d;Column: %d;RowSpan: %d;ColumnSpan: %d", mKNXControlBase.getText(), mKNXControlBase.getRow(), mKNXControlBase.getColumn(), mKNXControlBase.getRowSpan(), mKNXControlBase.getColumnSpan()));
 
-						ComponentView componentView = KNXControlBase.buildWithControl(this, mKNXControlBase);
-						if (componentView != null) {
-							LayoutParams controlLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
-							controlLayoutParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL | Gravity.CENTER;  
-							componentView.setLayoutParams(controlLayoutParams);
-							mGridLayoutGroup.addView(componentView, controlGridLayoutParams); 
-							 
-				        } 
+						if ((mKNXControlBase instanceof KNXLabel) && (mKNXControlBase.getText().equals("定时任务列表"))) {
+							ListView lvTimingTaskList = new ListView(this);
+//							lvTimingTaskList.setFastScrollEnabled(true);
+//							lvTimingTaskList.setFocusable(true);
+//							lvTimingTaskList.setVerticalScrollBarEnabled(true);
+							
+//							LayoutInflater inflater = getLayoutInflater().from(this);
+//							View timingTaskListView = inflater.inflate(R.layout.timing_task_list_layout, null);
+//							ListView lvTimingTaskList = (ListView)timingTaskListView.findViewById(R.id.listViewTimingTaskList);
+							
+							mTimingTaskListAdapter = new TimingTaskListAdapter(this, timingTaskList);
+							lvTimingTaskList.setAdapter(mTimingTaskListAdapter);
+							
+//							LayoutParams controlLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
+//							controlLayoutParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL | Gravity.CENTER;  
+//							controlLayoutParams.height = controlGridLayoutParams.height-500;
+//							controlLayoutParams.width = controlGridLayoutParams.width;
+//							lvTimingTaskList.setLayoutParams(controlLayoutParams);
+							mGridLayoutGroup.addView(lvTimingTaskList, controlGridLayoutParams);
+						} else {
+							ComponentView componentView = KNXControlBase.buildWithControl(this, mKNXControlBase);
+							if (componentView != null) {
+								LayoutParams controlLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
+								controlLayoutParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL | Gravity.CENTER;  
+								componentView.setLayoutParams(controlLayoutParams);
+								mGridLayoutGroup.addView(componentView, controlGridLayoutParams);
+							} 
+						}
 					}
+					
+					
 				}
 			}
 		}
@@ -211,10 +261,10 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 		Map<Integer, KNXControlBase> allBaseControl = new HashMap<Integer, KNXControlBase>();
 		for (int i = 0; i < currentPageKNXControlBase.size(); i++) {
 			
-			KNXSelectedAddress mKNXSelectedAddress = getFirstOrNull(currentPageKNXControlBase.get(i).getReadAddressId());
+			KNXSelectedAddress mKNXSelectedAddress = getFirstOrNull(currentPageKNXControlBase.get(i).getReadAddressId()); // 获取对象的读地址
 			int currentIndex = 0;
 			int currentValue = -1;
-			if(mKNXSelectedAddress != null) { 
+			if(mKNXSelectedAddress != null) {
 				String mETSId = mKNXSelectedAddress.getId(); 
 				currentIndex = ZyyKNXApp.getInstance().getGroupAddressIndexMap().get(mETSId); 
 				
@@ -224,14 +274,13 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 				currentValue = ByteUtil.getInt(contentBytes);
 			} 
 			
-			if(currentPageKNXControlBase.get(i) instanceof KNXButton) {
+			if(currentPageKNXControlBase.get(i) instanceof KNXButton) { // KNXButton
 				allBaseControl.put(currentPageKNXControlBase.get(i).getId(), currentPageKNXControlBase.get(i)); 
-				
-			} else if(currentPageKNXControlBase.get(i) instanceof KNXImageButton) {
+			} else if(currentPageKNXControlBase.get(i) instanceof KNXImageButton) { // KNXImageButton
 				allBaseControl.put(currentPageKNXControlBase.get(i).getId(), currentPageKNXControlBase.get(i));
-			} else if(currentPageKNXControlBase.get(i) instanceof KNXBlinds) {
+			} else if(currentPageKNXControlBase.get(i) instanceof KNXBlinds) { // KNXBlinds
 				allBaseControl.put(currentPageKNXControlBase.get(i).getId(), currentPageKNXControlBase.get(i));
-			} else if(currentPageKNXControlBase.get(i) instanceof KNXSwitch) {
+			} else if(currentPageKNXControlBase.get(i) instanceof KNXSwitch) { // KNXSwitch
 				allBaseControl.put(currentPageKNXControlBase.get(i).getId(), currentPageKNXControlBase.get(i));
 				
 				if(currentIndex >0) {
@@ -239,9 +288,9 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 					mMySwitchButton.setValue(currentValue);
 				}
 				
-			} else if(currentPageKNXControlBase.get(i) instanceof KNXSlider) {
+			} else if(currentPageKNXControlBase.get(i) instanceof KNXSlider) { // KNXSlider
 				allBaseControl.put(currentPageKNXControlBase.get(i).getId(), currentPageKNXControlBase.get(i));
-			} else if(currentPageKNXControlBase.get(i) instanceof KNXSliderSwitch) {
+			} else if(currentPageKNXControlBase.get(i) instanceof KNXSliderSwitch) { // KNXSliderSwitch
 				allBaseControl.put(currentPageKNXControlBase.get(i).getId(), currentPageKNXControlBase.get(i));
 				
 				if(currentIndex >0) {
@@ -290,11 +339,15 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 		{
 			// TODO 041291 Auto-generated method stub
 			if(intent.getAction().equals(ZyyKNXConstant.BROADCAST_UPDATE_DEVICE_STATUS)){ 
-				KNXResponse mKNXResponse = (KNXResponse) intent.getExtras().getSerializable("value");
-				Log.d("Test", "当前的值得为："+ mKNXResponse.ControlValue +"");
+//				KNXResponse mKNXResponse = (KNXResponse) intent.getExtras().getSerializable("value");
+				int index = intent.getExtras().getInt(ZyyKNXConstant.GROUP_ADDRESS_INDEX, 0);
+				int value = intent.getExtras().getInt(ZyyKNXConstant.GROUP_ADDRESS_NEW_VALUE, 0);
+				Log.d("ZyyKNXApp", "updateDeviceStateReceiver() 当前的索引号："+ index +"");
 				try {
-					KNXControlBase mKNXControlBase = currentPageKNXControlBaseMap.get(mKNXResponse.getKNXId());
+					String knxId = ZyyKNXApp.getInstance().getGroupAddressMap().get(index).getId();
+					KNXControlBase mKNXControlBase = currentPageKNXControlBaseMap.get(knxId);
 					int controlId = mKNXControlBase.getId(); 
+					Log.d("ZyyKNXApp", "updateDeviceStateReceiver() knxId:"+ knxId +" mKNXControlBase:"+mKNXControlBase+" controlId:"+controlId);
 					if(mKNXControlBase instanceof KNXButton) {
 						 
 					} else if(mKNXControlBase instanceof KNXImageButton) {
@@ -303,13 +356,13 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 						 
 					} else if(mKNXControlBase instanceof KNXSwitch) { 
 						MySwitchButton mMySwitchButton = (MySwitchButton) findViewById(controlId); // 获取LinearLayout控件 
-						mMySwitchButton.setValue(mKNXResponse.getControlValue());
+						mMySwitchButton.setValue(value);
 						 
 					} else if(mKNXControlBase instanceof KNXSlider) {
 						 
 					} else if(mKNXControlBase instanceof KNXSliderSwitch) {
 						MySliderSwitch mMySliderSwitch = (MySliderSwitch) findViewById(controlId); // 获取LinearLayout控件 
-						mMySliderSwitch.setProgress(mKNXResponse.getControlValue());
+						mMySliderSwitch.setProgress(value);
 					}
 				} catch (Exception e) { 
 					
@@ -383,5 +436,39 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
         }
         return obj;
     }
+    
+	OnClickListener buttonAddTimingTaskOnClickListener = new OnClickListener() {
+		
+		public void onClick(View v) {
+//			mapControls = ZyyKNXApp.getInstance().getCurrentPageKNXControlBaseMap();
+			builder = new TimingTaskDialog.Builder(v.getContext());
+			builder.setTitle("编辑定时任务");
+			builder.setPositiveButton(new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					Log.i("SliderSwitch", this.getClass()+" dialog = " + dialog + " which = " + which);
+					
+					timingTaskList.add(builder.getTimingTask());
+					mTimingTaskListAdapter.notifyDataSetChanged();
+					
+					dialog.dismiss();
+				}
+			});
+			
+			builder.setNegativeButton(new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					Log.i("SliderSwitch", this.getClass()+" dialog = " + dialog + " which = " + which);
+					
+					dialog.dismiss();
+				}
+			});
 
+			builder.create().show();
+		}
+	};
 }

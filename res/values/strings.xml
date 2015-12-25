@@ -33,6 +33,26 @@
     <string name="switcher_cursor_off">关</string>
     <string name="switcher_cursor_drag">拖动</string>
     <string name="switcher_cursor_on">开</string>
-   
+    
+    <string name="button_title_createtask">创建任务</string>
+    <string name="button_title_deletetask">删除任务</string>
+    <string name="button_title_save">保存</string>
+    <string name="button_title_cancel">取消</string>
+    
+    <string name="checkbox_title_one_time">一次性</string>
+    <string name="checkbox_title_everyday">每天</string>
+    <string name="checkbox_title_monday">周一</string>
+    <string name="checkbox_title_tuesday">周二</string>
+    <string name="checkbox_title_wensday">周三</string>
+    <string name="checkbox_title_thursday">周四</string>
+    <string name="checkbox_title_friday">周五</string>
+    <string name="checkbox_title_saturday">周六</string>
+    <string name="checkbox_title_sunday">周日</string>
+    <string name="checkbox_title_open">打开</string>
+    <string name="checkbox_title_close">关闭</string>
+    
+    <string name="textview_title_udp_work_way">UDP工作方式</string>
+    <string name="radiobutton_title_groupbroadcast">组播</string>
+    <string name="radiobutton_title_peertopeer">点对点</string>
 
 </resources>

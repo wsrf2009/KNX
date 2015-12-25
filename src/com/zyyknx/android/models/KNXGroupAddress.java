@@ -1,6 +1,7 @@
 package com.zyyknx.android.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class KNXGroupAddress implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -138,4 +139,11 @@ public class KNXGroupAddress implements Serializable {
 		ReadTimeSpan = readTimeSpan;
 	} 
 	
+	private List<KNXGroupAddressAction> AddressAction;
+	public List<KNXGroupAddressAction> getAddressAction() {
+		return AddressAction;
+	}
+	public void setAddressAction(List<KNXGroupAddressAction> action) {
+		AddressAction = action;
+	}
 }

@@ -1,6 +1,8 @@
 package com.zyyknx.android;
 
-import java.io.InputStream;  
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack; 
 
@@ -14,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder; 
 import com.zyyknx.android.control.KNXControlBaseDeserializerAdapter;
+import com.zyyknx.android.control.TimingTaskItem;
 import com.zyyknx.android.control.KNXControlBase;
 import com.zyyknx.android.models.KNXApp; 
 import com.zyyknx.android.models.KNXGroupAddress;
@@ -60,13 +63,16 @@ public class ZyyKNXApp extends Application {
 		// TODO Auto-generated method stub
 		super.onCreate(); 
 		app = this;  
-		
+		Log.i(TAG, "onCreate()");
 		settings = app.getSharedPreferences(ZyyKNXConstant.SETTING_FILE, android.content.Context.MODE_PRIVATE);
 		
 		mImageLoader = new ImageLoader(getRequestQueue(), new BitmapLruCache(getApplicationContext(), getCacheDir().getPath()));
 		mRoundImageLoader = new ImageLoader(getRequestQueue(), new BitmapLruCache(getApplicationContext(), getCacheDir().getPath(), true));
+		
+		timingTaskList = new ArrayList<TimingTaskItem>();
 	
-		startGetKNXResponseService();
+//		startGetKNXResponseService();
+		startTimingTaskService();
 	}
 	
 	public void startGetKNXResponseService() {
@@ -80,6 +86,20 @@ public class ZyyKNXApp extends Application {
 			am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), knxRefreshStatusTimespan, collectSender);
 			//am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 5000, collectSender);
 		}
+	}
+	
+	public void startTimingTaskService() {
+		Log.d(TAG, "startTimingTaskService()");
+		Intent intent = new Intent("ELITOR_CLOCK");
+//	    intent.setAction("repeating");
+	    PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);  
+	    
+	    // 开始时间
+	    long firstime=SystemClock.elapsedRealtime();
+
+	    AlarmManager am=(AlarmManager)getSystemService(ALARM_SERVICE);
+	    // 5秒一个周期，不停的发送广播
+	    am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5*1000, pi);
 	}
 	
 	@Override
@@ -223,6 +243,7 @@ public class ZyyKNXApp extends Application {
 				//gsonBuilder.registerTypeAdapter(Date.class, new GsonHelper.WCFDateDeserializer());
 				gsonBuilder.registerTypeAdapter(KNXControlBase.class, new KNXControlBaseDeserializerAdapter());
 				Gson gson = gsonBuilder.create();
+				Log.d("ZyyKNXApp", "KNXApp.class:"+KNXApp.class+"json:"+json);
 				KNXApp tempKNXApp = gson.fromJson(json, KNXApp.class);
 				
 				ZyyKNXApp.getInstance().setKNXAppConfig(tempKNXApp);
@@ -262,4 +283,11 @@ public class ZyyKNXApp extends Application {
 			this.currentPageKNXControlBaseMap = mKNXControlBaseMap;
 		} 
 
+		private List<TimingTaskItem> timingTaskList;
+		public List<TimingTaskItem> getTimingTaskList() {
+			return this.timingTaskList;
+		}
+		public void setTimingTaskList(List<TimingTaskItem> list) {
+			this.timingTaskList = list;
+		}
 }

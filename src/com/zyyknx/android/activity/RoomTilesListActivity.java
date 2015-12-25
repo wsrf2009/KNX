@@ -2,10 +2,11 @@ package com.zyyknx.android.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,7 @@ import com.zyyknx.android.models.KNXRoom;
 import com.zyyknx.android.util.StringUtil;
 import com.zyyknx.android.widget.PromptDialog;
 
+@SuppressLint("Override")
 public class RoomTilesListActivity  extends BaseActivity { 
 	
 	private GridView gridView;
@@ -49,6 +51,8 @@ public class RoomTilesListActivity  extends BaseActivity {
 			 @Override
 			 public void onClick(View v) {  
 				 final View view = LayoutInflater.from(RoomTilesListActivity.this).inflate(R.layout.password_layout, null);  
+				 final EditText txtPassword = (EditText) view.findViewById(R.id.txtPassword);
+//				 txtPassword.setInputType(InputType.TYPE_CLASS_NUMBER);
 					new PromptDialog.Builder(RoomTilesListActivity.this)
 					.setTitle("访问限制") 
 					.setIcon(R.drawable.launcher)
@@ -67,7 +71,8 @@ public class RoomTilesListActivity  extends BaseActivity {
 								
 								@Override
 								public void onClick(Dialog dialog, int which) {
-									EditText txtPassword = (EditText) view.findViewById(R.id.txtPassword);
+//									EditText txtPassword = (EditText) view.findViewById(R.id.txtPassword);
+//									txtPassword.setInputType(InputType.TYPE_CLASS_PHONE);
 									if(txtPassword.getText().toString().trim().equalsIgnoreCase("654321")) {  
 										dialog.dismiss();
 										new SettingDialog(RoomTilesListActivity.this).Show(); 

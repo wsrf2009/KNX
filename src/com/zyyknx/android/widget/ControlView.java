@@ -74,24 +74,7 @@ public class ControlView extends ComponentView {
 									icallBack.onCallBack();
 								}
 								 
-								String sendData = pData;
-								if(mETSID != null && mETSID.size() > 0) {
-									 Map<String, Integer> mGroupAddressIndexMap = ZyyKNXApp.getInstance().getGroupAddressIndexMap();
-									 //Map<Integer, KNXGroupAddress> mGroupAddressMap = ZyyKNXApp.getInstance().getGroupAddressMap(); 
-									for(Map.Entry<String, KNXSelectedAddress> entry:mETSID.entrySet()){   
-									     KNXSelectedAddress mKNXSelectedAddress = entry.getValue();
-									     int index = mGroupAddressIndexMap.get(mKNXSelectedAddress.getId());
-									     if(isSendDefaultValue) {  
-									    	 sendData = String.valueOf(mKNXSelectedAddress.getDefaultValue());
-										 }
-										 Log.d("TEST", "当前发送的索引号为"+ index +";值为："+ sendData);
-										
-										 byte[] byteArray = new byte[1]; 
-										 byteArray[0] = (byte)(0xff & Integer.valueOf(sendData));
-										 int x = KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length); 
-										
-									}   
-								}  
+								sendCommand(mETSID, pData, isSendDefaultValue);
 							}
 						})
 				.show(); 
@@ -105,24 +88,9 @@ public class ControlView extends ComponentView {
 					icallBack.onCallBack();
 				 }
 			
-				if(mETSID != null && mETSID.size() > 0) {
-					String sendData = pData;
-					Map<String, Integer> mGroupAddressIndexMap = ZyyKNXApp.getInstance().getGroupAddressIndexMap();
-					 //Map<Integer, KNXGroupAddress> mGroupAddressMap = ZyyKNXApp.getInstance().getGroupAddressMap(); 
-					for(Map.Entry<String, KNXSelectedAddress> entry:mETSID.entrySet()){   
-					     KNXSelectedAddress mKNXSelectedAddress = entry.getValue();
-					     int index = mGroupAddressIndexMap.get(mKNXSelectedAddress.getId());
-					     if(isSendDefaultValue) {  
-					    	 sendData = String.valueOf(mKNXSelectedAddress.getDefaultValue());
-						 }
-						 Log.d("SliderSwitch", "当前发送的索引号为"+ index +";值为："+ sendData);  
-						
-						 byte[] byteArray = new byte[1]; 
-						 byteArray[0] = (byte)(0xff & Integer.valueOf(sendData));
-						 int x = KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length); 
-					}   
-				} 
-				return true;
+				 sendCommand(mETSID, pData, isSendDefaultValue);
+				 
+				 return true;
 			}
 			
 			
@@ -310,5 +278,34 @@ public class ControlView extends ComponentView {
 	public void setonClick(ICallBack mICallBack)
 	{
 		icallBack = mICallBack;
+	}
+	
+	final public static void sendCommand(final Map<String ,KNXSelectedAddress> mETSID, final String pData, final boolean isSendDefaultValue) {
+		String sendData = pData;
+		if(mETSID != null && mETSID.size() > 0) {
+			 Map<String, Integer> mGroupAddressIndexMap = ZyyKNXApp.getInstance().getGroupAddressIndexMap();
+			for(Map.Entry<String, KNXSelectedAddress> entry:mETSID.entrySet()) {
+			     KNXSelectedAddress mKNXSelectedAddress = entry.getValue();
+			     int index = mGroupAddressIndexMap.get(mKNXSelectedAddress.getId());
+			     if(isSendDefaultValue) {  
+			    	 sendData = String.valueOf(mKNXSelectedAddress.getDefaultValue());
+				 }
+				 Log.d("TEST", "当前发送的索引号为"+ index +";值为："+ sendData);
+				
+				 byte[] byteArray = new byte[1]; 
+				 byteArray[0] = (byte)(0xff & Integer.valueOf(sendData));
+				 int x = KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length); 
+				
+			}   
+		}
+	}
+	
+	final public static void sendDataToAddress(final KNXGroupAddress address, final String data) {
+		Map<String, Integer> mGroupAddressIndexMap = ZyyKNXApp.getInstance().getGroupAddressIndexMap();
+		int index = mGroupAddressIndexMap.get(address.getId());
+		
+		byte[] byteArray = new byte[1];
+		byteArray[0] = (byte)(0xff & Integer.valueOf(data));
+		int x = KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length);
 	}
 }

@@ -39,7 +39,7 @@ import com.zyyknx.android.util.ByteUtil;
 import com.zyyknx.android.util.CompressStatus; 
 import com.zyyknx.android.util.CopyFileUtil;
 import com.zyyknx.android.util.KNX0X01Lib;
-import com.zyyknx.android.util.Log;
+//import com.zyyknx.android.util.Log;
 import com.zyyknx.android.util.ZipUtil;
 
 import android.app.Activity;
@@ -50,6 +50,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 public class SplashActivity extends Activity {
 
@@ -63,6 +64,7 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash); 
 		 
+//		ZyyKNXApp.getInstance().startTimingTaskService(this);
 		 
 		settings = getSharedPreferences(ZyyKNXConstant.SETTING_FILE, MODE_PRIVATE);
 		long localVersion = settings.getLong(ZyyKNXConstant.LOCALVERSION, 0);
@@ -72,6 +74,10 @@ public class SplashActivity extends Activity {
 			KNX0X01Lib.loadLibraryTest();
 			KNX0X01Lib.UCLOSENet();
 			
+			File f = new File(Environment.getExternalStorageDirectory().toString());  
+            File[] files = f.listFiles();// 列出所有文件  
+            System.out.println(f.listFiles().toString());
+            
 			zipFilePath = Environment.getExternalStorageDirectory().toString() + "/KnxUiProject.knxuie"; 
 			File zipFile = new File(zipFilePath);
 			long lastlastModified = zipFile.lastModified();
@@ -131,9 +137,17 @@ public class SplashActivity extends Activity {
 
 	private void jumpActivity() { 
 		//初始化连接
-		String mKNXGetWayIP = settings.getString(ZyyKNXConstant.KNX_GETEWAY_IP, "192.168.1.222");
-		int mKNXGetWayPort = settings.getInt(ZyyKNXConstant.KNX_GETEWAY_Port, 3671);
-		boolean isConnent = KNX0X01Lib.UOPENNet(mKNXGetWayIP, mKNXGetWayPort, 1);
+		String mKNXGatewayIP = settings.getString(ZyyKNXConstant.KNX_GATEWAY_IP, 
+				ZyyKNXConstant.KNX_GATEWAY_DEFAULT);
+		int mKNXGatewayPort = settings.getInt(ZyyKNXConstant.KNX_GATEWAY_PORT, 
+				ZyyKNXConstant.KNX_GATEWAY_PORT_DEFAULT);
+		int mKNXUDPWorkWay = settings.getInt(ZyyKNXConstant.KNX_UDP_WORK_WAY, 
+				ZyyKNXConstant.KNX_UDP_WORK_WAY_DEFAULT);
+		boolean isConnect = KNX0X01Lib.UOPENNet(mKNXGatewayIP, mKNXGatewayPort, mKNXUDPWorkWay);
+		
+		Log.d("ZyyKNXApp", "jumpActivity()"+" mKNXGatewayIP: "+mKNXGatewayIP+
+				" mKNXGatewayPort: "+mKNXGatewayPort+" mKNXUDPWorkWay: "+mKNXUDPWorkWay+
+				" isConnect: " + isConnect);
 		 
 		Intent intent = new Intent(SplashActivity.this, RoomTilesListActivity.class);
 		startActivity(intent);

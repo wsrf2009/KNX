@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dip"
             android:layout_marginRight="16dip"
-            android:text="500" />
+            android:text="500"
+        	android:inputType="datetime" />
     </LinearLayout>
 
 </LinearLayout>
