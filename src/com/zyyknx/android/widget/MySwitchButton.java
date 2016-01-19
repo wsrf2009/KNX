@@ -75,9 +75,8 @@ public class MySwitchButton extends ControlView {
 			
 			if(!StringUtil.isEmpty(mKNXSwitch.getOffImage())) {
 				FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);  
-//				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				//此处相当于布局文件中的Android:layout_gravity属性 
-				lp.leftMargin = 0;
+				lp.leftMargin = 15;
 				lp.topMargin= 10;
 				lp.bottomMargin = 15;
 				lp.gravity = Gravity.LEFT; 

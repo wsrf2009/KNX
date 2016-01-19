@@ -220,12 +220,12 @@ public class BaseActivity extends FragmentActivity {
 					spinner.setClickable(false);
 					spinner.setEnabled(false);
 
-					Log.i("A Spinner is unabled");
+//					Log.i("A Spinner is unabled");
 				} else if (v instanceof ListView) {
 					((ListView) v).setClickable(false);
 					((ListView) v).setEnabled(false);
 
-					Log.i("A ListView is unabled");
+//					Log.i("A ListView is unabled");
 				} else {
 					disableSubControls((ViewGroup) v);
 				}
@@ -233,11 +233,11 @@ public class BaseActivity extends FragmentActivity {
 				((EditText) v).setEnabled(false);
 				((EditText) v).setClickable(false);
 
-				Log.i("A EditText is unabled");
+//				Log.i("A EditText is unabled");
 			} else if (v instanceof Button) {
 				((Button) v).setEnabled(false);
 
-				Log.i("A Button is unabled");
+//				Log.i("A Button is unabled");
 			}
 		}
 	}

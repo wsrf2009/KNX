@@ -3,33 +3,45 @@ package com.zyyknx.android.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 public class NetWorkUtil {
 	/**
-	 * @author  获取当前的网络状态 -1：没有网络
-	 *         1：WIFI网络2：wap网络3：net网络
+	 * @author  获取当前的网络状态
+	 *         
 	 * @param context
-	 * @return
+	 * @return 
+	 * 			-1：没有网络
+	 * 			 0：	其他
+	 * 			 1：移动蜂窝网络
+	 * 			 2：WIFI
+	 * 			 3：以太网
 	 */
 	public static int getAPNType(Context context) {
 		int netType = -1;
 		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo == null) {
+		if (networkInfo == null) { // 无网络
 			return netType;
 		}
 		int nType = networkInfo.getType();
-		if (nType == ConnectivityManager.TYPE_MOBILE) {
-			Log.e("networkInfo.getExtraInfo()","networkInfo.getExtraInfo() is "+ networkInfo.getExtraInfo());
-			if (networkInfo.getExtraInfo().toLowerCase().equals("cmnet")) {
-				netType = 3;
-			} else {
+		if(networkInfo.isConnected()) {
+			if (nType == ConnectivityManager.TYPE_MOBILE) { // 移动蜂窝网络
+//				Log.e("networkInfo.getExtraInfo() is "+ networkInfo.getExtraInfo());
+//				if (networkInfo.getExtraInfo().toLowerCase().equals("cmnet")) { // Net
+//					netType = 3;
+//				} else { // wap网络
+					netType = 1;
+//				}
+			} else if (nType == ConnectivityManager.TYPE_WIFI) { // WIFI网络
 				netType = 2;
-			}
-		} else if (nType == ConnectivityManager.TYPE_WIFI) {
-			netType = 1;
+			} else if (nType == ConnectivityManager.TYPE_ETHERNET) { // 以太网
+				netType = 3;
+			} else { // 其他链接
+				netType = 0;
+			} 
 		}
+
+		
 		return netType;
 	}
 

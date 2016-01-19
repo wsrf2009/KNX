@@ -15,6 +15,7 @@ import com.zyyknx.android.widget.MySceneButton;
 import com.zyyknx.android.widget.MySnapper;
 import com.zyyknx.android.widget.MySnapperSwitch;
 import com.zyyknx.android.widget.MySwitchButton;
+import com.zyyknx.android.widget.MyTimerTaskButton;
 import com.zyyknx.android.widget.MyButton;
 import com.zyyknx.android.widget.MyColorLight;
 import com.zyyknx.android.widget.MyImageButton;
@@ -173,7 +174,9 @@ public class KNXControlBase extends KNXView implements Serializable {
     	  controlView = new MySnapperSwitch(context, (KNXSnapperSwitch)mKNXControlBase); 
       } else if (mKNXControlBase instanceof KNXSIPCall) {
     	  
-      } 
+      } else if (mKNXControlBase instanceof KNXTimerButton) {
+    	  controlView = new MyTimerTaskButton(context, null, (KNXTimerButton)mKNXControlBase);
+      }
 	  
       return controlView; 
    } 

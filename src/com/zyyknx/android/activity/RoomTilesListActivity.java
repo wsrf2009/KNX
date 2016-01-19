@@ -23,10 +23,10 @@ import com.zyyknx.android.adapter.RoomListAdapter.OnItemActionListener;
 import com.zyyknx.android.models.KNXApp;
 import com.zyyknx.android.models.KNXArea;
 import com.zyyknx.android.models.KNXRoom;
+import com.zyyknx.android.util.Log;
 import com.zyyknx.android.util.StringUtil;
 import com.zyyknx.android.widget.PromptDialog;
 
-@SuppressLint("Override")
 public class RoomTilesListActivity  extends BaseActivity { 
 	
 	private GridView gridView;
@@ -108,6 +108,9 @@ public class RoomTilesListActivity  extends BaseActivity {
 		mRoomListAdapter.setOnItemActionListener(new OnItemActionListener() {
 			
 			public void onItemClick(final KNXRoom mRoom) { 
+				
+				Log.i(ZyyKNXConstant.ACTIVITY_JUMP, this.getClass()+" onItemClick()");
+				
 				//进入房间具体设置
 				if(StringUtil.isEmpty(mRoom.getPinCode())) {
 					Intent intent = new Intent(RoomTilesListActivity.this, RoomDetailsActivity.class);

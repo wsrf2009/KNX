@@ -167,7 +167,7 @@ public class KXNResponseService extends Service {
 								//Log.d("Test", "索引号为"+ index +"的值："+ isChangeStr +""); 
 								if(isChange)
 								{
-									Log.d("Test1", "索引号为"+ index +"的值改变后为："+ ByteUtil.getInt(contentBytes) +""); 
+//									Log.d("Test1", "索引号为"+ index +"的值改变后为："+ ByteUtil.getInt(contentBytes) +""); 
 									
 									KNXResponse mKNXResponse = new KNXResponse();
 									mKNXResponse.setControlValue(ByteUtil.getInt(contentBytes));

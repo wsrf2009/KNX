@@ -66,6 +66,19 @@ public class PromptDialog extends Dialog {
 
 		private PromptDialog dialog;
 		private Context context;
+		
+		View mView = null;
+		LinearLayout mTitleBar = null;
+		TextView mTitle = null;
+		TextView mMessage = null;
+		TextView btnLeft = null;
+		TextView btnCenter = null;
+		TextView btnRight = null;
+		LinearLayout addView = null;
+		LinearLayout btnView = null;
+		View btnDivider1 = null;
+		View btnDivider2 = null;
+		View msgBtnDivider = null;
 
 		private CharSequence title;
 		private CharSequence message;
@@ -142,11 +155,17 @@ public class PromptDialog extends Dialog {
 
 		public Builder setTitle(CharSequence title){
 			this.title = title;
+			if(null != mTitle) {
+				mTitle.setText(this.title);
+			}
 			return this;
 		}
 
 		public Builder setTitle(int titleResId){
 			this.title = context.getResources().getString(titleResId);
+			if(null != mTitle) {
+				mTitle.setText(this.title);
+			}
 			return this;
 		}
 
@@ -330,19 +349,6 @@ public class PromptDialog extends Dialog {
 			if(dialog == null){
 				return null;
 			}
-
-			View mView = null;
-			LinearLayout mTitleBar = null;
-			TextView mTitle = null;
-			TextView mMessage = null;
-			TextView btnLeft = null;
-			TextView btnCenter = null;
-			TextView btnRight = null;
-			LinearLayout addView = null;
-			LinearLayout btnView = null;
-			View btnDivider1 = null;
-			View btnDivider2 = null;
-			View msgBtnDivider = null;
 
 			switch (viewStyle) {
 			case VIEW_STYLE_TITLEBAR :

@@ -108,7 +108,7 @@ public class SeekBarColorPicker
         int g = 0;
         int b = 0;
 
-        Log.d("progress", "progress: " + progress);
+//        Log.d("progress", "progress: " + progress);
 
         if (progress < 256) {
             b = progress;

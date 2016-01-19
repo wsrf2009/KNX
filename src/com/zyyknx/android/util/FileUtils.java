@@ -5,7 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream; 
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
 import java.io.OutputStream; 
 import org.apache.http.util.EncodingUtils; 
 
@@ -107,6 +110,7 @@ public class FileUtils {
 			File file = new File(getVideoPath(), name);
 			os = new FileOutputStream(file);
 			break;
+
 		default:
 			break;
 		}
@@ -120,4 +124,29 @@ public class FileUtils {
 		}
 		return VIDEO_PATH;
 	}
+	
+	public static void writeObjectIntoFile(Context mContext, String fileName, Object mObject) throws IOException{
+		FileOutputStream fileOutputStream = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);  
+        ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream);  
+        oos.writeObject(mObject);//timingTaskList is an Instance of TableData;  
+	}
+	
+	public static Object readObjectFromFile(Context mContext, String fileName) throws IOException, ClassNotFoundException {
+		FileInputStream fileInputStream = mContext.openFileInput(fileName);  
+        ObjectInputStream ois = new ObjectInputStream(fileInputStream);
+        return ois.readObject();
+	}
+	
+	public static boolean fileIsExists(String strFile) {  
+        try {  
+            File f=new File(strFile);  
+            if(!f.exists()) {  
+            	return false;  
+            }  
+        } catch (Exception e) {  
+            return false;  
+        }  
+  
+        return true;  
+    }
 }

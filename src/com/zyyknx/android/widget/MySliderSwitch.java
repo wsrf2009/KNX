@@ -124,13 +124,13 @@ public class MySliderSwitch extends ControlView {
 		super(context, attrs, defStyle);
 		this.setBackgroundResource(R.drawable.button_background);
 		
-		mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG); // ANTI_ALIAS_FLAG：图形保真
-		Resources res = getResources(); // 获取视图相关的资源
+		mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+		Resources res = getResources();
 		mTextPaint.density = res.getDisplayMetrics().density;
-		mTextPaint.setShadowLayer(0.5f, 1.0f, 1.0f, Color.BLACK); // 设置文本显示的阴影
+		mTextPaint.setShadowLayer(0.5f, 1.0f, 1.0f, Color.BLACK);
 		mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 20,  context.getResources().getDisplayMetrics())); 
 
-		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MySliderSwitch, defStyle, 0);  // 获得MySliderSwitch的自定义属性
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MySliderSwitch, defStyle, 0);
  
 		mOrientation = a.getInteger(R.styleable.MySliderSwitch_direct, HORIZONTAL); //目前只支持水平
 		mThumbDrawable = a.getDrawable(R.styleable.MySliderSwitch_thumb);  //滑动条Drawable
@@ -148,7 +148,7 @@ public class MySliderSwitch extends ControlView {
 		}
 		mDrawableRight = a.getDrawable(R.styleable.MySliderSwitch_drawableRight); //SliderSwitch右边背景
 		if(mDrawableRight == null) {
-			mDrawableRight = context.getResources().getDrawable(R.drawable.shixun_silder_swich_light_up);
+			mDrawableRight = context.getResources().getDrawable(R.drawable.shixun_silder_swich_light_down);
 		}
 		mThumbTextPadding = a.getDimensionPixelSize(R.styleable.MySliderSwitch_thumbTextPadding, 0);
 		 
@@ -167,7 +167,7 @@ public class MySliderSwitch extends ControlView {
 		if (appearance != 0) {
 			setSwitchTextAppearance(context, appearance);
 		}
-		a.recycle(); // 回收资源
+		a.recycle(); 
 		
 		ViewConfiguration config = ViewConfiguration.get(context);
 		mTouchSlop = config.getScaledTouchSlop();  //用法 是一个距离，表示滑动的时候，手的移动要大于这个距离才开始移动控件。 
@@ -185,11 +185,10 @@ public class MySliderSwitch extends ControlView {
 			
 			MinValue = mKNXSliderSwitch.getMinValue();
 			MaxValue = mKNXSliderSwitch.getMaxValue();
-			Log.i(TAG, "initControl(): mThumbPosition = " + mThumbPosition);
-			setProgress(50);
-			Log.i(TAG, "initControl(): mThumbPosition = " + mThumbPosition);
+			
+			setProgress(100);
 			//增加控件
-//			addView(this);
+			//addView(this);
 			//设置控件大小
 			setControlDefaultSize(this); 
 			
@@ -334,11 +333,9 @@ public class MySliderSwitch extends ControlView {
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) { 
 		mVelocityTracker.addMovement(ev);
-		 Log.d(TAG, "onTouchEvent(ev="+ev.toString()+")");
-		 Log.i(TAG, "x = "+ev.getX());
-		 Log.d(TAG, "mTouchMode="+mTouchMode);
+		// Log.d(TAG, "onTouchEvent(ev="+ev.toString()+")");
+		// Log.d(TAG, "mTouchMode="+mTouchMode);
 		final int action = ev.getActionMasked();
-		Log.d(TAG, "action = "+ Integer.toString(action));
 		switch (action) {
 		case MotionEvent.ACTION_DOWN: {
 			final float x = ev.getX();
@@ -382,7 +379,6 @@ public class MySliderSwitch extends ControlView {
 					float newPos = Math.max(0, Math.min(mThumbPosition + dx, getThumbScrollRange()));
 					if (newPos != mThumbPosition) {
 						mThumbPosition = newPos;
-						Log.i(TAG, "mThumbPosition = " + mThumbPosition);
 						mTouchX = x;
 						invalidate();
 						
@@ -418,16 +414,9 @@ public class MySliderSwitch extends ControlView {
 		case MotionEvent.ACTION_UP: 
 		case MotionEvent.ACTION_CANCEL: {
 			
-			Log.i(TAG, "PointX = "+ ev.getX() + " LeftWidth = "+mDrawableLeft.getIntrinsicWidth()+" RightWidth = "+mDrawableRight.getIntrinsicWidth() + " SwitchWidth = " + mSliderSwitchWidth);
-			if (ev.getX() <= mDrawableLeft.getIntrinsicWidth()) {
-				sendCommandRequest(mKNXSliderSwitch.getWriteAddressIds(), String.valueOf(0), false ,null);
-			} else if ((ev.getX() >= (mSliderSwitchWidth-mDrawableRight.getIntrinsicWidth())) && (ev.getX() <= mSliderSwitchWidth)) {
-				sendCommandRequest(mKNXSliderSwitch.getWriteAddressIds(), String.valueOf(1), false ,null);
-			} else {
-				//发送数据
-				sendCommandRequest(mKNXSliderSwitch.getWriteAddressIds(), String.valueOf((int)(mProgress * 255 / 100)), false ,null);
-			}
-			
+			//发送数据
+        	sendCommandRequest(mKNXSliderSwitch.getWriteAddressIds(), String.valueOf((int)(mProgress * 255 / 100)), false ,null);
+        	
 			if (mTouchMode == TOUCH_MODE_DRAGGING) { 
 				return true;
 			}
@@ -622,7 +611,7 @@ public class MySliderSwitch extends ControlView {
 		int thumbPos = (int) (mThumbPosition); 
 		
 		mProgress = (int)(mThumbPosition * 100 / thumbRange);
-		Log.d(TAG, "onDraw(): 当前进度条的值为： "+ mProgress + " mThumbPosition = " + mThumbPosition);
+		Log.d(TAG, "当前进度条的值为： "+ mProgress);
 		
 		if(mKNXSliderSwitch.getSliderSymbol() == ControlSymbol.DardBright.getControlSymbol()) {
 			if(mProgress > 0) {
@@ -665,7 +654,7 @@ public class MySliderSwitch extends ControlView {
 			}   
 			
 			// 绘制滑动条左右的背景图
-//			if (true) {
+			if (true) {
 				//画左背景图
 				canvas.save();
 				canvas.translate(mSwitchLeft + getPaddingLeft(), (mSliderSwitchHeight - mDrawableLeft.getIntrinsicHeight()) / 2);  
@@ -680,22 +669,22 @@ public class MySliderSwitch extends ControlView {
 					mDrawableRight.draw(canvas);
 				}
 				canvas.restore();
-//			} else {
-//				//画左背景图
-//				canvas.save();
-//				canvas.translate(mSwitchLeft  + getPaddingLeft(), (mSliderSwitchHeight - mDrawableLeft.getIntrinsicHeight()) / 2);  
-//				if (mDrawableLeft != null) {
-//					mDrawableLeft.draw(canvas);
-//				}
-//				canvas.restore(); 
-//				//画右背景图
-//				canvas.save();
-//				canvas.translate(mSwitchRight - mDrawableRight.getIntrinsicWidth() - getPaddingRight(), (mSliderSwitchHeight - mDrawableRight.getIntrinsicHeight()) / 2 );  
-//				if (mDrawableRight != null) {
-//					mDrawableRight.draw(canvas);
-//				}
-//				canvas.restore();
-//			} 
+			} else {
+				//画左背景图
+				canvas.save();
+				canvas.translate(mSwitchLeft  + getPaddingLeft(), (mSliderSwitchHeight - mDrawableLeft.getIntrinsicHeight()) / 2);  
+				if (mDrawableLeft != null) {
+					mDrawableLeft.draw(canvas);
+				}
+				canvas.restore(); 
+				//画右背景图
+				canvas.save();
+				canvas.translate(mSwitchRight - mDrawableRight.getIntrinsicWidth() - getPaddingRight(), (mSliderSwitchHeight - mDrawableRight.getIntrinsicHeight()) / 2 );  
+				if (mDrawableRight != null) {
+					mDrawableRight.draw(canvas);
+				}
+				canvas.restore();
+			} 
 			//绘制背景上的文字
 			canvas.save();
 			canvas.translate((mSliderSwitchWidth - mButtonTextLayout.getWidth())  / 2 , (mSliderSwitchHeight - mButtonTextLayout.getHeight()) / 2);
@@ -735,7 +724,6 @@ public class MySliderSwitch extends ControlView {
 	}
 	
 	public void setOnSliderChangeListener(OnSliderChangeListener l) {
-		Log.i(TAG, "setOnSliderChangeListener()");
 		mOnSliderChangeListener = l;
 	}
 

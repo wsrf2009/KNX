@@ -25,7 +25,7 @@ public enum KNXDataType {
      }
      
      public int getType() {
-    	 Log.d("ZyyKNXApp", this.toString());
+//    	 Log.d("ZyyKNXApp", this.toString());
     	 return this.type;
      }
      

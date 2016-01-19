@@ -24,7 +24,8 @@
     <color name="default_background_screen_pager_handle_focused">#80808080</color>  
     <color name="default_border">#ffd5d5d5</color>
     <color name="default_button_pressed">#ffb8b8b8</color>
-    <color name="default_item_background">#ffd5d5d5</color>  
+    <color name="default_item_background">#ffd5d5d5</color>
+    <color name="default_blue">#ff20A5f3</color>
     
     
     <color name="default_screen_bg">#20324a</color>

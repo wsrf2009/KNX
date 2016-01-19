@@ -74,6 +74,12 @@ public class Log {
 			android.util.Log.d(TAG, buildMessage(msg), tr);
 		}
 	}
+	
+	public static void d(String tag, String info) {
+		if (DEBUG){
+			android.util.Log.d(tag, buildMessage(info));
+		}
+	}
 
 	/**
 	 * Send an INFO log message.
@@ -84,6 +90,12 @@ public class Log {
 	public static void i(String msg) {
 		if (DEBUG) {
 			android.util.Log.i(TAG, buildMessage(msg));
+		}
+	}
+	
+	public static void i(String tag, String info) {
+		if (DEBUG){
+			android.util.Log.i(tag, buildMessage(info));
 		}
 	}
 
@@ -112,6 +124,12 @@ public class Log {
 			android.util.Log.e(TAG, buildMessage(msg));
 		}
 	}
+	
+	public static void e(String tag, String info) {
+		if (DEBUG){
+			android.util.Log.e(tag, buildMessage(info));
+		}
+	}
 
 	/**
 	 * Send a WARN log message.
@@ -122,6 +140,12 @@ public class Log {
 	public static void w(String msg) {
 		if (DEBUG) {
 			android.util.Log.w(TAG, buildMessage(msg));
+		}
+	}
+	
+	public static void w(String tag, String info) {
+		if (DEBUG){
+			android.util.Log.w(tag, buildMessage(info));
 		}
 	}
 

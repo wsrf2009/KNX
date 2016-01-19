@@ -8,7 +8,6 @@ import android.widget.Button;
 import com.zyyknx.android.R; 
 import com.zyyknx.android.activity.SceneRecordDialog; 
 import com.zyyknx.android.control.KNXSceneButton;
-import com.zyyknx.android.util.Log;
 
 public class MySceneButton extends ControlView {
 
@@ -88,8 +87,7 @@ public class MySceneButton extends ControlView {
         	} else {
         		v.setTag("0");  
         	}
-
-        	sendCommandRequest(mKNXSceneButton.getWriteAddressIds(), v.getTag().toString(), false, null); 
+        	sendCommandRequest(mKNXSceneButton.getWriteAddressIds(), v.getTag().toString(), true,null); 
         }
     };
 

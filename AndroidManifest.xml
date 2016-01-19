@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zyyknx.android"
     android:sharedUserLabel="@string/uid_label"
-    android:versionCode="2"
-    android:versionName="1.01.001" >
+    android:versionCode="6"
+    android:versionName="2.01.001" >
 
     <supports-screens
         android:largeScreens="true"
@@ -12,7 +12,7 @@
         android:xlargeScreens="true" />
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="15"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -50,6 +50,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     
     <uses-permission android:name = "android.permission.DISABLE_KEYGUARD"/><!-- 屏蔽HOME键需要的权限 -->
+
 
     <application
         android:name=".ZyyKNXApp"
@@ -112,9 +113,15 @@
 	        </intent-filter>
 	    </receiver>
 	    
+        <receiver android:name=".services.NetworkStateMonitor">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+	    
         <receiver android:name=".services.TimingTaskService">
        		<intent-filter>
-          		<action android:name="ELITOR_CLOCK" />
+          		<action android:name="com.zyyknx.android.services.TimingTaskService" />
        		</intent-filter>
 		</receiver>
 	    

@@ -39,6 +39,7 @@ import com.zyyknx.android.util.ByteUtil;
 import com.zyyknx.android.util.CompressStatus; 
 import com.zyyknx.android.util.CopyFileUtil;
 import com.zyyknx.android.util.KNX0X01Lib;
+import com.zyyknx.android.util.NetWorkUtil;
 //import com.zyyknx.android.util.Log;
 import com.zyyknx.android.util.ZipUtil;
 
@@ -143,9 +144,11 @@ public class SplashActivity extends Activity {
 				ZyyKNXConstant.KNX_GATEWAY_PORT_DEFAULT);
 		int mKNXUDPWorkWay = settings.getInt(ZyyKNXConstant.KNX_UDP_WORK_WAY, 
 				ZyyKNXConstant.KNX_UDP_WORK_WAY_DEFAULT);
+		
+		KNX0X01Lib.SetNetworkType(NetWorkUtil.getAPNType(this));
 		boolean isConnect = KNX0X01Lib.UOPENNet(mKNXGatewayIP, mKNXGatewayPort, mKNXUDPWorkWay);
 		
-		Log.d("ZyyKNXApp", "jumpActivity()"+" mKNXGatewayIP: "+mKNXGatewayIP+
+		Log.d(ZyyKNXConstant.DEBUG, "jumpActivity()"+" mKNXGatewayIP: "+mKNXGatewayIP+
 				" mKNXGatewayPort: "+mKNXGatewayPort+" mKNXUDPWorkWay: "+mKNXUDPWorkWay+
 				" isConnect: " + isConnect);
 		 
@@ -300,6 +303,7 @@ public class SplashActivity extends Activity {
 		        CopyFileUtil.copyFile(fileName, fileName2, true);
 		        
 			} catch (Exception e) {
+				Log.e(ZyyKNXConstant.DEBUG, e.getLocalizedMessage());
 				e.printStackTrace();
 			} 
 			

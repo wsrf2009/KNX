@@ -80,7 +80,6 @@ public class MyBlinds extends ControlView { /* extends FrameLayout { */
 		
 		if (blindsButtonText != null) {
 			txtBlindsText.setText(blindsButtonText);
-			txtBlindsText.setTextColor(textColor);
 		}  
 		if (buttonBackground != null) {
 			this.setBackgroundDrawable(buttonBackground);

@@ -74,17 +74,17 @@ public class DiskLruImageCache implements ImageCache {
 				mDiskCache.flush();
 				editor.commit();
 				if (BuildConfig.DEBUG) {
-					Log.d("cache_test_DISK_", "image put on disk cache " + key);
+//					Log.d("cache_test_DISK_", "image put on disk cache " + key);
 				}
 			} else {
 				editor.abort();
 				if (BuildConfig.DEBUG) {
-					Log.d("cache_test_DISK_", "ERROR on: image put on disk cache " + key);
+//					Log.d("cache_test_DISK_", "ERROR on: image put on disk cache " + key);
 				}
 			}
 		} catch (IOException e) {
 			if (BuildConfig.DEBUG) {
-				Log.d("cache_test_DISK_", "ERROR on: image put on disk cache " + key);
+//				Log.d("cache_test_DISK_", "ERROR on: image put on disk cache " + key);
 			}
 			try {
 				if (editor != null) {
@@ -122,8 +122,8 @@ public class DiskLruImageCache implements ImageCache {
 		}
 
 		if (BuildConfig.DEBUG) {
-			Log.d("cache_test_DISK_", bitmap == null ? ""
-					: "image read from disk " + key);
+//			Log.d("cache_test_DISK_", bitmap == null ? ""
+//					: "image read from disk " + key);
 		}
 
 		return bitmap;
@@ -151,7 +151,7 @@ public class DiskLruImageCache implements ImageCache {
 
 	public void clearCache() {
 		if (BuildConfig.DEBUG) {
-			Log.d("cache_test_DISK_", "disk cache CLEARED");
+//			Log.d("cache_test_DISK_", "disk cache CLEARED");
 		}
 		try {
 			mDiskCache.delete();

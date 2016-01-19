@@ -1,7 +1,11 @@
 package com.zyyknx.android;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack; 
@@ -21,7 +25,10 @@ import com.zyyknx.android.control.KNXControlBase;
 import com.zyyknx.android.models.KNXApp; 
 import com.zyyknx.android.models.KNXGroupAddress;
 import com.zyyknx.android.services.KXNResponseService;
-import com.zyyknx.android.util.BitmapLruCache; 
+import com.zyyknx.android.util.BitmapLruCache;
+import com.zyyknx.android.util.FileUtils;
+import com.zyyknx.android.util.Log;
+import com.zyyknx.android.widget.MyTimerTaskButton;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -33,7 +40,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.SystemClock;
 import android.text.TextUtils;
-import android.util.Log;
 
 public class ZyyKNXApp extends Application {
 	
@@ -63,20 +69,34 @@ public class ZyyKNXApp extends Application {
 		// TODO Auto-generated method stub
 		super.onCreate(); 
 		app = this;  
-		Log.i(TAG, "onCreate()");
+//		Log.i(TAG, "onCreate()");
 		settings = app.getSharedPreferences(ZyyKNXConstant.SETTING_FILE, android.content.Context.MODE_PRIVATE);
 		
 		mImageLoader = new ImageLoader(getRequestQueue(), new BitmapLruCache(getApplicationContext(), getCacheDir().getPath()));
 		mRoundImageLoader = new ImageLoader(getRequestQueue(), new BitmapLruCache(getApplicationContext(), getCacheDir().getPath(), true));
+
+		if (null == timerTaskMap) {
+			/* 从文件中读取已保存的定时器任务 */
+			try {
+				timerTaskMap = (Map<String, List<TimingTaskItem>>)FileUtils.readObjectFromFile(this, ZyyKNXConstant.FILE_TIMERTASK);
+			} catch (IOException e) {
+				Log.w(ZyyKNXConstant.DEBUG, "读取定时任务失败"+" " +e.getLocalizedMessage());
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				Log.w(ZyyKNXConstant.DEBUG, "读取定时任务失败"+" " +e.getLocalizedMessage());
+				e.printStackTrace();
+			}
+			
+			if (null == timerTaskMap) { // 读取不成功
+				timerTaskMap = new HashMap<String, List<TimingTaskItem>>(); // 创建定时器任务列表
+			}
+		}
 		
-		timingTaskList = new ArrayList<TimingTaskItem>();
-	
-//		startGetKNXResponseService();
 		startTimingTaskService();
 	}
 	
 	public void startGetKNXResponseService() {
-		Log.d(TAG, "start alarm"); 
+//		Log.d(TAG, "start alarm"); 
 		int knxRefreshStatusTimespan = settings.getInt(ZyyKNXConstant.KNX_REFRESH_STATUS_TIMESPAN, 1000); 
 		if(knxRefreshStatusTimespan > 0) { 
 			AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
@@ -89,8 +109,8 @@ public class ZyyKNXApp extends Application {
 	}
 	
 	public void startTimingTaskService() {
-		Log.d(TAG, "startTimingTaskService()");
-		Intent intent = new Intent("ELITOR_CLOCK");
+//		Log.d(TAG, "startTimingTaskService()");
+		Intent intent = new Intent("com.zyyknx.android.services.TimingTaskService");
 //	    intent.setAction("repeating");
 	    PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);  
 	    
@@ -99,7 +119,7 @@ public class ZyyKNXApp extends Application {
 
 	    AlarmManager am=(AlarmManager)getSystemService(ALARM_SERVICE);
 	    // 5秒一个周期，不停的发送广播
-	    am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5*1000, pi);
+	    am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1*1000, pi);
 	}
 	
 	@Override
@@ -243,7 +263,7 @@ public class ZyyKNXApp extends Application {
 				//gsonBuilder.registerTypeAdapter(Date.class, new GsonHelper.WCFDateDeserializer());
 				gsonBuilder.registerTypeAdapter(KNXControlBase.class, new KNXControlBaseDeserializerAdapter());
 				Gson gson = gsonBuilder.create();
-				Log.d("ZyyKNXApp", "KNXApp.class:"+KNXApp.class+"json:"+json);
+//				Log.d(ZyyKNXConstant.DEBUG, "KNXApp.class:"+KNXApp.class+"\njson:"+json);
 				KNXApp tempKNXApp = gson.fromJson(json, KNXApp.class);
 				
 				ZyyKNXApp.getInstance().setKNXAppConfig(tempKNXApp);
@@ -272,9 +292,7 @@ public class ZyyKNXApp extends Application {
 		public void setGroupAddressIndexMap(Map<String, Integer> groupAddressIndexMap) {
 			this.mGroupAddressIndexMap = groupAddressIndexMap;
 		}
-		
-		
-		
+
 		private Map<Integer, KNXControlBase> currentPageKNXControlBaseMap;
 		public Map<Integer, KNXControlBase> getCurrentPageKNXControlBaseMap() { 
 			return currentPageKNXControlBaseMap;
@@ -282,12 +300,23 @@ public class ZyyKNXApp extends Application {
 		public void setCurrentPageKNXControlBaseMap(Map<Integer, KNXControlBase> mKNXControlBaseMap) {
 			this.currentPageKNXControlBaseMap = mKNXControlBaseMap;
 		} 
-
-		private List<TimingTaskItem> timingTaskList;
-		public List<TimingTaskItem> getTimingTaskList() {
-			return this.timingTaskList;
+		
+		private Map<String, List<TimingTaskItem>> timerTaskMap;
+		public Map<String, List<TimingTaskItem>> getTimerTaskMap() {
+			return timerTaskMap;
 		}
-		public void setTimingTaskList(List<TimingTaskItem> list) {
-			this.timingTaskList = list;
+		public void setTimerTaskMap(Map<String, List<TimingTaskItem>> mTimerTaskMap) {
+			this.timerTaskMap = mTimerTaskMap;
+		}
+		
+		public void saveTimerTask() {
+			try {
+				FileUtils.writeObjectIntoFile(this, ZyyKNXConstant.FILE_TIMERTASK, timerTaskMap);
+			} catch (IOException e) {
+				
+				Log.e(ZyyKNXConstant.DEBUG, "保存定时任务失败"+"\n" +e.getLocalizedMessage()+"\n"+e.getMessage()+"\n"+e.getCause()+ "\ntimerTaskMap:"+timerTaskMap);
+				
+				e.printStackTrace();
+			}
 		}
 }

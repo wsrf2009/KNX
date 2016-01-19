@@ -11,7 +11,6 @@ import com.zyyknx.android.services.KXNResponseService;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.content.Context;
 import android.content.ContextWrapper;
 
@@ -45,7 +44,7 @@ public class KNX0X01Lib {
 		if (1 == lenArray) {
 			int value8 = (int)Value[0];
 			
-			Log.d("ZyyKNXApp", "KNX0X01Lib.SendGroupValue() 索引号为"+ asap +"的值改变后为:"+ String.valueOf(value8) +""); 
+			Log.i(ZyyKNXConstant.CALLBACK, "KNX0X01Lib.SendGroupValue() 索引号为"+ asap +"的值改变后为:"+ String.valueOf(value8) +""); 
 	    	
 	    	Intent intent = new Intent();
 			intent.setAction(ZyyKNXConstant.BROADCAST_UPDATE_DEVICE_STATUS);
@@ -61,6 +60,16 @@ public class KNX0X01Lib {
     }
 	    
 	public native boolean StartKNX0X01Lib(); 
+	
+	/** 
+	 * 当前网络连接成功的类型，在调用UOPENNet前必须先调用，在网络发生变化，如掉线，切换网络的时候必须调用同步状态 
+	 * 
+	 * @author wangchunfeng
+	 * 
+	 * @param Type 网络类型：-1：没有网络，0:其他连接，1：GPRS，2：wifi，3：Net
+	 */
+	public static native void  SetNetworkType(int Type); 
+
 
 	/******************************************************************************
 	* 描述   :  打开并初始化协议栈工作。
@@ -118,20 +127,26 @@ public class KNX0X01Lib {
 
 
 	/******************************************************************************
-	* 描述   :  设置Transmitting标志，并且请求一次写操作。
+	* 描述   :  设置Transmitting标志，并且请求一次写操作。修改说明：因为当只是执行分合之类的
+	* 操作时没必要等等执行成功，如果等等将影响速度，但是有些情况必须等待执行结果，比如，调光和
+	* 窗帘，如果是采用步进调节时，如果不等待执行情况协议栈将只执行最好的一次调节数值，这样会丢失
+
 	*
 	* 参数   :  asap    对象索引.
 	*
-	*           pData   待发送的数据指针.
+	*         pData   待发送的数据指针.
 	*
-	*           length  待发送的数据个数(通常为对象的数据类型长度).
+	*         length  待发送的数据个数(通常为对象的数据类型长度).
+	*         
+	*         mode: 0   不等待执行成功立刻返回
+	*         		1   等待执行成功后返回
 	*
 	* returns    :   2  if the operation of Read/Write was processing.
 	*            :   1  if the operation of Read/Write was successful.
 	*            :   0  if the operation of Read/Write was failed.
 	******************************************************************************/
 	//public static native boolean USetAndTransmitObject(int asap, String pData, int length);
-	public static native int USetAndTransmitObject(int asap, byte[] pData, int length);
+	public static native int USetAndTransmitObject(int asap, byte[] pData, int length, int mode);
 
 	/******************************************************************************
 	* 描述   :   获取读写操作的执行情况.
@@ -143,5 +158,5 @@ public class KNX0X01Lib {
 	*        :   -1 假如读写操作失败了.
 	******************************************************************************/
 	public static native int UGetAndClearRequestState(int asap);
-	
+
 }

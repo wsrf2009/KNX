@@ -14,8 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
  
 import com.zyyknx.android.R;
+import com.zyyknx.android.ZyyKNXConstant;
 import com.zyyknx.android.models.KNXRoom;
 import com.zyyknx.android.util.ImageUtils;
+import com.zyyknx.android.util.Log;
 import com.zyyknx.android.util.StringUtil;
 
 public class RoomListAdapter extends BaseAdapter {
@@ -74,6 +76,7 @@ public class RoomListAdapter extends BaseAdapter {
   
 		holder.room_name.setText(mRoom.getText()); 
 		if (!StringUtil.isEmpty(mRoom.getSymbol())) {
+			Log.i(ZyyKNXConstant.DEBUG, "image path:"+mRoom.getSymbol());
 			holder.room_icon.setImageBitmap(ImageUtils.getDiskBitmap(mRoom.getSymbol()));   
 		} else { 
 			holder.room_icon.setImageResource(R.drawable.launcher);    

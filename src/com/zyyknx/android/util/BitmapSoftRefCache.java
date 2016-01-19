@@ -34,7 +34,7 @@ public class BitmapSoftRefCache implements ImageCache {
 				if (bitmap == null) {
 					Log.w(url + "对象已经被GC回收");
 				} else {
-					Log.i("命中" + url);
+//					Log.i("命中" + url);
 				}
 			}
 		}
@@ -59,7 +59,7 @@ public class BitmapSoftRefCache implements ImageCache {
 			try {
 				b.flush();
 				b.close();
-				Log.w("图片本地缓存成功!");
+//				Log.w("图片本地缓存成功!");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -1,9 +1,14 @@
 package com.zyyknx.android.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class KNXGroupAddress implements Serializable {
+import com.zyyknx.android.ZyyKNXConstant;
+import com.zyyknx.android.control.TimingTaskItem.KNXGroupAddressAndAction;
+import com.zyyknx.android.util.Log;
+
+public class KNXGroupAddress implements Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 	
 	//ETS中设备的ID， ETS自动分配
@@ -33,27 +38,38 @@ public class KNXGroupAddress implements Serializable {
 		KnxAddress = mKnxAddress;
 	}
 	
-	/*
-	//ETS 读取地址
-	private Short ReadAddress;  
-	public Short getReadAddress() {
-		return ReadAddress;
+	private int KnxMainNumber;
+	public int getKnxMainNumber() {
+		return KnxMainNumber;
 	}
-	public void setReadAddress(Short readAddress) {
-		ReadAddress = readAddress;
+	public void setKnxMainNumber(int number) {
+		KnxMainNumber = number;
 	}
-	*/
 	
-	//Type
-	/*
-	private KNXDataType Type; 
-	public KNXDataType getType() {
-		return Type;
-	} 
-	public void setType(KNXDataType type) {
-		Type = type;
+	private int KnxSubNumber;
+	public int getKnxSubNumber() {
+		return KnxSubNumber;
 	}
-	*/
+	public void setKnxSubNumber(int number) {
+		KnxSubNumber = number;
+	}
+	
+	private String KnxSize;
+	public String getKnxSize() {
+		return KnxSize;
+	}
+	public void setKnxSize(String size) {
+		KnxSize = size;
+	}
+	
+	private String KnxType;
+	public String getKnxType() {
+		return KnxType;
+	}
+	public void setKnxType(String type) {
+		KnxType = type;
+	}
+	
 	//ETS 数据类型
 	private int Type; 
 	public int getType() {
@@ -63,14 +79,13 @@ public class KNXGroupAddress implements Serializable {
 		Type = type;
 	}
  
-	private boolean IsCommunication; 
+	private boolean IsCommunication;
 	public boolean getIsCommunication() {
 		return IsCommunication;
 	} 
 	public void setIsCommunication(boolean isCommunication) {
 		IsCommunication = isCommunication;
 	}
-	 
 	
 	private boolean IsRead; 
 	public boolean getIsRead() {
@@ -130,20 +145,46 @@ public class KNXGroupAddress implements Serializable {
 		DefaultValue  = defaultValue ;
 	}
 	
-	
 	private short ReadTimeSpan; 
 	public short getReadTimeSpan() {
 		return ReadTimeSpan;
 	} 
 	public void setReadTimeSpan(short readTimeSpan) {
 		ReadTimeSpan = readTimeSpan;
-	} 
-	
-	private List<KNXGroupAddressAction> AddressAction;
-	public List<KNXGroupAddressAction> getAddressAction() {
-		return AddressAction;
 	}
-	public void setAddressAction(List<KNXGroupAddressAction> action) {
-		AddressAction = action;
+	
+	private String Tip;
+	public String getTip() {
+		return this.Tip;
+	}
+	public void setTip(String tip) {
+		this.Tip = tip;
+	}
+	
+	private List<KNXGroupAddressAction> Actions;
+	public List<KNXGroupAddressAction> getAddressAction() {
+		return Actions;
+	}
+	public void setAddressAction(List<KNXGroupAddressAction> actions) {
+		Actions = actions;
+	}
+	
+	@Override  
+    public KNXGroupAddress clone() {  
+		KNXGroupAddress address = null;
+		
+		try {
+			address = (KNXGroupAddress)super.clone();
+			List<KNXGroupAddressAction> newActions = new ArrayList<KNXGroupAddressAction>();
+			for(KNXGroupAddressAction action : address.getAddressAction()) {
+				newActions.add(action.clone());
+			}
+			
+			address.setAddressAction(newActions);
+		} catch (CloneNotSupportedException e) {
+			Log.e(ZyyKNXConstant.DEBUG, e.getLocalizedMessage());
+		}
+		
+		return address;
 	}
 }

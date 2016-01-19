@@ -71,7 +71,7 @@ public class BitmapLruCache extends LruCache<String, Bitmap> implements ImageCac
 	@Override
 	protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
 		if (evicted) {
-			Log.i("空间已满，缓存图片被挤出:" + key);
+			Log.e("空间已满，缓存图片被挤出:" + key);
 			// 将被挤出的bitmap对象，添加至软引用BitmapSoftRefCache
 			softRefCache.putBitmap(key, oldValue);
 		}
@@ -87,9 +87,9 @@ public class BitmapLruCache extends LruCache<String, Bitmap> implements ImageCac
 		Bitmap bitmap = softRefCache.getBitmap(url);
 		if (bitmap == null) {
 			bitmap = get(url);
-			Log.i("LruCache从url提取：" + url);
+//			Log.i("LruCache从url提取：" + url);
 		} else {
-			Log.i("LruCache命中：" + url);
+//			Log.i("LruCache命中：" + url);
 		}
 		/*
 		 * Bitmap bitmap = get(url); // 如果bitmap为null，尝试从软引用缓存中查找 if (bitmap ==

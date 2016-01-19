@@ -9,6 +9,8 @@ public class ZyyKNXConstant {
 	public static final String XML_TYPE = "xml";
 	public static final String dot = ".";
 	
+	public static final String FILE_TIMERTASK = "TimerTask.dat";
+	
 	public static final int NOTIFY_ID  =  1000;
 	
 	
@@ -63,5 +65,14 @@ public class ZyyKNXConstant {
 	
 	
 	public static final int CONTROL_DEFAULT_WIDTH = 236;
-
+	
+	public static final String BROADCAST_REFRESH_TIMING_TASK_LIST = "com.zyyknx.android.services.refreshTimingTaskList";
+	
+	public static final String SEND_COMMAND = "SendCommand";
+	public static final String ACTIVITY_JUMP = "ActivityJump";
+	public static final String DEBUG = "debug";
+	public static final String CALLBACK = "CallBack";
+	
+	public static final String CONTROL_ID = "ControlId";
+	public static final String TIMERTASKBUTTONOBJECT = "TimerTaskButtonObject";
 }
