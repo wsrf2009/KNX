@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zyyknx.android"
+    android:sharedUserLabel="@string/uid_label"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="15" />
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- SDK离线地图和cache功能需要读写外部存储器 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 获取设置信息和详情页直接拨打电话需要以下权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 使用定位功能所需权限,demo已集成百度定位SDK,不使用定位功能可去掉以下6项 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+
+    <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <!-- 来电消音 -->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    
+    <uses-permission android:name="android.permission.WAKE_LOCK"/> 
+    
+    <uses-permission android:name = "android.permission.DISABLE_KEYGUARD"/><!-- 屏蔽HOME键需要的权限 -->
+
+    <application
+        android:name=".ZyyKNXApp"
+        android:allowBackup="true"
+        android:icon="@drawable/launcher"
+        android:label="@string/app_name"
+        android:logo="@drawable/launcher"
+        android:persistent="true"
+        android:screenOrientation="landscape"
+        android:theme="@style/DefaultTheme" >
+        <activity
+            android:name=".activity.SplashActivity"
+            android:configChanges="keyboardHidden"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.RoomListActivity"
+            android:configChanges="keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.RoomTilesListActivity"
+            android:configChanges="keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.RoomDetailsActivity"
+            android:configChanges="keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.RoomDetailsActivity2"
+            android:configChanges="keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.SetttingActivity"
+            android:configChanges="keyboardHidden"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
+        
+        <service android:name=".services.ListenNetStateService" />
+        
+        <service
+            android:name=".services.RestartService"
+            android:description="@null" >
+        </service>
+
+        <service android:name=".services.KXNResponseService" >
+            <intent-filter>
+                <action android:name="com.zyyEHome.NotificationService" /> 
+                <category android:name="android.intent.category.default" />
+            </intent-filter>
+        </service>
+        
+        <receiver android:name=".services.BootBroadcastReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
+            android:enabled="true" >
+	        <intent-filter>
+		        <action android:name="android.intent.action.BOOT_COMPLETED" />
+		        <category android:name="android.intent.category.DEFAULT" />
+	        </intent-filter>
+	    </receiver>
+	    
+    </application>
+
+</manifest>

@@ -1,0 +1,687 @@
+{
+  "About": "KNX App",
+  "Logo": "default_app.png",
+  "Symbol": null,
+  "Areas": [
+    {
+      "Rooms": [
+        {
+          "Symbol": "default.png",
+          "PinCode": "",
+          "Pages": [
+            {
+              "Grids": [
+                {
+                  "Row": 5,
+                  "Column": 0,
+                  "RowSpan": 5,
+                  "ColumnSpan": 2,
+                  "BorderStyle": 0,
+                  "RowCount": 2,
+                  "ColumnCount": 1,
+                  "Controls": [
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": null,
+                      "Column": 0,
+                      "Row": 0,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "01dbfe0c-fa71-4408-b8a3-8a08c2a6e2f6",
+                      "Text": "回家模式"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": null,
+                      "Column": 0,
+                      "Row": 1,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "66aea2dc-005b-4951-bc78-90e968fafcdf",
+                      "Text": "离家模式"
+                    }
+                  ],
+                  "Id": "bbd25001-3250-4881-9d2c-c74cd28f4732",
+                  "Text": "表格1"
+                },
+                {
+                  "Row": 5,
+                  "Column": 3,
+                  "RowSpan": 5,
+                  "ColumnSpan": 2,
+                  "BorderStyle": 0,
+                  "RowCount": 2,
+                  "ColumnCount": 1,
+                  "Controls": [
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": null,
+                      "Column": 0,
+                      "Row": 0,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "c0e39bd0-27c0-470a-8d23-bbca725472d4",
+                      "Text": "睡眠模式"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": null,
+                      "Column": 0,
+                      "Row": 1,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "7c7df86b-b25b-4531-8170-cf1040de81c9",
+                      "Text": "起床模式"
+                    }
+                  ],
+                  "Id": "4389924d-490c-46cd-975d-a87efc51d1f5",
+                  "Text": "表格2"
+                }
+              ],
+              "BackgroudImage": "default.png",
+              "RowCount": 15,
+              "ColumnCount": 5,
+              "Controls": [],
+              "Id": "d716f56c-3e63-4db8-9981-e2c8506f7973",
+              "Text": "场景页面"
+            }
+          ],
+          "Id": "eb24ae45-f8bb-4b8f-8c88-cbd3ec220fd8",
+          "Text": "场景"
+        },
+        {
+          "Symbol": "default.png",
+          "PinCode": "123",
+          "Pages": [
+            {
+              "Grids": [
+                {
+                  "Row": 5,
+                  "Column": 0,
+                  "RowSpan": 1,
+                  "ColumnSpan": 1,
+                  "BorderStyle": 0,
+                  "RowCount": 4,
+                  "ColumnCount": 1,
+                  "Controls": [
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": null,
+                      "Column": 0,
+                      "Row": 0,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "0a01b604-cbaa-4fa6-b349-c127297d53ad",
+                      "Text": "吊灯"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": null,
+                      "Column": 0,
+                      "Row": 1,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "e006c433-95d0-429b-9cc3-896d69d9a28b",
+                      "Text": "衣柜"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": null,
+                      "Column": 0,
+                      "Row": 3,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "66aaf732-5a80-4163-8100-313cf52aa8b8",
+                      "Text": "全开开关"
+                    }
+                  ],
+                  "Id": "e67c6f90-1bbe-40a8-b0aa-c27c52186fe2",
+                  "Text": "表格1"
+                },
+                {
+                  "Row": 9,
+                  "Column": 1,
+                  "RowSpan": 1,
+                  "ColumnSpan": 1,
+                  "BorderStyle": 0,
+                  "RowCount": 4,
+                  "ColumnCount": 1,
+                  "Controls": [
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": null,
+                      "Column": 0,
+                      "Row": 3,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "d9612601-daa1-4739-8f9b-058abbf09eac",
+                      "Text": "开门"
+                    }
+                  ],
+                  "Id": "620892d4-3599-4e18-b8fb-66b43ae1f6ef",
+                  "Text": "表格2"
+                }
+              ],
+              "BackgroudImage": "default.png",
+              "RowCount": 12,
+              "ColumnCount": 2,
+              "Controls": [
+                {
+                  "$type": "Structure.Control.KNXLabel, Structure",
+                  "Column": 0,
+                  "Row": 4,
+                  "ColumnSpan": 1,
+                  "RowSpan": 1,
+                  "ETSID": null,
+                  "ETSName": null,
+                  "WriteAddress": null,
+                  "ReadAddress": null,
+                  "DataType": 0,
+                  "Id": "a5d082a2-ca62-4ae1-9940-887458292430",
+                  "Text": "灯"
+                },
+                {
+                  "$type": "Structure.Control.KNXLabel, Structure",
+                  "Column": 1,
+                  "Row": 4,
+                  "ColumnSpan": 1,
+                  "RowSpan": 1,
+                  "ETSID": null,
+                  "ETSName": null,
+                  "WriteAddress": null,
+                  "ReadAddress": null,
+                  "DataType": 0,
+                  "Id": "a58bd39b-ca6e-4bfc-85ed-796c7ec174cf",
+                  "Text": "可视对讲"
+                }
+              ],
+              "Id": "067d139f-9481-42e1-bc1f-036be3e0d06a",
+              "Text": "玄关页面"
+            }
+          ],
+          "Id": "67b5b959-4d6e-4388-981a-7bf41842d7ad",
+          "Text": "玄关"
+        },
+        {
+          "Symbol": "default.png",
+          "PinCode": "",
+          "Pages": [
+            {
+              "Grids": [
+                {
+                  "Row": 1,
+                  "Column": 2,
+                  "RowSpan": 7,
+                  "ColumnSpan": 1,
+                  "BorderStyle": 0,
+                  "RowCount": 4,
+                  "ColumnCount": 1,
+                  "Controls": [
+                    {
+                      "$type": "Structure.Control.KNXBlinds, Structure",
+                      "HasSingleLabel": True,
+					  "LeftText": "",
+					  "RightText": "",
+					  "ControlSymbol" : 2,
+                      "Column": 0,
+                      "Row": 0,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "7cf59ee0-1b3e-421d-b355-62431c966d00",
+                      "Text": "车库门"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXBlinds, Structure",
+                      "HasSingleLabel": True,
+					  "LeftText": "",
+					  "RightText": "",
+					  "ControlSymbol" : 2,
+                      "Column": 0,
+                      "Row": 1,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "befbf76d-8a86-4925-9486-b26bc70efe4d",
+                      "Text": "电动窗帘"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXSwitch, Structure", 
+                      "Column": 0,
+                      "Row": 3,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "db487ff1-07f5-4a0c-b8c8-255caae5a392",
+                      "Text": "吊灯"
+                    }
+                  ],
+                  "Id": "890f91c7-bd7c-4ada-8582-1c7f1af170fe",
+                  "Text": "表格1"
+                },
+                {
+                  "Row": 1,
+                  "Column": 0,
+                  "RowSpan": 10,
+                  "ColumnSpan": 1,
+                  "BorderStyle": 0,
+                  "RowCount": 6,
+                  "ColumnCount": 1,
+                  "Controls": [
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc":  "走廊灯",
+                      "Column": 0,
+                      "Row": 0,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "51fcf0e0-f90e-488a-9cc5-a0d91426cb56",
+                      "Text": "走廊灯"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": "庭院灯",
+                      "Column": 0,
+                      "Row": 1,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "2f4d0f22-8911-4c4c-92fa-c0fba818edc6",
+                      "Text": "庭院灯"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": "前门",
+                      "Column": 0,
+                      "Row": 2,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "8ef5adac-879f-4b50-ab87-f24ae0a598df",
+                      "Text": "前门"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXSlider, Structure", 
+                      "Column": 0,
+                      "Row": 3,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "c0f456f6-ffcb-4321-9df7-dddeffa1aa0f",
+                      "Text": "后门"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": "全开开关",
+                      "Column": 0,
+                      "Row": 5,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "835946ab-ffe7-425f-9aa8-cd0b1ea0f830",
+                      "Text": "全开开关"
+                    }
+                  ],
+                  "Id": "a09681d2-27be-4591-abac-0081db88dcde",
+                  "Text": "表格2"
+                }
+              ],
+              "BackgroudImage": "default.png",
+              "RowCount": 15,
+              "ColumnCount": 3,
+              "Controls": [
+                {
+                  "$type": "Structure.Control.KNXLabel, Structure",
+                  "Column": 0,
+                  "Row": 0,
+                  "ColumnSpan": 1,
+                  "RowSpan": 1,
+                  "ETSID": null,
+                  "ETSName": null,
+                  "WriteAddress": null,
+                  "ReadAddress": null,
+                  "DataType": 0,
+                  "Id": "58e29b47-2aa0-4d2c-8ab3-cfd88876c266",
+                  "Text": "灯"
+                },
+                {
+                  "$type": "Structure.Control.KNXLabel, Structure",
+                  "Column": 2,
+                  "Row": 0,
+                  "ColumnSpan": 1,
+                  "RowSpan": 1,
+                  "ETSID": null,
+                  "ETSName": null,
+                  "WriteAddress": null,
+                  "ReadAddress": null,
+                  "DataType": 0,
+                  "Id": "69da37b4-a657-49eb-a003-a906cacf8c6f",
+                  "Text": "车库"
+                }
+              ],
+              "Id": "dab4e7e8-ffe1-47eb-8c18-437918064a31",
+              "Text": "室外页面"
+            }
+          ],
+          "Id": "ad5cd7af-11f4-4edb-91a0-2e09ad88e6a0",
+          "Text": "室外"
+        }
+      ],
+      "Id": "9c32ca96-24ca-461a-a291-62623c021d72",
+      "Text": "一楼"
+    },
+    {
+      "Rooms": [
+        {
+          "Symbol": "default.png",
+          "PinCode": "",
+          "Pages": [],
+          "Id": "9ea1e919-1750-4801-9d17-8d0c4a41fe94",
+          "Text": "客厅"
+        },
+        {
+          "Symbol": "default.png",
+          "PinCode": "",
+          "Pages": [
+            {
+              "Grids": [
+                {
+                  "Row": 1,
+                  "Column": 2,
+                  "RowSpan": 7,
+                  "ColumnSpan": 1,
+                  "BorderStyle": 0,
+                  "RowCount": 4,
+                  "ColumnCount": 1,
+                  "Controls": [
+                    {
+                      "$type": "Structure.Control.KNXBlinds, Structure",
+                      "HasSingleLabel": True,
+					  "LeftText": "",
+					  "RightText": "",
+					  "ControlSymbol" : 2,
+                      "Column": 0,
+                      "Row": 0,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "7cf59ee0-1b3e-421d-b355-62431c966d00",
+                      "Text": "车库门"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXBlinds, Structure",
+                      "HasSingleLabel": True,
+					  "LeftText": "",
+					  "RightText": "",
+					  "ControlSymbol" : 2,
+                      "Column": 0,
+                      "Row": 1,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "befbf76d-8a86-4925-9486-b26bc70efe4d",
+                      "Text": "电动窗帘"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXSwitch, Structure", 
+                      "Column": 0,
+                      "Row": 3,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "db487ff1-07f5-4a0c-b8c8-255caae5a392",
+                      "Text": "吊灯"
+                    }
+                  ],
+                  "Id": "890f91c7-bd7c-4ada-8582-1c7f1af170fe",
+                  "Text": "表格1"
+                },
+                {
+                  "Row": 1,
+                  "Column": 0,
+                  "RowSpan": 10,
+                  "ColumnSpan": 1,
+                  "BorderStyle": 0,
+                  "RowCount": 6,
+                  "ColumnCount": 1,
+                  "Controls": [
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc":  "走廊灯",
+                      "Column": 0,
+                      "Row": 0,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "51fcf0e0-f90e-488a-9cc5-a0d91426cb56",
+                      "Text": "走廊灯"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": "庭院灯",
+                      "Column": 0,
+                      "Row": 1,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "2f4d0f22-8911-4c4c-92fa-c0fba818edc6",
+                      "Text": "庭院灯"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": "前门",
+                      "Column": 0,
+                      "Row": 2,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "8ef5adac-879f-4b50-ab87-f24ae0a598df",
+                      "Text": "前门"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXSlider, Structure", 
+                      "Column": 0,
+                      "Row": 3,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "c0f456f6-ffcb-4321-9df7-dddeffa1aa0f",
+                      "Text": "后门"
+                    },
+                    {
+                      "$type": "Structure.Control.KNXButton, Structure",
+                      "ButtonDesc": "全开开关",
+                      "Column": 0,
+                      "Row": 5,
+                      "ColumnSpan": 1,
+                      "RowSpan": 1,
+                      "ETSID": null,
+                      "ETSName": null,
+                      "WriteAddress": null,
+                      "ReadAddress": null,
+                      "DataType": 0,
+                      "Id": "835946ab-ffe7-425f-9aa8-cd0b1ea0f830",
+                      "Text": "全开开关"
+                    }
+                  ],
+                  "Id": "a09681d2-27be-4591-abac-0081db88dcde",
+                  "Text": "表格2"
+                }
+              ],
+              "BackgroudImage": "default.png",
+              "RowCount": 15,
+              "ColumnCount": 3,
+              "Controls": [
+                {
+                  "$type": "Structure.Control.KNXLabel, Structure",
+                  "Column": 0,
+                  "Row": 0,
+                  "ColumnSpan": 1,
+                  "RowSpan": 1,
+                  "ETSID": null,
+                  "ETSName": null,
+                  "WriteAddress": null,
+                  "ReadAddress": null,
+                  "DataType": 0,
+                  "Id": "58e29b47-2aa0-4d2c-8ab3-cfd88876c266",
+                  "Text": "灯"
+                },
+                {
+                  "$type": "Structure.Control.KNXLabel, Structure",
+                  "Column": 2,
+                  "Row": 0,
+                  "ColumnSpan": 1,
+                  "RowSpan": 1,
+                  "ETSID": null,
+                  "ETSName": null,
+                  "WriteAddress": null,
+                  "ReadAddress": null,
+                  "DataType": 0,
+                  "Id": "69da37b4-a657-49eb-a003-a906cacf8c6f",
+                  "Text": "车库"
+                }
+              ],
+              "Id": "dab4e7e8-ffe1-47eb-8c18-437918064a31",
+              "Text": "室外页面"
+            }
+          ],
+          "Id": "caf80d9b-1a24-488e-982c-6e652b89e714",
+          "Text": "卧室"
+        }
+      ],
+      "Id": "ddd59d3b-2b9b-4ac2-ae9f-86362705f127",
+      "Text": "二楼"
+    },
+    {
+      "Rooms": [
+        {
+          "Symbol": "default.png",
+          "PinCode": "",
+          "Pages": [],
+          "Id": "25607c46-a788-4dcd-8b2e-0daa62f3db67",
+          "Text": "能源计量"
+        },
+        {
+          "Symbol": "default.png",
+          "PinCode": "",
+          "Pages": [],
+          "Id": "5ee7b27b-c1d2-42f4-91e5-bb9f7a1762df",
+          "Text": "安保 PIN 123"
+        },
+        {
+          "Symbol": "default.png",
+          "PinCode": "",
+          "Pages": [],
+          "Id": "07217e5e-01be-4e4e-96a4-cfc53f51dd71",
+          "Text": "暖通空调"
+        }
+      ],
+      "Id": "62d20ee5-7dd1-40a7-b8a2-bd64ca256f41",
+      "Text": "通常"
+    }
+  ],
+  "DefaultLanguage": 0,
+  "Id": "775779d8-6698-4131-9d66-40dccf0dabe7",
+  "Text": "ayControl Demo"
+}

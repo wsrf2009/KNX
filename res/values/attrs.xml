@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="styleLable" format="reference" />
+    <attr name="styleRoomListFrame" format="reference" />
+    <attr name="styleRoomListSection" format="reference" />
+    <attr name="styleRoomListRoomIcon" format="reference" />
+    <attr name="styleRoomListRoom" format="reference" />
+    <attr name="styleRoomListRoomText" format="reference" />
+    <attr name="styleRoomListDivider" format="reference" />
+    <attr name="StyleToggleButton" format="reference" />
+    <attr name="styleGroupItem" format="reference" />
+    <attr name="styleGridLayout" format="reference" />
+    <attr name="styleDialogButton" format="reference" />
+    <attr name="styleMySilder" format="reference" /> 
+    
+    <attr name="styleButton" format="reference" /> 
+    <attr name="styleMediaButton" format="reference" /> 
+    <attr name="styleSliderSwitch" format="reference" />
+    <attr name="styleBlindsDown" format="reference" />
+    <attr name="styleBlindsUp" format="reference" />  
+  
+    
+    
+    
+    
+    
+    <attr name="vertical_padding" format="dimension" />
+	<attr name="horizontal_padding" format="dimension" />
+	<attr name="box_height" format="dimension" />
+	<attr name="box_width" format="dimension" />
+	<attr name="max" format="dimension" />
+    <declare-styleable name="SmoothSwitcher">
+	    <attr name="vertical_padding" />
+	    <attr name="horizontal_padding" />
+	    <attr name="box_height" />
+	    <attr name="box_width"  />
+	    <attr name="max"  />
+	    <attr name="enabled" format="boolean" />
+	    <attr name="text" format="string" />
+	</declare-styleable>
+	
+    <declare-styleable name="SmoothSeekBar">
+	    <attr name="vertical_padding" />
+	    <attr name="horizontal_padding" />
+	    <attr name="box_height" />
+	    <attr name="box_width" />
+	    <attr name="cursor_height" format="dimension" />
+	    <attr name="cursor_width" format="dimension" />
+		<attr name="max" />
+		<attr name="total_labels" format="integer" />
+		<attr name="progress" format="integer" />
+	</declare-styleable>
+    
+    
+    <declare-styleable name="SlidingToggleSwitch">
+        <attr name="android:textColor" />
+        <attr name="leftButtonText" format="string" />
+        <attr name="rightButtonText" format="string" />
+        <attr name="sliderBackground" format="integer" />
+        <attr name="slidingButtonBackground" format="integer" />
+    </declare-styleable>
+  
+    
+    
+    <attr name="thumb" format="reference" />   
+    <attr name="sliderSwitchButtonText" format="string" />
+    <attr name="drawableLeft" format="reference" /> 
+    <attr name="drawableRight" format="reference" />
+    <attr name="thumbTextPadding" format="dimension" />  
+    <attr name="switchTextAppearanceAttrib" format="reference" /> 
+    <attr name="switchMinWidth" format="dimension" /> 
+    <attr name="switchMinHeight" format="dimension" /> 
+    <attr name="switchPadding" format="dimension" />
+    <attr name="direct"> 
+        <enum name="horizontal" value="1" /> 
+        <enum name="vertical" value="0" />
+    </attr>  
+    <attr name="leftBackground" format="reference" /> 
+    <attr name="rightBackground" format="reference" /> 
+    <attr name="backgroundMask" format="reference" />
+    <declare-styleable name="SliderSwitch">  
+        <attr name="thumb" />  
+        <attr name="textOn" format="reference|string" /> 
+        <attr name="textOff" format="reference|string" /> 
+        <attr name="sliderSwitchButtonText" />
+        <attr name="drawableLeft" /> 
+        <attr name="drawableRight" />  
+        <attr name="textOnThumb" format="boolean" />  
+        <attr name="thumbTextPadding" />  
+        <attr name="switchTextAppearanceAttrib" /> 
+        <attr name="switchMinWidth" /> 
+        <attr name="switchMinHeight" /> 
+        <attr name="switchPadding" />
+        <attr name="direct" />  
+        <attr name="leftBackground" /> 
+        <attr name="rightBackground" /> 
+        <attr name="backgroundMask" />
+    </declare-styleable> 
+    
+    <declare-styleable name="MySliderSwitch">  
+        <attr name="thumb" />   
+        <attr name="sliderSwitchButtonText" />
+        <attr name="drawableLeft" /> 
+        <attr name="drawableRight" />
+        <attr name="thumbTextPadding" />  
+        <attr name="switchTextAppearanceAttrib" /> 
+        <attr name="switchMinWidth" /> 
+        <attr name="switchMinHeight" /> 
+        <attr name="switchPadding" />
+        <attr name="direct" />
+        <attr name="leftBackground" /> 
+        <attr name="rightBackground" /> 
+        <attr name="backgroundMask" />
+    </declare-styleable>
+    
+     <declare-styleable name="MySnapper">  
+        <attr name="thumb" />   
+        <attr name="sliderSwitchButtonText" />
+        <attr name="drawableLeft" /> 
+        <attr name="drawableRight" />
+        <attr name="thumbTextPadding" />  
+        <attr name="switchTextAppearanceAttrib" /> 
+        <attr name="switchMinWidth" /> 
+        <attr name="switchMinHeight" /> 
+        <attr name="switchPadding" />
+        <attr name="direct" />
+        <attr name="leftBackground" /> 
+        <attr name="rightBackground" /> 
+        <attr name="backgroundMask" />
+    </declare-styleable>
+    
+      <declare-styleable name="MySnapperSwitch">  
+        <attr name="thumb" />   
+        <attr name="sliderSwitchButtonText" />
+        <attr name="drawableLeft" /> 
+        <attr name="drawableRight" />
+        <attr name="thumbTextPadding" />  
+        <attr name="switchTextAppearanceAttrib" /> 
+        <attr name="switchMinWidth" /> 
+        <attr name="switchMinHeight" /> 
+        <attr name="switchPadding" />
+        <attr name="direct" />
+        <attr name="leftBackground" /> 
+        <attr name="rightBackground" /> 
+        <attr name="backgroundMask" />
+    </declare-styleable>
+    
+    
+    <declare-styleable name="sliderSwitchTextAppearanceAttrib"> 
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" /> 
+        <attr name="textStyle">
+            <flag name="normal" value="0" />
+            <flag name="bold" value="1" />
+            <flag name="italic" value="2" />
+        </attr> 
+        <attr name="typeface" format="reference">
+            <enum name="normal" value="0" />
+            <enum name="sans" value="1" />
+            <enum name="serif" value="2" />
+            <enum name="monospace" value="3" />
+        </attr> 
+        <attr name="textColorHighlight" format="color" /> 
+        <attr name="textColorHint" format="color" /> 
+        <attr name="textColorLink" format="color" />
+        <attr name="textAllCaps" format="boolean" />
+    </declare-styleable> 
+    <attr name="sliderSwitchStyleAttr" format="reference" /> 
+     
+    <declare-styleable name="MyBlinds">
+        <attr name="android:textColor" />
+        <attr name="blindsButtonText" format="string" />
+        <attr name="minValue" format="integer" />
+        <attr name="maxValue" format="integer" />
+        <attr name="currentValue" format="integer" /> 
+        <attr name="buttonBackground" format="integer" />  
+         
+        <attr name="imgArrowDown" format="reference" />
+        <attr name="imgArrowUp" format="reference" />
+        <attr name="imgLightDown" format="reference" />
+        <attr name="imgLightUp" format="reference" /> 
+        <attr name="imgVolumeDown" format="reference" />
+        <attr name="imgVolumeUp" format="reference" />  
+        
+    </declare-styleable>  
+    
+    
+    
+    <declare-styleable name="MyValueDisplay">
+        
+    </declare-styleable>
+    
+    <declare-styleable name="ProgressBar">
+        <attr name="android:progressDrawable" />
+        <attr name="android:minWidth" />
+        <attr name="android:maxWidth" />
+        <attr name="android:minHeight" />
+        <attr name="android:maxHeight" />
+        <attr name="android:max" />
+        <attr name="android:progress" />
+        <attr name="android:secondaryProgress" />
+        <attr name="vertical" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SeekBar">
+        <attr name="android:thumb" />
+        <attr name="android:thumbOffset" />
+    </declare-styleable>
+    <declare-styleable name="Theme">
+        <attr name="android:disabledAlpha" />
+    </declare-styleable>
+    
+     <declare-styleable name="IconButton">
+        <attr name="iconPadding" format="dimension"/>
+    </declare-styleable>
+    
+    <declare-styleable name="MySwitchButton">
+        <attr name="buttonText" format="string" /> 
+        <attr name="switchOnImage" format="reference" />
+        <attr name="switchOffImage" format="reference" /> 
+    </declare-styleable>
+    
+     
+
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="com/zyyknx/android/activity/SetttingActivity.java|com/zyyknx/android/models/KNXControlBaseDeserializer.java|com/zyyknx/android/widget/BetterSeekBar.java|com/zyyknx/android/widget/BetterSeekBarData.java|com/zyyknx/android/widget/Blinds_Test.java|com/zyyknx/android/widget/CustomSeekbar.java|com/zyyknx/android/widget/DoubleSeekView.java|com/zyyknx/android/widget/GridLayout.java|com/zyyknx/android/widget/MySwitch2.java|com/zyyknx/android/widget/Space.java" kind="src" path="src"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
