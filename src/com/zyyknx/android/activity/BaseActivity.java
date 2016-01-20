@@ -18,6 +18,8 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Build.VERSION;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -35,8 +37,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class BaseActivity extends FragmentActivity {
-	
-	public static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000; //需要自己定义标志
+
+	public static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000; // 需要自己定义标志
 
 	private static final int TOAST_DURATION = Toast.LENGTH_SHORT;
 	private static final int LODING_PROGRESS_ID = 2;
@@ -46,44 +48,41 @@ public class BaseActivity extends FragmentActivity {
 	protected boolean isLandscape = false;
 	protected int lastConfigurationOrientation = -1;
 
+	WakeLock wakeLock = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// 读取主题 如果读取失败，则设置为系统默认的主题 
+		// 读取主题 如果读取失败，则设置为系统默认的主题
 		if (savedInstanceState == null) {
 			currentTheme = PreferenceHelper.getTheme(this);
 		} else {
 			currentTheme = savedInstanceState.getInt("theme");
 		}
 		// 设定主题
-		setTheme(currentTheme); 
+		setTheme(currentTheme);
 		super.onCreate(savedInstanceState);
-		this.getWindow().setFlags(FLAG_HOMEKEY_DISPATCHED, FLAG_HOMEKEY_DISPATCHED);//关键代码
-		
+		this.getWindow().setFlags(FLAG_HOMEKEY_DISPATCHED,
+				FLAG_HOMEKEY_DISPATCHED);// 关键代码
+
 		ZyyKNXApp.getInstance().pushActivity(this);
-		
-		//注册广播  
-        //registerReceiver(mHomeKeyEventReceiver, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));  
-		
-		// 设置全屏
-		/*
-		if (VERSION.SDK_INT != 11) {
-			getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-		}
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		*/
+
+		 
 		// 获取屏幕尺寸及
 		DisplayMetrics dm = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
-		if (display != null && (display.getRotation() == Surface.ROTATION_0 || display .getRotation() == Surface.ROTATION_180)) {
+		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE))
+				.getDefaultDisplay();
+		if (display != null
+				&& (display.getRotation() == Surface.ROTATION_0 || display
+						.getRotation() == Surface.ROTATION_180)) {
 			isLandscape = true;
 			lastConfigurationOrientation = Configuration.ORIENTATION_LANDSCAPE;
 		} else {
 			isLandscape = false;
 			lastConfigurationOrientation = Configuration.ORIENTATION_PORTRAIT;
 		}
-		//initOrientationListener();
+		// initOrientationListener();
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 	}
 
@@ -91,15 +90,17 @@ public class BaseActivity extends FragmentActivity {
 		OrientationEventListener orientationListener = new OrientationEventListener(
 				this) {
 			@Override
-			public void onOrientationChanged(int orientation) { 
-				if (orientation > 315 || orientation < 45 || (orientation > 135 && orientation < 225)) {
+			public void onOrientationChanged(int orientation) {
+				if (orientation > 315 || orientation < 45
+						|| (orientation > 135 && orientation < 225)) {
 					// portrait
 					if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
 						setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-					} 
-				} else if ((orientation > 225 && orientation < 315) || (orientation > 45 && orientation < 135)) {
+					}
+				} else if ((orientation > 225 && orientation < 315)
+						|| (orientation > 45 && orientation < 135)) {
 					// landscape
-					if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE ) {
+					if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
 						setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 					}
 				}
@@ -119,7 +120,8 @@ public class BaseActivity extends FragmentActivity {
 		if (getIntent().hasExtra(ZyyKNXConstant.MENU_DRAWER_TRIGGER_KEY)) {
 
 		} else {
-			overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+			overridePendingTransition(R.anim.push_right_in,
+					R.anim.push_right_out);
 		}
 	}
 
@@ -137,32 +139,27 @@ public class BaseActivity extends FragmentActivity {
 	@Override
 	public void onBackPressed() {
 
-		if (this.getClass().getSimpleName().equalsIgnoreCase("PushMessagesActivity")
-				|| this.getClass().getSimpleName().equalsIgnoreCase("MyProfileActivity")) {
+		if (this.getClass().getSimpleName()
+				.equalsIgnoreCase("PushMessagesActivity")
+				|| this.getClass().getSimpleName()
+						.equalsIgnoreCase("MyProfileActivity")) {
 			this.finish();
 		} else {
 			super.onBackPressed();
 		}
 	}
-	
-	/*
+
+ 
+
 	@Override
-	public void onAttachedToWindow() {
-	      // TODO Auto-generated method stub
-	      this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
-	      super.onAttachedToWindow();
-	}
-	*/
-	
-	@Override
-    public boolean onKeyDown( int keyCode, KeyEvent event) {
-           // TODO Auto-generated method stub
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
 		int key = event.KEYCODE_HOME;
 		if (keyCode == event.KEYCODE_HOME) {
 			return false;
 		}
 		return super.onKeyDown(keyCode, event);
-    }
+	}
 
 	@Override
 	public final void onLowMemory() {
@@ -175,7 +172,17 @@ public class BaseActivity extends FragmentActivity {
 		if (currentTheme != PreferenceHelper.getTheme(this)) {
 			reload();
 		}
+		
+		//获取锁，保持屏幕亮度
+		//acquireWakeLock();
+		//startTimer();
 	}
+	
+	@Override
+	protected void onPause() { 
+		  super.onPause();
+		  //releaseWakeLock();
+    }
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
@@ -220,12 +227,12 @@ public class BaseActivity extends FragmentActivity {
 					spinner.setClickable(false);
 					spinner.setEnabled(false);
 
-//					Log.i("A Spinner is unabled");
+					Log.i("A Spinner is unabled");
 				} else if (v instanceof ListView) {
 					((ListView) v).setClickable(false);
 					((ListView) v).setEnabled(false);
 
-//					Log.i("A ListView is unabled");
+					Log.i("A ListView is unabled");
 				} else {
 					disableSubControls((ViewGroup) v);
 				}
@@ -233,11 +240,11 @@ public class BaseActivity extends FragmentActivity {
 				((EditText) v).setEnabled(false);
 				((EditText) v).setClickable(false);
 
-//				Log.i("A EditText is unabled");
+				Log.i("A EditText is unabled");
 			} else if (v instanceof Button) {
 				((Button) v).setEnabled(false);
 
-//				Log.i("A Button is unabled");
+				Log.i("A Button is unabled");
 			}
 		}
 	}
@@ -262,32 +269,38 @@ public class BaseActivity extends FragmentActivity {
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		return null;
 	}
-	
-	
+
 	/**
 	 * 监听是否点击了home键将客户端推到后台
 	 */
-	private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() { 
-		String SYSTEM_HOME_KEY = "homekey"; 
-		 
+	private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
+		String SYSTEM_HOME_KEY = "homekey";
+
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
 				Toast.makeText(getApplicationContext(), "home", 1).show();
-			} 
+			}
 		}
 	};
 
-	/*
-	 * public void changeToTheme(Activity activity, int theme) { currentTheme =
-	 * theme; activity.finish(); activity.startActivity(new Intent(activity,
-	 * activity.getClass())); }
-	 * 
-	 * //Set the theme of the activity, according to the configuration. public
-	 * void onActivityCreateSetTheme(Activity activity) { switch (currentTheme)
-	 * { default: case 1: activity.setTheme(R.style.PolishedTheme); break; case
-	 * 2: activity.setTheme(R.style.BrownTheme); break; case 3:
-	 * activity.setTheme(R.style.WhiteTheme); break; } }
-	 */
+	// 获取电源锁，保持该服务在屏幕熄灭时仍然获取CPU时，保持运行
+	private void acquireWakeLock() {
+		if (wakeLock != null) {
+			PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+			wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK| PowerManager.ON_AFTER_RELEASE, "PostLocationService");
+			if (wakeLock != null) {
+				wakeLock.acquire();
+			}
+		}
+	}
+
+	// 释放设备电源锁
+	private void releaseWakeLock() {
+		if (wakeLock != null) {
+			wakeLock.release();
+			wakeLock = null;
+		}
+	} 
 }

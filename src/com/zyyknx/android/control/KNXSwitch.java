@@ -30,6 +30,4 @@ public class KNXSwitch extends KNXControlBase {
 	public void setSendInterval(int sendInterval) {
 		SendInterval = sendInterval;
 	}
-	
-	
 }

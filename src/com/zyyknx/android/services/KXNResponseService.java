@@ -124,7 +124,7 @@ public class KXNResponseService extends Service {
 		 * RemoteViews contentView = new
 		 * RemoteViews(mContext.getPackageName(),R.layout.notify_view);
 		 * contentView.setTextViewText(R.id.notify_name, "LED 控制进入后台运行");
-		 * contentView.setTextViewText(R.id.notify_msg, "手机正在后台运行");
+		 * contentView.setTextViewText(R.id.notify_msg, "手机QQ正在后台运行");
 		 * contentView.setTextViewText(R.id.notify_time, Utility.getDate()); //
 		 * 指定个性化视图 mNotification.contentView = contentView;
 		 * 
@@ -134,7 +134,37 @@ public class KXNResponseService extends Service {
 		 * mNotification.contentIntent = contentIntent;
 		 * mNotificationManager.notify(ZyyConstant.NOTIFY_ID, mNotification);
 		 */
-	} 
+	}
+ 
+	/*
+	private DeviceStatusHandler mDeviceStatusHandler = new DeviceStatusHandler();
+
+	// 实时轨迹Handler
+	public class DeviceStatusHandler extends Handler {
+
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case 1:
+				//发送设备状态广播
+				sendBroadcast(new Intent(ZyyKNXConstant.BROADCAST_UPDATE_DEVICE_STATUS));
+				break;
+			case -1: 
+				
+				break;
+			case -2:
+				// refreshNotice.setText("正在更新数据...");
+				break;
+			}
+			super.handleMessage(msg);
+		}
+
+		public void sleep(long delayMillis) {
+			this.removeMessages(0);
+			sendMessageDelayed(obtainMessage(0), delayMillis);
+		}
+	}
+	*/
 	
 	
 	private boolean isSendComplete = false;
@@ -167,7 +197,7 @@ public class KXNResponseService extends Service {
 								//Log.d("Test", "索引号为"+ index +"的值："+ isChangeStr +""); 
 								if(isChange)
 								{
-//									Log.d("Test1", "索引号为"+ index +"的值改变后为："+ ByteUtil.getInt(contentBytes) +""); 
+									Log.d("Test1", "索引号为"+ index +"的值改变后为："+ ByteUtil.getInt(contentBytes) +""); 
 									
 									KNXResponse mKNXResponse = new KNXResponse();
 									mKNXResponse.setControlValue(ByteUtil.getInt(contentBytes));

@@ -36,7 +36,7 @@
             android:text="0"
         	android:inputType="number" />
         
-            <EditText
+          <EditText
             android:id="@+id/txtThree"
             style="@android:style/Widget.EditText"
             android:layout_width="60dip"
@@ -45,7 +45,6 @@
             android:layout_marginRight="5dip"
             android:text="0"
         	android:inputType="number" />
-          
     </LinearLayout>
 
 </LinearLayout>

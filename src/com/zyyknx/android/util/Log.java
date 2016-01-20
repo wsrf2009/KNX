@@ -74,7 +74,7 @@ public class Log {
 			android.util.Log.d(TAG, buildMessage(msg), tr);
 		}
 	}
-	
+
 	public static void d(String tag, String info) {
 		if (DEBUG){
 			android.util.Log.d(tag, buildMessage(info));

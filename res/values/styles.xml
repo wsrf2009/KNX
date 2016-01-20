@@ -16,7 +16,6 @@
         <item name="android:windowFrame">@null</item><!--边框--> 
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowBackground">@drawable/dialog_login_qq_shape</item>
-        <!-- <item name="android:windowFrame">@null</item> -->
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:windowSoftInputMode">adjustPan</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -107,7 +106,6 @@
         <item name="android:layout_height">wrap_content</item>  
         <item name="android:gravity">center_vertical|center_horizontal</item>
         <item name="android:layout_gravity">center</item> 
-        <!-- <item name="android:gravity">center_vertical|center_horizontal</item> -->
 	    <item name="android:disabledAlpha">?android:attr/disabledAlpha</item> 
 	</style> 
 	
@@ -138,7 +136,6 @@
         <item name="android:layout_height">wrap_content</item>  
         <item name="android:gravity">fill</item>
         <item name="android:layout_gravity">center</item> 
-        <!-- <item name="android:gravity">center_vertical|center_horizontal</item> -->
 	    <item name="android:disabledAlpha">?android:attr/disabledAlpha</item> 
 	</style> 
 	

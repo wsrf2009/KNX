@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -40,16 +41,12 @@ import android.widget.Toast;
  
 
 public class SettingDialog {
-	
 	private SharedPreferences settings;
-
 	protected Context mContext;
-	
-	//private SettingView mSettingView1 = null;
-	//private SettingView mSettingView2 = null; 
 	private SettingButton settingKNXConnect = null;
 	private SettingButton settingPhysicalAddress = null; 
 	private SettingButton settingDeviceReflashSpan = null; 
+	private SettingButton settingScreenOffSpan = null; 
 	private SettingData mItemData = null;
 	private SettingViewItemData mItemViewData = null;
 	private List<SettingViewItemData> mListData = new ArrayList<SettingViewItemData>();
@@ -71,12 +68,11 @@ public class SettingDialog {
 		mCustomPopDialogFragment.setContentView(mView);
 		mCustomPopDialogFragment.show(((FragmentActivity) mContext).getSupportFragmentManager(), "TelephoneMonitoring");
 		mCustomPopDialogFragment.setWindowSize(0.6, 0.6);
-		
-		//mSettingView1 = (SettingView) mView.findViewById(R.id.qq_style_setting_view_01);
-		//mSettingView2 = (SettingView) mView.findViewById(R.id.qq_style_setting_view_02); 
+
 		settingKNXConnect = (SettingButton) mView.findViewById(R.id.settingKNXConnect);
 		settingPhysicalAddress = (SettingButton) mView.findViewById(R.id.settingPhysicalAddress); 
 		settingDeviceReflashSpan = (SettingButton) mView.findViewById(R.id.settingDeviceReflashSpan); 
+		settingScreenOffSpan = (SettingButton) mView.findViewById(R.id.settingScreenOffSpan);
 
 		settingKNXConnect.setOnSettingButtonClickListener(new onSettingButtonClickListener() {
 
@@ -269,6 +265,48 @@ public class SettingDialog {
 			}
 		});
 
+		settingScreenOffSpan.setOnSettingButtonClickListener(new onSettingButtonClickListener() {
+
+			@Override
+			public void onSettingButtonClick() { 
+				// TODO Auto-genera 	  {
+				final View view = LayoutInflater.from(mContext).inflate(R.layout.knx_refresh_status_setting, null);  
+				final EditText txtTimeSpan = (EditText) view.findViewById(R.id.txtTimeSpan);
+				
+				int knxSettingScreenOffTimespan = settings.getInt(ZyyKNXConstant.KNX_SETTING_SCRRENOFF_TIMESPAN, 30); 
+				txtTimeSpan.setText(String.valueOf(knxSettingScreenOffTimespan));
+				
+				new PromptDialog.Builder(mContext)
+				.setTitle("设置背光时间") 
+				.setIcon(R.drawable.launcher)
+				//.setViewStyle(PromptDialog.VIEW_STYLE_TITLEBAR_SKYBLUE)
+				.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
+				//.setMessage("请输入密码")
+				.setView(view)
+				.setButton1("取消",  new PromptDialog.OnClickListener() {
+							
+							@Override
+							public void onClick(Dialog dialog, int which) {
+								dialog.dismiss(); 
+							}
+						})
+				.setButton2("确认", new PromptDialog.OnClickListener() {
+							
+							@Override
+							public void onClick(Dialog dialog, int which) { 
+								SharedPreferences.Editor editor = settings.edit(); 
+								editor.putInt(ZyyKNXConstant.KNX_SETTING_SCRRENOFF_TIMESPAN, Integer.valueOf(txtTimeSpan.getText().toString()));
+								editor.commit();
+								dialog.dismiss();
+							 
+								Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000 * Integer.valueOf(txtTimeSpan.getText().toString()));
+							}
+						})
+				.show(); 
+				 
+			}
+		});
+
 		initView(); 
 		
 	 
@@ -291,48 +329,6 @@ public class SettingDialog {
 	}
 	
 	private void initView() {
-		/* ==========================SettingView1========================== */
-		/*
-		mItemViewData = new SettingViewItemData();
-		mItemData = new SettingData();
-		mItemData.setTitle("流量更新");
-
-		mItemViewData.setData(mItemData);
-		mItemViewData.setItemView(new BasicItemViewH(mContext));
-		mListData.add(mItemViewData);
-
-		mItemViewData = new SettingViewItemData();
-		mItemData = new SettingData();
-		mItemData.setTitle("2G/3G/4G下自动接收图片");
-		mItemData.setChecked(true);
-
-		mItemViewData.setData(mItemData);
-		mItemViewData.setItemView(new SwitchItemView(mContext));
-		mListData.add(mItemViewData);
-
-		mItemViewData = new SettingViewItemData();
-		mItemData = new SettingData();
-		mItemData.setTitle("2G/3G/4G下自动接收魔法动画");
-		mItemData.setChecked(false);
-
-		mItemViewData.setData(mItemData);
-		mItemViewData.setItemView(new SwitchItemView(mContext));
-		mListData.add(mItemViewData);
-
-		mItemViewData = new SettingViewItemData();
-		mItemData = new SettingData();
-		mItemData.setTitle("Wifi下自动在后台下载新版本");
-		mItemData.setChecked(true);
-
-		mItemViewData.setData(mItemData);
-		mItemViewData.setItemView(new SwitchItemView(mContext));
-		mListData.add(mItemViewData);
-
-		mSettingView1.setAdapter(mListData);
-		*/
-		/* ==========================SettingView1========================== */
-  
-		/* ==========================SettingButton1========================== */
 		mItemViewData = new SettingViewItemData();
 		mItemData = new SettingData();
 		mItemData.setTitle("KXN网关设置");
@@ -341,9 +337,7 @@ public class SettingDialog {
 		mItemViewData.setData(mItemData);
 		mItemViewData.setItemView(new ImageItemView(mContext));
 		settingKNXConnect.setAdapter(mItemViewData);
-		/* ==========================SettingButton1========================== */
 		
-		/* ==========================SettingButton2========================== */
 		mItemViewData = new SettingViewItemData();
 		mItemData = new SettingData();
 		mItemData.setTitle("物理地址设置");
@@ -352,7 +346,6 @@ public class SettingDialog {
 		mItemViewData.setData(mItemData);
 		mItemViewData.setItemView(new ImageItemView(mContext));
 		settingPhysicalAddress.setAdapter(mItemViewData);
-		/* ==========================SettingButton2========================== */ 
 		
 		mItemViewData = new SettingViewItemData();
 		mItemData = new SettingData();
@@ -362,5 +355,14 @@ public class SettingDialog {
 		mItemViewData.setData(mItemData);
 		mItemViewData.setItemView(new ImageItemView(mContext));
 		settingDeviceReflashSpan.setAdapter(mItemViewData);
+		
+		mItemViewData = new SettingViewItemData();
+		mItemData = new SettingData();
+		mItemData.setTitle("设置背光时间");
+		//mItemData.setInfo(mContext.getResources().getDrawable(R.drawable.icon10));
+
+		mItemViewData.setData(mItemData);
+		mItemViewData.setItemView(new ImageItemView(mContext));
+		settingScreenOffSpan.setAdapter(mItemViewData);
 	}
 }

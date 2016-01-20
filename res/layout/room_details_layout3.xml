@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zyyknx.android.widget.BounceScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:silderSwitch="http://schemas.android.com/apk/res-auto"
+    xmlns:blinds="http://schemas.android.com/apk/res-auto"
+    xmlns:slider="http://schemas.android.com/apk/res-auto"
+    xmlns:colorPanel="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/coversation_bg"
+    android:fillViewport="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bg"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_horizontal"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginTop="5dip"
+            android:text="标题"
+            android:textSize="26sp" />
+
+        <LinearLayout
+            style="?attr/styleGroupItem"
+            android:background="@drawable/group_bg"
+            android:orientation="vertical" >
+ 			<!--  
+            <com.zyyknx.android.widget.Blinds
+                android:id="@+id/blinds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ff000000"
+                blinds:blindsButtonText="电动窗" /> 
+           -->
+           
+            <com.zyyknx.android.widget.SeekBarColorPicker
+            android:id="@+id/seekbar_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="50"/>
+           
+        </LinearLayout>
+
+        <LinearLayout
+            style="?attr/styleGroupItem"
+            android:layout_height="320.0dip"
+            android:background="@drawable/group_bg"
+            android:orientation="vertical" >
+
+           
+            <com.zyyknx.android.widget.ColorPicker
+                android:id="@+id/colorPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.8" />
+
+             <com.zyyknx.android.widget.AlphaSliderBar
+                style="?attr/styleSliderSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" 
+                android:layout_marginBottom="20dip"  
+                android:gravity="center"
+                silderSwitch:drawableLeft="@drawable/default_silder_swich_light_down"
+                silderSwitch:drawableRight="@drawable/default_silder_swich_light_up"
+                silderSwitch:sliderSwitchButtonText=""
+                silderSwitch:thumb="@drawable/btn_toggle_bg" /> 
+           
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:orientation="horizontal" >
+
+                <com.zyyknx.android.widget.ColorPickerPanelView
+                    android:id="@+id/white_panel"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:layout_weight="0.5" />
+
+                <com.zyyknx.android.widget.ColorPickerPanelView
+                    android:id="@+id/cyan_panel"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:layout_weight="0.5" />
+
+                <com.zyyknx.android.widget.ColorPickerPanelView
+                    android:id="@+id/red_panel"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:layout_weight="0.5" />
+
+                <com.zyyknx.android.widget.ColorPickerPanelView
+                    android:id="@+id/green_panel"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:layout_weight="0.5" />
+
+                <com.zyyknx.android.widget.ColorPickerPanelView
+                    android:id="@+id/yellow_panel"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="?attr/styleGroupItem"
+            android:background="@drawable/group_bg"
+            android:orientation="horizontal" >
+
+            <com.zyyknx.android.widget.SliderSwitch
+                style="?attr/styleSliderSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button_background"
+                android:gravity="center"
+                silderSwitch:drawableLeft="@drawable/default_silder_swich_light_down"
+                silderSwitch:drawableRight="@drawable/default_silder_swich_light_up"
+                silderSwitch:sliderSwitchButtonText=" 吊灯 "
+                silderSwitch:thumb="@drawable/btn_toggle_bg" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="?attr/styleGroupItem"
+            android:background="@drawable/group_bg"
+            android:orientation="horizontal" >
+
+            <android.support.v7.widget.GridLayout
+                android:id="@+id/gridLayout"
+                style="?attr/styleGridLayout"
+                app:useDefaultMargins="false" >
+
+                <!--
+                <TextView
+                    app:layout_columnSpan="4"
+                    app:layout_gravity="center_horizontal"
+                    android:text="Email setup"
+                    android:textSize="32dip" />
+
+                <TextView
+                    app:layout_columnSpan="4"
+                    app:layout_gravity="left"
+                    android:text="You can configure email in a few simple steps:"
+                    android:textSize="16dip" />
+
+                <TextView
+                    app:layout_gravity="right"
+                    android:text="Email address:" />
+
+                <EditText android:ems="10" />
+
+                <TextView
+                    app:layout_column="0"
+                    app:layout_gravity="right"
+                    android:text="Password:" />
+
+                <EditText android:ems="8" />
+
+                <Button
+                    app:layout_column="3"
+                    app:layout_row="5"
+                    android:text="Manual setup" />
+
+                <Button
+                    app:layout_column="3"
+                    app:layout_gravity="fill_horizontal"
+                    android:text="Next" />
+                -->
+
+            </android.support.v7.widget.GridLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</com.zyyknx.android.widget.BounceScrollView>

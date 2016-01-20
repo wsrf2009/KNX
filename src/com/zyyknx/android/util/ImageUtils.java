@@ -109,7 +109,7 @@ public class ImageUtils {
 				if (bitmap == null) {
 					Log.w(TAG, url + "对象已经被GC回收");
 				} else {
-//					Log.i(TAG, "命中" + url);
+
 				}
 			}
 		}

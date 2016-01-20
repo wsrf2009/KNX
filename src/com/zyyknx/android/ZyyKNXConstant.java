@@ -9,6 +9,7 @@ public class ZyyKNXConstant {
 	public static final String XML_TYPE = "xml";
 	public static final String dot = ".";
 	
+
 	public static final String FILE_TIMERTASK = "TimerTask.dat";
 	
 	public static final int NOTIFY_ID  =  1000;
@@ -55,7 +56,7 @@ public class ZyyKNXConstant {
 	public static final String KNX_PHYSICAL_ADDRESS_SECOND = "KNX_physical_address_Second"; 
 	public static final String KNX_PHYSICAL_ADDRESS_THREE = "KNX_physical_address_Three"; 
 	
-	
+	public static final String KNX_SETTING_SCRRENOFF_TIMESPAN = "KNX_Setting_ScreenOff_Timespan";
 	
 	public final static String MENU_DRAWER_TRIGGER_KEY = "Menu_Drawer_Trigger_key";
 

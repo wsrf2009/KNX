@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Mode">
+        <item>UCP组播</item>
+        <item>UCP点对点 </item> 
+    </string-array>
+</resources>

@@ -175,7 +175,7 @@ public class Slider extends ControlView implements ORSeekBar.OnSeekBarChangeList
 
 	@Override
 	public void onStopTrackingTouch(ORSeekBar seekBar) {
-//		Log.i("OpenRemote-SLIDER", "Slide to business value " + slideToBusinessValue);
+
 		//sendCommandRequest(String.valueOf(slideToBusinessValue));
 	}
 

@@ -85,6 +85,10 @@
             android:configChanges="keyboardHidden"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
+            android:name=".activity.RoomDetailsActivity2"
+            android:configChanges="keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
             android:name=".activity.SetttingActivity"
             android:configChanges="keyboardHidden"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />

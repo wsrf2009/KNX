@@ -39,8 +39,6 @@ import com.zyyknx.android.util.ByteUtil;
 import com.zyyknx.android.util.CompressStatus; 
 import com.zyyknx.android.util.CopyFileUtil;
 import com.zyyknx.android.util.KNX0X01Lib;
-import com.zyyknx.android.util.NetWorkUtil;
-//import com.zyyknx.android.util.Log;
 import com.zyyknx.android.util.ZipUtil;
 
 import android.app.Activity;
@@ -51,7 +49,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 public class SplashActivity extends Activity {
 
@@ -65,27 +62,34 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash); 
 		 
-//		ZyyKNXApp.getInstance().startTimingTaskService(this);
-		 
+		/*
+		 * boolean ss1 = KNX0X01Lib.UOPENNet("192.168.1.2", 8999, 1);
+		 * 
+		 * boolean ss2 = KNX0X01Lib.UCLOSENet();
+		 * 
+		 * boolean ss3 = KNX0X01Lib.UTestAndCopyObject(1, 1);
+		 * 
+		 * boolean ss4 = KNX0X01Lib.USetAndRequestObject(1);
+		 * 
+		 * boolean ss5 = KNX0X01Lib.USetAndTransmitObject(1, "11", 1);
+		 * 
+		 * boolean ss6 = KNX0X01Lib.UGetAndClearRequestState(1);
+		 */
 		settings = getSharedPreferences(ZyyKNXConstant.SETTING_FILE, MODE_PRIVATE);
 		long localVersion = settings.getLong(ZyyKNXConstant.LOCALVERSION, 0);
 		
 		try {
-			//加载KNX lib 
+			//加载KNX lib
+			//KNX0X01Lib.loadLibrary();
 			KNX0X01Lib.loadLibraryTest();
 			KNX0X01Lib.UCLOSENet();
 			
-			File f = new File(Environment.getExternalStorageDirectory().toString());  
-            File[] files = f.listFiles();// 列出所有文件  
-            System.out.println(f.listFiles().toString());
-            
 			zipFilePath = Environment.getExternalStorageDirectory().toString() + "/KnxUiProject.knxuie"; 
 			File zipFile = new File(zipFilePath);
 			long lastlastModified = zipFile.lastModified();
 			if(lastlastModified == 0 ||  lastlastModified != localVersion) { 
-				/* 文件不存在或者最后修改时间与本地文件的时间不一致 */
 				SharedPreferences.Editor editor = settings.edit(); 
-				editor.putLong(ZyyKNXConstant.LOCALVERSION, lastlastModified); // 将新的文件版本保存
+				editor.putLong(ZyyKNXConstant.LOCALVERSION, lastlastModified);
 				editor.commit();
 				try {
 					ZipUtil.unZipFileWithProgress(zipFile, Environment.getExternalStorageDirectory() + "/zyyknxandroid/.nomedia/", handler, false);
@@ -99,7 +103,7 @@ public class SplashActivity extends Activity {
 					@Override
 					public void run() {
 						// startPushService();
-						new AppConfigAsyncTask().execute(); // 调用异步任务
+						new AppConfigAsyncTask().execute();
 					}
 				}, 1000);
 			} 
@@ -113,18 +117,21 @@ public class SplashActivity extends Activity {
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case CompressStatus.START: 
+			case CompressStatus.START:
+				// tv.setText("开始解压!");
 				break;
 			case CompressStatus.HANDLING:
-				Bundle b = msg.getData(); 
+				Bundle b = msg.getData();
+				// tv.setText(b.getInt(CompressStatus.PERCENT)+" ");
 				break;
-			case CompressStatus.COMPLETED: 
+			case CompressStatus.COMPLETED:
+				// tv.setText("解压完成!");
 				
 				new Handler().postDelayed(new Runnable() {
 					@Override
 					public void run() {
 						// startPushService();
-						new AppConfigAsyncTask().execute(); // 调用异步任务
+						new AppConfigAsyncTask().execute();
 					}
 				}, 1000);
 
@@ -136,7 +143,13 @@ public class SplashActivity extends Activity {
 		};
 	};
 
-	private void jumpActivity() { 
+	private void jumpActivity() {
+		//加载KNX lib
+		//KNX0X01Lib.loadLibrary();
+		//KNX0X01Lib.loadLibraryTest();
+		//KNX0X01Lib.UCLOSENet();
+		
+		
 		//初始化连接
 		String mKNXGatewayIP = settings.getString(ZyyKNXConstant.KNX_GATEWAY_IP, 
 				ZyyKNXConstant.KNX_GATEWAY_DEFAULT);
@@ -151,7 +164,7 @@ public class SplashActivity extends Activity {
 		Log.d(ZyyKNXConstant.DEBUG, "jumpActivity()"+" mKNXGatewayIP: "+mKNXGatewayIP+
 				" mKNXGatewayPort: "+mKNXGatewayPort+" mKNXUDPWorkWay: "+mKNXUDPWorkWay+
 				" isConnect: " + isConnect);
-		 
+		
 		Intent intent = new Intent(SplashActivity.this, RoomTilesListActivity.class);
 		startActivity(intent);
 		finish();
@@ -180,7 +193,7 @@ public class SplashActivity extends Activity {
 		return res;
 	}
 
-	private class AppConfigAsyncTask extends AsyncTask<Void, Void, Void> { // 异步操作任务
+	private class AppConfigAsyncTask extends AsyncTask<Void, Void, Void> {
 		
 		public AppConfigAsyncTask() {
 
@@ -189,18 +202,74 @@ public class SplashActivity extends Activity {
 		/** 在onPreExecute()完成后立即执行，用于执行较为费时的操作，此方法将接收输入参数和返回计算结果。在执行过程中可以调用publishProgress(Progress... values)来更新进度信息 */
 		@Override
 		protected Void doInBackground(Void... params) {
-			try { 
-				GsonBuilder gsonBuilder = new GsonBuilder(); 
+			try {
+				// String json =
+				// ZyyKNXApp.getInstance().getFromAssets("KNXUI_Data.knxjson");
+				//String json = ZyyKNXApp.getInstance().getFromAssets("KNXUI_Data.knxjson");
+				String json = readFileSdcardFile(Environment.getExternalStorageDirectory() + "/zyyknxandroid/.nomedia/KnxUiMetaData.json");
+
+				/*
+				 * GsonBuilder gsonBuilder = new GsonBuilder();
+				 * gsonBuilder.setDateFormat("yyyy-MM-dd HH:mm:ss");
+				 * gsonBuilder.registerTypeAdapter(Date.class, new
+				 * GsonHelper.WCFDateDeserializer());
+				 * gsonBuilder.setFieldNamingPolicy
+				 * (FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+				 * KNXControlBaseDeserializer deserializer = new
+				 * KNXControlBaseDeserializer("KNXControlBase");
+				 * deserializer.registerControlBase("KNXBlinds",
+				 * KNXBlinds.class);
+				 * deserializer.registerControlBase("KNXButton",
+				 * KNXButton.class);
+				 * gsonBuilder.registerTypeAdapter(KNXControlBase.class,
+				 * deserializer); Gson gson = gsonBuilder.create(); KNXApp
+				 * mKNXApp = gson.fromJson(json, KNXApp.class);
+				 * ZyyKNXApp.getInstance().setKNXAppConfig(mKNXApp);
+				 */
+
+				GsonBuilder gsonBuilder = new GsonBuilder();
+				// gsonBuilder.setDateFormat("yyyy-MM-dd HH:mm:ss");
+				// gsonBuilder.registerTypeAdapter(Date.class, new
+				// GsonHelper.WCFDateDeserializer());
 				gsonBuilder.registerTypeAdapter(KNXControlBase.class, new KNXControlBaseDeserializerAdapter());
 				Gson gson = gsonBuilder.create();
-				
-				String json = readFileSdcardFile(Environment.getExternalStorageDirectory() + "/zyyknxandroid/.nomedia/KnxUiMetaData.json");
 				KNXApp mKNXApp = gson.fromJson(json, KNXApp.class);
+
 				ZyyKNXApp.getInstance().setKNXAppConfig(mKNXApp); 
-				 
+				
+				/*
+				Map<Integer, String> mKNXControlIdMapKNXId = new HashMap<Integer, String>(); 
+				for (int i = 0; i < mKNXApp.getAreas().size(); i++) {
+					KNXArea mKNXArea = mKNXApp.getAreas().get(i);
+					for (int j = 0; j < mKNXArea.getRooms().size(); j++) {
+						KNXRoom mKNXRoom = mKNXArea.getRooms().get(j); 
+						for (int x = 0; x < mKNXRoom.getPages().size(); x++) {
+							
+							KNXPage mKNXPage = mKNXRoom.getPages().get(x);
+							if(mKNXPage.getControls() != null && mKNXPage.getControls().size() > 0) { 
+								for (int a = 0; a < mKNXPage.getControls().size(); a++) { 
+									mKNXControlIdMapKNXId.put(mKNXPage.getControls().get(a).getId(), getFirstOrNull(mKNXPage.getControls().get(a).getReadAddressId()).getId());
+								}
+							}
+							
+							for (int y = 0; y < mKNXPage.getGrids().size(); y++) {
+								KNXGrid mKNXGrid = mKNXPage.getGrids().get(y);
+								if(mKNXGrid.getControls() != null && mKNXGrid.getControls().size() > 0) { 
+									for (int b = 0; b < mKNXPage.getControls().size(); b++) { 
+										mKNXControlIdMapKNXId.put(mKNXPage.getControls().get(b).getId(), getFirstOrNull(mKNXPage.getControls().get(b).getReadAddressId()).getId());
+									}
+								}
+								
+							}
+						} 
+					}
+				}
+				*/
+				
+				
+				
 				String groupAddressJson = readFileSdcardFile(Environment.getExternalStorageDirectory() + "/zyyknxandroid/.nomedia/GroupAddress.json");
 				List<KNXGroupAddress> mKNXGroupAddressList = gson.fromJson(groupAddressJson, new TypeToken<List<KNXGroupAddress>>() { }.getType());
-//				System.out.println(gson.toJson(groupAddressJson));
 				Collections.sort(mKNXGroupAddressList, new Comparator<KNXGroupAddress>() { 
 					@Override 
 				    public int compare(KNXGroupAddress o1, KNXGroupAddress o2) {
@@ -208,7 +277,6 @@ public class SplashActivity extends Activity {
 				           return (o2.getKnxAddress().compareTo(o1.getKnxAddress()));
 				     }	
 				});
-//				System.out.println(gson.toJson(groupAddressJson));
 				//索引号对应的组地址列表
 				Map<Integer, KNXGroupAddress> sortGroupAddressMap = new HashMap<Integer, KNXGroupAddress>(); 
 				//索引号对应的组地址列表
@@ -217,8 +285,6 @@ public class SplashActivity extends Activity {
 					sortGroupAddressMap.put(i + 1, mKNXGroupAddressList.get(i));
 					groupAddressIndexMap.put(mKNXGroupAddressList.get(i).getId(), i + 1);
 				} 
-//				System.out.println(gson.toJson(sortGroupAddressMap));
-//				System.out.println(gson.toJson(groupAddressIndexMap));
 				ZyyKNXApp.getInstance().setGroupAddressMap(sortGroupAddressMap);
 				ZyyKNXApp.getInstance().setGroupAddressIndexMap(groupAddressIndexMap);
 				
@@ -259,16 +325,16 @@ public class SplashActivity extends Activity {
 		            
 		            for (int j = 0; j < mKNXGroupAddressList.size(); j++) {  
 		            	byte config = 1;
-		            	if(mKNXGroupAddressList.get(j).getPriority() == 0) { // priority 0
+		            	if(mKNXGroupAddressList.get(j).getPriority() == 0) {
 		            		config = BitUtils.setBitValue(config, 0, (byte)0); 
 		            		config = BitUtils.setBitValue(config, 1, (byte)0); 
-		            	} else if(mKNXGroupAddressList.get(j).getPriority() == 1) { // priority 1
+		            	} else if(mKNXGroupAddressList.get(j).getPriority() == 1) {
 		            		config = BitUtils.setBitValue(config, 0, (byte)1); 
 		            		config = BitUtils.setBitValue(config, 1, (byte)0); 
-		            	} else if(mKNXGroupAddressList.get(j).getPriority() == 2) { // priority 2
+		            	} else if(mKNXGroupAddressList.get(j).getPriority() == 2) {
 		            		config = BitUtils.setBitValue(config, 0, (byte)0); 
 		            		config = BitUtils.setBitValue(config, 1, (byte)1); 
-		            	} else if(mKNXGroupAddressList.get(j).getPriority() == 3) { // priority 3
+		            	} else if(mKNXGroupAddressList.get(j).getPriority() == 3) {
 		            		config = BitUtils.setBitValue(config, 0, (byte)1); 
 		            		config = BitUtils.setBitValue(config, 1, (byte)1); 
 			            }
@@ -303,7 +369,6 @@ public class SplashActivity extends Activity {
 		        CopyFileUtil.copyFile(fileName, fileName2, true);
 		        
 			} catch (Exception e) {
-				Log.e(ZyyKNXConstant.DEBUG, e.getLocalizedMessage());
 				e.printStackTrace();
 			} 
 			

@@ -66,7 +66,7 @@ public class PromptDialog extends Dialog {
 
 		private PromptDialog dialog;
 		private Context context;
-		
+
 		View mView = null;
 		LinearLayout mTitleBar = null;
 		TextView mTitle = null;

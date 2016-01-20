@@ -177,7 +177,7 @@ public class KNXControlBase extends KNXView implements Serializable {
       } else if (mKNXControlBase instanceof KNXTimerButton) {
     	  controlView = new MyTimerTaskButton(context, null, (KNXTimerButton)mKNXControlBase);
       }
-	  
+
       return controlView; 
    } 
 	

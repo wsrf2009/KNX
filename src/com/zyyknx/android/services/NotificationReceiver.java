@@ -28,7 +28,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 				context.startService(notificationIntent);
 			}
 		} else if (intent.getAction().equals(Intent.ACTION_SHUTDOWN)) {
-//			Log.d("NotificationReceiver", "System shutdown, stopping service.");
+			Log.d("NotificationReceiver", "System shutdown, stopping service.");
 		} else if (intent.getAction().equals(
 				"android.intent.action.BOOT_COMPLETED")) {
 			context.startService(notificationIntent);

@@ -2,6 +2,7 @@ package com.zyyknx.android.services;
 
 import com.zyyknx.android.ZyyKNXConstant;
 import com.zyyknx.android.R;
+import com.zyyknx.android.util.KNX0X01Lib;
 import com.zyyknx.android.util.Utils;
 
 import android.app.Notification;
@@ -50,9 +51,12 @@ public class ListenNetStateService extends Service {
 		public void onReceive(Context context, Intent intent) {
 			if (intent.getAction().equals(
 					android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {
+				int type = -1;
 				if (!Utils.checkNetState(context)) {
-					notifyShow(context);
+					//notifyShow(context);
+					type = Utils.isNetworkAvailable(context);
 				}
+				KNX0X01Lib.SetNetworkType(type);
 			}
 
 		}

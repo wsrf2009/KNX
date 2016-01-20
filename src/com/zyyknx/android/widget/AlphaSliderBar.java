@@ -160,7 +160,8 @@ public class AlphaSliderBar extends CompoundButton {
 		mSwitchPadding = a.getDimensionPixelSize(R.styleable.SliderSwitch_switchPadding, 0);
  
 		mThumbDrawable.getPadding(mThPad);
-//		Log.d(TAG, "mThPad=" + mThPad); 
+
+		Log.d(TAG, "mThPad=" + mThPad); 
 	  
 		xferPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		xferPaint.setColor(Color.TRANSPARENT);
@@ -391,7 +392,7 @@ public class AlphaSliderBar extends CompoundButton {
 		}
 		}
 
-//		Log.d(TAG, "mThumbPosition=" + mThumbPosition);
+		Log.d(TAG, "mThumbPosition=" + mThumbPosition);
 		boolean flag = super.onTouchEvent(ev);
 		// Log.d(TAG, "super.onTouchEvent(ev) returned="+flag);
 		return flag;
@@ -451,8 +452,8 @@ public class AlphaSliderBar extends CompoundButton {
 		mThumbWidth = mThumbDrawable.getIntrinsicWidth(); 
 		mThumbHeight = mThumbDrawable.getIntrinsicHeight();
 		 
-//		Log.d(TAG, "mThumbWidth=" + mThumbWidth);
-//		Log.d(TAG, "mThumbHeight=" + mThumbHeight);
+		Log.d(TAG, "mThumbWidth=" + mThumbWidth);
+		Log.d(TAG, "mThumbHeight=" + mThumbHeight);
 		
 		//计算控件的宽度
 		int switchWidth;
@@ -509,7 +510,7 @@ public class AlphaSliderBar extends CompoundButton {
 			mSliderSwitchWidth = MeasureSpec.getSize(widthMeasureSpec);
 		}
 
-//		Log.d(TAG, "onMeasure():mSwitchWidth=" + mSliderSwitchWidth + " mSwitchHeight=" + mSliderSwitchHeight);
+		Log.d(TAG, "onMeasure():mSwitchWidth=" + mSliderSwitchWidth + " mSwitchHeight=" + mSliderSwitchHeight);
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		final int measuredHeight = getMeasuredHeight();
 		final int measuredWidth = getMeasuredWidth();
@@ -524,7 +525,7 @@ public class AlphaSliderBar extends CompoundButton {
 
 	@Override
 	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-//		Log.d(TAG, "onLayout()-left=" + left + ",top=" + top + ",right=" + right + ",bottom=" + bottom);
+		Log.d(TAG, "onLayout()-left=" + left + ",top=" + top + ",right=" + right + ",bottom=" + bottom);
 		super.onLayout(changed, left, top, right, bottom);
 
 		int switchTop = 0;
@@ -552,13 +553,13 @@ public class AlphaSliderBar extends CompoundButton {
 		mSwitchLeft = mSliderSwitchWidth - mSwitchRight; 
 		mSwitchRight = mSliderSwitchWidth; 
 
-//		Log.d(TAG, "getWidth()=" + getWidth() + " getHeight()=" + getHeight());
-//		Log.d(TAG, "getPaddingLeft()=" + getPaddingLeft() + " getPaddingRight()=" + getPaddingRight());
-//		Log.d(TAG, "getPaddingTop()=" + getPaddingTop() + " getPaddingBottom()=" + getPaddingBottom());
+		Log.d(TAG, "getWidth()=" + getWidth() + " getHeight()=" + getHeight());
+		Log.d(TAG, "getPaddingLeft()=" + getPaddingLeft() + " getPaddingRight()=" + getPaddingRight());
+		Log.d(TAG, "getPaddingTop()=" + getPaddingTop() + " getPaddingBottom()=" + getPaddingBottom());
 
-//		Log.d(TAG, "mSwitchWidth=" + mSliderSwitchWidth + " mSwitchHeight=" + mSliderSwitchHeight);
-//		/d(TAG, "mSwitchLeft=" + mSwitchLeft + " mSwitchRight=" + mSwitchRight);
-//		Log.d(TAG, "mSwitchTop=" + mSwitchTop + " mSwitchBottom=" + mSwitchBottom); 
+		Log.d(TAG, "mSwitchWidth=" + mSliderSwitchWidth + " mSwitchHeight=" + mSliderSwitchHeight);
+		Log.d(TAG, "mSwitchLeft=" + mSwitchLeft + " mSwitchRight=" + mSwitchRight);
+		Log.d(TAG, "mSwitchTop=" + mSwitchTop + " mSwitchBottom=" + mSwitchBottom); 
 
 		// now that the layout is known, prepare the drawables 
 		if (mDrawableLeft != null) {
