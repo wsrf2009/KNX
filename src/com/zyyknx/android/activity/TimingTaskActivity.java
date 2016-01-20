@@ -395,10 +395,6 @@ public class TimingTaskActivity extends BaseActivity {
 					currentTask.setLoop(false);
 					currentTask.setOneOff(false);
 
-//					currentTask.setDay(dialogMonthly.getDay());
-//					currentTask.setHour(dialogMonthly.getHour());
-//					currentTask.setMinute(dialogMonthly.getMinute());
-						
 					refreshExecuteWayDetail(currentTask);
 					
 					dialog.dismiss();
@@ -473,16 +469,6 @@ public class TimingTaskActivity extends BaseActivity {
 					currentTask.setLoop(false);
 					currentTask.setOneOff(false);
 						
-					currentTask.setHour(dialogWeekly.getHour());
-					currentTask.setMinute(dialogWeekly.getMinute());
-					currentTask.setMonday(dialogWeekly.getMondayChecked());
-					currentTask.setTuesday(dialogWeekly.getTuesdayChecked());
-					currentTask.setWednesday(dialogWeekly.getWednesdayChecked());
-					currentTask.setThursday(dialogWeekly.getThursdayChecked());
-					currentTask.setFriday(dialogWeekly.getFridayChecked());
-					currentTask.setSaturday(dialogWeekly.getSaturdayChecked());
-					currentTask.setSunday(dialogWeekly.getSundayChecked());
-						
 					refreshExecuteWayDetail(currentTask);
 					
 					dialog.dismiss();
@@ -541,9 +527,6 @@ public class TimingTaskActivity extends BaseActivity {
 					currentTask.setEveryday(true);
 					currentTask.setLoop(false);
 					currentTask.setOneOff(false);
-						
-//					currentTask.setHour(dialogEveryday.getHour());
-//					currentTask.setMinute(dialogEveryday.getMinute());
 						
 					refreshExecuteWayDetail(currentTask);
 					
@@ -612,10 +595,6 @@ public class TimingTaskActivity extends BaseActivity {
 					currentTask.setHour(cal.get(Calendar.HOUR_OF_DAY));
 					currentTask.setMinute(cal.get(Calendar.MINUTE));
 					currentTask.setSecond(cal.get(Calendar.SECOND));
-						
-//					currentTask.setIntervalHour(dialogTime.getHour());
-//					currentTask.setIntervalMinute(dialogTime.getMinute());
-//					currentTask.setIntervalSecond(dialogTime.getSecond());
 					
 					refreshExecuteWayDetail(currentTask);
 					
@@ -682,12 +661,6 @@ public class TimingTaskActivity extends BaseActivity {
 					currentTask.setLoop(false);
 					currentTask.setOneOff(true);
 						
-//					currentTask.setYear(dialogOneOff.getYear());
-//					currentTask.setMonth(dialogOneOff.getMonth()+1);
-//					currentTask.setDay(dialogOneOff.getDay());
-//					currentTask.setHour(dialogOneOff.getHour());
-//					currentTask.setMinute(dialogOneOff.getMinute());
-						
 					refreshExecuteWayDetail(currentTask);
 					
 					dialog.dismiss(); 
@@ -730,17 +703,19 @@ public class TimingTaskActivity extends BaseActivity {
 			final TextView tvHint = (TextView)view.findViewById(R.id.textViewDatapointActionLayoutHint);
 			rbGetStatus.requestFocus();
 
+			int selectedIndex = -1;
+			KNXGroupAddressAction currentAction = addressAndAction.getAction();
+			boolean defaultActionsIsValid = true;
+			
+			/* Spinner 默认行为 */
 			ArrayAdapter<String> actionSpinnerAdapter = new ArrayAdapter<String>(arg0.getContext(), android.R.layout.simple_spinner_item);
 			actionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			KNXGroupAddressAction currentAction = addressAndAction.getAction();
-			String actionName = null;
-			if(null != currentAction) {
-				actionName = currentAction.getName();
-			}
 			List<KNXGroupAddressAction> defaultActions = addressAndAction.getAddress().getAddressAction();
-			int selectedIndex = -1;
-			boolean defaultActionsIsValid = true;
 			if(null != defaultActions) { // 该地址有可供选择的默认行为列表
+				String actionName = null;
+				if(null != currentAction) {
+					actionName = currentAction.getName();
+				}
 				for(int i=0; i<defaultActions.size(); i++) {
 					String name = defaultActions.get(i).getName();
 					actionSpinnerAdapter.add(name);
@@ -756,6 +731,7 @@ public class TimingTaskActivity extends BaseActivity {
 				defaultActionsIsValid = false;
 			}
 			
+			/* RadioButton 初始化界面 */
 			if(addressAndAction.getIsRead()) { // 读取状态
 				rbGetStatus.setChecked(true);
 				
@@ -800,8 +776,8 @@ public class TimingTaskActivity extends BaseActivity {
 				if(null != currentAction) {
 					rbCustomAction.setChecked(true);
 					
-					etActionName.setText(actionName);
-					etActionValue.setText(String.valueOf(addressAndAction.getAction().getValue()));
+					etActionName.setText(currentAction.getName());
+					etActionValue.setText(String.valueOf(currentAction.getValue()));
 				} else {
 					rbCustomAction.setChecked(false);
 				}
@@ -813,130 +789,6 @@ public class TimingTaskActivity extends BaseActivity {
 				tvActionParam.setEnabled(true);
 				etActionValue.setEnabled(true);
 			}
-			
-//			if (null != addressAndAction.getAction()) { // 已对该地址设置了行为
-//				String actionName = addressAndAction.getAction().getName();
-//				List<KNXGroupAddressAction> defaultActions = addressAndAction.getAddress().getAddressAction();
-//				if(null != defaultActions) { // 该地址有可供选择的默认行为列表
-//					int selectedIndex = -1;
-//					for(int i=0; i<defaultActions.size(); i++) {
-//						String name = defaultActions.get(i).getName();
-//						actionSpinnerAdapter.add(name);
-//						if(actionName.equals(name)) { // 该地址设置的行为为默认行为，记录下索引号
-//							selectedIndex = i;
-//						}
-//					}
-//					
-//					actionSpinner.setAdapter(actionSpinnerAdapter);
-//					
-//					Log.i(ZyyKNXConstant.DEBUG, "selectedIndex:"+selectedIndex);
-//					
-//					if (selectedIndex >= 0) { // 该地址的行为为默认行为列表中的选项
-//						rbGetStatus.setChecked(false);
-//						
-//						/* 默认行为可用，且选中 */
-//						rbDefaultAction.setChecked(true);
-//						rbDefaultAction.setEnabled(true);
-//						actionSpinner.setEnabled(true);
-//						
-//						/* 自定义行为可用 ，但不选中*/
-//						rbCustomAction.setChecked(false);
-//						rbCustomAction.setEnabled(true);
-//						tvActionName.setEnabled(false);
-//						etActionName.setEnabled(false);
-//						etActionName.clearFocus();
-//						tvActionParam.setEnabled(false);
-//						etActionValue.setEnabled(false);
-//						etActionValue.clearFocus();
-//						
-//						actionSpinner.setSelection(selectedIndex, true); // 在Spinner中选中该地址的行为
-//					} else { // 该地址的行为为自定义行为
-//						rbGetStatus.setChecked(false);
-//						
-//						/* 默认行为可用，但不选中 */
-//						rbDefaultAction.setChecked(false);
-//						rbDefaultAction.setEnabled(true);
-//						actionSpinner.setEnabled(false);
-//						
-//						/* 自定义行为可用，且选中 */
-//						rbCustomAction.setChecked(true);
-//						rbCustomAction.setEnabled(true);
-//						tvActionName.setEnabled(true);
-//						etActionName.setEnabled(true);
-//						etActionName.clearFocus();;
-//						tvActionParam.setEnabled(true);
-//						etActionValue.setEnabled(true);
-//						etActionValue.clearFocus();
-//						
-//						etActionName.setText(actionName);
-//						etActionValue.setText(String.valueOf(addressAndAction.getAction().getValue()));
-//					}
-//				} else { // 该地址无可供选择的默认行为列表
-//					rbGetStatus.setChecked(false);
-//					
-//					/* 默认行为不可用，且不选中 */
-//					rbDefaultAction.setChecked(false);
-//					rbDefaultAction.setEnabled(false);
-//					actionSpinner.setEnabled(false);
-//					
-//					/* 自定义行为可用，且选中 */
-//					rbCustomAction.setChecked(true);
-//					rbCustomAction.setEnabled(true);
-//					tvActionName.setEnabled(true);
-//					etActionName.setEnabled(true);
-//					etActionName.clearFocus();
-//					tvActionParam.setEnabled(true);
-//					etActionValue.setEnabled(true);
-//					etActionValue.clearFocus();
-//					
-//					etActionName.setText(actionName);
-//					etActionValue.setText(String.valueOf(addressAndAction.getAction().getValue()));
-//				}
-//			} else { // 该地址尚未设置行为
-//				List<KNXGroupAddressAction> defaultActions = addressAndAction.getAddress().getAddressAction();
-//				if(null != defaultActions) { // 该地址有可供选择的默认行为列表
-//					
-//					for(KNXGroupAddressAction action:defaultActions) {
-//						actionSpinnerAdapter.add(action.getName());
-//					}
-//					
-//					actionSpinner.setAdapter(actionSpinnerAdapter);
-//
-//					rbGetStatus.setChecked(false);
-//					
-//					/* 默认行为可用，但不选中 */
-//					rbDefaultAction.setChecked(false);
-//					rbDefaultAction.setEnabled(true);
-//					actionSpinner.setEnabled(false);
-//
-//					/* 自定义行为可用，但不选中 */
-//					rbCustomAction.setChecked(false);
-//					rbCustomAction.setEnabled(true);
-//					tvActionName.setEnabled(false);
-//					etActionName.setEnabled(false);
-//					etActionName.clearFocus();
-//					tvActionParam.setEnabled(false);
-//					etActionValue.setEnabled(false);
-//					etActionValue.clearFocus();
-//				} else { // 该地址无可供选择的默认行为列表
-//					rbGetStatus.setChecked(false);
-//					
-//					/* 默认行为不可用，且不选中 */
-//					rbDefaultAction.setChecked(false);
-//					rbDefaultAction.setEnabled(false);
-//					actionSpinner.setEnabled(false);
-//					
-//					/* 自定义行为可用，但不选中 */
-//					rbCustomAction.setChecked(false);
-//					rbCustomAction.setEnabled(true);
-//					tvActionName.setEnabled(false);
-//					etActionName.setEnabled(false);
-//					etActionName.clearFocus();
-//					tvActionParam.setEnabled(false);
-//					etActionValue.setEnabled(false);
-//					etActionValue.clearFocus();
-//				}
-//			}
 
 			/* 读取对象的状态 */
 			rbGetStatus.setOnCheckedChangeListener(new OnCheckedChangeListener() {

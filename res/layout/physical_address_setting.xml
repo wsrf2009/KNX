@@ -24,7 +24,7 @@
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:text="0"
-        	android:inputType="datetime" />
+        	android:inputType="number" />
         
           <EditText
             android:id="@+id/txtSecond"
@@ -34,7 +34,7 @@
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:text="0"
-        	android:inputType="datetime" />
+        	android:inputType="number" />
         
             <EditText
             android:id="@+id/txtThree"
@@ -44,7 +44,7 @@
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:text="0"
-        	android:inputType="datetime" />
+        	android:inputType="number" />
           
     </LinearLayout>
 

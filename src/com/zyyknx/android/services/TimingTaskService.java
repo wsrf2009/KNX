@@ -26,58 +26,27 @@ import android.util.Log;
  *
  */
 public class TimingTaskService extends BroadcastReceiver {
-
-	/**
-	 * 
-	 */
-	public TimingTaskService() {
-		// TODO Auto-generated constructor stub
-	}
-
 	/* (non-Javadoc)
 	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
 	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
-//		Log.d("ZyyKNXApp", "intent.getAction: "+intent.getAction());
-		
-		/* 获取系统时区 */
-//		TimeZone tz = TimeZone.getDefault();
-//		String timeZoneOfSystem = tz.getDisplayName(false, TimeZone.SHORT);
-		
-		
-		
 		final Calendar c = Calendar.getInstance();  
-//		c.setTimeZone(TimeZone.getTimeZone(timeZoneOfSystem));  
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH)+1;
 		int day = c.get(Calendar.DAY_OF_MONTH);
 		int hour = c.get(Calendar.HOUR_OF_DAY); // 24小时制的时间
 		int minute = c.get(Calendar.MINUTE);
 		int second = c.get(Calendar.SECOND);
-		
-//		final Calendar c = Calendar.getInstance();  
-//        c.setTimeZone(TimeZone.getTimeZone(timeZoneOfSystem));  
-//        String dayOfWeek = TimingTaskItem.getDayOfWeek(c.get(Calendar.DAY_OF_WEEK));
+
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        boolean refreshUI = false;
         
-        Log.i(ZyyKNXConstant.DEBUG, "system time:"+year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second+" dayOfWeek:"+dayOfWeek);
-		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-//		String currentTime = sdf.format(new Date());
-//		Log.d("ZyyKNXApp", "currentTime: " + currentTime);
-		
-		/* 获取当前的系统时间 */
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-//		String currentTime = sdf.format(new Date());
-//		
-//		Log.i(ZyyKNXConstant.DEBUG, "currentTime:"+currentTime);
-//		
+//        Log.i(ZyyKNXConstant.DEBUG, "system time:"+year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second+" dayOfWeek:"+dayOfWeek);
+
 		Map<String, List<TimingTaskItem>> timerTaskMap = ZyyKNXApp.getInstance().getTimerTaskMap();
 		for(Map.Entry<String, List<TimingTaskItem>> taskMap : timerTaskMap.entrySet()) { // 枚举定时任务按钮所对应的定时任务列表
 			List<TimingTaskItem> delList = new ArrayList<TimingTaskItem>();
-			boolean refreshUI = false;
-			
 			List<TimingTaskItem> taskList = taskMap.getValue();
 			for(TimingTaskItem item:taskList) { // 枚举定时任务列表下的每个定时任务
 				boolean delete = false;
@@ -128,8 +97,8 @@ public class TimingTaskService extends BroadcastReceiver {
 					if((day == item.getDay()) && (hour == item.getHour()) && (minute == item.getMinute()) && (second == item.getSecond())) {
 						item.execute();
 					}
-				} else if (item.isLoopSelected()) { // 循环.
-
+				} else if (item.isLoopSelected()) { // 循环
+					/* 计数器减一秒 */
 					if(item.decCounterSecond > 0) {
 						item.decCounterSecond--;
 					} else {
@@ -141,12 +110,11 @@ public class TimingTaskService extends BroadcastReceiver {
 								item.decCounterSecond = 59;
 								item.decCounterMinute = 59;
 								item.decCounterHour--;
-							} else {
-								
 							}
 						}
 					}
 					
+					/* 计数器减完，则执行任务，并开始下一轮计数 */
 					if ((0 >= item.decCounterHour) && (0 >= item.decCounterMinute) && (0 >= item.decCounterSecond)) {
 						item.decCounterSecond = item.getIntervalSecond();
 						item.decCounterMinute = item.getIntervalMinute();
@@ -154,9 +122,7 @@ public class TimingTaskService extends BroadcastReceiver {
 						
 						item.execute();
 					}
-					
-					Log.i(ZyyKNXConstant.DEBUG, "item.decCounterSecond:" + item.decCounterSecond+"item.getSecond():"+item.getSecond());
-					
+
 					int newHour = hour+item.decCounterHour;
 					int newMinute = minute+item.decCounterMinute;
 					int newSecond = second+item.decCounterSecond;
@@ -181,13 +147,10 @@ public class TimingTaskService extends BroadcastReceiver {
 						item.setSecond(newSecond);
 						refreshUI = true;
 					}
-
 				} 
 				
 				if (delete) {
 					delList.add(item);
-					
-					delete = false;
 				}
 			}
 			
@@ -195,11 +158,11 @@ public class TimingTaskService extends BroadcastReceiver {
 				taskList.removeAll(delList);
 				refreshUI = true;
 			}
-
-			if (refreshUI) {
-				Intent mIntent = new Intent(ZyyKNXConstant.BROADCAST_REFRESH_TIMING_TASK_LIST);
-				context.sendBroadcast(mIntent);
-			}
+		}
+		
+		if (refreshUI) {
+			Intent mIntent = new Intent(ZyyKNXConstant.BROADCAST_REFRESH_TIMING_TASK_LIST);
+			context.sendBroadcast(mIntent);
 		}
 	}
 }
