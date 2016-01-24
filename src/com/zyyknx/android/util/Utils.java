@@ -55,6 +55,29 @@ public class Utils {
 		}
 		return false;
 	}
+	
+	/** 
+	  * 网络已经连接，然后去判断是wifi连接还是GPRS连接 
+	  * 设置一些自己的逻辑调用 
+	  *  返回值： 0:其他连接，1：GPRS，2：wifi，3：Net
+	  */  
+	public static int isNetworkAvailable(Context context)
+	 {         
+		 ConnectivityManager cgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		 NetworkInfo networkInfo = cgr.getActiveNetworkInfo();  
+		 if (networkInfo == null)
+			 return -1;
+       if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {  
+           return 1;  
+       } 
+       if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {  
+           return 2;  
+       }  
+       if (networkInfo.getType() == ConnectivityManager.DEFAULT_NETWORK_PREFERENCE) {  
+           return 3;  
+       }  
+	     return 0;   //      
+	 }  
 
 	/**
 	 * @param view

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zyyknx.android"
     android:sharedUserLabel="@string/uid_label"
-    android:versionCode="6"
-    android:versionName="2.01.001" >
+    android:versionCode="7"
+    android:versionName="2.01.002" >
 
     <supports-screens
         android:largeScreens="true"
@@ -12,7 +12,7 @@
         android:xlargeScreens="true" />
 
     <uses-sdk
-        android:minSdkVersion="17"
+        android:minSdkVersion="15"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -49,7 +49,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     
-    <uses-permission android:name = "android.permission.DISABLE_KEYGUARD"/><!-- 屏蔽HOME键需要的权限 -->
+    <uses-permission android:name = "android.permission.DISABLE_KEYGUARD"/> <!-- 屏蔽HOME键需要的权限 -->
 
 
     <application

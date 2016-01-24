@@ -2,23 +2,18 @@ package com.zyyknx.android.activity;
 
 import java.util.ArrayList;
 import java.util.List;
- 
+
 import com.zyyknx.android.R;
 import com.zyyknx.android.ZyyKNXApp;
 import com.zyyknx.android.ZyyKNXConstant;
 import com.zyyknx.android.services.RestartService;
 import com.zyyknx.android.widget.CustomPopDialogFragment;
 import com.zyyknx.android.widget.PromptDialog;
-import com.zyyknx.android.widget.settingview.BasicItemViewH;
-import com.zyyknx.android.widget.settingview.CheckItemViewV;
 import com.zyyknx.android.widget.settingview.ImageItemView;
 import com.zyyknx.android.widget.settingview.SettingButton;
-import com.zyyknx.android.widget.settingview.SettingData;
-import com.zyyknx.android.widget.settingview.SettingView;
-import com.zyyknx.android.widget.settingview.SettingViewItemData;
-import com.zyyknx.android.widget.settingview.SwitchItemView;
 import com.zyyknx.android.widget.settingview.SettingButton.onSettingButtonClickListener;
-import com.zyyknx.android.widget.settingview.SettingButton.onSettingButtonSwitchListener;
+import com.zyyknx.android.widget.settingview.SettingData;
+import com.zyyknx.android.widget.settingview.SettingViewItemData;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -26,18 +21,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-<<<<<<< HEAD
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Toast;
  
 
 public class SettingDialog {
@@ -298,8 +289,8 @@ public class SettingDialog {
 								editor.putInt(ZyyKNXConstant.KNX_SETTING_SCRRENOFF_TIMESPAN, Integer.valueOf(txtTimeSpan.getText().toString()));
 								editor.commit();
 								dialog.dismiss();
-							 
-								Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000 * Integer.valueOf(txtTimeSpan.getText().toString()));
+								
+//								Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000 * Integer.valueOf(txtTimeSpan.getText().toString()));
 							}
 						})
 				.show(); 

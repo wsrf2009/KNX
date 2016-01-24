@@ -49,53 +49,54 @@ public class TimingTaskService extends BroadcastReceiver {
 			List<TimingTaskItem> delList = new ArrayList<TimingTaskItem>();
 			List<TimingTaskItem> taskList = taskMap.getValue();
 			for(TimingTaskItem item:taskList) { // 枚举定时任务列表下的每个定时任务
+				boolean execute = false;
 				boolean delete = false;
 
 				if(item.isOneOffSelected()) { // 若是一次性任务
 					if ((year == item.getYear()) && (month == item.getMonth()) && (day == item.getDay()) &&
 								(hour == item.getHour()) && (minute == item.getMinute()) && (second == item.getSecond())) { // 当前时间与任务所指时间一致
-						item.execute(); // 执行任务
+						execute = true; // 执行任务
 						delete = true; // 从定时任务列表移除该任务
 					}
 				} else if(item.isEverydaySelected()) { // 若是每天都要执行的任务
 					if((hour == item.getHour()) && (minute == item.getMinute()) && (second == item.getSecond())) {
-						item.execute(); // 执行任务
+						execute = true; // 执行任务
 					}
 				} else if (item.isWeeklySelected()) { // 若是周期性的
 					if((hour == item.getHour()) && (minute == item.getMinute()) && (second == item.getSecond())) {
 						if (1 == dayOfWeek) { // 周日
 							if(item.isSundaySelected()) {
-								item.execute();
+								execute = true; // 执行任务
 							}
 						} else if (2 == dayOfWeek) { // 周一
 							if(item.isMondaySelected()) {
-								item.execute();
+								execute = true; // 执行任务
 							}
 						} else if (3 == dayOfWeek) { // 周二
 							if(item.isTuesdaySelected()) {
-								item.execute();
+								execute = true; // 执行任务
 							}
 						} else if (4 == dayOfWeek) { // 周三
 							if(item.isWednesdaySelected()){
-								item.execute();
+								execute = true; // 执行任务
 							}
 						} else if (5 == dayOfWeek) { // 周四
 							if(item.isThursdaySelected()) {
-								item.execute();
+								execute = true; // 执行任务
 							}
 						} else if (6 == dayOfWeek) { // 周五
 							if(item.isFridaySelected()) {
-								item.execute();
+								execute = true; // 执行任务
 							}
 						} else if (7 == dayOfWeek) { // 周六
 							if(item.isSaturdaySelected()) {
-								item.execute();
+								execute = true; // 执行任务
 							}
 						}
 					}
 				} else if (item.isMonthlySelected()) { // 每月
 					if((day == item.getDay()) && (hour == item.getHour()) && (minute == item.getMinute()) && (second == item.getSecond())) {
-						item.execute();
+						execute = true; // 执行任务
 					}
 				} else if (item.isLoopSelected()) { // 循环
 					/* 计数器减一秒 */
@@ -120,7 +121,7 @@ public class TimingTaskService extends BroadcastReceiver {
 						item.decCounterMinute = item.getIntervalMinute();
 						item.decCounterHour = item.getIntervalHour();
 						
-						item.execute();
+						execute = true; // 执行任务
 					}
 
 					int newHour = hour+item.decCounterHour;
@@ -148,6 +149,10 @@ public class TimingTaskService extends BroadcastReceiver {
 						refreshUI = true;
 					}
 				} 
+				
+				if(execute) {
+					new Thread(item).start();
+				}
 				
 				if (delete) {
 					delList.add(item);

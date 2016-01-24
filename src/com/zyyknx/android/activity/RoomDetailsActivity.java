@@ -1,6 +1,5 @@
 package com.zyyknx.android.activity;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +26,6 @@ import com.zyyknx.android.models.KNXPage;
 import com.zyyknx.android.models.KNXRoom;
 import com.zyyknx.android.models.KNXSelectedAddress;
 import com.zyyknx.android.util.ByteUtil;
-import com.zyyknx.android.util.FileUtils;
 import com.zyyknx.android.util.ImageUtils;
 import com.zyyknx.android.util.KNX0X01Lib;
 import com.zyyknx.android.util.Log;
@@ -44,7 +42,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.GridLayout.Spec;
-import android.support.v7.widget.Space;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -55,7 +52,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.Space;
 
 public class RoomDetailsActivity extends BaseActivity implements OnBlindsListener {
 	
@@ -109,7 +106,7 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 	private void initialComponent() {
 		// 获取参数
 		KNXRoom mKNXRoom = (KNXRoom) getIntent().getSerializableExtra(ZyyKNXConstant.REMOTE_PARAM_KEY);
-		RelativeLayout layContent = (RelativeLayout) findViewById(R.id.layContent); // 获取LinearLayout控件
+		LinearLayout layContent = (LinearLayout) findViewById(R.id.layContent); // 获取LinearLayout控件
 		final GridLayout rootGridLayout = (GridLayout) findViewById(R.id.gridLayout); // 获取GridLayout控件  
 		int contentViewTop = getBarHeight();  //获取状态栏高度
 				
@@ -164,14 +161,6 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 
 						addTimingTask.setLayoutParams(pageLayoutParams);
 						rootGridLayout.addView(addTimingTask, pageControlGridLayoutParams);
-						
-						//生成控件
-//						ComponentView componentView = KNXControlBase.buildWithControl(this, mKNXControlBase);
-//						if (componentView != null) {
-//							componentView.setOnClickListener(buttonAddTimingTaskOnClickListener);
-//							componentView.setLayoutParams(pageLayoutParams);
-//							rootGridLayout.addView(componentView, pageControlGridLayoutParams);
-//						 }
 					} else if (mKNXControlBase instanceof KNXTimerTaskListView) {
 						ListView lvTimingTaskList = new ListView(this);
 						lvTimingTaskList.setBackgroundResource(R.drawable.shixun_group_bg);
@@ -180,11 +169,15 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 						if(timerId > 0) {
 							Map<String, List<TimingTaskItem>> timerTaskMap = ZyyKNXApp.getInstance().getTimerTaskMap(); // 获取页面的定时器
 							List<TimingTaskItem> timingTaskList = timerTaskMap.get(String.valueOf(timerId)); // 根据定时器ID获取定时任务列表
-							if(null != timingTaskList) {
-								TimingTaskListAdapter mTimingTaskListAdapter = new TimingTaskListAdapter(this, timingTaskList);
-								lvTimingTaskList.setAdapter(mTimingTaskListAdapter);
-								timingTaskAdapterList.add(mTimingTaskListAdapter);
+							if(null == timingTaskList) {
+								/* 如为新建的定时器 */
+								timingTaskList = new ArrayList<TimingTaskItem>();
+								timerTaskMap.put(String.valueOf(timerId), timingTaskList);
 							}
+							
+							TimingTaskListAdapter mTimingTaskListAdapter = new TimingTaskListAdapter(this, timingTaskList);
+							lvTimingTaskList.setAdapter(mTimingTaskListAdapter);
+							timingTaskAdapterList.add(mTimingTaskListAdapter);
 						}
 
 						rootGridLayout.addView(lvTimingTaskList, pageControlGridLayoutParams);
@@ -271,14 +264,60 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 //
 //							mGridLayoutGroup.addView(lvTimingTaskList, controlGridLayoutParams);
 //						} else {
-							ComponentView componentView = KNXControlBase.buildWithControl(this, mKNXControlBase);
-							if (componentView != null) {
+//							ComponentView componentView = KNXControlBase.buildWithControl(this, mKNXControlBase);
+//							if (componentView != null) {
+//								LayoutParams controlLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
+//								controlLayoutParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL | Gravity.CENTER;  
+//								componentView.setLayoutParams(controlLayoutParams);
+//								mGridLayoutGroup.addView(componentView, controlGridLayoutParams);
+//							} 
+//						}
+							
+							if(mKNXControlBase instanceof KNXTimerButton) { // 为定时器按钮
+								Button addTimingTask = new Button(this);
+								String id = String.valueOf(mKNXControlBase.getId());
+								
+								addTimingTask.setTag(id); // 当前控件的ID
+								addTimingTask.setText(mKNXControlBase.getText());
+								addTimingTask.setOnClickListener(buttonAddTimingTaskOnClickListener);
+
 								LayoutParams controlLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
 								controlLayoutParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL | Gravity.CENTER;  
-								componentView.setLayoutParams(controlLayoutParams);
-								mGridLayoutGroup.addView(componentView, controlGridLayoutParams);
-							} 
-//						}
+								addTimingTask.setLayoutParams(controlLayoutParams);
+								mGridLayoutGroup.addView(addTimingTask, controlGridLayoutParams);
+							} else if (mKNXControlBase instanceof KNXTimerTaskListView) {
+								ListView lvTimingTaskList = new ListView(this);
+								lvTimingTaskList.setBackgroundResource(R.drawable.shixun_group_bg);
+								
+								int timerId = ((KNXTimerTaskListView)mKNXControlBase).getSelectedTimer().getId(); // 获取与之关联的定时器的ID
+								if(timerId > 0) {
+									Map<String, List<TimingTaskItem>> timerTaskMap = ZyyKNXApp.getInstance().getTimerTaskMap(); // 获取页面的定时器
+									List<TimingTaskItem> timingTaskList = timerTaskMap.get(String.valueOf(timerId)); // 根据定时器ID获取定时任务列表
+									if(null == timingTaskList) {
+										/* 如为新建的定时器 */
+										timingTaskList = new ArrayList<TimingTaskItem>();
+										timerTaskMap.put(String.valueOf(timerId), timingTaskList);
+									}
+									
+									TimingTaskListAdapter mTimingTaskListAdapter = new TimingTaskListAdapter(this, timingTaskList);
+									lvTimingTaskList.setAdapter(mTimingTaskListAdapter);
+									timingTaskAdapterList.add(mTimingTaskListAdapter);
+								}
+
+								LayoutParams controlLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
+								controlLayoutParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL | Gravity.CENTER;  
+								lvTimingTaskList.setLayoutParams(controlLayoutParams);
+								mGridLayoutGroup.addView(lvTimingTaskList, controlGridLayoutParams);
+							} else {
+								//生成控件
+								ComponentView componentView = KNXControlBase.buildWithControl(this, mKNXControlBase);
+								if (componentView != null) {
+									LayoutParams controlLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
+									controlLayoutParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL | Gravity.CENTER;  
+									componentView.setLayoutParams(controlLayoutParams);
+									mGridLayoutGroup.addView(componentView, controlGridLayoutParams);
+								} 
+							}	
 					}
 				}
 			}

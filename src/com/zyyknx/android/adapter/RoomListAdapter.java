@@ -3,6 +3,7 @@ package com.zyyknx.android.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler; 
 import android.view.LayoutInflater;
@@ -76,7 +77,8 @@ public class RoomListAdapter extends BaseAdapter {
 		holder.room_name.setText(mRoom.getText()); 
 		if (!StringUtil.isEmpty(mRoom.getSymbol())) {
 			//holder.room_icon.setImageBitmap(ImageUtils.getDiskBitmap(mRoom.getSymbol()));
-			holder.room_icon.setBackgroundDrawable(new BitmapDrawable(ImageUtils.getDiskBitmap(mRoom.getSymbol())));  
+			holder.room_icon.setBackgroundDrawable(new BitmapDrawable(ImageUtils.getDiskBitmap(mRoom.getSymbol()))); 
+//			holder.room_icon.setImageBitmap(BitmapFactory.decodeFile(pathName));
 		} else { 
 			holder.room_icon.setImageResource(R.drawable.launcher);    
 		}  

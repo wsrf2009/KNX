@@ -13,22 +13,20 @@ import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Build.VERSION;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -134,6 +132,14 @@ public class BaseActivity extends FragmentActivity {
 	public void finish() {
 		super.finish();
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) { 
+		super.onTouchEvent(event);
+		Log.i(ZyyKNXConstant.DEBUG, "getAction:"+event.getAction());
+		
+		return true;
 	}
 
 	@Override

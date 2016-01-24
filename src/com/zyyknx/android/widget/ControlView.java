@@ -311,13 +311,19 @@ public class ControlView extends ComponentView {
 		
 		Map<String, Integer> mGroupAddressIndexMap = ZyyKNXApp.getInstance().getGroupAddressIndexMap();
 		if(null != mGroupAddressIndexMap) {
-			int index = mGroupAddressIndexMap.get(address.getId());
+			String addressId = address.getId();
+			
+			Log.i(ZyyKNXConstant.DEBUG, "addressId:"+addressId);
+			
+			if((null != addressId) && (mGroupAddressIndexMap.containsKey(addressId))) {
+				int index = mGroupAddressIndexMap.get(address.getId());
 		
-			Log.i(ZyyKNXConstant.DEBUG, "write address ======>> "+address.getName()+" with value:"+data);
+				Log.i(ZyyKNXConstant.DEBUG, "write address ======>> "+address.getName()+" with value:"+data);
 		
-			byte[] byteArray = new byte[1];
-			byteArray[0] = (byte)(0xff & Integer.valueOf(data));
-			int x = KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length, 0);
+				byte[] byteArray = new byte[1];
+				byteArray[0] = (byte)(0xff & Integer.valueOf(data));
+				int x = KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length, 0);
+			}
 		}
 	}
 	

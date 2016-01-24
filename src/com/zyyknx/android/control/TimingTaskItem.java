@@ -24,7 +24,7 @@ import android.content.Context;
  * @author wangchunfeng
  *
  */
-public class TimingTaskItem implements Serializable, Cloneable  {
+public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 	/**
 	 * 
 	 */
@@ -326,7 +326,8 @@ public class TimingTaskItem implements Serializable, Cloneable  {
 		return this.addressList;
 	}
 
-	public void execute() {
+	@Override
+	public void run() {
 		for(KNXGroupAddressAndAction addressAndAction : addressList) {
 			if(addressAndAction.getIsRead()) {
 				ControlView.readDataFromAddress(addressAndAction.address);

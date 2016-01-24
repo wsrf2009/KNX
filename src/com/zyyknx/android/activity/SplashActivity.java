@@ -39,6 +39,8 @@ import com.zyyknx.android.util.ByteUtil;
 import com.zyyknx.android.util.CompressStatus; 
 import com.zyyknx.android.util.CopyFileUtil;
 import com.zyyknx.android.util.KNX0X01Lib;
+import com.zyyknx.android.util.Log;
+import com.zyyknx.android.util.NetWorkUtil;
 import com.zyyknx.android.util.ZipUtil;
 
 import android.app.Activity;
