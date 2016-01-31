@@ -341,13 +341,13 @@ public class RoomDetailsActivity extends BaseActivity implements OnBlindsListene
 				String mETSId = mKNXSelectedAddress.getId();
 				if(groupAddressIndexMap.containsKey(mETSId)) {
 					currentIndex = ZyyKNXApp.getInstance().getGroupAddressIndexMap().get(mETSId); 
+					
+					byte[] contentBytes = new byte[32];
+					byte[] length  = new byte[1];
+					KNX0X01Lib.UTestAndCopyObject(currentIndex, contentBytes, length);
+					currentValue = ByteUtil.getInt(contentBytes);
+					KNX0X01Lib.USetAndRequestObject(currentIndex);
 				}
-				
-				byte[] contentBytes = new byte[32];
-				byte[] length  = new byte[1];
-				KNX0X01Lib.UTestAndCopyObject(currentIndex, contentBytes, length);
-				currentValue = ByteUtil.getInt(contentBytes);
-				KNX0X01Lib.USetAndRequestObject(currentIndex);
 			} 
 			
 			if(currentPageKNXControlBase.get(i) instanceof KNXButton) { // KNXButton
