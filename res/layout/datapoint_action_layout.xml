@@ -45,10 +45,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@drawable/divider"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:showDividers="end"
-        android:focusable="true"  
-		android:focusableInTouchMode="true" >
+        android:visibility="visible" >
 
         <RelativeLayout
             android:layout_width="match_parent"

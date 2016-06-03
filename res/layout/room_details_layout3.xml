@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zyyknx.android.widget.BounceScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sation.knxcontroller.widget.BounceScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:silderSwitch="http://schemas.android.com/apk/res-auto"
     xmlns:blinds="http://schemas.android.com/apk/res-auto"
@@ -42,7 +42,7 @@
                 blinds:blindsButtonText="电动窗" /> 
            -->
            
-            <com.zyyknx.android.widget.SeekBarColorPicker
+            <com.sation.knxcontroller.widget.SeekBarColorPicker
             android:id="@+id/seekbar_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,14 +58,14 @@
             android:orientation="vertical" >
 
            
-            <com.zyyknx.android.widget.ColorPicker
+            <com.sation.knxcontroller.widget.ColorPicker
                 android:id="@+id/colorPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_weight="0.8" />
 
-             <com.zyyknx.android.widget.AlphaSliderBar
+             <com.sation.knxcontroller.widget.AlphaSliderBar
                 style="?attr/styleSliderSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,35 +85,35 @@
                 android:layout_marginRight="7dp"
                 android:orientation="horizontal" >
 
-                <com.zyyknx.android.widget.ColorPickerPanelView
+                <com.sation.knxcontroller.widget.ColorPickerPanelView
                     android:id="@+id/white_panel"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6dp"
                     android:layout_weight="0.5" />
 
-                <com.zyyknx.android.widget.ColorPickerPanelView
+                <com.sation.knxcontroller.widget.ColorPickerPanelView
                     android:id="@+id/cyan_panel"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6dp"
                     android:layout_weight="0.5" />
 
-                <com.zyyknx.android.widget.ColorPickerPanelView
+                <com.sation.knxcontroller.widget.ColorPickerPanelView
                     android:id="@+id/red_panel"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6dp"
                     android:layout_weight="0.5" />
 
-                <com.zyyknx.android.widget.ColorPickerPanelView
+                <com.sation.knxcontroller.widget.ColorPickerPanelView
                     android:id="@+id/green_panel"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="6dp"
                     android:layout_weight="0.5" />
 
-                <com.zyyknx.android.widget.ColorPickerPanelView
+                <com.sation.knxcontroller.widget.ColorPickerPanelView
                     android:id="@+id/yellow_panel"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
             android:background="@drawable/group_bg"
             android:orientation="horizontal" >
 
-            <com.zyyknx.android.widget.SliderSwitch
+            <com.sation.knxcontroller.widget.SliderSwitch
                 style="?attr/styleSliderSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -190,4 +190,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</com.zyyknx.android.widget.BounceScrollView>
+</com.sation.knxcontroller.widget.BounceScrollView>

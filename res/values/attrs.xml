@@ -19,17 +19,19 @@
     <attr name="styleSliderSwitch" format="reference" />
     <attr name="styleBlindsDown" format="reference" />
     <attr name="styleBlindsUp" format="reference" />  
-  
-    
-    
-    
-    
-    
+
     <attr name="vertical_padding" format="dimension" />
 	<attr name="horizontal_padding" format="dimension" />
 	<attr name="box_height" format="dimension" />
 	<attr name="box_width" format="dimension" />
 	<attr name="max" format="dimension" />
+	
+	<attr name="buttonText" format="string" />
+	<attr name="textSize" format="dimension" /> 
+	<attr name="textColor" format="color" />
+	<attr name="switchOnImage" format="reference" />
+	<attr name="switchOffImage" format="reference" />
+	
     <declare-styleable name="SmoothSwitcher">
 	    <attr name="vertical_padding" />
 	    <attr name="horizontal_padding" />
@@ -148,8 +150,8 @@
     
     
     <declare-styleable name="sliderSwitchTextAppearanceAttrib"> 
-        <attr name="textColor" format="color" />
-        <attr name="textSize" format="dimension" /> 
+        <attr name="textColor" />
+        <attr name="textSize" /> 
         <attr name="textStyle">
             <flag name="normal" value="0" />
             <flag name="bold" value="1" />
@@ -215,12 +217,90 @@
         <attr name="iconPadding" format="dimension"/>
     </declare-styleable>
     
+     
     <declare-styleable name="MySwitchButton">
-        <attr name="buttonText" format="string" /> 
-        <attr name="switchOnImage" format="reference" />
-        <attr name="switchOffImage" format="reference" /> 
+        <attr name="buttonText" /> 
+        <attr name="switchOnImage" />
+        <attr name="switchOffImage" /> 
     </declare-styleable>
     
-     
+    <declare-styleable name="STSwitch">
+        <attr name="buttonText"/>
+        <attr name="textSize" />
+        <attr name="textColor"/>
+        <attr name="backgroundColor" format="color" />
+        <attr name="switchOnImage" />
+        <attr name="switchOffImage" />
+    </declare-styleable> 
+    
+    
+    
+    
+        <!-- SettingView -->
+    <declare-styleable name="SettingView">
+        <attr name="iOSStyle" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="SettingViewItem">
+        <attr name="title" format="string" />
+        <attr name="subTitle" format="string" />
+        <attr name="titleColor" format="reference" />
+        <attr name="subTitleColor" format="reference" />
+        <attr name="titleSize" format="reference|dimension" />
+        <attr name="subTitleSize" format="reference|dimension" />
+        <attr name="drawable" format="reference" />
+        <attr name="arrow" format="reference" />
+        <attr name="check" format="reference" />
+        <attr name="image" format="reference" />
+        <attr name="clickable" format="boolean" />
+        <attr name="checked" format="boolean" />
+        <attr name="background" format="reference" />
+    </declare-styleable>
 
+    <declare-styleable name="GridLayout">
+        <attr name="android:orientation" />
+    </declare-styleable>
+    
+    <declare-styleable name="GridLayout_Layout">
+        <attr name="android:layout_column" />
+        <attr name="android:layout_gravity" />
+    </declare-styleable>
+    
+    <declare-styleable name="ViewGroup_MarginLayout" >
+        <attr name="android:layout_margin" />
+        <attr name="android:layout_marginLeft" />
+        <attr name="android:layout_marginTop" />
+        <attr name="android:layout_marginRight" />
+        <attr name="android:layout_marginBottom" />
+    </declare-styleable>
+    
+    <attr name="mySwitchStyleAttr" />
+    <declare-styleable name="MySwitch" >
+        <attr name="leftBackground" />
+        <attr name="rightBackground" />
+        <attr name="direct" />
+        <attr name="thumb" />
+        <attr name="track" format="reference" />
+        <attr name="textOn" />
+        <attr name="textOff" />
+        <attr name="drawableOn" format="reference" />
+        <attr name="drawableOff" format="reference" />
+        <attr name="pushStyle" format="boolean" />
+        <attr name="textOnThumb" />
+        <attr name="thumbExtraMovement" format="reference" />
+        <attr name="thumbTextPadding" />
+        <attr name="trackTextPadding" format="reference|dimension" />
+        <attr name="switchMinWidth" />
+        <attr name="switchMinHeight" />
+        <attr name="switchPadding" />
+        <attr name="backgroundMask" />
+        <attr name="switchTextAppearanceAttrib" />
+    </declare-styleable>
+    
+    <declare-styleable name="mySwitchTextAppearanceAttrib" >
+        <attr name="textColor" />
+        <attr name="textSize" />
+        <attr name="typeface" />
+        <attr name="textStyle" />
+    </declare-styleable>
+    
 </resources>

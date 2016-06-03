@@ -9,7 +9,7 @@
         android:gravity="center" >
  
 
-        <com.zyyknx.android.widget.seekbar.ORSeekBar
+        <com.sation.knxcontroller.widget.seekbar.ORSeekBar
             android:id="@+id/horizontal_seekbar"
             android:layout_width="360dip"
             android:layout_height="86dip"

@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content" >
 
                     <TextView
-                        android:id="@+id/textView1"
+                        android:id="@+id/roomTilesListTextViewDateTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
@@ -135,19 +135,28 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp" >
 
+                    <EditText
+                        android:id="@+id/timingTaskLayoutTaskItemEditTextName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:ems="10" />
+
                     <TextView
                         android:id="@+id/timingTaskLayoutTaskExecuteWayTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/timingTaskLayoutTaskItemEditTextName"
                         android:text="@string/task_execution_way"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:id="@+id/timingTaskLayoutExecuteWayBackground"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/timingTaskLayoutTaskExecuteWayTitle"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:background="#FFFFFF"
                         android:divider="@drawable/divider"
                         android:orientation="vertical"
@@ -213,7 +222,8 @@
                         android:layout_below="@id/timingTaskLayoutExecuteWayBackground"
                         android:layout_marginTop="20dp"
                         android:text="@string/task_execution_object"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:visibility="gone" />
 
                     <ListView
                         android:id="@+id/timingTaskLayoutGroupAddressList"
@@ -221,7 +231,9 @@
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/RelativeLayout11251"
                         android:layout_below="@id/timingTaskLayoutTaskObjectTitle"
+                        android:layout_marginTop="10dp"
                         android:background="#FFFFFF" >
+
                     </ListView>
 
                     <RelativeLayout

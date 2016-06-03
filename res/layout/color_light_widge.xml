@@ -17,7 +17,7 @@
             android:background="@drawable/group_bg"
             android:orientation="vertical" >
 
-            <com.zyyknx.android.widget.ColorPicker
+            <com.sation.knxcontroller.widget.ColorPicker
                 android:id="@+id/colorPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
                 android:gravity="center" />
         </LinearLayout>
 
-        <com.zyyknx.android.widget.AlphaSliderBar
+        <com.sation.knxcontroller.widget.AlphaSliderBar
             style="?attr/styleSliderSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,35 +44,35 @@
             android:layout_weight="0.2"
             android:orientation="horizontal" >
 
-            <com.zyyknx.android.widget.ColorPickerPanelView
+            <com.sation.knxcontroller.widget.ColorPickerPanelView
                 android:id="@+id/white_panel"
                 android:layout_width="0px"
                 android:layout_height="wrap_content" 
                 android:layout_weight="0.5"
                 android:background="@drawable/default_button_background_color_mask" />
 
-            <com.zyyknx.android.widget.ColorPickerPanelView
+            <com.sation.knxcontroller.widget.ColorPickerPanelView
                 android:id="@+id/cyan_panel"
                 android:layout_width="0px"
                 android:layout_height="wrap_content" 
                 android:layout_weight="0.5"
                 android:background="@drawable/default_button_background_color_mask" />
 
-            <com.zyyknx.android.widget.ColorPickerPanelView
+            <com.sation.knxcontroller.widget.ColorPickerPanelView
                 android:id="@+id/red_panel"
                 android:layout_width="0px"
                 android:layout_height="wrap_content" 
                 android:layout_weight="0.5"
                 android:background="@drawable/default_button_background_color_mask" />
 
-            <com.zyyknx.android.widget.ColorPickerPanelView
+            <com.sation.knxcontroller.widget.ColorPickerPanelView
                 android:id="@+id/green_panel"
                 android:layout_width="0px"
                 android:layout_height="wrap_content" 
                 android:layout_weight="0.5"
                 android:background="@drawable/default_button_background_color_mask" />
 
-            <com.zyyknx.android.widget.ColorPickerPanelView
+            <com.sation.knxcontroller.widget.ColorPickerPanelView
                 android:id="@+id/yellow_panel"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"

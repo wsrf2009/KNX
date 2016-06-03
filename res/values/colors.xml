@@ -49,6 +49,16 @@
     <color name="switcher_cursor_on">#0033FF</color>
     <color name="switcher_cursor_drag">#0066FF</color>
     <color name="switcher_background">#303030</color>
+    
+    
+    
+    
+    
+    <color name="setting_view_item_bg_pressed">#FFF0F0F0</color>
+    <color name="setting_view_item_bg_normal">#FFFFFFFF</color>
+   
+    <color name="setting_view_item_title_text">#FF000000</color>
+    <color name="setting_view_item_subtitle_text">#FFCCCCCC</color>
      
     
 </resources>

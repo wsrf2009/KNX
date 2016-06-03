@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="16dip"
-        android:text="网关地址" />
+        android:text="@string/gateway_address" />
 
     <EditText
         android:id="@+id/txtIP"
@@ -39,7 +39,7 @@
         android:layout_below="@+id/txtIP"
         android:layout_marginLeft="16dip"
         android:layout_marginTop="13dp"
-        android:text="网关端口"  />
+        android:text="@string/gateway_port" />
 
     <EditText
         android:id="@+id/txtPort"

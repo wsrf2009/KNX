@@ -11,7 +11,7 @@
         android:id="@+id/setting_view_switch_item_title"
         style="@style/SettingViewTitleH" />
 
-    <com.zyyknx.android.widget.settingview.SwitchButton
+    <com.sation.knxcontroller.widget.settingview.SwitchButton
         android:id="@+id/setting_view_switch_item_switch"
         style="@style/SettingViewSwitch" />
 
