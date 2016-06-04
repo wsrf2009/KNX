@@ -22,11 +22,11 @@ public class KNXSelectedAddress implements Serializable {
 	}
 	
 	// 数据类型
-	private String Type ;  
-	public String getType () {
+	private int Type ;  
+	public int getType () {
 		return Type ;
 	}
-	public void setType (String type ) {
+	public void setType (int type ) {
 		Type = type;
 	}
 	

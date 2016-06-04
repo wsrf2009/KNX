@@ -31,40 +31,4 @@ public class KNXSliderSwitch extends KNXControlBase {
 	} 
 	
 	public boolean IsRelativeControl;
-
-	//最小值
-//	private int MinValue; 
-//	public int getMinValue() {
-//		return MinValue;
-//	}
-//	public void setMinValue(int minValue) {
-//		MinValue = minValue;
-//	}
-	
-	//最大值
-//	private int MaxValue;
-//	public int getMaxValue() {
-//		return MaxValue;
-//	}
-//	public void setMaxValue(int maxValue) {
-//		MaxValue = maxValue;
-//	}
-	
-//	//要滑块两侧显示的符号。
-//	private int SliderSymbol; 
-//	public int getSliderSymbol() {
-//		return SliderSymbol;
-//	}
-//	public void setSliderSymbol(int controlSymbol) {
-//		SliderSymbol = controlSymbol;
-//	}
-//
-//	//滑动时延迟时间(单位毫秒)
-//	private int SendInterval;
-//	public int getSendInterval() {
-//		return SendInterval;
-//	}
-//	public void setSendInterval(int sendInterval) {
-//		SendInterval = sendInterval;
-//	}
 }

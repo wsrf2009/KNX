@@ -30,12 +30,7 @@ public class NetWorkUtil {
 		int nType = networkInfo.getType();
 		if(networkInfo.isConnected()) {
 			if (nType == ConnectivityManager.TYPE_MOBILE) { // 移动蜂窝网络
-//				Log.e("networkInfo.getExtraInfo() is "+ networkInfo.getExtraInfo());
-//				if (networkInfo.getExtraInfo().toLowerCase().equals("cmnet")) { // Net
-//					netType = 3;
-//				} else { // wap网络
-					netType = 1;
-//				}
+				netType = 1;
 			} else if (nType == ConnectivityManager.TYPE_WIFI) { // WIFI网络
 				netType = 2;
 			} else if (nType == ConnectivityManager.TYPE_ETHERNET) { // 以太网

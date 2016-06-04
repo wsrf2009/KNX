@@ -27,7 +27,7 @@ public class DPT9 {
 					break;
 				}
 			}
-			
+			 
 			if(E>15) {
 				break;
 			}

@@ -4,7 +4,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
-import com.sation.knxcontroller.models.ResponseEntity;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.PreferenceHelper;
 import com.sation.knxcontroller.R;
@@ -212,10 +211,6 @@ public class BaseActivity extends FragmentActivity {
 
 			}
 		};
-	}
-
-	protected <T> Boolean ResponseExceptionListener(ResponseEntity<T> response) {
-		return true;
 	}
 
 	/**

@@ -18,56 +18,6 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.TextView;
 
-/* 使用
- public void showDialogFragment(final String msg) {
-
- dialogFragment = new CustomPopDialogFragment() {
- @Override
- protected View customContent(LayoutInflater inflater) {
- View view = inflater.inflate(R.layout.tips, null, false);
- TextView txtTips = (TextView) view.findViewById(R.id.txtTips);
-
- txtTips.setText(msg);
- ImageButton cancelBtn = (ImageButton) view .findViewById(R.id.cancelBtn);
- cancelBtn.setOnClickListener(new OnClickListener() {
- public void onClick(View v) {
-
- dismiss();
- }
- }); 
- return view;
- }
-
- @Override
- protected String customTitle() {
- return "业务呼叫";
- }
- };
- dialogFragment.show(getFragmentManager(), "tips");
- }
-
-
-
- CustomPopDialogFragment mCustomPopDialogFragment = new CustomPopDialogFragment();  
- mCustomPopDialogFragment.setTitle("温馨提示");  
- mCustomPopDialogFragment.setMessage("您确退出吗?"); 
- mCustomPopDialogFragment.setIsProgressBarVisable(true);
- mCustomPopDialogFragment.setBackButton("返 回", new DialogInterface.OnClickListener() {  
- @Override  
- public void onClick(DialogInterface arg0, int arg1) {  
- // 关闭对话框  
-
- }  
- });  
- mCustomPopDialogFragment.setConfirmButton("确 定", new DialogInterface.OnClickListener() {  
- @Override  
- public void onClick(DialogInterface arg0, int arg1) {  
- // 退出电子书  
-
- }  
- }); 
- */
-
 public class CustomPopDialogFragment extends DialogFragment {
 	private View view;
 	private View closeBtn;

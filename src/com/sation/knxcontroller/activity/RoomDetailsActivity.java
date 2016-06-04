@@ -11,20 +11,17 @@ import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.adapter.TimingTaskListAdapter;
 import com.sation.knxcontroller.control.KNXBlinds;
-import com.sation.knxcontroller.control.KNXButton;
 import com.sation.knxcontroller.control.KNXControlBase;
 import com.sation.knxcontroller.control.KNXDigitalAdjustment;
 import com.sation.knxcontroller.control.KNXGroupBox;
-import com.sation.knxcontroller.control.KNXImageButton;
-import com.sation.knxcontroller.control.KNXSlider;
 import com.sation.knxcontroller.control.KNXSliderSwitch;
 import com.sation.knxcontroller.control.KNXSwitch;
 import com.sation.knxcontroller.control.KNXTimerButton;
 import com.sation.knxcontroller.control.KNXValueDisplay;
 import com.sation.knxcontroller.knxdpt.DPT9;
+import com.sation.knxcontroller.knxdpt.KNXDataType;
 import com.sation.knxcontroller.knxdpt.KNXDatapointType;
 import com.sation.knxcontroller.models.KNXContainer;
-import com.sation.knxcontroller.models.KNXDataType;
 import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.models.KNXPage;
 import com.sation.knxcontroller.models.KNXRoom;
@@ -169,7 +166,7 @@ public class RoomDetailsActivity extends BaseActivity {
 					
 //					Log.e("RoomDetailsActivity", "b1:"+b1+" b2:"+b2);
 					
-						int type = Integer.parseInt(mKNXSelectedAddress.getType());
+						int type = mKNXSelectedAddress.getType();
 						currentValue = getCallBackValue(contentBytes, address);
 					}
 //					Log.e("RoomDetailsActivity", "add name:"+mKNXSelectedAddress.getName());
@@ -177,11 +174,7 @@ public class RoomDetailsActivity extends BaseActivity {
 				}  
 			}
 			 
-			if(knxControl instanceof KNXButton) { // KNXButton
-//				allBaseControl.put(currentPageKNXControlBase.get(i).getId(), currentPageKNXControlBase.get(i)); 
-			} else if(knxControl instanceof KNXImageButton) { // KNXImageButton
-//				allBaseControl.put(currentPageKNXControlBase.get(i).getId(), currentPageKNXControlBase.get(i));
-			} else if(knxControl instanceof KNXBlinds) { // KNXBlinds
+			if(knxControl instanceof KNXBlinds) { // KNXBlinds
 //				allBaseControl.put(currentPageKNXControlBase.get(i).getId(), currentPageKNXControlBase.get(i));
 				allBaseControl.put(knxControl.getId(), knxControl);
 			} else if(knxControl instanceof KNXSwitch) { // KNXSwitch
@@ -191,8 +184,6 @@ public class RoomDetailsActivity extends BaseActivity {
 					STKNXSwitch mSTKNXSwitch = (STKNXSwitch) findViewById(knxControl.getId()); // 获取LinearLayout控件 
 					mSTKNXSwitch.setValue(currentValue);
 				}
-			} else if(knxControl instanceof KNXSlider) { // KNXSlider
-//				allBaseControl.put(currentPageKNXControlBase.get(i).getId(), currentPageKNXControlBase.get(i));
 			} else if(knxControl instanceof KNXSliderSwitch) { // KNXSliderSwitch
 				allBaseControl.put(knxControl.getId(), knxControl);
 			
@@ -236,18 +227,12 @@ public class RoomDetailsActivity extends BaseActivity {
 					
 					KNXControlBase mKNXControlBase = currentPageKNXControlBaseMap.get(knxId);
 					int controlId = mKNXControlBase.getId(); 
-					if(mKNXControlBase instanceof KNXButton) {
-						 
-					} else if(mKNXControlBase instanceof KNXImageButton) {
-						 
-					} else if(mKNXControlBase instanceof KNXBlinds) {
+					if(mKNXControlBase instanceof KNXBlinds) {
 						 
 					} else if(mKNXControlBase instanceof KNXSwitch) { 
 						STKNXSwitch mSTKNXSwitch = (STKNXSwitch) findViewById(controlId); // 获取LinearLayout控件 
 						mSTKNXSwitch.setValue(value);
 					
-					} else if(mKNXControlBase instanceof KNXSlider) {
-						 
 					} else if(mKNXControlBase instanceof KNXSliderSwitch) {
 						STKNXSliderSwitch mSliderSwitch = (STKNXSliderSwitch) findViewById(controlId); // 获取LinearLayout控件 
 						mSliderSwitch.setProgress(value&0xFF);

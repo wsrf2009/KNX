@@ -6,35 +6,6 @@
     <string name="all_rights_reserved"> <![CDATA[Copyright © 2016 SATION. All Rights Reserved.]]></string>
     <string name="browserUrl"><![CDATA[SATION Science & Technology]]></string>
     
-    <!--  volley -->
-    <string name="http_error_time_out">网络连接超时，请重新再试。</string>
-    <string name="generic_server_down">服务器出现问题。请稍后重试。</string>
-    <string name="no_internet">出现网络错误。请重试，或者取消并返回上一屏幕。</string>
-    <string name="generic_error">系统出现错误，请关闭程序重新再试。</string>
-     
-    <string name="networking_error_title">服务器出现问题。请稍后重试。</string>
-    <string name="networking_error">出现网络错误。请重试，或者取消并返回上一屏幕。</string>
-    <string name="general_error_title">注意</string>
-    <string name="general_error">出现服务器错误，请重试，或者取消并返回上一屏幕。</string>
-    <string name="general_error_noretry">出现错误。</string>
-    <string name="general_server_down">出现错误。</string>
-
-    <string name="http_error_304">没有数据返回.</string>
-    <string name="http_error_400">请求数据不合法，或者超过请求频率限制.</string>
-    <string name="http_error_401">没有进行身份验证.</string>
-    <string name="http_error_402">没有开通微博</string>
-    <string name="http_error_403">没有权限访问对应的资源.</string>
-    <string name="http_error_404">请求的资源不存在.</string>
-    <string name="http_error_500">服务器内部错误.</string>
-    <string name="http_error_502">接口API关闭或正在升级 .</string>
-    <string name="http_error_503">服务端资源不可用.</string>
-    
-   
-    <string name="switcher_cursor_off">关</string>
-    <string name="switcher_cursor_drag">拖动</string>
-
-    <string name="switcher_cursor_on">开</string>
-    
     <string name="confirm">确定</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>

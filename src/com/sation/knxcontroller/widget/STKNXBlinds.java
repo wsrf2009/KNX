@@ -5,7 +5,6 @@ import com.sation.knxcontroller.control.KNXBlinds;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 import com.sation.knxcontroller.util.ImageUtils;
-import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.StringUtil;
 
 import android.annotation.SuppressLint;
@@ -150,25 +149,20 @@ public class STKNXBlinds extends STKNXControl {
     		paint.setARGB((int)(this.mKNXBlinds.Alpha*255), Color.red(backColor), Color.green(backColor), Color.blue(backColor));
     	}
     	canvas.drawRoundRect(rect1, this.mKNXBlinds.Radius, this.mKNXBlinds.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
-    
-//    	String valueString = String.valueOf(this.currentValue);
-    	
+
     	if(null != this.mKNXBlinds.getText()) {
         	/* 绘制文本 */
         	Rect bound = new Rect();
         	paint.getTextBounds(this.mKNXBlinds.getText(), 0, this.mKNXBlinds.getText().length(), bound);
         	x = getWidth()/2;
             y = (getHeight()  + bound.height())/2;
-            Log.e("STKNXBlinds", "textsize:"+paint.getTextSize());
             
             paint.reset();
         	paint.setTextSize(this.mKNXBlinds.FontSize);
             paint.setColor(Color.parseColor(this.mKNXBlinds.FontColor));
             paint.setTextAlign(Paint.Align.CENTER);
         	canvas.drawText(this.mKNXBlinds.getText(), x, y, paint);
-        	
-//        	Log.e("STKNXBlinds", "x:"+x+" y:"+y+" height:"+getHeight()+" bHeight:"+bound.height()+" fontSize:"+this.mKNXBlinds.FontSize);
-        }
+    	}
     }
 }
 

@@ -43,13 +43,13 @@ public class KNXApp extends KNXView implements Serializable {
 	}
 	 
 	//默认语言
-	private Language DefaultLanguage;  
-	public Language getDefaultLanguage() {
-		return DefaultLanguage;
-	}
-	public void setDefaultLanguage(Language defaultLanguage) {
-		DefaultLanguage = defaultLanguage;
-	} 
+//	private Language DefaultLanguage;  
+//	public Language getDefaultLanguage() {
+//		return DefaultLanguage;
+//	}
+//	public void setDefaultLanguage(Language defaultLanguage) {
+//		DefaultLanguage = defaultLanguage;
+//	} 
 	
 	//屏幕宽度
 	private int ScreenWidth;

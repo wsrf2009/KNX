@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sation.knxcontroller"
     android:sharedUserLabel="@string/uid_label"
-    android:versionCode="15"
-    android:versionName="2.02.004" >
+    android:versionCode="1"
+    android:versionName="1.00.0000" >
 
     <supports-screens
         android:largeScreens="true"

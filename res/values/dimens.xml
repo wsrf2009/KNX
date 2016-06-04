@@ -5,42 +5,9 @@
     <dimen name="font_size_medium">16.0dip</dimen>
     <dimen name="font_size_mini">12.0dip</dimen>
     <dimen name="font_size_mix">10.0dip</dimen>
-    
-    <dimen name="room_item_size2">126.0dip</dimen>
-    <dimen name="room_item_size">86.0dp</dimen>
-    
-    <dimen name="control_item_min_width">186.0dip</dimen>
-    
+
     <dimen name="polished_width_navigation_bar">320.0dip</dimen>
-    
-    <dimen name="screen_horizontal_margin">16.0dip</dimen>
-    <dimen name="list_item_vertical_margin">4.0dip</dimen>
-    <dimen name="text_size_small">16.0sp</dimen>
-    <dimen name="text_size_normal">18.0sp</dimen>
-    <dimen name="text_size_large">20.0sp</dimen>
-    <dimen name="text_size_xlarge">22.0sp</dimen>
-    <dimen name="min_height">32.0dip</dimen>
-    <dimen name="padding_small">4.0dip</dimen>
-    <dimen name="padding_medium">12.0dip</dimen>
-    <dimen name="padding_large">16.0dip</dimen>
-    <dimen name="margin_small">4.0dip</dimen>
-    <dimen name="margin_medium">8.0dip</dimen>
-    <dimen name="margin_large">12.0dip</dimen>
-    <dimen name="margin_xlarge">16.0dip</dimen>
-    <dimen name="default_width_navigation_bar">0.0dip</dimen>
-    <dimen name="default_height_room_list_section">48.0dip</dimen>
-    <dimen name="default_height_room_list_room">52.0dip</dimen>
-    <dimen name="default_width_room_list_room_icon">@dimen/default_height_room_list_room</dimen>
-    <dimen name="default_height_room_list_room_icon">@dimen/default_height_room_list_room</dimen>
-    <dimen name="default_width_room_list_toggle_button">@dimen/default_width_room_list_room_icon</dimen>
-    <dimen name="default_height_room_list_toggle_button">@dimen/default_height_room_list_room_icon</dimen>
-    <dimen name="default_height_toolbar">@dimen/default_height_room_list_toggle_button</dimen>
-    <dimen name="labelSizeSmall">18.0sp</dimen>
-    <dimen name="labelSizeMedium">25.0sp</dimen>
-    <dimen name="labelSizeLarge">32.0sp</dimen> 
-    
-    
-    
+
     <dimen name="setting_view_lr_padding">10dp</dimen>
     <dimen name="setting_view_tb_padding">5dp</dimen>
     <dimen name="setting_view_title_size">16sp</dimen>

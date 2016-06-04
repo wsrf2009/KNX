@@ -74,41 +74,18 @@ public class KNXControlBase extends KNXView implements Serializable {
 	public static STKNXView buildWithControl(Context context, KNXControlBase mKNXControlBase) {
 		STKNXView knxView = null;
 	  if (mKNXControlBase instanceof KNXLabel) {
-//	      controlView = new MyLabel(context, (KNXLabel)mKNXControlBase);
 		  knxView = new STKNXLabel(context, (KNXLabel)mKNXControlBase);
-	  } else if (mKNXControlBase instanceof KNXButton) {
-//         controlView = new MyButton(context, (KNXButton) mKNXControlBase); 
-      } else if (mKNXControlBase instanceof KNXSceneButton) {  
-//          controlView = new MySceneButton(context, (KNXSceneButton) mKNXControlBase);
+	  } else if (mKNXControlBase instanceof KNXSceneButton) {  
     	  knxView = new STKNXSceneButton(context, (KNXSceneButton)mKNXControlBase);
-      } else if (mKNXControlBase instanceof KNXImageButton) {
-//         controlView = new MyImageButton(context, (KNXImageButton) mKNXControlBase);
       } else if (mKNXControlBase instanceof KNXBlinds) {
-//    	 controlView = new MyBlinds(context, null, (KNXBlinds)mKNXControlBase);
     	  knxView = new STKNXBlinds(context, (KNXBlinds)mKNXControlBase);
       } else if (mKNXControlBase instanceof KNXSwitch) {
-//    	  controlView = new MySwitchButton(context, null, (KNXSwitch)mKNXControlBase);
     	  knxView = new STKNXSwitch(context, (KNXSwitch)mKNXControlBase);
-      } else if (mKNXControlBase instanceof KNXSlider) {
-//    	  controlView = new MySlider(context, (KNXSlider)mKNXControlBase);
-      }else if (mKNXControlBase instanceof KNXMediaButton) {
-//    	  controlView = new MyMediaButton(context, (KNXMediaButton)mKNXControlBase);
-      } else if (mKNXControlBase instanceof KNXValueDisplay) {
-//    	  controlView = new MyValueDisplay(context, null, (KNXValueDisplay)mKNXControlBase);
+      } if (mKNXControlBase instanceof KNXValueDisplay) {
     	  knxView = new STKNXValueDisplay(context, (KNXValueDisplay)mKNXControlBase);
       } else if (mKNXControlBase instanceof KNXSliderSwitch) {
-//    	  controlView = new MySliderSwitch(context, (KNXSliderSwitch)mKNXControlBase); 
     	  knxView = new STKNXSliderSwitch(context, (KNXSliderSwitch)mKNXControlBase);
-      } else if (mKNXControlBase instanceof KNXColorLight) {
-//    	  controlView = new MyColorLight(context, (KNXColorLight) mKNXControlBase);
-      } else if (mKNXControlBase instanceof KNXSnapper) {
-//    	  controlView = new MySnapper(context, (KNXSnapper)mKNXControlBase); 
-      } else if (mKNXControlBase instanceof KNXSnapperSwitch) {
-//    	  controlView = new MySnapperSwitch(context, (KNXSnapperSwitch)mKNXControlBase); 
-      } else if (mKNXControlBase instanceof KNXSIPCall) {
-    	  
       } else if (mKNXControlBase instanceof KNXTimerButton) {
-//    	  controlView = new MyTimerTaskButton(context, null, (KNXTimerButton)mKNXControlBase);
     	  knxView = new STKNXTimerButton(context, (KNXTimerButton)mKNXControlBase);
       } else if (mKNXControlBase instanceof KNXDigitalAdjustment) {
     	  knxView = new STKNXDigitalAdjustment(context, (KNXDigitalAdjustment)mKNXControlBase);

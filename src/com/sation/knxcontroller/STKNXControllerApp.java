@@ -13,7 +13,6 @@ import org.apache.http.util.EncodingUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,7 +21,6 @@ import com.sation.knxcontroller.control.KNXControlBaseDeserializerAdapter;
 import com.sation.knxcontroller.control.TimingTaskItem;
 import com.sation.knxcontroller.models.KNXApp;
 import com.sation.knxcontroller.models.KNXGroupAddress;
-import com.sation.knxcontroller.util.BitmapLruCache;
 import com.sation.knxcontroller.util.FileUtils;
 import com.sation.knxcontroller.util.Log;
 
@@ -36,19 +34,11 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 
 public class STKNXControllerApp extends Application {
-	
-	/**
-	 * Log or request TAG.
-	 */
 	public static final String TAG = "STKNXControllerApp"; 
 
 	private static STKNXControllerApp app = null;
 	private static Stack<Activity> activityStack;
 	
-	/*
-	 * private EHomeApp() { token = ""; users = null; selectedStudent = null; }
-	 */
-
 	public final static synchronized STKNXControllerApp getInstance() {
 		if (app == null) {
 			app = new STKNXControllerApp();
@@ -60,10 +50,6 @@ public class STKNXControllerApp extends Application {
 	public void onCreate() { 
 		super.onCreate(); 
 		app = this;  
-//		app.getSharedPreferences(STKNXControllerConstant.SETTING_FILE, android.content.Context.MODE_PRIVATE);
-		
-		mImageLoader = new ImageLoader(getRequestQueue(), new BitmapLruCache(getApplicationContext(), getCacheDir().getPath()));
-		mRoundImageLoader = new ImageLoader(getRequestQueue(), new BitmapLruCache(getApplicationContext(), getCacheDir().getPath(), true));
 
 		if (null == timerTaskMap) {
 			/* 从文件中读取已保存的定时器任务 */
@@ -88,23 +74,8 @@ public class STKNXControllerApp extends Application {
 		startTimingTaskService();
 	}
 	
-//	public void startGetKNXResponseService() {
-////		Log.d(TAG, "start alarm"); 
-//		int knxRefreshStatusTimespan = settings.getInt(ZyyKNXConstant.KNX_REFRESH_STATUS_TIMESPAN, 1000); 
-//		if(knxRefreshStatusTimespan > 0) { 
-//			AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-//			Intent collectIntent = new Intent(this, KXNResponseService.class);
-//			PendingIntent collectSender  = PendingIntent.getService(this, 0, collectIntent, 0);
-//			am.cancel(collectSender);
-//			am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), knxRefreshStatusTimespan, collectSender);
-//			//am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 5000, collectSender);
-//		}
-//	}
-	
 	public void startTimingTaskService() {
-//		Log.d(TAG, "startTimingTaskService()");
 		Intent intent = new Intent("com.sation.knxcontroller.services.TimingTaskService");
-//	    intent.setAction("repeating");
 	    PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);  
 	    
 	    // 开始时间
@@ -134,22 +105,10 @@ public class STKNXControllerApp extends Application {
 	 * @return The Volley Request queue, the queue will be created if it is null
 	 */
 	public RequestQueue getRequestQueue() {
-		// lazy initialize the request queue, the queue instance will be
-		// created when it is accessed for the first time
 		if (mRequestQueue == null) {
 			mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		} 
 		return mRequestQueue;
-	}
-
-	private ImageLoader mImageLoader; 
-	public ImageLoader getImageLoader() {
-		return mImageLoader;
-	}
-	
-	private ImageLoader mRoundImageLoader; 
-	public ImageLoader getRoundImageLoader() {
-		return mRoundImageLoader;
 	}
 
 	/**
@@ -252,11 +211,8 @@ public class STKNXControllerApp extends Application {
 				String json = this.getFromAssets("controlapp.knxjson");
 
 				GsonBuilder gsonBuilder = new GsonBuilder();
-				//gsonBuilder.setDateFormat("yyyy-MM-dd HH:mm:ss");
-				//gsonBuilder.registerTypeAdapter(Date.class, new GsonHelper.WCFDateDeserializer());
 				gsonBuilder.registerTypeAdapter(KNXControlBase.class, new KNXControlBaseDeserializerAdapter());
 				Gson gson = gsonBuilder.create();
-//				Log.d(ZyyKNXConstant.DEBUG, "KNXApp.class:"+KNXApp.class+"\njson:"+json);
 				KNXApp tempKNXApp = gson.fromJson(json, KNXApp.class);
 				
 				STKNXControllerApp.getInstance().setKNXAppConfig(tempKNXApp);

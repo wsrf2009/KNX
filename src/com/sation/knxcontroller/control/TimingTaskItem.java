@@ -13,7 +13,7 @@ import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.models.KNXGroupAddressAction;
 import com.sation.knxcontroller.util.Log;
-import com.sation.knxcontroller.widget.ControlView;
+import com.sation.knxcontroller.widget.STKNXControl;
 
 import android.content.Context;
 
@@ -335,9 +335,9 @@ public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 	public void run() {
 		for(KNXGroupAddressAndAction addressAndAction : addressList) {
 			if(addressAndAction.getIsRead()) {
-				ControlView.readDataFromAddress(addressAndAction.address);
+				STKNXControl.readDataFromAddress(addressAndAction.address);
 			} else if (null != addressAndAction.action) {
-				ControlView.sendDataToAddress(addressAndAction.address, String.valueOf(addressAndAction.action.getValue()));
+				STKNXControl.sendDataToAddress(addressAndAction.address, String.valueOf(addressAndAction.action.getValue()));
 			}
 		}
 	}
