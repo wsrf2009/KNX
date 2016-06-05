@@ -42,8 +42,6 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name = "android.permission.DISABLE_KEYGUARD"/> <!-- 屏蔽HOME键需要的权限 -->
-	
-	<uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name=".STKNXControllerApp"
