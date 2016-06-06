@@ -180,7 +180,6 @@ public class STKNXSwitch extends STKNXControl {
         if(null != image) {
         	Rect resRect = new Rect(0, 0, image.getWidth(), image.getHeight());
         	Rect desRect = new Rect(this.imgX, this.imgY, this.imgRight, this.imgBottom);
-        	Log.e("STKNXSwitch", "resRect:"+resRect+" desRect"+desRect+" height:"+this.mKNXSwitch.Height);
         	canvas.drawBitmap(image, resRect, desRect, paint);
         }
 

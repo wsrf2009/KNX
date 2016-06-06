@@ -79,7 +79,7 @@ public class KNXGroupAddress implements Serializable, Cloneable {
 	public void setType(int type) {
 		Type = type;
 	}
-	
+	 
 	private String DPTName;
 	public String getDPTName() {
 		return DPTName;

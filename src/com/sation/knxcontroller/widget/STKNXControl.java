@@ -149,7 +149,7 @@ public class STKNXControl extends STKNXView {
 				case Bit48:
 						
 					break;
-						
+					 	
 				case Bit64:
 						
 					break;
@@ -169,11 +169,13 @@ public class STKNXControl extends STKNXView {
 			if(KNXDataType.Bit1 == KNXDataType.values()[type]) {
 						
 			}
-					
+					 
 			Log.e("STKNXControl", "pData==>"+data+" add type:"+KNXDataType.values()[type]);
 
 			int index = mGroupAddressIndexMap.get(addressId);
-			KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length, 0);
+			int len = KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length, 1);
+			
+			Log.e("STKNXControl", "pData==>"+data+" add type:"+KNXDataType.values()[type]+" len:"+len);
 		}
 	}
 	

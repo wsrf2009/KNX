@@ -154,7 +154,7 @@ public class SplashActivity extends Activity {
 		//加载KNX lib
 		KNX0X01Lib.loadLibraryTest();
 		KNX0X01Lib.UCLOSENet();
-
+ 
 		//初始化连接
 		String mKNXGatewayIP = settings.getString(STKNXControllerConstant.KNX_GATEWAY_IP, 
 				STKNXControllerConstant.KNX_GATEWAY_DEFAULT);
@@ -162,8 +162,9 @@ public class SplashActivity extends Activity {
 				STKNXControllerConstant.KNX_GATEWAY_PORT_DEFAULT);
 		int mKNXUDPWorkWay = settings.getInt(STKNXControllerConstant.KNX_UDP_WORK_WAY, 
 				STKNXControllerConstant.KNX_UDP_WORK_WAY_DEFAULT);
-		
-		KNX0X01Lib.SetNetworkType(NetWorkUtil.getAPNType(this));
+		   
+		int type = NetWorkUtil.getAPNType(this);
+		KNX0X01Lib.SetNetworkType(type);
 		boolean isConnect = KNX0X01Lib.UOPENNet(mKNXGatewayIP, mKNXGatewayPort, mKNXUDPWorkWay);
 		
 		Log.d(STKNXControllerConstant.DEBUG, "jumpActivity()"+" mKNXGatewayIP: "+mKNXGatewayIP+
@@ -287,8 +288,8 @@ public class SplashActivity extends Activity {
 		            	} else if(mKNXGroupAddressList.get(j).getPriority() == 3) {
 		            		config = BitUtils.setBitValue(config, 0, (byte)1); 
 		            		config = BitUtils.setBitValue(config, 1, (byte)1); 
-			            }
-		            	
+			            } 
+		            	 
 		            	config = BitUtils.setBitValue(config, 2, mKNXGroupAddressList.get(j).getIsCommunication()); //commuEnable 
 		            	config = BitUtils.setBitValue(config, 3, mKNXGroupAddressList.get(j).getIsRead());      //readEnable             
 		            	config = BitUtils.setBitValue(config, 4, mKNXGroupAddressList.get(j).getIsWrite());     //writeEnable        
