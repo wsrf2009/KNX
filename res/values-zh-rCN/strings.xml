@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SATIONControl</string>
     <string name="uid_label">SATIONControl</string>
     <string name="all_rights_reserved"> <![CDATA[Copyright © 2014 SATION. All Rights Reserved.]]></string>
     <string name="browserUrl">世讯科技</string>

@@ -80,19 +80,18 @@ public class STKNXSceneButton extends STKNXControl {
     	if(this.mKNXSceneButton.IsGroup) {
     		STKNXGroupBox mSTKNXGroupBox = (STKNXGroupBox)this.getParent();
     		if((null != mSTKNXGroupBox) && (null != mSTKNXGroupBox.mKNXGroupBox)) {
-    			if(mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().isEmpty()) {
-//    				if(SceneState.On == this.mSceneState) {
-//        				this.setSelected(false);
-//        			} else {
-//        				this.setSelected(true);
-//        			}
+    			if(mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().isEmpty() ||
+    					mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds().containsKey(
+    							mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().keySet().toArray()[0])) {
     				mSTKNXGroupBox.setSelectedValue(this.mKNXSceneButton.DefaultValue);
     			}
     			 
     			sendCommandRequest(mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds(), this.mKNXSceneButton.DefaultValue+"", false, null);
     		}
     	} else {
-    		if(this.mKNXSceneButton.getReadAddressId().isEmpty()) {
+    		if(this.mKNXSceneButton.getReadAddressId().isEmpty() ||
+    				this.mKNXSceneButton.getWriteAddressIds().containsKey(
+    						this.mKNXSceneButton.getReadAddressId().keySet().toArray()[0])) {
     			if(SceneState.On == this.mSceneState) {
     				this.setSelected(false);
     			} else {

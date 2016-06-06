@@ -84,7 +84,9 @@ public class STKNXSwitch extends STKNXControl {
     	
     	int val;
     	if(SwitchState.Off == this.mSwitchState) {
-    		if(this.mKNXSwitch.getReadAddressId().isEmpty()) {
+    		if(this.mKNXSwitch.getReadAddressId().isEmpty() ||
+    				this.mKNXSwitch.getWriteAddressIds().containsKey(
+    						this.mKNXSwitch.getReadAddressId().keySet().toArray()[0])) {
     			if (null != this.imageOn) {
    				 	invalidate();
     			}
@@ -94,7 +96,9 @@ public class STKNXSwitch extends STKNXControl {
     		
     		val = 1;
     	} else {
-    		if (this.mKNXSwitch.getReadAddressId().isEmpty()) {
+    		if (this.mKNXSwitch.getReadAddressId().isEmpty() ||
+    				this.mKNXSwitch.getWriteAddressIds().containsKey(
+    						this.mKNXSwitch.getReadAddressId().keySet().toArray()[0])) {
     			if(null != this.imageOff) {
     				invalidate();
     			}

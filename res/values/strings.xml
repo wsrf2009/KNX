@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SATIONControl</string>
+    <string name="app_name">SKC-S</string>
     <string name="uid_label">SATIONControl</string>
     <string name="all_rights_reserved"> <![CDATA[Copyright © 2016 SATION. All Rights Reserved.]]></string>
     <string name="browserUrl"><![CDATA[SATION Science & Technology]]></string>
