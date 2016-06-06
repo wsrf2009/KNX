@@ -3,6 +3,7 @@ package com.sation.knxcontroller.adapter;
 import java.util.List;
 
 import com.sation.knxcontroller.R;
+import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.models.KNXRoom;
 import com.sation.knxcontroller.util.ImageUtils;
 import com.sation.knxcontroller.util.StringUtil;
@@ -72,7 +73,13 @@ public class RoomListAdapter extends BaseAdapter {
   
 		holder.room_name.setText(mRoom.getText()); 
 		if (!StringUtil.isEmpty(mRoom.getSymbol())) {
-			Bitmap icon = ImageUtils.getDiskBitmap(mRoom.getSymbol());
+			String roomIcon = null;
+			if(StringUtil.isEmpty(mRoom.getSymbol())) {
+				roomIcon = STKNXControllerConstant.ConfigResImgPath+"liveroom_background.jpg";
+			} else {
+				roomIcon = STKNXControllerConstant.ConfigResImgPath + mRoom.getSymbol();
+			}
+			Bitmap icon = ImageUtils.getDiskBitmap(roomIcon);
 			if(null != icon) {
 				holder.room_icon.setBackgroundDrawable(new BitmapDrawable(icon)); 
 			} else {

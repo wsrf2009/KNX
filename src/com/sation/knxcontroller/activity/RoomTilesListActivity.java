@@ -187,13 +187,13 @@ public class RoomTilesListActivity  extends BaseActivity {
 			KNXArea mArea = mControlEditor.getAreas().get(i);
 			for (int j = 0; j < mArea.getRooms().size(); j++) { 
 				KNXRoom mRoom = mArea.getRooms().get(j);
-				Log.i("RoomTilesListActivity", "symbol:"+mRoom.getSymbol());
-				if(StringUtil.isEmpty(mRoom.getSymbol())) {
-					mRoom.setSymbol(STKNXControllerConstant.ConfigResImgPath+"liveroom_background.jpg");
-				} else {
-					mRoom.setSymbol(STKNXControllerConstant.ConfigResImgPath + mRoom.getSymbol());
-				}
-				Log.i("RoomTilesListActivity", "ConfigResImgPath:"+STKNXControllerConstant.ConfigResImgPath+" symbol:"+mRoom.getSymbol());
+//				Log.i("RoomTilesListActivity", "symbol:"+mRoom.getSymbol());
+//				if(StringUtil.isEmpty(mRoom.getSymbol())) {
+//					mRoom.setSymbol(STKNXControllerConstant.ConfigResImgPath+"liveroom_background.jpg");
+//				} else {
+//					mRoom.setSymbol(STKNXControllerConstant.ConfigResImgPath + mRoom.getSymbol());
+//				}
+//				Log.i("RoomTilesListActivity", "ConfigResImgPath:"+STKNXControllerConstant.ConfigResImgPath+" symbol:"+mRoom.getSymbol());
 				mRoomList.add(mRoom);
 			}
 		}
