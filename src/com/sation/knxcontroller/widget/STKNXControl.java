@@ -175,7 +175,7 @@ public class STKNXControl extends STKNXView {
 			int index = mGroupAddressIndexMap.get(addressId);
 			int len = KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length, 1);
 			
-			Log.e("STKNXControl", "pData==>"+data+" add type:"+KNXDataType.values()[type]+" len:"+len);
+//			Log.e("STKNXControl", "pData==>"+data+" add type:"+KNXDataType.values()[type]+" len:"+len);
 		}
 	}
 	
