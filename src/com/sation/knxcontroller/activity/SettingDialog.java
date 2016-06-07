@@ -466,7 +466,7 @@ public class SettingDialog {
 			public void onSettingButtonClick(){
 				final View view = LayoutInflater.from(mContext).inflate(R.layout.system_status, null);
 				final TextView txtLoacalIP = (TextView) view.findViewById(R.id.systemStatusTextViewLocalIP);
-				txtLoacalIP.setText(NetWorkUtil.getIpAddress());
+				txtLoacalIP.setText(NetWorkUtil.getIpAddress(mContext));
 				
 				final CheckBox cbDisplaySystemTime = (CheckBox) view.findViewById(R.id.systemStatusCheckBoxDisplaySystemTime);
 				boolean displaySystemTime = settings.getBoolean(STKNXControllerConstant.SYSTEMSTATUS_DISPLAY_SYSTEM_TIME, true);

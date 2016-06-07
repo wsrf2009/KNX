@@ -4,6 +4,8 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+import com.sation.knxcontroller.R;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -103,27 +105,31 @@ public class NetWorkUtil {
 	/**
 	 * 获取本机IP地址
 	 */
-	public static String getIpAddress() {
-    	String ipaddress = null;
-    	try{
-    		for (Enumeration<NetworkInterface>  en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
-    			NetworkInterface intf = en.nextElement();
-    			if (intf.getName().toLowerCase().equals("eth0") || intf.getName().toLowerCase().equals("wlan0")) { 
-    				for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();enumIpAddr.hasMoreElements();) {
-    					InetAddress inetAddress = enumIpAddr.nextElement();
-    					if (!inetAddress.isLoopbackAddress()) {
-    						ipaddress = inetAddress.getHostAddress().toString();
-    						if(!ipaddress.contains("::")){//ipV6的地址
-    							return ipaddress;
+	public static String getIpAddress(Context mContext) {
+    	String ipaddress = mContext.getResources().getString(R.string.network_disconnect);
+    	int type = getAPNType(mContext);
+    	if(type >= 0) {
+    		try{
+    			for (Enumeration<NetworkInterface>  en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+    				NetworkInterface intf = en.nextElement();
+    				if (intf.getName().toLowerCase().equals("eth0") || intf.getName().toLowerCase().equals("wlan0")) { 
+    					for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();enumIpAddr.hasMoreElements();) {
+    						InetAddress inetAddress = enumIpAddr.nextElement();
+    						if (!inetAddress.isLoopbackAddress()) {
+    							ipaddress = inetAddress.getHostAddress().toString();
+    							if(!ipaddress.contains("::")){//ipV6的地址
+    								return ipaddress;
+    							}
     						}
     					}
+    				} else {
+    					continue;
     				}
-    			} else {
-    				continue;
     			}
+    		} catch (Exception e) {
+    			
     		}
-    	} catch (Exception e) {}
-    	
+    	}
     	return ipaddress;
     }
 }

@@ -99,6 +99,7 @@
     
     <string name="system_status">System Status</string>
     <string name="local_ip">本机IP</string>
+    <string name="network_disconnect">网络未连接</string>
     <string name="display_system_time">显示系统时间</string>
 
 </resources>
