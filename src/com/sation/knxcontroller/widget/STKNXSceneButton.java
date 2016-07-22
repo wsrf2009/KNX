@@ -2,6 +2,7 @@ package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXSceneButton;
+import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 import com.sation.knxcontroller.util.ImageUtils;
@@ -77,16 +78,18 @@ public class STKNXSceneButton extends STKNXControl {
     		return;
     	}
     	  
-    	if(this.mKNXSceneButton.IsGroup) {
-    		STKNXGroupBox mSTKNXGroupBox = (STKNXGroupBox)this.getParent();
-    		if((null != mSTKNXGroupBox) && (null != mSTKNXGroupBox.mKNXGroupBox)) {
-    			if(mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().isEmpty() ||
-    					mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds().containsKey(
+    	if(EBool.Yes == this.mKNXSceneButton.getIsGroup()) {
+    		if(this.getParent() instanceof STKNXGroupBox) {
+    			STKNXGroupBox mSTKNXGroupBox = (STKNXGroupBox)this.getParent();
+    			if((null != mSTKNXGroupBox) && (null != mSTKNXGroupBox.mKNXGroupBox)) {
+    				if(mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().isEmpty() ||
+    						mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds().containsKey(
     							mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().keySet().toArray()[0])) {
-    				mSTKNXGroupBox.setSelectedValue(this.mKNXSceneButton.DefaultValue);
-    			}
+    					mSTKNXGroupBox.setSelectedValue(this.mKNXSceneButton.DefaultValue);
+    				}
     			 
-    			sendCommandRequest(mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds(), this.mKNXSceneButton.DefaultValue+"", false, null);
+    				sendCommandRequest(mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds(), this.mKNXSceneButton.DefaultValue+"", false, null);
+    			}
     		}
     	} else {
     		if(this.mKNXSceneButton.getReadAddressId().isEmpty() ||
@@ -156,14 +159,7 @@ public class STKNXSceneButton extends STKNXControl {
     		paint.setARGB((int)(this.mKNXSceneButton.Alpha*255), Color.red(backColor), Color.green(backColor), Color.blue(backColor));
     	}
     	canvas.drawRoundRect(oval3, this.mKNXSceneButton.Radius, this.mKNXSceneButton.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
-    	
-    	if(this.mKNXSceneButton.DisplayBorder && (this.mKNXSceneButton.Radius ==0)) {
-    		paint.reset();
-    		paint.setStyle(Paint.Style.STROKE);
-    		paint.setColor(Color.parseColor(this.mKNXSceneButton.BorderColor));
-    		canvas.drawRoundRect(oval3, 0, 0, paint);//第二个参数是x半径，第三个参数是y半径  
-    	}
-    
+
         /* 绘制图片 */
         Bitmap image = null;
         if(SceneState.On == this.mSceneState) {
@@ -172,18 +168,19 @@ public class STKNXSceneButton extends STKNXControl {
        		image = this.imageOff;
        	}
         if(null != image) {
+        	paint.reset();
         	Rect resRect = new Rect(0, 0, image.getWidth(), image.getHeight());
         	Rect desRect = new Rect(this.imgX, this.imgY, this.imgRight, this.imgBottom);
         	canvas.drawBitmap(image, resRect, desRect, paint);
         }
-
+ 
         if(null != this.mKNXSceneButton.getText()) {
         	int x = 0;
         	int y = 0;
         	Rect bound = new Rect();
         	paint.getTextBounds(this.mKNXSceneButton.getText(), 0, this.mKNXSceneButton.getText().length(), bound);
         	if(null != image) {
-        		x=(getWidth()-this.imgRight+this.PADDING)/2-(bound.right-bound.left)/2+this.imgRight+this.PADDING;
+        		x=(getWidth()- (this.imgRight+this.PADDING)-this.PADDING -bound.width())/2+this.imgRight+this.PADDING;
         		y=(getHeight()  + bound.height())/2;
         	} else {
         		x = (getWidth() - 2 *x - bound.width())/2;
@@ -203,11 +200,18 @@ public class STKNXSceneButton extends STKNXControl {
         		paint.setStyle(Paint.Style.FILL);
         		paint.setColor(Color.parseColor("#FF6100"));
         		paint.setAlpha(0x60);
-        		canvas.drawRoundRect(oval3, 5, 5, paint);	//第二个参数是x半径，第三个参数是y半径  
+        		canvas.drawRoundRect(oval3, this.mKNXSceneButton.Radius, this.mKNXSceneButton.Radius, paint);	//第二个参数是x半径，第三个参数是y半径  
         		break;
         	case Normal:
         		break;
         }
+        
+        if(EBool.Yes == this.mKNXSceneButton.getDisplayBorder()) {
+    		paint.reset();
+    		paint.setStyle(Paint.Style.STROKE);
+    		paint.setColor(Color.parseColor(this.mKNXSceneButton.BorderColor));
+    		canvas.drawRoundRect(oval3, this.mKNXSceneButton.Radius, this.mKNXSceneButton.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
+    	}
     }
       
     @Override

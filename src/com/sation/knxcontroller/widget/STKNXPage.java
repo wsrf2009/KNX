@@ -10,6 +10,9 @@ import android.graphics.RectF;
 
 public class STKNXPage extends STKNXViewContainer {
 	private KNXPage mKNXPage;
+	public KNXPage getKNXPage(){
+		return mKNXPage;
+	}
 
 	public STKNXPage(Context context, KNXPage page) {
 		super(context, page);

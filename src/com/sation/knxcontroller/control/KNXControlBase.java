@@ -26,38 +26,41 @@ public class KNXControlBase extends KNXView implements Serializable {
 	public Map<String ,KNXSelectedAddress> getReadAddressId() {
 		return ReadAddressId;
 	} 
-	public void setReadAddressId(Map<String ,KNXSelectedAddress> mReadAddressId) {
-		ReadAddressId = mReadAddressId;
-	}
-		
-	// ETS项目中该控件的ID 
+//	public void setReadAddressId(Map<String ,KNXSelectedAddress> mReadAddressId) {
+//		ReadAddressId = mReadAddressId;
+//	}
+//		
+//	// ETS项目中该控件的ID 
 	private Map<String ,KNXSelectedAddress> WriteAddressIds; 
 	public Map<String ,KNXSelectedAddress> getWriteAddressIds() {
 		return WriteAddressIds;
 	} 
-	public void setWriteAddressIds(Map<String ,KNXSelectedAddress> mWriteAddressIds) {
-		WriteAddressIds = mWriteAddressIds;
-	}
+//	public void setWriteAddressIds(Map<String ,KNXSelectedAddress> mWriteAddressIds) {
+//		WriteAddressIds = mWriteAddressIds;
+//	}
 	
 	//是否有提示
-	private boolean HasTip ;
-	public boolean getHasTip () {
-		return HasTip ;
+	private int HasTip ;
+	public EBool getHasTip () {
+		return EBool.values()[this.HasTip];
 	} 
-	public void setHasTip (boolean hasTip ) {
-		HasTip  = hasTip;
-	}
+//	public void setHasTip (int hasTip ) {
+//		HasTip  = hasTip;
+//	}
 	
 	//提示
-	private String Tip  ;
-	public String getTip  () {
-		return Tip  ;
+	private String Tip;
+	public String getTip() {
+		return Tip;
 	} 
-	public void setTip (String tip) {
-		Tip   = tip;
-	}
+//	public void setTip (String tip) {
+//		Tip   = tip;
+//	}
 
-	public boolean Clickable;
+	public int Clickable;
+	public EBool getClickable() {
+		return EBool.values()[this.Clickable];
+	}
 	
 	public String Icon;
 	

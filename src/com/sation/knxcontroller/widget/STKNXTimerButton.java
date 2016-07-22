@@ -2,6 +2,7 @@ package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXTimerButton;
+import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 import com.sation.knxcontroller.util.ImageUtils;
@@ -100,6 +101,7 @@ public class STKNXTimerButton extends STKNXControl {
     	}
     	canvas.drawRoundRect(oval3, this.mKNXTimerButton.Radius, this.mKNXTimerButton.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
     	
+    	paint.reset();
         if(null != image) {
         	Rect resRect = new Rect(0, 0, image.getWidth(), image.getHeight());
         	Rect desRect = new Rect(this.imgX, this.imgY, this.imgRight, this.imgBottom);
@@ -113,7 +115,7 @@ public class STKNXTimerButton extends STKNXControl {
         	paint.setTextSize(this.mKNXTimerButton.FontSize);
         	Rect bound = new Rect();
         	paint.getTextBounds(this.mKNXTimerButton.getText(), 0, this.mKNXTimerButton.getText().length(), bound);
-        	canvas.drawText(this.mKNXTimerButton.getText(), (getWidth()-(this.imgRight+this.PADDING))/2-(bound.right-bound.left)/2+this.imgRight+this.PADDING, getHeight() / 2 + (bound.bottom-bound.top) / 2, paint);
+        	canvas.drawText(this.mKNXTimerButton.getText(), this.imgRight+this.PADDING*2, getHeight() / 2 + (bound.bottom-bound.top) / 2, paint);
         }
         
         switch (mControlState) {
@@ -122,11 +124,18 @@ public class STKNXTimerButton extends STKNXControl {
     			paint.setStyle(Paint.Style.FILL);
     			paint.setColor(Color.parseColor("#FF6100"));
     			paint.setAlpha(0x60);
-    			canvas.drawRoundRect(oval3, 5, 5, paint);	//第二个参数是x半径，第三个参数是y半径  
+    			canvas.drawRoundRect(oval3, this.mKNXTimerButton.Radius, this.mKNXTimerButton.Radius, paint);	//第二个参数是x半径，第三个参数是y半径  
     			break;
     		case Normal:
     			break;
         }
+        
+        if(EBool.Yes == this.mKNXTimerButton.getDisplayBorder()) {
+    		paint.reset();
+    		paint.setStyle(Paint.Style.STROKE);
+    		paint.setColor(Color.parseColor(this.mKNXTimerButton.BorderColor));
+    		canvas.drawRoundRect(oval3, this.mKNXTimerButton.Radius, this.mKNXTimerButton.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
+    	}
     }
     
     @Override

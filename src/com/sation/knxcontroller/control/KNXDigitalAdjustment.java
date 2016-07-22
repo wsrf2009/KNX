@@ -1,5 +1,8 @@
 package com.sation.knxcontroller.control;
 
+import java.util.Map;
+
+import com.sation.knxcontroller.models.KNXSelectedAddress;
 import com.sation.knxcontroller.models.MeasurementUnit;
 
 public class KNXDigitalAdjustment extends KNXControlBase {
@@ -19,6 +22,16 @@ public class KNXDigitalAdjustment extends KNXControlBase {
 			return description;
 		}
 	}
+	
+//	private Map<String ,KNXSelectedAddress> ReadAddressId; 
+//	public Map<String ,KNXSelectedAddress> getReadAddressId() {
+//		return ReadAddressId;
+//	}
+//
+//	private Map<String ,KNXSelectedAddress> WriteAddressIds; 
+//	public Map<String ,KNXSelectedAddress> getWriteAddressIds() {
+//		return WriteAddressIds;
+//	}
 	
 	public String LeftImage;
 

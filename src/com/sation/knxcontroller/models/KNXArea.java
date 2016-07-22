@@ -11,8 +11,7 @@ public class KNXArea extends KNXView implements Serializable {
 	public List<KNXRoom> getRooms() {
 		return Rooms;
 	} 
-	public void setRooms(List<KNXRoom> rooms) {
-		Rooms = rooms;
-	} 
-
+//	public void setRooms(List<KNXRoom> rooms) {
+//		Rooms = rooms;
+//	} 
 }

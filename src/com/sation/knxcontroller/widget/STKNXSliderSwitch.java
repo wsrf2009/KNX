@@ -2,6 +2,7 @@ package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXSliderSwitch;
+import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 import com.sation.knxcontroller.util.ImageUtils;
@@ -25,9 +26,10 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class STKNXSliderSwitch extends STKNXControl {
-	private final int PADDING = 5;
+	private static final int PADDING = 2;
+	private static final int SUBVIEW_WIDTH = 40;
     private final int SLIDER_EDGE_WIDTH = 3;
-    private final int SLIDER_WIDTH = 40;
+    private final int SLIDER_WIDTH = 50;
 	
 	private KNXSliderSwitch mKNXSliderSwitch;
 	private int leftImgX = 0;
@@ -43,14 +45,14 @@ public class STKNXSliderSwitch extends STKNXControl {
     
     private ViewDragHelper mViewDragHelper;
     private int sliderPositionX = 100;
-//    private int sliderWidth = 40;
     private enum ESliderState {
     	Down,
     	Dragging,
-//    	Up,
     	Normal,
     }
     private ESliderState mSliderState;
+    private int sliderStartPos;
+    private int sliderWidth;
     private float progress;
     private int[] pos;
     private int curPos;
@@ -59,26 +61,49 @@ public class STKNXSliderSwitch extends STKNXControl {
 		super(context, knxSliderSwitch);
 
 		this.mKNXSliderSwitch = knxSliderSwitch;
-//		this.setTag(this.mKNXSliderSwitch.getId());
 		this.setId(this.mKNXSliderSwitch.getId());
 		this.mSliderState = ESliderState.Normal;
-		
+
+		STButton vLeft = new STButton(context);
+		vLeft.width = Math.max(this.mKNXSliderSwitch.Height-2*STKNXSliderSwitch.PADDING, STKNXSliderSwitch.SUBVIEW_WIDTH);
+		vLeft.height = this.mKNXSliderSwitch.Height-2*STKNXSliderSwitch.PADDING;
+		vLeft.left = STKNXSliderSwitch.PADDING;
+		vLeft.top = STKNXSliderSwitch.PADDING;
+		vLeft.backColor = Color.parseColor(this.mKNXSliderSwitch.BackgroundColor);
+		vLeft.radius = this.mKNXSliderSwitch.Radius;
+		vLeft.alpha = this.mKNXSliderSwitch.Alpha;
+		vLeft.setSubViewClickListener(this.leftClicked);
 		if(!StringUtil.isEmpty(this.mKNXSliderSwitch.getLeftImage())) {
-			this.imgLeft = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getLeftImage());
+			vLeft.backImage = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getLeftImage());
 		}
-			
-		if(!StringUtil.isEmpty(mKNXSliderSwitch.getRightImage())) {
-			this.imgRight = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getRightImage());
-		}
+		this.addView(vLeft);
 		
-		if(this.mKNXSliderSwitch.IsRelativeControl) {
+		STButton vRight = new STButton(context);
+		vRight.width = Math.max(this.mKNXSliderSwitch.Height-2*STKNXSliderSwitch.PADDING, STKNXSliderSwitch.SUBVIEW_WIDTH);
+		vRight.height = this.mKNXSliderSwitch.Height-2*STKNXSliderSwitch.PADDING;
+		vRight.left = this.mKNXSliderSwitch.Width - STKNXSliderSwitch.PADDING - vRight.width;
+		vRight.top = STKNXSliderSwitch.PADDING;
+		vRight.backColor = Color.parseColor(this.mKNXSliderSwitch.BackgroundColor);
+		vRight.radius = this.mKNXSliderSwitch.Radius;
+		vRight.alpha = this.mKNXSliderSwitch.Alpha;
+		vRight.setSubViewClickListener(this.rightClicked);
+		if(!StringUtil.isEmpty(this.mKNXSliderSwitch.getRightImage())) {
+			vRight.backImage = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getRightImage());
+		}
+		this.addView(vRight);
+		
+		this.sliderStartPos = vLeft.left+vLeft.width+STKNXSliderSwitch.PADDING;
+		this.sliderWidth = this.mKNXSliderSwitch.Width-this.sliderStartPos*2;
+		
+		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
 			pos = new int[16];
 			int range = getThumbScrollRange();
+//			int range = this.sliderWidth;
 			int interval = range/15;
 			for(int i=0; i<16; i++) {
-				pos[i] = i*interval;
+				pos[i] = this.sliderStartPos+ i*interval;
 			}
-			pos[15] = range;
+			pos[15] = this.sliderStartPos+range;
 			
 			this.curPos = 8;
 			this.sliderPositionX = this.pos[this.curPos];
@@ -97,12 +122,25 @@ public class STKNXSliderSwitch extends STKNXControl {
 				final int leftBound = getPaddingLeft();
                 final int rightBound = getWidth() - child.getWidth() - leftBound;
 
-                sliderPositionX = Math.min(Math.max(left, leftBound), rightBound);
-                if(mKNXSliderSwitch.IsRelativeControl) {
+                int range = getThumbScrollRange();
+                sliderPositionX = Math.min(Math.max(left, leftBound), sliderStartPos+range);
+                sliderPositionX = Math.max(sliderPositionX, sliderStartPos);
+                if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) {
                 	curPos = MathUtils.getTheClosetIndex(sliderPositionX, pos);
                 	sliderPositionX = pos[curPos];
                 }
                 
+//                if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) { 
+//
+//        		} else {
+        			
+        			progress = (float)(sliderPositionX-sliderStartPos)/range;
+        			if(progress>1){
+        				progress = 1;
+        			}
+//        		}
+        				sliderChanged();
+        				
                 return sliderPositionX;
 			} 
 			
@@ -138,33 +176,104 @@ public class STKNXSliderSwitch extends STKNXControl {
 	}
 	
 	private int getThumbScrollRange() { 
-		return this.mKNXSliderSwitch.Width-this.SLIDER_WIDTH;
-	} 
+//		return this.mKNXSliderSwitch.Width-this.SLIDER_WIDTH;
+		return this.sliderWidth-this.SLIDER_WIDTH;
+	}
+	
+	private int getSliderPos(float progress){
+		int pos = (int)(progress * getThumbScrollRange());
+		return this.sliderStartPos+pos;
+	}
 	
 	public void setProgress(int p) {
-		if(!this.mKNXSliderSwitch.IsRelativeControl) { 
+		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) { 
+			/* 相对调光 */
+			this.sliderPositionX = this.pos[8];
+		} else {
 			/* 绝对调光 */
-			int thumbRange = getThumbScrollRange();
+//			int thumbRange = getThumbScrollRange();
 			this.progress = (float)p/255;
-			this.sliderPositionX = (int)(this.progress * thumbRange);
+//			this.sliderPositionX = (int)(this.progress * thumbRange);
+			this.sliderPositionX = getSliderPos(this.progress);
 		}
 		
 		requestLayout();
 	}
 	
-	private void onClick() {
-		if(this.mKNXSliderSwitch.IsRelativeControl) {
+	private void sliderChanged() {
+		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
 			int val = 0;
 			 if (this.curPos < 8) {
 				val = this.curPos;
 			} else if (this.curPos <= 15) {
 				val = 8 +15-this.curPos;
 			}
+			
 			 sendCommandRequest(this.mKNXSliderSwitch.getWriteAddressIds(), val+"", false, null);
 		} else {
-			sendCommandRequest(this.mKNXSliderSwitch.getWriteAddressIds(), String.valueOf((int)(this.progress * 255 / 100)), false, null);
+			sendCommandRequest(this.mKNXSliderSwitch.getWriteAddressIds(), String.valueOf((int)(this.progress*255/*this.progress * 255 / 100*/)), false, null);
 		}
 	}
+	
+	STButton.SubViewClickListener leftClicked = new STButton.SubViewClickListener() {
+
+		@Override
+		public void onClick(STButton view) {
+			if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) {
+				curPos--;
+				if(curPos<0){
+					curPos = 0;
+				} else if(curPos>15){
+					curPos = 15;
+				}
+				sliderPositionX = pos[curPos];
+			} else {
+				progress -= 0.1f;
+				
+				if(progress < .0f){
+					progress = .0f;
+				} else if(progress>1.0f){
+					progress = 1.0f;
+				}
+				
+				sliderPositionX = getSliderPos(progress);
+			}
+
+			requestLayout();
+			
+			sliderChanged();
+		}
+	};
+	
+	STButton.SubViewClickListener rightClicked = new STButton.SubViewClickListener() {
+
+		@Override
+		public void onClick(STButton view) {
+			if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) {
+				curPos++;
+				if(curPos<0){
+					curPos = 0;
+				} else if(curPos>15){
+					curPos = 15;
+				}
+				sliderPositionX = pos[curPos];
+			} else {
+				progress += 0.1f;
+				
+				if(progress < .0f){
+					progress = .0f;
+				} else if(progress>1.0f){
+					progress = 1.0f;
+				}
+				
+				sliderPositionX = getSliderPos(progress);
+			}
+
+			requestLayout();
+			
+			sliderChanged();
+		}
+	};
 	
 	@Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
@@ -175,18 +284,18 @@ public class STKNXSliderSwitch extends STKNXControl {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		measureChildren(widthMeasureSpec, heightMeasureSpec);
 
-        /* 计算图片的显示位置和大小 */
-		this.leftImgX = this.PADDING;
-		this.leftImgY = this.SLIDER_EDGE_WIDTH + this.PADDING;
-		int height = this.mKNXSliderSwitch.Height - 2 * this.leftImgY;
-		int width = height;
-        this.leftImgRight = this.leftImgX + width;
-        this.leftImgBottom = this.leftImgY + height;
-        
-        this.rightImgX = this.mKNXSliderSwitch.Width - this.PADDING - width;
-        this.rightImgY = this.leftImgY;
-        this.rightImgRight = this.rightImgX + width;
-        this.rightImgBottom = this.leftImgBottom;
+//        /* 计算图片的显示位置和大小 */
+//		this.leftImgX = this.PADDING;
+//		this.leftImgY = this.SLIDER_EDGE_WIDTH + this.PADDING;
+//		int height = this.mKNXSliderSwitch.Height - 2 * this.leftImgY;
+//		int width = height;
+//        this.leftImgRight = this.leftImgX + width;
+//        this.leftImgBottom = this.leftImgY + height;
+//        
+//        this.rightImgX = this.mKNXSliderSwitch.Width - this.PADDING - width;
+//        this.rightImgY = this.leftImgY;
+//        this.rightImgRight = this.rightImgX + width;
+//        this.rightImgBottom = this.leftImgBottom;
         
         /**
          * 最后调用父类方法,把View的大小告诉父布局。
@@ -198,7 +307,7 @@ public class STKNXSliderSwitch extends STKNXControl {
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		int cCount = getChildCount();
 		
-		if(this.mKNXSliderSwitch.IsRelativeControl) {
+		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
 			curPos = MathUtils.getTheClosetIndex(sliderPositionX, pos);
 			sliderPositionX = pos[curPos];
 		}
@@ -207,15 +316,23 @@ public class STKNXSliderSwitch extends STKNXControl {
 		 * 遍历所有childView根据其宽和高，以及margin进行布局
 		 */
 		for (int i = 0; i < cCount; i++) {
-			View childView = (View)getChildAt(i);
+			View view = (View)getChildAt(i);
 
 			int cl = 0, ct = 0, cr = 0, cb = 0;
-			cl = this.sliderPositionX;
-			ct = 0; 
-			cr = cl+this.SLIDER_WIDTH;
-			cb = ct+this.getHeight();
+			if(view instanceof ViewSlider) {
+				cl = this.sliderPositionX;
+				ct = 0; 
+				cr = cl+this.SLIDER_WIDTH;
+				cb = ct+this.getHeight();
+			} else if(view instanceof STButton){
+				STButton button = (STButton)view;
+				cl = button.left;
+				ct = button.top;
+				cr = button.left+button.width;
+				cb = button.top+button.height;
+			}
 
-			childView.layout(cl, ct, cr, cb);
+			view.layout(cl, ct, cr, cb);
 		}
 	}
 
@@ -255,20 +372,21 @@ public class STKNXSliderSwitch extends STKNXControl {
     		paint.setARGB((int)(this.mKNXSliderSwitch.Alpha*255), Color.red(backColor), Color.green(backColor), Color.blue(backColor));
     	}
     	canvas.drawRoundRect(rect1, this.mKNXSliderSwitch.Radius, this.mKNXSliderSwitch.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
-    	
-    	/* 左图标 */
-        if (null != this.imgLeft) {
-            Rect resRect = new Rect(0, 0, this.imgLeft.getWidth(), this.imgRight.getHeight());
-            Rect desRect = new Rect(this.leftImgX, this.leftImgY, this.leftImgRight, this.leftImgBottom);
-            canvas.drawBitmap(this.imgLeft, resRect, desRect, paint);
-        }
 
-        /* 右图标 */
-        if (null != this.imgRight) {
-            Rect resRect = new Rect(0, 0, this.imgRight.getWidth(), this.imgRight.getHeight());
-            Rect desRect = new Rect(this.rightImgX, this.rightImgY, this.rightImgRight, this.rightImgBottom);
-            canvas.drawBitmap(this.imgRight, resRect, desRect, paint);
-        }
+//    	paint.reset();
+//    	/* 左图标 */
+//        if (null != this.imgLeft) {
+//            Rect resRect = new Rect(0, 0, this.imgLeft.getWidth(), this.imgRight.getHeight());
+//            Rect desRect = new Rect(this.leftImgX, this.leftImgY, this.leftImgRight, this.leftImgBottom);
+//            canvas.drawBitmap(this.imgLeft, resRect, desRect, paint);
+//        }
+//
+//        /* 右图标 */
+//        if (null != this.imgRight) {
+//            Rect resRect = new Rect(0, 0, this.imgRight.getWidth(), this.imgRight.getHeight());
+//            Rect desRect = new Rect(this.rightImgX, this.rightImgY, this.rightImgRight, this.rightImgBottom);
+//            canvas.drawBitmap(this.imgRight, resRect, desRect, paint);
+//        }
     }
     
     @SuppressLint("ClickableViewAccessibility")
@@ -280,21 +398,26 @@ public class STKNXSliderSwitch extends STKNXControl {
     	switch (event.getAction()) { 
     		case MotionEvent.ACTION_DOWN: 
     			if(ESliderState.Normal == mSliderState) {
-    				this.sliderPositionX = (int)x-this.SLIDER_WIDTH/2;
-    				if(this.sliderPositionX < 0) {
-    					this.sliderPositionX = 0;
-    				} else if (this.sliderPositionX > (this.getWidth() - this.SLIDER_WIDTH)){
-    					this.sliderPositionX = this.getWidth() - this.SLIDER_WIDTH;
-    				}
-    				
-    				this.requestLayout();
+//    				this.sliderPositionX = (int)x-this.SLIDER_WIDTH/2;
+//    				if(this.sliderPositionX < 0) {
+//    					this.sliderPositionX = 0;
+//    				} else if (this.sliderPositionX > (this.getWidth() - this.SLIDER_WIDTH)){
+//    					this.sliderPositionX = this.getWidth() - this.SLIDER_WIDTH;
+//    				}
+//    				if((x>this.sliderStartPos) && (x<(this.sliderStartPos+this.sliderWidth))){
+//    					this.sliderPositionX = (int)((x-this.SLIDER_WIDTH)/2);
+//    					
+//    				}
+//    				
+//    				this.requestLayout();
     			}
     			break; 
     		case MotionEvent.ACTION_UP:
     			int range = getThumbScrollRange();
-    			this.progress = 100*this.sliderPositionX/range;
+//    			this.progress = 100*this.sliderPositionX/range;
+    			this.progress = (this.sliderPositionX-this.sliderStartPos)/range;
     			Log.e("STKNXSliderSwitch", "sliderPositionX==>"+sliderPositionX+" range==>"+range+" progress==>"+progress);
-    			this.onClick();
+    			this.sliderChanged();
     			break;
     			
     		case MotionEvent.ACTION_MOVE:
@@ -345,7 +468,6 @@ class ViewSlider extends View {
 
     	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     	paint.setStyle(Paint.Style.FILL_AND_STROKE);	// 充满  
-    	paint.setAlpha((int)(this.alpha*255));
     	RectF oval3 = new RectF(0, 0, this.getWidth(), this.getHeight());
     	
     	/* 绘制滑块 */
@@ -364,45 +486,17 @@ class ViewSlider extends View {
         		sliderColors, sliderPositions, Shader.TileMode.CLAMP); // 设置渐变色 这个正方形的颜色是改变的 , 一个材质,打造出一个线性梯度沿著一条线。  
     	paint.setShader(sliderShader);  
     	canvas.drawRoundRect(oval3, this.radius, this.radius, paint);
-    	
+
     	switch (this.mEControlState) {
 			case Down:
 				paint.reset();
 				paint.setStyle(Paint.Style.FILL);
 				paint.setColor(Color.parseColor("#FF6100"));
 				paint.setAlpha(0x60);
-				canvas.drawRoundRect(oval3, 5, 5, paint);	//第二个参数是x半径，第三个参数是y半径  
+				canvas.drawRoundRect(oval3, this.radius, this.radius, paint);	//第二个参数是x半径，第三个参数是y半径  
 				break;
 			case Up:
 				break;
     	}
 	}
-	
-//	@Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//    	switch (event.getAction()) { 
-//    		case MotionEvent.ACTION_DOWN:
-//    			this.mEControlState = EControlState.Down;
-//    			this.invalidate();
-//    			break; 
-//    		case MotionEvent.ACTION_UP:
-//    			this.mEControlState = EControlState.Up;
-////    			if(null != this.mViewControlClickListener) {
-////    				this.mViewControlClickListener.onClick(this);
-////    			}
-//    			this.invalidate();
-//    			break;
-//    		case MotionEvent.ACTION_MOVE:
-//    			break;
-//    		case MotionEvent.ACTION_CANCEL:
-//    			this.mEControlState = EControlState.Up;
-//    			this.invalidate();
-//    			break;
-//    			
-//    		default:
-//    			break;
-//    	}
-//    	
-//    	return true;
-//    }
 }

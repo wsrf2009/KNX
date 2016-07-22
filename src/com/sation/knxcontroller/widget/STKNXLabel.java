@@ -1,6 +1,7 @@
 package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.control.KNXLabel;
+import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 
@@ -76,6 +77,13 @@ public class STKNXLabel extends STKNXControl {
         	paint.getTextBounds(this.mKNXLabel.getText(), 0, this.mKNXLabel.getText().length(), bound);
         	canvas.drawText(this.mKNXLabel.getText(), getWidth() / 2 - bound.width() / 2, getHeight() / 2 + bound.height() / 2, paint);
         }
+        
+        if(EBool.Yes == this.mKNXLabel.getDisplayBorder()) {
+    		paint.reset();
+    		paint.setStyle(Paint.Style.STROKE);
+    		paint.setColor(Color.parseColor(this.mKNXLabel.BorderColor));
+    		canvas.drawRoundRect(oval3, this.mKNXLabel.Radius, this.mKNXLabel.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
+    	}
     }
 
 }

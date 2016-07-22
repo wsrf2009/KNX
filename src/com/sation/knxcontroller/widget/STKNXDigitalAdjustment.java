@@ -3,6 +3,7 @@ package com.sation.knxcontroller.widget;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXDigitalAdjustment;
 import com.sation.knxcontroller.knxdpt.DPT9;
+import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 import com.sation.knxcontroller.util.ImageUtils;
@@ -24,10 +25,12 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class STKNXDigitalAdjustment extends STKNXControl {
-	private static final int PADDING = 0;
+	private static final int PADDING = 3;
 	private static final int SUBVIEW_WIDTH = 40;
 	private KNXDigitalAdjustment mKNXDigitalAdjustment;
     private int currentValue = 20;
+//    private ViewControl vLeft;
+//    private ViewControl vRight;
 
 	public STKNXDigitalAdjustment(Context context, KNXDigitalAdjustment knxDigitalAdjustment) {
 		super(context, knxDigitalAdjustment);
@@ -36,8 +39,8 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 		this.setId(mKNXDigitalAdjustment.getId());
 		
 		ViewControl vLeft = new ViewControl(context);
-		vLeft.width = Math.max(this.mKNXDigitalAdjustment.Height, STKNXDigitalAdjustment.SUBVIEW_WIDTH);
-		vLeft.height = this.mKNXDigitalAdjustment.Height;
+		vLeft.width = Math.max(this.mKNXDigitalAdjustment.Height-2*STKNXDigitalAdjustment.PADDING, STKNXDigitalAdjustment.SUBVIEW_WIDTH);
+		vLeft.height = this.mKNXDigitalAdjustment.Height-2*STKNXDigitalAdjustment.PADDING;
 		vLeft.left = STKNXDigitalAdjustment.PADDING;
 		vLeft.top = STKNXDigitalAdjustment.PADDING;
 		vLeft.backColor = Color.parseColor(this.mKNXDigitalAdjustment.BackgroundColor);
@@ -50,8 +53,8 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 		this.addView(vLeft);
 		
 		ViewControl vRight = new ViewControl(context);
-		vRight.width = Math.max(this.mKNXDigitalAdjustment.Height, STKNXDigitalAdjustment.SUBVIEW_WIDTH);
-		vRight.height = this.mKNXDigitalAdjustment.Height;
+		vRight.width = Math.max(this.mKNXDigitalAdjustment.Height-2*STKNXDigitalAdjustment.PADDING, STKNXDigitalAdjustment.SUBVIEW_WIDTH);
+		vRight.height = this.mKNXDigitalAdjustment.Height-2*STKNXDigitalAdjustment.PADDING;
 		vRight.left = this.mKNXDigitalAdjustment.Width - STKNXDigitalAdjustment.PADDING - vRight.width;
 		vRight.top = STKNXDigitalAdjustment.PADDING;
 		vRight.backColor = Color.parseColor(this.mKNXDigitalAdjustment.BackgroundColor);
@@ -98,7 +101,7 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 				if(mKNXDigitalAdjustment.getReadAddressId().isEmpty()) {
 					setValue(val);
 				}
-   
+     
 				sendCommandRequest(mKNXDigitalAdjustment.getWriteAddressIds(), val+"", false, null);
 
 			} catch (Exception e) {
@@ -109,7 +112,7 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 	
 	public void setValue(int val) {
 		this.currentValue = val;
-		invalidate();
+		this.invalidate();
 	}
 
 	@Override
@@ -189,6 +192,13 @@ public class STKNXDigitalAdjustment extends STKNXControl {
         Rect bound = new Rect();
         paint.getTextBounds(str, 0, str.length(), bound);
         canvas.drawText(str, getWidth() / 2 - bound.width() / 2, getHeight() / 2 + bound.height() / 2, paint);
+        
+        if(EBool.Yes == this.mKNXDigitalAdjustment.getDisplayBorder()) {
+    		paint.reset();
+    		paint.setStyle(Paint.Style.STROKE);
+    		paint.setColor(Color.parseColor(this.mKNXDigitalAdjustment.BorderColor));
+    		canvas.drawRoundRect(rect1, this.mKNXDigitalAdjustment.Radius, this.mKNXDigitalAdjustment.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
+    	}
     }
 }
 
@@ -207,7 +217,7 @@ class ViewControl extends View {
 	public double alpha;
 	public Bitmap backImage;
 	private ViewControlClickListener mViewControlClickListener;
-	
+	private String text = "";
 	
 	private enum EControlState {
 		Down,
@@ -234,8 +244,8 @@ class ViewControl extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		this.backImgLeft = this.PADDING_LEFT;
 		this.backImgTop = this.PADDING_TOP;
-		int width = this.getWidth() - this.PADDING_LEFT - this.PADDING_RIGHT;
-		int height = this.getHeight() - this.PADDING_TOP - this.PADDING_BOTTOM;
+		int width = this.width - this.PADDING_LEFT - this.PADDING_RIGHT;
+		int height = this.height - this.PADDING_TOP - this.PADDING_BOTTOM;
 		if(width > height) {
 			this.backImgRight = this.backImgLeft + height;
 			this.backImgBottom = this.backImgTop + height;
@@ -257,39 +267,23 @@ class ViewControl extends View {
 
     	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     	paint.setStyle(Paint.Style.FILL_AND_STROKE);	// 充满  
-    	paint.setAlpha((int)(this.alpha*255));
+//    	paint.setAlpha((int)(this.alpha*255));
     	RectF oval3 = new RectF(0, 0, this.getWidth(), this.getHeight());
-    	
-//    	/* 绘制背景 */
-//        int[] sliderColors = new int[3];
-//        sliderColors[0] = ColorUtils.changeBrightnessOfColor(this.backColor, 100);
-//        sliderColors[1] = this.backColor;
-//        sliderColors[2] = ColorUtils.changeBrightnessOfColor(this.backColor, -30);
-//        
-//        float sliderPositions[] = new float[3];
-//        sliderPositions[0] = .0f;
-//        sliderPositions[1] = .3f;
-//        sliderPositions[2] = 1.0f;
-//        
-//        Shader sliderShader = new LinearGradient(0, 0, 0, getHeight(), 
-//        		sliderColors, sliderPositions, Shader.TileMode.CLAMP); // 设置渐变色 这个正方形的颜色是改变的 , 一个材质,打造出一个线性梯度沿著一条线。  
-//    	paint.setShader(sliderShader);  
-//    	canvas.drawRoundRect(oval3, this.radius, this.radius, paint);
-    	
+
         /* 绘制背景图片 */
         if(null != this.backImage) {
         	Rect resRect = new Rect(0, 0, this.backImage.getWidth(), this.backImage.getHeight());
         	Rect desRect = new Rect(this.backImgLeft, this.backImgTop, this.backImgRight, this.backImgBottom);
         	canvas.drawBitmap(this.backImage, resRect, desRect, paint);
         }
-    	
+
     	switch (this.mEControlState) {
     		case Down:
     			paint.reset();
     			paint.setStyle(Paint.Style.FILL);
     			paint.setColor(Color.parseColor("#FF6100"));
     			paint.setAlpha(0x60);
-    			canvas.drawRoundRect(oval3, 5, 5, paint);	//第二个参数是x半径，第三个参数是y半径  
+    			canvas.drawRoundRect(oval3, this.radius, this.radius, paint);	//第二个参数是x半径，第三个参数是y半径  
     		break;
     		case Up:
     			break;

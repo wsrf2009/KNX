@@ -11,6 +11,7 @@ import com.sation.knxcontroller.knxdpt.KNXDataType;
 import com.sation.knxcontroller.knxdpt.KNXDatapointType;
 import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.models.KNXSelectedAddress;
+import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.util.KNX0X01Lib;
 import com.sation.knxcontroller.util.Log;
 
@@ -31,9 +32,9 @@ public class STKNXControl extends STKNXView {
 	protected boolean sendCommandRequest(final Map<String ,KNXSelectedAddress> mETSID,final String pData,final boolean isSendDefaultValue,final ICallBack icallBack) {
 		try  {
 			
-			if(this.mKNXControlBase.getHasTip()) { 
+			if(EBool.Yes == this.mKNXControlBase.getHasTip()) { 
 				new PromptDialog.Builder(this.mContext)
-				.setTitle("提示") 
+				.setTitle("提示")
 				.setIcon(R.drawable.launcher)
 				.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
 				.setMessage(this.mKNXControlBase.getTip()) 

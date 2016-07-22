@@ -3,6 +3,7 @@ package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXSwitch;
+import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 import com.sation.knxcontroller.util.ImageUtils;
@@ -166,13 +167,6 @@ public class STKNXSwitch extends STKNXControl {
     		paint.setARGB((int)(this.mKNXSwitch.Alpha*255), Color.red(backColor), Color.green(backColor), Color.blue(backColor));
     	}
     	canvas.drawRoundRect(oval3, this.mKNXSwitch.Radius, this.mKNXSwitch.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
-    	
-    	if(this.mKNXSwitch.DisplayBorder && (this.mKNXSwitch.Radius ==0)) {
-    		paint.reset();
-    		paint.setStyle(Paint.Style.STROKE);
-    		paint.setColor(Color.parseColor(this.mKNXSwitch.BorderColor));
-    		canvas.drawRoundRect(oval3, 0, 0, paint);//第二个参数是x半径，第三个参数是y半径  
-    	}
 
         /* 绘制图片 */
         Bitmap image = null;
@@ -182,6 +176,7 @@ public class STKNXSwitch extends STKNXControl {
        		image = this.imageOff;
        	}
         if(null != image) {
+        	paint.reset();
         	Rect resRect = new Rect(0, 0, image.getWidth(), image.getHeight());
         	Rect desRect = new Rect(this.imgX, this.imgY, this.imgRight, this.imgBottom);
         	canvas.drawBitmap(image, resRect, desRect, paint);
@@ -193,16 +188,16 @@ public class STKNXSwitch extends STKNXControl {
         	Rect bound = new Rect();
         	paint.getTextBounds(this.mKNXSwitch.getText(), 0, this.mKNXSwitch.getText().length(), bound);
         	if(null != image) {
-        		x=(getWidth()-(this.imgRight+this.PADDING))/2+this.imgRight+this.PADDING;
+        		x= (getWidth()- (this.imgRight+this.PADDING)-this.PADDING -bound.width())/2+this.imgRight+this.PADDING;
         		y=(getHeight()  + bound.height())/2;
         	} else {
         		x = getWidth()/2;
             	y = (getHeight()  + bound.height())/2;
         	} 
-        	
+
         	/* 绘制文本 */
         	paint.reset();
-        	paint.setTextAlign(Paint.Align.CENTER);
+//        	paint.setTextAlign(Paint.Align.CENTER);
         	paint.setColor(Color.parseColor(this.mKNXSwitch.FontColor));
         	paint.setTextSize(this.mKNXSwitch.FontSize);
         	canvas.drawText(this.mKNXSwitch.getText(), x, y, paint);
@@ -214,11 +209,18 @@ public class STKNXSwitch extends STKNXControl {
         		paint.setStyle(Paint.Style.FILL);
         		paint.setColor(Color.parseColor("#FF6100"));
         		paint.setAlpha(0x60);
-        		canvas.drawRoundRect(oval3, 5, 5, paint);	//第二个参数是x半径，第三个参数是y半径  
+        		canvas.drawRoundRect(oval3, this.mKNXSwitch.Radius, this.mKNXSwitch.Radius, paint);	//第二个参数是x半径，第三个参数是y半径  
         		break;
         	case Normal:
         		break;
         }
+        
+        if(EBool.Yes == this.mKNXSwitch.getDisplayBorder()) {
+    		paint.reset();
+    		paint.setStyle(Paint.Style.STROKE);
+    		paint.setColor(Color.parseColor(this.mKNXSwitch.BorderColor));
+    		canvas.drawRoundRect(oval3, this.mKNXSwitch.Radius, this.mKNXSwitch.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
+    	}
     }
     
     @Override

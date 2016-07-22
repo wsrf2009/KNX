@@ -1,6 +1,7 @@
 package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.control.KNXValueDisplay;
+import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 
@@ -24,7 +25,7 @@ public class STKNXValueDisplay extends STKNXControl {
 		super(context, knxValueDisplay);
 
 		this.mKNXValueDisplay = knxValueDisplay;
-		this.setId(this.mKNXValueDisplay.getId());
+		this.setId(mKNXValueDisplay.getId());
 	}
 	
 	public void setValue(int value) {
@@ -42,7 +43,7 @@ public class STKNXValueDisplay extends STKNXControl {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		
+		 
 		int backColor = Color.parseColor(this.mKNXValueDisplay.BackgroundColor);
     	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     	paint.setStyle(Paint.Style.FILL_AND_STROKE);	// 充满  
@@ -77,22 +78,19 @@ public class STKNXValueDisplay extends STKNXControl {
     	paint.setColor(fontColor);
     	paint.setTextSize(this.mKNXValueDisplay.FontSize);
     	
-//    	if(null != this.mKNXValueDisplay.getText()) {
-//        	/* 绘制文本 */
-//        	Rect bound = new Rect();
-//        	paint.getTextBounds(this.mKNXValueDisplay.getText(), 0, this.mKNXValueDisplay.getText().length(), bound);
-//        	canvas.drawText(this.mKNXValueDisplay.getText(), x, getHeight() / 2 + bound.height() / 2, paint);
-//        }
-    	
     	if(null != this.valueString) { 
-//    		valueString += " " +/* this.mKNXValueDisplay.getUnitDescription()*/this.mKNXValueDisplay.Unit;
-    		
     		Rect bound = new Rect();
         	paint.getTextBounds(this.valueString, 0, this.valueString.length(), bound);
-//        	x = getWidth() - this.PADDING - bound.width();
         	x = (getWidth() - 2 *x - bound.width())/2;
         	y = (getHeight()  + bound.height())/2;
         	canvas.drawText(this.valueString, x, y, paint);
+    	}
+    	
+    	if(EBool.Yes == this.mKNXValueDisplay.getDisplayBorder()) {
+    		paint.reset();
+    		paint.setStyle(Paint.Style.STROKE);
+    		paint.setColor(Color.parseColor(this.mKNXValueDisplay.BorderColor));
+    		canvas.drawRoundRect(oval3, this.mKNXValueDisplay.Radius, this.mKNXValueDisplay.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
     	}
 	}
 }

@@ -312,8 +312,7 @@ public class SplashActivity extends Activity {
 		            } 
 		            out.close();  
 		            
-		        } catch (Exception e)  
-		        {  
+		        } catch (Exception e) {  
 		            e.printStackTrace();  
 		        }   
 				 
