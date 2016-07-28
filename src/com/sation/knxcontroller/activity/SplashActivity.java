@@ -57,7 +57,7 @@ public class SplashActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.splash); 
+		setContentView(R.layout.splash);
 
 		settings = getSharedPreferences(STKNXControllerConstant.SETTING_FILE, MODE_PRIVATE);
 
@@ -217,7 +217,7 @@ public class SplashActivity extends Activity {
 				Gson gson = gsonBuilder.create();
 				KNXApp mKNXApp = gson.fromJson(json, /*new TypeToken<KNXApp>(){}.getType()*/KNXApp.class);
 				STKNXControllerApp.getInstance().setKNXAppConfig(mKNXApp); 
-				String groupAddressJson = readFileSdcardFile(STKNXControllerConstant.GroupAddFilePath);
+				String groupAddressJson = readFileSdcardFile(STKNXControllerConstant.GroupAddFilePath);  
 				List<KNXGroupAddress> mKNXGroupAddressList = gson.fromJson(groupAddressJson, 
 						new TypeToken<List<KNXGroupAddress>>() { }.getType());
 				Collections.sort(mKNXGroupAddressList, new Comparator<KNXGroupAddress>() { 
@@ -225,7 +225,7 @@ public class SplashActivity extends Activity {
 				    public int compare(KNXGroupAddress o1, KNXGroupAddress o2) {
 				           return (o2.getKnxAddress().compareTo(o1.getKnxAddress()));
 				     }	
-				});
+				}); 
 				//索引号对应的组地址列表
 				Map<Integer, KNXGroupAddress> sortGroupAddressMap = new HashMap<Integer, KNXGroupAddress>(); 
 				//索引号对应的组地址列表

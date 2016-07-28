@@ -25,7 +25,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class STKNXDigitalAdjustment extends STKNXControl {
-	private static final int PADDING = 3;
+	private static final int PADDING = 2;
 	private static final int SUBVIEW_WIDTH = 40;
 	private KNXDigitalAdjustment mKNXDigitalAdjustment;
     private int currentValue = 20;

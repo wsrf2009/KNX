@@ -16,7 +16,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 
 public class STKNXValueDisplay extends STKNXControl {
-	private final int PADDING = 5;
+	private final int PADDING = 2;
 	
 	private KNXValueDisplay mKNXValueDisplay;
 	private String valueString = "---";

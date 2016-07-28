@@ -21,15 +21,18 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.ViewDragHelper;
+import android.test.TouchUtils;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class STKNXSliderSwitch extends STKNXControl {
 	private static final int PADDING = 2;
 	private static final int SUBVIEW_WIDTH = 40;
     private final int SLIDER_EDGE_WIDTH = 3;
-    private final int SLIDER_WIDTH = 50;
+    private final int SLIDER_WIDTH = 100;
 	
 	private KNXSliderSwitch mKNXSliderSwitch;
 	private int leftImgX = 0;
@@ -43,6 +46,7 @@ public class STKNXSliderSwitch extends STKNXControl {
     private Bitmap imgLeft;
     private Bitmap imgRight;
     
+    private ViewSlider slider;
     private ViewDragHelper mViewDragHelper;
     private int sliderPositionX = 100;
     private enum ESliderState {
@@ -114,69 +118,95 @@ public class STKNXSliderSwitch extends STKNXControl {
 			@Override
 			public boolean tryCaptureView(View arg0, int arg1) {
 //				mSliderState = ESliderState.Dragging;
+				Log.w("", "tryCaptureView left:"+arg0.getLeft()+" top:"+arg0.getTop()+
+						" right:"+arg0.getRight()+" bottom:"+arg0.getBottom()+
+						" arg1:"+arg1);
 				return true;
 			}
 			
 			@Override
-			public int clampViewPositionHorizontal(View child, int left, int dx) {
-				final int leftBound = getPaddingLeft();
-                final int rightBound = getWidth() - child.getWidth() - leftBound;
+	        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
+	            invalidate();
+	        }
 
+	        @Override
+	        public void onEdgeTouched(int edgeFlags, int pointerId) {
+	            super.onEdgeTouched(edgeFlags, pointerId);
+	        }
+
+	        @Override
+	        public void onEdgeDragStarted(int edgeFlags, int pointerId) {
+	            mViewDragHelper.captureChildView(slider, pointerId);
+	        }
+			
+			@Override
+			public int clampViewPositionHorizontal(View child, int left, int dx) {
                 int range = getThumbScrollRange();
-                sliderPositionX = Math.min(Math.max(left, leftBound), sliderStartPos+range);
-                sliderPositionX = Math.max(sliderPositionX, sliderStartPos);
+                sliderPositionX = Math.max(sliderStartPos, left);
+                sliderPositionX = Math.min(sliderPositionX, sliderStartPos+sliderWidth-SLIDER_WIDTH);
                 if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) {
                 	curPos = MathUtils.getTheClosetIndex(sliderPositionX, pos);
                 	sliderPositionX = pos[curPos];
                 }
                 
-//                if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) { 
-//
-//        		} else {
-        			
-        			progress = (float)(sliderPositionX-sliderStartPos)/range;
-        			if(progress>1){
-        				progress = 1;
-        			}
-//        		}
-        				sliderChanged();
-        				
+        		progress = (float)(sliderPositionX-sliderStartPos)/range;
+        		if(progress>1){
+        			progress = 1;
+        		}
+
                 return sliderPositionX;
 			} 
 			
 			@Override
 			public int clampViewPositionVertical(View child, int top, int dy) {
-				return 0;
+				return super.clampViewPositionVertical(child, top, dy);
 			}
 			
 			@Override
 			public void onViewCaptured(View capturedChild, int activePointerId) {
-//				mSliderState = ESliderState.Down;
+				super.onViewCaptured(capturedChild, activePointerId);
 				ViewSlider slider = (ViewSlider)capturedChild;
 				slider.mEControlState = EControlState.Down;
-				slider.invalidate();
 			}
 			
 			@Override
 			public void onViewReleased(View releasedChild, float xvel, float yvel) {
-//				mSliderState = ESliderState.Normal;
+				super.onViewReleased(releasedChild, xvel, yvel);
 				ViewSlider slider = (ViewSlider)releasedChild;
 				slider.mEControlState = EControlState.Up;
-				slider.invalidate();
+				sliderChanged();
+				Log.w("", "onViewReleased left:"+releasedChild.getLeft()+
+						" top:"+releasedChild.getTop()+" right:"+releasedChild.getRight()+
+						" bottom:"+releasedChild.getBottom()+
+						" xvel:"+xvel+" yvel:"+yvel);
+			}
+			
+			@Override
+			public int getViewHorizontalDragRange(View child){
+				return getThumbScrollRange();
+			}
+			
+			@Override
+			public int getViewVerticalDragRange(View child){
+				return 0;
 			}
 		});
 
-		ViewSlider slider = new ViewSlider(context);
-		slider.width = this.SLIDER_WIDTH;
-		slider.height = this.mKNXSliderSwitch.Height;
+		slider = new ViewSlider(context);
+//		slider.width = this.SLIDER_WIDTH;
+//		slider.height = this.mKNXSliderSwitch.Height;
+		slider.setMinimumWidth(this.SLIDER_WIDTH);
+		slider.setMinimumHeight(this.mKNXSliderSwitch.Height);
 		slider.backColor = Color.parseColor(this.mKNXSliderSwitch.BackgroundColor);
 		slider.radius = this.mKNXSliderSwitch.Radius;
 		slider.alpha = this.mKNXSliderSwitch.Alpha;
+		
+		LayoutParams pageLayoutParams = new LayoutParams(this.SLIDER_WIDTH, this.mKNXSliderSwitch.Height); 
+		slider.setLayoutParams(pageLayoutParams);
 		this.addView(slider);
 	}
 	
 	private int getThumbScrollRange() { 
-//		return this.mKNXSliderSwitch.Width-this.SLIDER_WIDTH;
 		return this.sliderWidth-this.SLIDER_WIDTH;
 	}
 	
@@ -191,9 +221,7 @@ public class STKNXSliderSwitch extends STKNXControl {
 			this.sliderPositionX = this.pos[8];
 		} else {
 			/* 绝对调光 */
-//			int thumbRange = getThumbScrollRange();
 			this.progress = (float)p/255;
-//			this.sliderPositionX = (int)(this.progress * thumbRange);
 			this.sliderPositionX = getSliderPos(this.progress);
 		}
 		
@@ -277,25 +305,17 @@ public class STKNXSliderSwitch extends STKNXControl {
 	
 	@Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
+		final int action = MotionEventCompat.getActionMasked(event);
+        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+            this.mViewDragHelper.cancel();
+            return false;
+        }
         return this.mViewDragHelper.shouldInterceptTouchEvent(event);
     }
 
 	@Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		measureChildren(widthMeasureSpec, heightMeasureSpec);
-
-//        /* 计算图片的显示位置和大小 */
-//		this.leftImgX = this.PADDING;
-//		this.leftImgY = this.SLIDER_EDGE_WIDTH + this.PADDING;
-//		int height = this.mKNXSliderSwitch.Height - 2 * this.leftImgY;
-//		int width = height;
-//        this.leftImgRight = this.leftImgX + width;
-//        this.leftImgBottom = this.leftImgY + height;
-//        
-//        this.rightImgX = this.mKNXSliderSwitch.Width - this.PADDING - width;
-//        this.rightImgY = this.leftImgY;
-//        this.rightImgRight = this.rightImgX + width;
-//        this.rightImgBottom = this.leftImgBottom;
         
         /**
          * 最后调用父类方法,把View的大小告诉父布局。
@@ -372,70 +392,55 @@ public class STKNXSliderSwitch extends STKNXControl {
     		paint.setARGB((int)(this.mKNXSliderSwitch.Alpha*255), Color.red(backColor), Color.green(backColor), Color.blue(backColor));
     	}
     	canvas.drawRoundRect(rect1, this.mKNXSliderSwitch.Radius, this.mKNXSliderSwitch.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
-
-//    	paint.reset();
-//    	/* 左图标 */
-//        if (null != this.imgLeft) {
-//            Rect resRect = new Rect(0, 0, this.imgLeft.getWidth(), this.imgRight.getHeight());
-//            Rect desRect = new Rect(this.leftImgX, this.leftImgY, this.leftImgRight, this.leftImgBottom);
-//            canvas.drawBitmap(this.imgLeft, resRect, desRect, paint);
-//        }
-//
-//        /* 右图标 */
-//        if (null != this.imgRight) {
-//            Rect resRect = new Rect(0, 0, this.imgRight.getWidth(), this.imgRight.getHeight());
-//            Rect desRect = new Rect(this.rightImgX, this.rightImgY, this.rightImgRight, this.rightImgBottom);
-//            canvas.drawBitmap(this.imgRight, resRect, desRect, paint);
-//        }
     }
     
     @SuppressLint("ClickableViewAccessibility")
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
     	this.mViewDragHelper.processTouchEvent(event);
-    	final float x = event.getX();
-
-    	switch (event.getAction()) { 
-    		case MotionEvent.ACTION_DOWN: 
-    			if(ESliderState.Normal == mSliderState) {
-//    				this.sliderPositionX = (int)x-this.SLIDER_WIDTH/2;
-//    				if(this.sliderPositionX < 0) {
-//    					this.sliderPositionX = 0;
-//    				} else if (this.sliderPositionX > (this.getWidth() - this.SLIDER_WIDTH)){
-//    					this.sliderPositionX = this.getWidth() - this.SLIDER_WIDTH;
-//    				}
-//    				if((x>this.sliderStartPos) && (x<(this.sliderStartPos+this.sliderWidth))){
-//    					this.sliderPositionX = (int)((x-this.SLIDER_WIDTH)/2);
-//    					
-//    				}
-//    				
-//    				this.requestLayout();
-    			}
-    			break; 
-    		case MotionEvent.ACTION_UP:
-    			int range = getThumbScrollRange();
-//    			this.progress = 100*this.sliderPositionX/range;
-    			this.progress = (this.sliderPositionX-this.sliderStartPos)/range;
-    			Log.e("STKNXSliderSwitch", "sliderPositionX==>"+sliderPositionX+" range==>"+range+" progress==>"+progress);
-    			this.sliderChanged();
-    			break;
-    			
-    		case MotionEvent.ACTION_MOVE:
-    			break;
-    		case MotionEvent.ACTION_CANCEL:
-    			break;
-    			
-    		default:
-    			break;
-    	}
+//    	final float x = event.getX();
+//
+//    	switch (event.getAction()) { 
+//    		case MotionEvent.ACTION_DOWN: 
+//    			if(ESliderState.Normal == mSliderState) {
+////    				this.sliderPositionX = (int)x-this.SLIDER_WIDTH/2;
+////    				if(this.sliderPositionX < 0) {
+////    					this.sliderPositionX = 0;
+////    				} else if (this.sliderPositionX > (this.getWidth() - this.SLIDER_WIDTH)){
+////    					this.sliderPositionX = this.getWidth() - this.SLIDER_WIDTH;
+////    				}
+////    				if((x>this.sliderStartPos) && (x<(this.sliderStartPos+this.sliderWidth))){
+////    					this.sliderPositionX = (int)((x-this.SLIDER_WIDTH)/2);
+////    					
+////    				}
+////    				
+////    				this.requestLayout();
+//    			}
+//    			break; 
+//    		case MotionEvent.ACTION_UP:
+//    			int range = getThumbScrollRange();
+////    			this.progress = 100*this.sliderPositionX/range;
+//    			this.progress = (this.sliderPositionX-this.sliderStartPos)/range;
+//    			Log.e("STKNXSliderSwitch", "sliderPositionX==>"+sliderPositionX+" range==>"+range+" progress==>"+progress);
+//    			this.sliderChanged();
+//    			break;
+//    			
+//    		case MotionEvent.ACTION_MOVE:
+//    			break;
+//    		case MotionEvent.ACTION_CANCEL:
+//    			break;
+//    			
+//    		default:
+//    			break;
+//    	}
     	 
     	return true;
     }
 }
 
 class ViewSlider extends View {
-	public int width;
-	public int height;
+//	public int width;
+//	public int height;
 	public int backColor;
 	public int radius;
 	public double alpha;
@@ -458,10 +463,9 @@ class ViewSlider extends View {
         /**
          * 最后调用父类方法,把View的大小告诉父布局。
          */
-        setMeasuredDimension(this.width, this.height);
+        setMeasuredDimension(/*this.width, this.height*/this.getWidth(), this.getHeight());
     }
 
-	@SuppressLint({ "DrawAllocation", "ClickableViewAccessibility" })
 	@Override
     protected void onDraw(Canvas canvas) {
     	super.onDraw(canvas);
@@ -495,7 +499,7 @@ class ViewSlider extends View {
 				paint.setAlpha(0x60);
 				canvas.drawRoundRect(oval3, this.radius, this.radius, paint);	//第二个参数是x半径，第三个参数是y半径  
 				break;
-			case Up:
+			default:
 				break;
     	}
 	}

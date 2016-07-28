@@ -26,6 +26,7 @@ import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,8 +59,11 @@ public class BaseActivity extends FragmentActivity {
 		// 设定主题
 		setTheme(currentTheme);
 		super.onCreate(savedInstanceState);
-		this.getWindow().setFlags(FLAG_HOMEKEY_DISPATCHED,
-				FLAG_HOMEKEY_DISPATCHED);// 关键代码
+//		requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//		this.getWindow().setFlags(FLAG_HOMEKEY_DISPATCHED,
+//				FLAG_HOMEKEY_DISPATCHED);// 关键代码
 
 		STKNXControllerApp.getInstance().pushActivity(this);
 
@@ -149,16 +153,14 @@ public class BaseActivity extends FragmentActivity {
 				|| this.getClass().getSimpleName()
 						.equalsIgnoreCase("MyProfileActivity")) {
 			this.finish();
+//			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 		} else {
 			super.onBackPressed();
 		}
 	}
 
- 
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
 		int key = event.KEYCODE_HOME;
 		if (keyCode == event.KEYCODE_HOME) {
 			return false;

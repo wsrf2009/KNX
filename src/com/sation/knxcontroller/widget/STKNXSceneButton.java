@@ -21,7 +21,7 @@ import android.graphics.Shader;
 import android.view.MotionEvent;
 
 public class STKNXSceneButton extends STKNXControl {
-	private final int PADDING = 5;
+	private final int PADDING = 2;
     
 	private Bitmap imageOn;
     private Bitmap imageOff;

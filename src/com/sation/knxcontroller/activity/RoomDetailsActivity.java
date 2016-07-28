@@ -199,7 +199,7 @@ public class RoomDetailsActivity extends BaseActivity {
 				if(groupAddressIndexMap.containsKey(mETSId)) {
 					currentIndex = STKNXControllerApp.getInstance().getGroupAddressIndexMap().get(mETSId);
 					KNXGroupAddress address = STKNXControllerApp.getInstance().getGroupAddressMap().get(currentIndex);
-					if(address.getIsCommunication() && address.getIsRead()) {
+					if(address.getIsCommunication() && address.getIsTransmit()) {
 						byte[] contentBytes = new byte[32];
 						byte[] length  = new byte[1];
 						boolean b1 = KNX0X01Lib.UTestAndCopyObject(currentIndex, contentBytes, length);

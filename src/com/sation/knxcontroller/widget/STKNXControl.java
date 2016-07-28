@@ -26,6 +26,7 @@ public class STKNXControl extends STKNXView {
 	public STKNXControl(Context context, KNXControlBase control) {
 		super(context, control);
 
+		this.mContext = context;
 		this.mKNXControlBase = control;
 	}
 

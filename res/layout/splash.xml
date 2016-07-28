@@ -17,7 +17,7 @@
         android:textColor="#ffbbbbbb"
         android:textSize="@dimen/font_size_mini" />
 
-    <LinearLayout
+   <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
@@ -39,6 +39,8 @@
             android:textColor="#ffbbbbbb"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+
     </LinearLayout>
 
 </RelativeLayout>

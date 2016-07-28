@@ -151,130 +151,129 @@ public class STKNXControllerApp extends Application {
 	}
 	
 	// manager the activity.
-		/**
-		 * add activity to stack.
-		 * 
-		 * @param activity
-		 */
-		public void pushActivity(Activity activity) {
-			if (activityStack == null) {
-				activityStack = new Stack<Activity>();
-			}
-			activityStack.add(activity);
+	/**
+	* add activity to stack.
+	* 
+	* @param activity
+	*/
+	public void pushActivity(Activity activity) {
+		if (activityStack == null) {
+			activityStack = new Stack<Activity>();
 		}
+		activityStack.add(activity);
+	}
 
-		/**
-		 * finish all activity
-		 */
-		public void popAllActivity() {
-			while (!activityStack.isEmpty()) {
-				Activity activity = activityStack.lastElement();
-				if (activity == null) {
-					break;
-				}
-
-				activity.finish();
-				activityStack.remove(activity);
-				activity = null;
+	/**
+	 * finish all activity
+	 */
+	public void popAllActivity() {
+		while (!activityStack.isEmpty()) {
+			Activity activity = activityStack.lastElement();
+			if (activity == null) {
+				break;
 			}
-		}
 
-		// 遍历所有Activity并finish
-		public void exit() {
-			for (Activity activity : activityStack) {
-				activity.finish();
-			}
-			// System.exit(0);
+			activity.finish();
+			activityStack.remove(activity);
+			activity = null;
 		}
+	}
 
-		// 从assets 文件夹中获取文件并读取数据
-		public String getFromAssets(String fileName) {
-			String result = "";
-			try {
-				InputStream inputStream = getResources().getAssets().open(fileName);
-				// 获取文件的字节数
-				int lenght = inputStream.available();
-				// 创建byte数组
-				byte[] buffer = new byte[lenght];
-				// 将文件中的数据读到byte数组中
-				inputStream.read(buffer);
-				result = EncodingUtils.getString(buffer, "UTF-8");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return result;
+	// 遍历所有Activity并finish
+	public void exit() {
+		for (Activity activity : activityStack) {
+			activity.finish();
 		}
+		// System.exit(0);
+	}
+
+	// 从assets 文件夹中获取文件并读取数据
+	public String getFromAssets(String fileName) {
+		String result = "";
+		try {
+			InputStream inputStream = getResources().getAssets().open(fileName);
+			// 获取文件的字节数
+			int lenght = inputStream.available();
+			// 创建byte数组
+			byte[] buffer = new byte[lenght];
+			// 将文件中的数据读到byte数组中
+			inputStream.read(buffer);
+			result = EncodingUtils.getString(buffer, "UTF-8");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 		
-		private KNXApp mKNXApp;
-		public KNXApp getAppConfig() {
-			if (mKNXApp == null) {
-				String json = this.getFromAssets("controlapp.knxjson");
+	private KNXApp mKNXApp;
+	public KNXApp getAppConfig() {
+		if (mKNXApp == null) {
+			String json = this.getFromAssets("controlapp.knxjson");
 
-				GsonBuilder gsonBuilder = new GsonBuilder();
-				gsonBuilder.registerTypeAdapter(KNXControlBase.class, new KNXControlBaseDeserializerAdapter());
-				Gson gson = gsonBuilder.create();
-				KNXApp tempKNXApp = gson.fromJson(json, KNXApp.class);
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gsonBuilder.registerTypeAdapter(KNXControlBase.class, new KNXControlBaseDeserializerAdapter());
+			Gson gson = gsonBuilder.create();
+			KNXApp tempKNXApp = gson.fromJson(json, KNXApp.class);
 				
-				STKNXControllerApp.getInstance().setKNXAppConfig(tempKNXApp);
-			}
-			return mKNXApp;
-		} 
-		public void setKNXAppConfig(KNXApp mKNXApp) {
-			this.mKNXApp = mKNXApp;
+			STKNXControllerApp.getInstance().setKNXAppConfig(tempKNXApp);
 		}
+		return mKNXApp;
+	} 
+	public void setKNXAppConfig(KNXApp mKNXApp) {
+		this.mKNXApp = mKNXApp;
+	}	
 		
-		
-		//索引号对应的组地址列表
-		private Map<Integer, KNXGroupAddress> mGroupAddressMap;
-		public Map<Integer, KNXGroupAddress> getGroupAddressMap() { 
-			return mGroupAddressMap;
-		}
-		public void setGroupAddressMap(Map<Integer, KNXGroupAddress> groupAddressMap) {
-			this.mGroupAddressMap = groupAddressMap;
-		} 
+	//索引号对应的组地址列表
+	private Map<Integer, KNXGroupAddress> mGroupAddressMap;
+	public Map<Integer, KNXGroupAddress> getGroupAddressMap() { 
+		return mGroupAddressMap;
+	}
+	public void setGroupAddressMap(Map<Integer, KNXGroupAddress> groupAddressMap) {
+		this.mGroupAddressMap = groupAddressMap;
+	} 
 		 
-		//索引号对应的组地址列表
-		private Map<String, Integer> mGroupAddressIndexMap;
-		public Map<String, Integer> getGroupAddressIndexMap() { 
-			return mGroupAddressIndexMap;
-		}
-		public void setGroupAddressIndexMap(Map<String, Integer> groupAddressIndexMap) {
-			this.mGroupAddressIndexMap = groupAddressIndexMap;
-		}
+	//索引号对应的组地址列表
+	private Map<String, Integer> mGroupAddressIndexMap;
+	public Map<String, Integer> getGroupAddressIndexMap() { 
+		return mGroupAddressIndexMap;
+	}
+	public void setGroupAddressIndexMap(Map<String, Integer> groupAddressIndexMap) {
+		this.mGroupAddressIndexMap = groupAddressIndexMap;
+	}
 
-		private Map<Integer, KNXControlBase> currentPageKNXControlBaseMap;
-		public Map<Integer, KNXControlBase> getCurrentPageKNXControlBaseMap() { 
-			return currentPageKNXControlBaseMap;
-		}
-		public void setCurrentPageKNXControlBaseMap(Map<Integer, KNXControlBase> mKNXControlBaseMap) {
-			this.currentPageKNXControlBaseMap = mKNXControlBaseMap;
-		} 
+	private Map<Integer, KNXControlBase> currentPageKNXControlBaseMap;
+	public Map<Integer, KNXControlBase> getCurrentPageKNXControlBaseMap() { 
+		return currentPageKNXControlBaseMap;
+	}
+	public void setCurrentPageKNXControlBaseMap(Map<Integer, KNXControlBase> mKNXControlBaseMap) {
+		this.currentPageKNXControlBaseMap = mKNXControlBaseMap;
+	} 
 		
-		private Map<String, KNXGroupAddress> mGroupAddressIdMap;
-		public Map<String, KNXGroupAddress> getGroupAddressIdMap() {
-			return mGroupAddressIdMap;
-		}
-		public void setGroupAddressIdMap(Map<String, KNXGroupAddress> map) {
-			mGroupAddressIdMap = map;
-		}
+	private Map<String, KNXGroupAddress> mGroupAddressIdMap;
+	public Map<String, KNXGroupAddress> getGroupAddressIdMap() {
+		return mGroupAddressIdMap;
+	}
+	public void setGroupAddressIdMap(Map<String, KNXGroupAddress> map) {
+		mGroupAddressIdMap = map;
+	}
 		
-		private Map<String, List<TimingTaskItem>> timerTaskMap;
-		public Map<String, List<TimingTaskItem>> getTimerTaskMap() {
-			return timerTaskMap;
-		}
-		public void setTimerTaskMap(Map<String, List<TimingTaskItem>> mTimerTaskMap) {
-			this.timerTaskMap = mTimerTaskMap;
-		}
+	private Map<String, List<TimingTaskItem>> timerTaskMap;
+	public Map<String, List<TimingTaskItem>> getTimerTaskMap() {
+		return timerTaskMap;
+	}
+	public void setTimerTaskMap(Map<String, List<TimingTaskItem>> mTimerTaskMap) {
+		this.timerTaskMap = mTimerTaskMap;
+	}
 		
-		public void saveTimerTask() {
-			try {
-				FileUtils.writeObjectIntoFile(this, STKNXControllerConstant.FILE_TIMERTASK/*+"_"+SystemUtil.getVersionCode(this)+".dat"*/, timerTaskMap);
-			} catch (IOException e) {
+	public void saveTimerTask() {
+		try {
+			FileUtils.writeObjectIntoFile(this, STKNXControllerConstant.FILE_TIMERTASK/*+"_"+SystemUtil.getVersionCode(this)+".dat"*/, timerTaskMap);
+		} catch (IOException e) {
 				
-				Log.e(STKNXControllerConstant.DEBUG, "保存定时任务失败"+"\n" +e.getLocalizedMessage()+"\n"+e.getMessage()+"\n"+e.getCause()+ "\ntimerTaskMap:"+timerTaskMap);
+			Log.e(STKNXControllerConstant.DEBUG, "保存定时任务失败"+"\n" +e.getLocalizedMessage()+"\n"+e.getMessage()+"\n"+e.getCause()+ "\ntimerTaskMap:"+timerTaskMap);
 				
-				e.printStackTrace();
-			}
+			e.printStackTrace();
 		}
+	}
 
 }

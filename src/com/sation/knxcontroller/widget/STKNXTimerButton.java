@@ -21,7 +21,7 @@ import android.graphics.Shader;
 import android.view.MotionEvent;
 
 public class STKNXTimerButton extends STKNXControl {
-	private final int PADDING = 5;
+	private final int PADDING = 2;
 	
 	private KNXTimerButton mKNXTimerButton;
 	private enum ControlState {

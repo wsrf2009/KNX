@@ -16,6 +16,7 @@ import com.sation.knxcontroller.util.SystemUtil;
 import com.sation.knxcontroller.widget.PromptDialog;
 import com.sation.knxcontroller.R;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -24,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +38,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RoomTilesListActivity  extends BaseActivity { 
+public class RoomTilesListActivity extends BaseActivity { 
 	
 	private GridView gridView;
 	private RoomListAdapter mRoomListAdapter;
@@ -50,12 +52,11 @@ public class RoomTilesListActivity  extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.room_tiles_list_layout);
+
 		txtSystemTime = (TextView)findViewById(R.id.roomTilesListTextViewDateTime);
 		settings = getSharedPreferences(STKNXControllerConstant.SETTING_FILE, android.content.Context.MODE_PRIVATE);
 
 		init();
-		
-//		SystemUtil.getMountPathList();
 	}
 	
 	@Override
@@ -82,12 +83,13 @@ public class RoomTilesListActivity  extends BaseActivity {
 	    IntentFilter filter = new IntentFilter(STKNXControllerConstant.BROADCASTRECEIVER_REFRESH_SYSTEM_TIME);
 	    registerReceiver(mRefreshSystemTimeReceiver, filter);  
 	}
+	
 	@Override
 	public void onPause() {
 		super.onPause();
 
 		unregisterReceiver(mRefreshSystemTimeReceiver);
-	}
+	} 
 	
 	@Override
 	protected void onStop() {

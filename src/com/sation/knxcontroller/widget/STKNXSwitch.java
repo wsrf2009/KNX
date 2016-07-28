@@ -24,7 +24,7 @@ import android.view.MotionEvent;
 
 
 public class STKNXSwitch extends STKNXControl {
-	private final int PADDING = 8;
+	private final int PADDING = 2;
 
     private Bitmap imageOn;
     private Bitmap imageOff;
@@ -117,9 +117,9 @@ public class STKNXSwitch extends STKNXControl {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     	
         /* 计算图片的显示位置和大小 */
-    	int height = this.mKNXSwitch.Height*3/5;
-    	this.imgY = (this.mKNXSwitch.Height-height)/2;
-    	this.imgX = this.imgY;
+    	this.imgX = this.PADDING;
+    	this.imgY = this.PADDING;
+    	int height = this.mKNXSwitch.Height - 2 * this.imgY;
     	this.imgRight = this.imgX + height;   // 计算出高度
         this.imgBottom = this.imgY + height;     // 计算出宽度
         
