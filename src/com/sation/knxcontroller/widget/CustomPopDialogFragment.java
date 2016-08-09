@@ -102,7 +102,7 @@ public class CustomPopDialogFragment extends DialogFragment {
 	 * @return
 	 */
 	public void setContentView(int v) {
-		final LayoutInflater inflater = LayoutInflater.from(getDialog().getContext());
+//		final LayoutInflater inflater = LayoutInflater.from(getDialog().getContext());
 		//this.contentView = inflater.inflate(R.layout.softupdate_progress, null);
 	}
 

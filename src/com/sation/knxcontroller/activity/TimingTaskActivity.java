@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.adapter.AddressAndActionAdapter;
@@ -14,21 +15,19 @@ import com.sation.knxcontroller.control.KNXControlBase;
 import com.sation.knxcontroller.control.KNXTimerButton;
 import com.sation.knxcontroller.control.TimingTaskItem;
 import com.sation.knxcontroller.control.TimingTaskItem.KNXGroupAddressAndAction;
-import com.sation.knxcontroller.knxdpt.KNXDatapointType;
 import com.sation.knxcontroller.models.KNXGroupAddress;
-import com.sation.knxcontroller.models.KNXGroupAddressAction;
 import com.sation.knxcontroller.models.KNXSelectedAddress;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.widget.CustomDateAndTimeDialog;
-import com.sation.knxcontroller.widget.CustomTimerPickerDialog;
-import com.sation.knxcontroller.widget.PromptDialog;
-import com.sation.knxcontroller.widget.TimeAndWeekdayPickerDialog;
 import com.sation.knxcontroller.widget.CustomDateAndTimeDialog.OnDateAndTimeChangedListener;
 import com.sation.knxcontroller.widget.CustomDateAndTimeDialog.OnTimeChangedListener;
+import com.sation.knxcontroller.widget.CustomTimerPickerDialog;
 import com.sation.knxcontroller.widget.CustomTimerPickerDialog.OnTimerChangedListener;
+import com.sation.knxcontroller.widget.PromptDialog;
+import com.sation.knxcontroller.widget.TimeAndWeekdayPickerDialog;
 import com.sation.knxcontroller.widget.TimeAndWeekdayPickerDialog.OnChangedListener;
-import com.sation.knxcontroller.R;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -37,24 +36,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Looper;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TimingTaskActivity extends BaseActivity {
 	private ListView lvTimingTaskList;
@@ -166,7 +157,7 @@ public class TimingTaskActivity extends BaseActivity {
 	public void onPause() {
 		super.onPause();
 		
-		Log.i(STKNXControllerConstant.ACTIVITY_JUMP, "...");
+//		Log.i(STKNXControllerConstant.ACTIVITY_JUMP, "...");
 		
 		STKNXControllerApp.getInstance().saveTimerTask();
 		
@@ -212,6 +203,7 @@ public class TimingTaskActivity extends BaseActivity {
 		}
   	}
 	
+	@SuppressLint("DefaultLocale")
 	private String getMonthlyContent(TimingTaskItem item) {
 		String text = String.format("%s: %02d%s  %02d%s%02d%s", getResources().getString(R.string.monthly), 
 				item.getDay(), getResources().getString(R.string.day),
@@ -220,6 +212,7 @@ public class TimingTaskActivity extends BaseActivity {
 		return text;
 	}
 	
+	@SuppressLint("DefaultLocale")
 	private String getWeeklyContent(TimingTaskItem item) {
 		String weekly = String.format("%s: %s", getResources().getString(R.string.weekly), item.getWeekly(this)) ;
 		String time = String.format("%02d%s%02d%s", item.getHour(), getResources().getString(R.string.hour),
@@ -227,6 +220,7 @@ public class TimingTaskActivity extends BaseActivity {
 		return weekly + " " + time;
 	}
 	
+	@SuppressLint("DefaultLocale")
 	private String getEverydayContent(TimingTaskItem item) {
 		String text = String.format("%s: %02d%s%02d%s", getResources().getString(R.string.everyday),
 				item.getHour(), getResources().getString(R.string.hour),
@@ -234,6 +228,7 @@ public class TimingTaskActivity extends BaseActivity {
 		return text;
 	}
 	
+	@SuppressLint("DefaultLocale")
 	private String getCycleContent(TimingTaskItem item) {
 		String text = String.format("%s: %d%s%d%s%d%s", getResources().getString(R.string.cycle_interval), 
 				item.getIntervalHour(), getResources().getString(R.string.unit_hour), 
@@ -242,6 +237,7 @@ public class TimingTaskActivity extends BaseActivity {
 		return text;
 	}
 	
+	@SuppressLint("DefaultLocale")
 	private String getOneOffContent(TimingTaskItem item) {
 		String text = String.format("%04d%s%02d%s%02d%s  %02d%s%02d%s", item.getYear(), getResources().getString(R.string.year), 
 				item.getMonth(), getResources().getString(R.string.month), 
@@ -751,7 +747,7 @@ public class TimingTaskActivity extends BaseActivity {
 					}
 				}
 				
-				Log.i(STKNXControllerConstant.DEBUG, "timeIsInvalid:"+timeIsInvalid);
+//				Log.i(STKNXControllerConstant.DEBUG, "timeIsInvalid:"+timeIsInvalid);
 				
 				if (timeIsInvalid) {
 					new AlertDialog.Builder(TimingTaskActivity.this) 

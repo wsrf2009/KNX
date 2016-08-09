@@ -1,22 +1,21 @@
 package com.sation.knxcontroller.activity; 
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import com.sation.knxcontroller.STKNXControllerApp;
+import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.services.RestartService;
+import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.NetWorkUtil;
 import com.sation.knxcontroller.widget.CustomPopDialogFragment;
 import com.sation.knxcontroller.widget.PromptDialog;
 import com.sation.knxcontroller.widget.settingview.ImageItemView;
 import com.sation.knxcontroller.widget.settingview.SettingButton;
+import com.sation.knxcontroller.widget.settingview.SettingButton.onSettingButtonClickListener;
 import com.sation.knxcontroller.widget.settingview.SettingData;
 import com.sation.knxcontroller.widget.settingview.SettingViewItemData;
-import com.sation.knxcontroller.widget.settingview.SettingButton.onSettingButtonClickListener;
-import com.sation.knxcontroller.R;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -52,7 +51,7 @@ public class SettingDialog {
 	private SettingButton systemStatus = null;
 	private SettingData mItemData = null;
 	private SettingViewItemData mItemViewData = null;
-	private List<SettingViewItemData> mListData = new ArrayList<SettingViewItemData>();
+//	private List<SettingViewItemData> mListData = new ArrayList<SettingViewItemData>();
 	
 	public SettingDialog(Context context) { 
 		mContext = context;
@@ -60,6 +59,7 @@ public class SettingDialog {
 	}
 
  
+	@SuppressLint("InflateParams")
 	public void Show() {
 		final LayoutInflater inflater = LayoutInflater.from(mContext);
 		final View mView = inflater.inflate(R.layout.setting_layout, null);
@@ -72,7 +72,7 @@ public class SettingDialog {
 
 		settingKNXConnect = (SettingButton) mView.findViewById(R.id.settingKNXConnect);
 		settingPhysicalAddress = (SettingButton) mView.findViewById(R.id.settingPhysicalAddress); 
-//		settingDeviceReflashSpan = (SettingButton) mView.findViewById(R.id.settingDeviceReflashSpan); 
+//		settingDeviceReflashSpan = (SettingButton) mView.findViewById(R.id.settingDeviceReflashSpan);
 		settingScreenOffSpan = (SettingButton) mView.findViewById(R.id.settingScreenOffSpan);
 		settingLanguage = (SettingButton) mView.findViewById(R.id.settingLanguage);
 		systemStatus = (SettingButton) mView.findViewById(R.id.systemStatus);
@@ -296,7 +296,7 @@ public class SettingDialog {
 //
 //			@Override
 //			public void onSettingButtonClick() { 
-//				// TODO Auto-genera 	  {
+// 	  {
 //				final View view = LayoutInflater.from(mContext).inflate(R.layout.knx_refresh_status_setting, null);  
 //				final EditText txtTimeSpan = (EditText) view.findViewById(R.id.txtTimeSpan);
 ////				txtTimeSpan.setInputType(InputType.TYPE_CLASS_DATETIME);
@@ -342,40 +342,46 @@ public class SettingDialog {
 
 			@Override
 			public void onSettingButtonClick() { 
-				final View view = LayoutInflater.from(mContext).inflate(R.layout.knx_refresh_status_setting, null);  
-				final EditText txtTimeSpan = (EditText) view.findViewById(R.id.txtTimeSpan);
+				try {
+					final View view = LayoutInflater.from(mContext).inflate(R.layout.knx_refresh_status_setting, null);  
+					final EditText txtTimeSpan = (EditText) view.findViewById(R.id.txtTimeSpan);
 				
-				int knxSettingScreenOffTimespan = settings.getInt(STKNXControllerConstant.KNX_SETTING_SCRRENOFF_TIMESPAN, 30); 
-				txtTimeSpan.setText(String.valueOf(knxSettingScreenOffTimespan));
+					int knxSettingScreenOffTimespan = Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT);
+					if(knxSettingScreenOffTimespan>1000) {
+						knxSettingScreenOffTimespan /= 1000;
+					}
+					txtTimeSpan.setText(String.valueOf(knxSettingScreenOffTimespan));
 				
-				new PromptDialog.Builder(mContext)
-				.setTitle(mContext.getResources().getString(R.string.setting_back_light_time)) 
-				.setIcon(R.drawable.launcher)
-				//.setViewStyle(PromptDialog.VIEW_STYLE_TITLEBAR_SKYBLUE)
-				.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
-				//.setMessage("请输入密码")
-				.setView(view)
-				.setButton1(mContext.getResources().getString(R.string.cancel),  new PromptDialog.OnClickListener() {
+					new PromptDialog.Builder(mContext)
+					.setTitle(mContext.getResources().getString(R.string.setting_back_light_time)) 
+					.setIcon(R.drawable.launcher)
+					.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
+					.setView(view)
+					.setButton1(mContext.getResources().getString(R.string.cancel),  new PromptDialog.OnClickListener() {
 							
-							@Override
-							public void onClick(Dialog dialog, int which) {
-								dialog.dismiss(); 
-							}
-						})
-				.setButton2(mContext.getResources().getString(R.string.save), new PromptDialog.OnClickListener() {
+						@Override
+						public void onClick(Dialog dialog, int which) {
+							dialog.dismiss(); 
+						}
+					})
+					.setButton2(mContext.getResources().getString(R.string.save), new PromptDialog.OnClickListener() {
 							
-							@Override
-							public void onClick(Dialog dialog, int which) { 
-								SharedPreferences.Editor editor = settings.edit(); 
-								editor.putInt(STKNXControllerConstant.KNX_SETTING_SCRRENOFF_TIMESPAN, Integer.valueOf(txtTimeSpan.getText().toString()));
-								editor.commit();
-								dialog.dismiss();
-								
-								Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000 * Integer.valueOf(txtTimeSpan.getText().toString()));
+						@Override
+						public void onClick(Dialog dialog, int which) { 
+							int time = Integer.valueOf(txtTimeSpan.getText().toString());
+							if(time > 0) {
+								Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000*time);
+							} else {
+								Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, -1); // 屏幕不休眠
 							}
-						})
-				.show(); 
-				 
+	
+							dialog.dismiss();
+						}
+					})
+					.show(); 
+				} catch (Exception e) {
+					Log.e(e.getLocalizedMessage());
+				} 
 			}
 		});
 		
@@ -540,7 +546,7 @@ public class SettingDialog {
 		
 		mItemViewData = new SettingViewItemData();
 		mItemData = new SettingData();
-		mItemData.setTitle("设置背光时间");
+		mItemData.setTitle(mContext.getResources().getString(R.string.setting_back_light_time));
 		mItemViewData.setData(mItemData);
 		mItemViewData.setItemView(new ImageItemView(mContext));
 		settingScreenOffSpan.setAdapter(mItemViewData);

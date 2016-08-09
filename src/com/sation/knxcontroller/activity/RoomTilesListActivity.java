@@ -3,6 +3,7 @@ package com.sation.knxcontroller.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.adapter.RoomListAdapter;
@@ -10,13 +11,10 @@ import com.sation.knxcontroller.adapter.RoomListAdapter.OnItemActionListener;
 import com.sation.knxcontroller.models.KNXApp;
 import com.sation.knxcontroller.models.KNXArea;
 import com.sation.knxcontroller.models.KNXRoom;
-import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.StringUtil;
-import com.sation.knxcontroller.util.SystemUtil;
 import com.sation.knxcontroller.widget.PromptDialog;
-import com.sation.knxcontroller.R;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -25,7 +23,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,15 +107,13 @@ public class RoomTilesListActivity extends BaseActivity {
 	}
 	
 	private void init() {   
-		
-		Log.i("RoomTilesListActivity", "init()====>>>");
-		
 		gridView = (GridView) findViewById(R.id.gridView);
 		imgSettting = (ImageView) findViewById(R.id.imgSettting);
 		imgSettting.setOnClickListener(new OnClickListener() {
 
-			 @Override
-			 public void onClick(View v) {
+			@SuppressLint("InflateParams")
+			@Override
+			public void onClick(View v) {
 				 final View view = LayoutInflater.from(RoomTilesListActivity.this).inflate(R.layout.password_layout, null);
 				 final EditText txtPassword = (EditText) view.findViewById(R.id.txtPassword);
 				 txtPassword.setImeOptions(EditorInfo.IME_ACTION_GO);
@@ -185,24 +180,20 @@ public class RoomTilesListActivity extends BaseActivity {
 		
 		List<KNXRoom> mRoomList = new ArrayList<KNXRoom>();
 		KNXApp mControlEditor = STKNXControllerApp.getInstance().getAppConfig();
-		for (int i = 0; i < mControlEditor.getAreas().size(); i++) { 
-			KNXArea mArea = mControlEditor.getAreas().get(i);
-			for (int j = 0; j < mArea.getRooms().size(); j++) { 
-				KNXRoom mRoom = mArea.getRooms().get(j);
-//				Log.i("RoomTilesListActivity", "symbol:"+mRoom.getSymbol());
-//				if(StringUtil.isEmpty(mRoom.getSymbol())) {
-//					mRoom.setSymbol(STKNXControllerConstant.ConfigResImgPath+"liveroom_background.jpg");
-//				} else {
-//					mRoom.setSymbol(STKNXControllerConstant.ConfigResImgPath + mRoom.getSymbol());
-//				}
-//				Log.i("RoomTilesListActivity", "ConfigResImgPath:"+STKNXControllerConstant.ConfigResImgPath+" symbol:"+mRoom.getSymbol());
-				mRoomList.add(mRoom);
+		if(null != mControlEditor) {
+			for (int i = 0; i < mControlEditor.getAreas().size(); i++) { 
+				KNXArea mArea = mControlEditor.getAreas().get(i);
+				for (int j = 0; j < mArea.getRooms().size(); j++) { 
+					KNXRoom mRoom = mArea.getRooms().get(j);
+					mRoomList.add(mRoom);
+				}
 			}
 		}
 		mRoomListAdapter = new RoomListAdapter(RoomTilesListActivity.this, mRoomList);
 		gridView.setAdapter(mRoomListAdapter); 
 		mRoomListAdapter.setOnItemActionListener(new OnItemActionListener() {
 			
+			@SuppressLint("InflateParams")
 			public void onItemClick(final KNXRoom mRoom) { 
 				//进入房间具体设置
 				if(StringUtil.isEmpty(mRoom.getPinCode())) {
@@ -221,32 +212,31 @@ public class RoomTilesListActivity extends BaseActivity {
 					.setView(view)
 					.setButton1(getResources().getString(R.string.cancel),  new PromptDialog.OnClickListener() {
 								
-								@Override
-								public void onClick(Dialog dialog, int which) {
-									dialog.dismiss(); 
-								}
-							})
+						@Override
+						public void onClick(Dialog dialog, int which) {
+							dialog.dismiss(); 
+						}
+					})
 					.setButton2(getResources().getString(R.string.go), new PromptDialog.OnClickListener() {
 								
-								@Override
-								public void onClick(Dialog dialog, int which) {
-									EditText txtPassword = (EditText) view.findViewById(R.id.txtPassword);
-									dialog.dismiss();
-									if(txtPassword.getText().toString().trim().equalsIgnoreCase(mRoom.getPinCode())) { 
+						@Override
+						public void onClick(Dialog dialog, int which) {
+						EditText txtPassword = (EditText) view.findViewById(R.id.txtPassword);
+						dialog.dismiss();
+						if(txtPassword.getText().toString().trim().equalsIgnoreCase(mRoom.getPinCode())) { 
 										
-										Intent intent = new Intent(RoomTilesListActivity.this, RoomDetailsActivity.class);
-										Bundle bundle = new Bundle();
-										bundle.putSerializable(STKNXControllerConstant.REMOTE_PARAM_KEY, mRoom);
-										intent.putExtras(bundle);
-										startActivity(intent);
-									} else {
-										Toast.makeText(RoomTilesListActivity.this, getResources().getString(R.string.password_error), 
-												Toast.LENGTH_SHORT).show();
-									}
-								}
-							})
-					.show(); 
-					 
+							Intent intent = new Intent(RoomTilesListActivity.this, RoomDetailsActivity.class);
+							Bundle bundle = new Bundle();
+							bundle.putSerializable(STKNXControllerConstant.REMOTE_PARAM_KEY, mRoom);
+							intent.putExtras(bundle);
+							startActivity(intent);
+						} else {
+							Toast.makeText(RoomTilesListActivity.this, getResources().getString(R.string.password_error), 
+										Toast.LENGTH_SHORT).show();
+						}
+					}
+				})
+				.show(); 
 				}
 			}
 		});

@@ -7,9 +7,7 @@ import android.content.Intent;
 
 public class KNX0X01Lib {
 	private static Context mContext;
-	/**
-	 * Libreria a cargar para poder usar la llamadas a methodos nativos
-	 */
+
 	static {
 		System.loadLibrary("KNX0X01lib");
 		KNX0X01Lib KNX0X01LibClass = new KNX0X01Lib();
@@ -28,9 +26,9 @@ public class KNX0X01Lib {
 	
 	public char SendGroupValue(int asap, int lenArray, byte[] Value) {
 //		if (1 == lenArray) {
-			int value8 = (int)Value[0];
+//			int value8 = (int)Value[0];
 			
-			Log.i(STKNXControllerConstant.CALLBACK, "索引号为"+ asap +"的值改变后为:"+ String.valueOf(value8)+" 数组长度:"+lenArray); 
+//			Log.i(STKNXControllerConstant.CALLBACK, "索引号为"+ asap +"的值改变后为:"+ String.valueOf(value8)+" 数组长度:"+lenArray); 
 	    	
 	    	Intent intent = new Intent();
 			intent.setAction(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS);

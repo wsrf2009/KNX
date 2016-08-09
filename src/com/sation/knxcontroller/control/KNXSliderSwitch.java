@@ -1,9 +1,5 @@
 package com.sation.knxcontroller.control;
 
-import java.util.Map;
-
-import com.sation.knxcontroller.models.KNXSelectedAddress;
-
 public class KNXSliderSwitch extends KNXControlBase {
 	private static final long serialVersionUID = 1L;
 	

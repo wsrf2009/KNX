@@ -1,7 +1,6 @@
 package com.sation.knxcontroller.models;
 
-import java.io.Serializable;
-import java.util.List; 
+import java.io.Serializable; 
 
 public class KNXPage extends KNXContainer implements Serializable { 
 	private static final long serialVersionUID = 1L;

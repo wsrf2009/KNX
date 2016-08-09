@@ -33,9 +33,9 @@ import com.sation.knxcontroller.util.CopyFileUtil;
 import com.sation.knxcontroller.util.KNX0X01Lib;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.NetWorkUtil;
-import com.sation.knxcontroller.util.SystemUtil;
 import com.sation.knxcontroller.util.ZipUtil;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,7 +49,9 @@ import android.util.DisplayMetrics;
 import net.lingala.zip4j.exception.ZipException;
 
 public class SplashActivity extends Activity {
-
+	private final String TAG = "SplashActivity";
+//	private final static int HEAP_SIZE = 6* 1024* 1024 ;
+//    private final static float TARGET_HEAP_UTILIZATION = 0.75f;
 	String zipFilePath;
 	
 	private SharedPreferences settings;
@@ -58,6 +60,10 @@ public class SplashActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
+		
+		//设置最小  
+//		VMRuntime.getRuntime().setMinimumHeapSize(HEAP_SIZE);
+//	    VMRuntime.getRuntime().setTargetHeapUtilization(TARGET_HEAP_UTILIZATION);  
 
 		settings = getSharedPreferences(STKNXControllerConstant.SETTING_FILE, MODE_PRIVATE);
 
@@ -65,13 +71,13 @@ public class SplashActivity extends Activity {
 	    Configuration config = resources.getConfiguration();//获得设置对象  
 	    DisplayMetrics dm = resources.getDisplayMetrics();//获得屏幕参数：主要是分辨率，像素等。  
 		String language = settings.getString(STKNXControllerConstant.APP_APPEARANCE_LANGUAGE, "");
-		Log.i(STKNXControllerConstant.DEBUG, "language:" + language+"locale:"+Locale.CHINA);
+//		Log.i(STKNXControllerConstant.DEBUG, "language:" + language+"locale:"+Locale.CHINA);
 		if(language.isEmpty()) {
 			/* 若APP尚未配置语言 */
 		    String locLanguage = config.locale.getLanguage();
-		    String locCountry = config.locale.getCountry();
+//		    String locCountry = config.locale.getCountry();
 
-		    Log.i(STKNXControllerConstant.DEBUG, "locLanguage:" + locLanguage+" locCountry:"+locCountry);
+//		    Log.i(STKNXControllerConstant.DEBUG, "locLanguage:" + locLanguage+" locCountry:"+locCountry);
 		    
 		    SharedPreferences.Editor editor = settings.edit();
 		    if(locLanguage.equals(Locale.CHINESE.toString())) {
@@ -120,14 +126,12 @@ public class SplashActivity extends Activity {
 					}
 				}, 1000);
 			} 
-			 
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 	}
 
+	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
@@ -167,7 +171,7 @@ public class SplashActivity extends Activity {
 		KNX0X01Lib.SetNetworkType(type);
 		boolean isConnect = KNX0X01Lib.UOPENNet(mKNXGatewayIP, mKNXGatewayPort, mKNXUDPWorkWay);
 		
-		Log.d(STKNXControllerConstant.DEBUG, "jumpActivity()"+" mKNXGatewayIP: "+mKNXGatewayIP+
+		Log.d(TAG, "jumpActivity()"+" mKNXGatewayIP: "+mKNXGatewayIP+
 				" mKNXGatewayPort: "+mKNXGatewayPort+" mKNXUDPWorkWay: "+mKNXUDPWorkWay+
 				" isConnect: " + isConnect);
 		
@@ -208,6 +212,7 @@ public class SplashActivity extends Activity {
 		/** 在onPreExecute()完成后立即执行，用于执行较为费时的操作，此方法将接收输入参数和返回计算结果。
 		 * 在执行过程中可以调用publishProgress(Progress... values)来更新进度信息 
 		 */
+		@SuppressLint("UseSparseArrays")
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {

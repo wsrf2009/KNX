@@ -3,10 +3,6 @@
  */
 package com.sation.knxcontroller.control;
 
-import java.util.Map;
-
-import com.sation.knxcontroller.models.KNXSelectedAddress;
-
 /**
  * @author wangchunfeng
  *

@@ -1,8 +1,5 @@
 package com.sation.knxcontroller.control;
 
-import java.util.Map;
-
-import com.sation.knxcontroller.models.KNXSelectedAddress;
 import com.sation.knxcontroller.models.MeasurementUnit;
 
 public class KNXDigitalAdjustment extends KNXControlBase {

@@ -4,17 +4,11 @@
 package com.sation.knxcontroller.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.util.Log;
 
-/**
- * @author wangchunfeng
- *
- */
 public class KNXGroupAddressAction implements Serializable, Cloneable {
+	private final String TAG = "KNXGroupAddressAction";
 	private static final long serialVersionUID = 1L;
 	
 	@Override  
@@ -25,15 +19,12 @@ public class KNXGroupAddressAction implements Serializable, Cloneable {
 			action = (KNXGroupAddressAction)super.clone();
 
 		} catch (CloneNotSupportedException e) {
-			Log.e(STKNXControllerConstant.DEBUG, e.getLocalizedMessage());
+			Log.e(TAG, e.getLocalizedMessage());
 		}
 		
 		return action;
 	}
 
-	/**
-	 * 
-	 */
 	public KNXGroupAddressAction(String name, int value) {
 		this.Name = name;
 		this.Value = value;

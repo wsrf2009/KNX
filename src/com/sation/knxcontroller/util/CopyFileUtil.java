@@ -14,7 +14,7 @@ import android.os.Environment;
 
 public class CopyFileUtil {
 
-	private static String MESSAGE = "";
+//	private static String MESSAGE = "";
 
 	/**
 	 * 复制单个文件
@@ -33,10 +33,10 @@ public class CopyFileUtil {
 
 		// 判断源文件是否存在
 		if (!srcFile.exists()) {
-			MESSAGE = "源文件：" + srcFileName + "不存在！"; 
+//			MESSAGE = "源文件：" + srcFileName + "不存在！"; 
 			return false;
 		} else if (!srcFile.isFile()) {
-			MESSAGE = "复制文件失败，源文件：" + srcFileName + "不是一个文件！"; 
+//			MESSAGE = "复制文件失败，源文件：" + srcFileName + "不是一个文件！"; 
 			return false;
 		}
 
@@ -105,10 +105,10 @@ public class CopyFileUtil {
 		// 判断源目录是否存在
 		File srcDir = new File(srcDirName);
 		if (!srcDir.exists()) {
-			MESSAGE = "复制目录失败：源目录" + srcDirName + "不存在！"; 
+//			MESSAGE = "复制目录失败：源目录" + srcDirName + "不存在！"; 
 			return false;
 		} else if (!srcDir.isDirectory()) {
-			MESSAGE = "复制目录失败：" + srcDirName + "不是目录！"; 
+//			MESSAGE = "复制目录失败：" + srcDirName + "不是目录！"; 
 			return false;
 		}
 
@@ -123,7 +123,7 @@ public class CopyFileUtil {
 			if (overlay) {
 				new File(destDirName).delete();
 			} else {
-				MESSAGE = "复制目录失败：目的目录" + destDirName + "已存在！"; 
+//				MESSAGE = "复制目录失败：目的目录" + destDirName + "已存在！"; 
 				return false;
 			}
 		} else {
@@ -152,7 +152,7 @@ public class CopyFileUtil {
 			}
 		}
 		if (!flag) {
-			MESSAGE = "复制目录" + srcDirName + "至" + destDirName + "失败！"; 
+//			MESSAGE = "复制目录" + srcDirName + "至" + destDirName + "失败！"; 
 			return false;
 		} else {
 			return true;

@@ -3,25 +3,19 @@
  */
 package com.sation.knxcontroller.services;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 
+import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.TimingTaskItem;
-import com.sation.knxcontroller.R;
-
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
 
 /**
  * @author wangchunfeng
@@ -31,6 +25,7 @@ public class TimingTaskService extends BroadcastReceiver {
 	/* (non-Javadoc)
 	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
 	 */
+	@SuppressLint("DefaultLocale")
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		final Calendar c = Calendar.getInstance();  
@@ -44,7 +39,7 @@ public class TimingTaskService extends BroadcastReceiver {
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         boolean refreshUI = false;
         
-        SharedPreferences settings = context.getSharedPreferences(STKNXControllerConstant.SETTING_FILE, android.content.Context.MODE_PRIVATE);
+//        SharedPreferences settings = context.getSharedPreferences(STKNXControllerConstant.SETTING_FILE, android.content.Context.MODE_PRIVATE);
         
 //        Log.i(ZyyKNXConstant.DEBUG, "system time:"+year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second+" dayOfWeek:"+dayOfWeek);
 

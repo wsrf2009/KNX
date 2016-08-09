@@ -7,7 +7,7 @@ import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.models.KNXRoom;
 import com.sation.knxcontroller.util.ImageUtils;
 import com.sation.knxcontroller.util.StringUtil;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -51,6 +51,8 @@ public class RoomListAdapter extends BaseAdapter {
 		return position;
 	}
 
+	@SuppressLint("InflateParams")
+	@SuppressWarnings("deprecation")
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;

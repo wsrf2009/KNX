@@ -1,7 +1,6 @@
 package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.R;
-import com.sation.knxcontroller.util.Utils;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -21,7 +20,7 @@ import android.widget.TextView;
 @SuppressLint("InflateParams") 
 public class PromptDialog extends Dialog {
 
-	private Context context;
+//	private Context context;
 
 	public static final int VIEW_STYLE_NORMAL			= 0x00000001;
 	public static final int VIEW_STYLE_TITLEBAR			= 0x00000002;
@@ -38,7 +37,7 @@ public class PromptDialog extends Dialog {
 
 	protected PromptDialog(Context context, int theme) {
 		super(context, theme);
-		this.context = context;
+//		this.context = context;
 	}
 
 	protected PromptDialog(Context context) {
@@ -56,7 +55,7 @@ public class PromptDialog extends Dialog {
 
 		Window window = this.getWindow();
 		WindowManager.LayoutParams params = window.getAttributes();
-		int marginBorder = Utils.dip2px(context, 30);
+//		int marginBorder = Utils.dip2px(context, 30);
 		//params.width = Utils.getScreenWidth(context) - marginBorder * 2; 
 		window.setAttributes(params);	
 	}
@@ -324,6 +323,7 @@ public class PromptDialog extends Dialog {
 		/**
 		 * you can set view style, and need not set others,including message style,title style,etc.
 		 */
+		@SuppressLint("RtlHardcoded")
 		public Builder setViewStyle(int style){
 			this.viewStyle = style;
 			

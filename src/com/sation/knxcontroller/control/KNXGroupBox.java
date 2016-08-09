@@ -1,10 +1,8 @@
 package com.sation.knxcontroller.control;
 
 import java.io.Serializable;
-import java.util.Map;
 
-import com.sation.knxcontroller.models.KNXContainer;
-import com.sation.knxcontroller.models.KNXSelectedAddress; 
+import com.sation.knxcontroller.models.KNXContainer; 
 
 //布局
 public class KNXGroupBox extends KNXContainer implements Serializable { 

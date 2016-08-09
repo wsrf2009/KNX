@@ -3,15 +3,14 @@
  */
 package com.sation.knxcontroller.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.sation.knxcontroller.adapter.GroupAddressAdapter.ViewHolder;
+import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.control.TimingTaskItem.KNXGroupAddressAndAction;
 import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.models.KNXGroupAddressAction;
-import com.sation.knxcontroller.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -90,6 +88,7 @@ public class AddressAndActionAdapter extends BaseAdapter {
 	/* (non-Javadoc)
 	 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
 	 */
+	@SuppressLint("InflateParams")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater mLayoutInflater = LayoutInflater.from(mContext);
@@ -169,8 +168,7 @@ public class AddressAndActionAdapter extends BaseAdapter {
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-				
+
 			}
 			
 		});

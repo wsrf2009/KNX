@@ -2,18 +2,15 @@ package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXDigitalAdjustment;
-import com.sation.knxcontroller.knxdpt.DPT9;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 import com.sation.knxcontroller.util.ImageUtils;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.StringUtil;
-import com.sation.knxcontroller.widget.ViewControl.ViewControlClickListener;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -21,8 +18,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.view.MotionEvent;
-import android.view.View;
 
 public class STKNXDigitalAdjustment extends STKNXControl {
 	private static final int PADDING = 2;
@@ -38,7 +33,7 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 		this.mKNXDigitalAdjustment = knxDigitalAdjustment;
 		this.setId(mKNXDigitalAdjustment.getId());
 		
-		ViewControl vLeft = new ViewControl(context);
+		STButton vLeft = new STButton(context);
 		vLeft.width = Math.max(this.mKNXDigitalAdjustment.Height-2*STKNXDigitalAdjustment.PADDING, STKNXDigitalAdjustment.SUBVIEW_WIDTH);
 		vLeft.height = this.mKNXDigitalAdjustment.Height-2*STKNXDigitalAdjustment.PADDING;
 		vLeft.left = STKNXDigitalAdjustment.PADDING;
@@ -46,13 +41,13 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 		vLeft.backColor = Color.parseColor(this.mKNXDigitalAdjustment.BackgroundColor);
 		vLeft.radius = this.mKNXDigitalAdjustment.Radius;
 		vLeft.alpha = this.mKNXDigitalAdjustment.Alpha;
-		vLeft.setViewControlClickListener(this.leftClicked);
+		vLeft.setSubViewClickListener(this.leftClicked);
 		if(!StringUtil.isEmpty(this.mKNXDigitalAdjustment.LeftImage)) {
 			vLeft.backImage = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXDigitalAdjustment.LeftImage);
 		}
 		this.addView(vLeft);
 		
-		ViewControl vRight = new ViewControl(context);
+		STButton vRight = new STButton(context);
 		vRight.width = Math.max(this.mKNXDigitalAdjustment.Height-2*STKNXDigitalAdjustment.PADDING, STKNXDigitalAdjustment.SUBVIEW_WIDTH);
 		vRight.height = this.mKNXDigitalAdjustment.Height-2*STKNXDigitalAdjustment.PADDING;
 		vRight.left = this.mKNXDigitalAdjustment.Width - STKNXDigitalAdjustment.PADDING - vRight.width;
@@ -60,17 +55,17 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 		vRight.backColor = Color.parseColor(this.mKNXDigitalAdjustment.BackgroundColor);
 		vRight.radius = this.mKNXDigitalAdjustment.Radius;
 		vRight.alpha = this.mKNXDigitalAdjustment.Alpha;
-		vRight.setViewControlClickListener(this.rightClicked);
+		vRight.setSubViewClickListener(this.rightClicked);
 		if(!StringUtil.isEmpty(this.mKNXDigitalAdjustment.LeftImage)) {
 			vRight.backImage = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXDigitalAdjustment.RightImage);
 		}
 		this.addView(vRight);
 	}
 	
-	ViewControlClickListener leftClicked = new ViewControlClickListener() {
+	STButton.SubViewClickListener leftClicked = new STButton.SubViewClickListener() {
 
 		@Override
-		public void onClick(ViewControl view) {
+		public void onClick(STButton view) {
 			try {
 				int val = currentValue;
 				val--;
@@ -87,11 +82,11 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 			}
 		}
 	};
-	
-	ViewControlClickListener rightClicked = new ViewControlClickListener() {
+
+	STButton.SubViewClickListener rightClicked = new STButton.SubViewClickListener() {
 
 		@Override
-		public void onClick(ViewControl view) {
+		public void onClick(STButton view) {
 			try {
 				int val = currentValue;
 				val++;
@@ -133,7 +128,7 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 		 * 遍历所有childView根据其宽和高，以及margin进行布局
 		 */
 		for (int i = 0; i < cCount; i++) {
-			ViewControl childView = (ViewControl)getChildAt(i);
+			STButton childView = (STButton)getChildAt(i);
 
 			int cl = 0, ct = 0, cr = 0, cb = 0;
 			cl = childView.left;
@@ -202,123 +197,123 @@ public class STKNXDigitalAdjustment extends STKNXControl {
     }
 }
 
-class ViewControl extends View {
-	private final int PADDING_LEFT = 5;
-	private final int PADDING_TOP = 5;
-	private final int PADDING_RIGHT = 5;
-	private final int PADDING_BOTTOM = 5;
-	
-	public int left;
-	public int top;
-	public int width;
-	public int height;
-	public int backColor;
-	public int radius;
-	public double alpha;
-	public Bitmap backImage;
-	private ViewControlClickListener mViewControlClickListener;
-	private String text = "";
-	
-	private enum EControlState {
-		Down,
-		Up,
-	}
-	private EControlState mEControlState;
-	
-	private int backImgLeft = 0;
-	private int backImgTop = 0;
-	private int backImgRight = 0;
-	private int backImgBottom = 0;
-
-	protected ViewControl(Context context) {
-		super(context);
-		
-		this.mEControlState = EControlState.Up;
-	}
-	
-	public void setViewControlClickListener(ViewControlClickListener l) {
-		this.mViewControlClickListener = l;
-	}
-	
-	@Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		this.backImgLeft = this.PADDING_LEFT;
-		this.backImgTop = this.PADDING_TOP;
-		int width = this.width - this.PADDING_LEFT - this.PADDING_RIGHT;
-		int height = this.height - this.PADDING_TOP - this.PADDING_BOTTOM;
-		if(width > height) {
-			this.backImgRight = this.backImgLeft + height;
-			this.backImgBottom = this.backImgTop + height;
-		} else {
-			this.backImgRight = this.backImgLeft + width;
-			this.backImgBottom = this.backImgTop + width;
-		}
-		
-        /**
-         * 最后调用父类方法,把View的大小告诉父布局。
-         */
-        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
-    }
-
-	@SuppressLint({ "DrawAllocation", "ClickableViewAccessibility" })
-	@Override
-    protected void onDraw(Canvas canvas) {
-    	super.onDraw(canvas);
-
-    	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    	paint.setStyle(Paint.Style.FILL_AND_STROKE);	// 充满  
-//    	paint.setAlpha((int)(this.alpha*255));
-    	RectF oval3 = new RectF(0, 0, this.getWidth(), this.getHeight());
-
-        /* 绘制背景图片 */
-        if(null != this.backImage) {
-        	Rect resRect = new Rect(0, 0, this.backImage.getWidth(), this.backImage.getHeight());
-        	Rect desRect = new Rect(this.backImgLeft, this.backImgTop, this.backImgRight, this.backImgBottom);
-        	canvas.drawBitmap(this.backImage, resRect, desRect, paint);
-        }
-
-    	switch (this.mEControlState) {
-    		case Down:
-    			paint.reset();
-    			paint.setStyle(Paint.Style.FILL);
-    			paint.setColor(Color.parseColor("#FF6100"));
-    			paint.setAlpha(0x60);
-    			canvas.drawRoundRect(oval3, this.radius, this.radius, paint);	//第二个参数是x半径，第三个参数是y半径  
-    		break;
-    		case Up:
-    			break;
-    	}
-	}
-	
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-    	switch (event.getAction()) { 
-    		case MotionEvent.ACTION_DOWN:
-    			this.mEControlState = EControlState.Down;
-    			this.invalidate();
-    			break; 
-    		case MotionEvent.ACTION_UP:
-    			this.mEControlState = EControlState.Up;
-    			if(null != this.mViewControlClickListener) {
-    				this.mViewControlClickListener.onClick(this);
-    			}
-    			this.invalidate();
-    			break;
-    		case MotionEvent.ACTION_MOVE:
-    			break;
-    		case MotionEvent.ACTION_CANCEL:
-    			this.mEControlState = EControlState.Up;
-    			this.invalidate();
-    			break;
-    			
-    		default:
-    			break;
-    	}
-    	
-    	return true;
-    }
-    
-    public interface ViewControlClickListener {
-    	public void onClick(ViewControl view);
-    }
-}
+//class ViewControl extends View {
+//	private final int PADDING_LEFT = 5;
+//	private final int PADDING_TOP = 5;
+//	private final int PADDING_RIGHT = 5;
+//	private final int PADDING_BOTTOM = 5;
+//
+//	public int left;
+//	public int top;
+//	public int width;
+//	public int height;
+//	public int backColor;
+//	public int radius;
+//	public double alpha;
+//	public Bitmap backImage;
+//	private ViewControlClickListener mViewControlClickListener;
+//	private String text = "";
+//
+//	private enum EControlState {
+//		Down,
+//		Up,
+//	}
+//	private EControlState mEControlState;
+//
+//	private int backImgLeft = 0;
+//	private int backImgTop = 0;
+//	private int backImgRight = 0;
+//	private int backImgBottom = 0;
+//
+//	protected ViewControl(Context context) {
+//		super(context);
+//
+//		this.mEControlState = EControlState.Up;
+//	}
+//
+//	public void setViewControlClickListener(ViewControlClickListener l) {
+//		this.mViewControlClickListener = l;
+//	}
+//
+//	@Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//		this.backImgLeft = this.PADDING_LEFT;
+//		this.backImgTop = this.PADDING_TOP;
+//		int width = this.width - this.PADDING_LEFT - this.PADDING_RIGHT;
+//		int height = this.height - this.PADDING_TOP - this.PADDING_BOTTOM;
+//		if(width > height) {
+//			this.backImgRight = this.backImgLeft + height;
+//			this.backImgBottom = this.backImgTop + height;
+//		} else {
+//			this.backImgRight = this.backImgLeft + width;
+//			this.backImgBottom = this.backImgTop + width;
+//		}
+//
+//        /**
+//         * 最后调用父类方法,把View的大小告诉父布局。
+//         */
+//        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
+//    }
+//
+//	@SuppressLint({ "DrawAllocation", "ClickableViewAccessibility" })
+//	@Override
+//    protected void onDraw(Canvas canvas) {
+//    	super.onDraw(canvas);
+//
+//    	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+//    	paint.setStyle(Paint.Style.FILL_AND_STROKE);	// 充满
+////    	paint.setAlpha((int)(this.alpha*255));
+//    	RectF oval3 = new RectF(0, 0, this.getWidth(), this.getHeight());
+//
+//        /* 绘制背景图片 */
+//        if(null != this.backImage) {
+//        	Rect resRect = new Rect(0, 0, this.backImage.getWidth(), this.backImage.getHeight());
+//        	Rect desRect = new Rect(this.backImgLeft, this.backImgTop, this.backImgRight, this.backImgBottom);
+//        	canvas.drawBitmap(this.backImage, resRect, desRect, paint);
+//        }
+//
+//    	switch (this.mEControlState) {
+//    		case Down:
+//    			paint.reset();
+//    			paint.setStyle(Paint.Style.FILL);
+//    			paint.setColor(Color.parseColor("#FF6100"));
+//    			paint.setAlpha(0x60);
+//    			canvas.drawRoundRect(oval3, this.radius, this.radius, paint);	//第二个参数是x半径，第三个参数是y半径
+//    		break;
+//    		case Up:
+//    			break;
+//    	}
+//	}
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//    	switch (event.getAction()) {
+//    		case MotionEvent.ACTION_DOWN:
+//    			this.mEControlState = EControlState.Down;
+//    			this.invalidate();
+//    			break;
+//    		case MotionEvent.ACTION_UP:
+//    			this.mEControlState = EControlState.Up;
+//    			if(null != this.mViewControlClickListener) {
+//    				this.mViewControlClickListener.onClick(this);
+//    			}
+//    			this.invalidate();
+//    			break;
+//    		case MotionEvent.ACTION_MOVE:
+//    			break;
+//    		case MotionEvent.ACTION_CANCEL:
+//    			this.mEControlState = EControlState.Up;
+//    			this.invalidate();
+//    			break;
+//
+//    		default:
+//    			break;
+//    	}
+//
+//    	return true;
+//    }
+//
+//    public interface ViewControlClickListener {
+//    	public void onClick(ViewControl view);
+//    }
+//}

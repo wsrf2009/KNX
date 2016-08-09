@@ -1,7 +1,7 @@
 package com.sation.knxcontroller.widget.settingview;
 
 import com.sation.knxcontroller.R;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -32,17 +32,18 @@ public class CheckItemViewH extends FrameLayout {
 
 	public CheckItemViewH(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
+
 		init(context);
 	}
 
 	public CheckItemViewH(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
+
 		init(context);
 		readAttrs(context, attrs);
 	}
 
+	@SuppressLint("InflateParams")
 	private void init(Context context) {
 		mInflater = LayoutInflater.from(context);
 		mItemView = mInflater.inflate(R.layout.setting_view_check_item_h, null);
@@ -57,7 +58,6 @@ public class CheckItemViewH extends FrameLayout {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if (mCheck.getVisibility() == View.GONE) {
 					mCheck.setVisibility(View.VISIBLE);
 					if (null != mChangedListener) {
@@ -73,6 +73,7 @@ public class CheckItemViewH extends FrameLayout {
 		});
 	}
 
+	@SuppressWarnings("deprecation")
 	private void readAttrs(Context context, AttributeSet attrs) {
 		if (null != attrs) {
 			TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SettingViewItem);
@@ -144,6 +145,7 @@ public class CheckItemViewH extends FrameLayout {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void fillData(SettingData data) {
 		if (null != data) {
 			if (!TextUtils.isEmpty(data.getTitle())) {

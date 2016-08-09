@@ -15,7 +15,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 
 public class ImageUtils {
-
 	private static final String TAG = "ImageUtils";
 	
 	public static Bitmap getDiskBitmap(String path) {

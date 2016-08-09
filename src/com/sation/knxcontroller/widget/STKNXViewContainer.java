@@ -2,7 +2,6 @@ package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.models.KNXContainer;
-import com.sation.knxcontroller.models.KNXView;
 import com.sation.knxcontroller.util.ImageUtils;
 
 import android.annotation.SuppressLint;

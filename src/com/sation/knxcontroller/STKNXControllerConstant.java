@@ -12,9 +12,6 @@ public class STKNXControllerConstant {
 	public static final String PASSWORD_UNZIP = "com.sation.knxcontroller.uieditor";
 
 	public static final String ConfigFile = "KnxUiProject.knxuie";
-//	public static final String ConfigFile = "KnxProject61.knxuie";
-//	public static final String ConfigFile = "TEST.knxuie";
-//	public static final String ConfigFile = "test_1.knxuie";
 	
 	public static final String UiMetaFile = "KnxUiMetaData.json";
 	public static final String GroupAddFile = "GroupAddress.json";
@@ -96,12 +93,7 @@ public class STKNXControllerConstant {
 	public static final int CONTROL_DEFAULT_WIDTH = 236;
 	
 	public static final String BROADCAST_REFRESH_TIMING_TASK_LIST = "com.sation.knxcontroller.services.refreshTimingTaskList";
-	
-	public static final String SEND_COMMAND = "SendCommand";
-	public static final String ACTIVITY_JUMP = "ActivityJump";
-	public static final String DEBUG = "debug";
-	public static final String CALLBACK = "CallBack";
-	
+
 	public static final String CONTROL_ID = "ControlId";
 	public static final String TIMERTASKBUTTONOBJECT = "TimerTaskButtonObject";
 }

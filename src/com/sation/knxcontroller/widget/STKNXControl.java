@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.STKNXControllerApp;
-import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXControlBase;
 import com.sation.knxcontroller.knxdpt.DPT9;
 import com.sation.knxcontroller.knxdpt.KNXDataType;
@@ -17,7 +16,6 @@ import com.sation.knxcontroller.util.Log;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.util.AttributeSet;
 
 public class STKNXControl extends STKNXView {
 	private KNXControlBase mKNXControlBase;
@@ -175,7 +173,7 @@ public class STKNXControl extends STKNXView {
 			Log.e("STKNXControl", "pData==>"+data+" add type:"+KNXDataType.values()[type]);
 
 			int index = mGroupAddressIndexMap.get(addressId);
-			int len = KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length, 1);
+			KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length, 1);
 			
 //			Log.e("STKNXControl", "pData==>"+data+" add type:"+KNXDataType.values()[type]+" len:"+len);
 		}
@@ -190,30 +188,30 @@ public class STKNXControl extends STKNXView {
 		if(null != mGroupAddressIndexMap) {
 			int index = mGroupAddressIndexMap.get(address.getId());
 		
-			Log.i(STKNXControllerConstant.DEBUG, "read address <<====== "+address.getName());
+//			Log.i(STKNXControllerConstant.DEBUG, "read address <<====== "+address.getName());
 			
 			KNX0X01Lib.USetAndRequestObject(index);
 		}
 	}
 	
-	   /**
-		 * 一定一个接口
-		 */
-		public interface ICallBack{
-			public void onCallBack();
-		}
+	/**
+	 * 一定一个接口
+	 */
+	public interface ICallBack{
+		public void onCallBack();
+	}
 		
-		/**
-		 * 初始化接口变量
-		 */
-		ICallBack icallBack = null;
+	/**
+	 * 初始化接口变量
+	 */
+	ICallBack icallBack = null;
 		
-		/**
-		 * 自定义控件的自定义事件
-		 * @param iBack 接口类型
-		 */
-		public void setonClick(ICallBack mICallBack)
-		{
-			icallBack = mICallBack;
-		}
+	/**
+	 * 自定义控件的自定义事件
+	 * @param iBack 接口类型
+	 */
+	public void setonClick(ICallBack mICallBack)
+	{
+		icallBack = mICallBack;
+	}
 }

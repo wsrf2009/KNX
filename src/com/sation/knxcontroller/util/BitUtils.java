@@ -53,7 +53,7 @@ public class BitUtils {
 	public static byte setBitValue(byte source, int pos, boolean valueBoolean) {
 
 		byte mask = (byte) (1 << pos);
-		byte value = valueBoolean == true ?  (byte)1 : (byte)0;
+//		byte value = valueBoolean == true ?  (byte)1 : (byte)0;
 		source |= mask;
 		/*
 		if (value > 0) {

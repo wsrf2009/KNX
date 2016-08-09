@@ -1,7 +1,7 @@
 package com.sation.knxcontroller.widget.settingview;
 
 import com.sation.knxcontroller.R;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -32,17 +32,18 @@ public class BasicItemViewV extends FrameLayout {
 
 	public BasicItemViewV(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
+
 		init(context);
 	}
 
 	public BasicItemViewV(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
+
 		init(context);
 		readAttrs(context, attrs);
 	}
 
+	@SuppressLint("InflateParams")
 	private void init(Context context) {
 		mInflater = LayoutInflater.from(context);
 		mItemView = mInflater.inflate(R.layout.setting_view_basic_item_v, null);
@@ -58,6 +59,7 @@ public class BasicItemViewV extends FrameLayout {
 		mItemViewContainer = (LinearLayout) mItemView.findViewById(R.id.setting_view_basic_item_v_container);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void readAttrs(Context context, AttributeSet attrs) {
 		if (null != attrs) {
 			TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SettingViewItem);
@@ -142,6 +144,7 @@ public class BasicItemViewV extends FrameLayout {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void fillData(SettingData data) {
 		if (null != data) {
 			if (!TextUtils.isEmpty(data.getTitle())) {

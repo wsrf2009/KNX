@@ -6,10 +6,9 @@ import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class TimeAndWeekdayPickerDialog extends PromptDialog.Builder {
 	private TimePicker mTimePicker;

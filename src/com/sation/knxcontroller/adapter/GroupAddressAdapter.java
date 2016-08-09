@@ -1,26 +1,19 @@
 package com.sation.knxcontroller.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.sation.knxcontroller.STKNXControllerConstant;
-import com.sation.knxcontroller.adapter.TimingTaskListAdapter.ViewHolder;
-import com.sation.knxcontroller.control.TimingTaskItem;
-import com.sation.knxcontroller.control.TimingTaskItem.KNXGroupAddressAndAction;
-import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.R;
+import com.sation.knxcontroller.models.KNXGroupAddress;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.TextView;
 
 public class GroupAddressAdapter extends BaseAdapter {
 	private List<KNXGroupAddress> addressList;
@@ -52,6 +45,7 @@ public class GroupAddressAdapter extends BaseAdapter {
 		return this.selectedList;
 	}
 
+	@SuppressLint("InflateParams")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater mLayoutInflater = LayoutInflater.from(mContext);
@@ -118,14 +112,14 @@ public class GroupAddressAdapter extends BaseAdapter {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				boolean isContains = false;
 				KNXGroupAddress currentAddress = (KNXGroupAddress)buttonView.getTag();
-				Log.i(STKNXControllerConstant.DEBUG, "\nname :"+ currentAddress.getName()+" isChecked:"+isChecked);
+//				Log.i(STKNXControllerConstant.DEBUG, "\nname :"+ currentAddress.getName()+" isChecked:"+isChecked);
 				for(KNXGroupAddress selectedAddress : selectedList) {
 					isContains = selectedAddress.getId().equals(currentAddress.getId());
 					if(!isChecked) {
 						/* 移除地址 */
 						if(isContains) { // 若已选地址列表中已包含改地址，则将改地址从已选地址列表中移除
 							selectedList.remove(selectedAddress);
-							Log.i(STKNXControllerConstant.DEBUG, " 移除组地址："+selectedAddress.getName()+"-"+selectedAddress.getId());
+//							Log.i(STKNXControllerConstant.DEBUG, " 移除组地址："+selectedAddress.getName()+"-"+selectedAddress.getId());
 							break;
 						}
 					}
@@ -141,7 +135,7 @@ public class GroupAddressAdapter extends BaseAdapter {
 					/* 添加地址 */
 					if(!isContains) { // 若已选地址列表中若没有该地址，则将改地址加到已选地址列表中
 						selectedList.add(currentAddress);
-						Log.i(STKNXControllerConstant.DEBUG, " 添加组地址："+currentAddress.getName()+"-"+currentAddress.getId());
+//						Log.i(STKNXControllerConstant.DEBUG, " 添加组地址："+currentAddress.getName()+"-"+currentAddress.getId());
 					}
 				} 
 			}

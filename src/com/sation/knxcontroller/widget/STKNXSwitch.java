@@ -7,7 +7,6 @@ import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 import com.sation.knxcontroller.util.ImageUtils;
-import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.StringUtil;
 
 import android.annotation.SuppressLint;
@@ -223,7 +222,8 @@ public class STKNXSwitch extends STKNXControl {
     	}
     }
     
-    @Override
+    @SuppressLint("ClickableViewAccessibility")
+	@Override
     public boolean onTouchEvent(MotionEvent event) {
     	switch (event.getAction()) { 
     		case MotionEvent.ACTION_DOWN: 

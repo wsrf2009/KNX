@@ -30,11 +30,10 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.SystemClock;
 import android.text.TextUtils;
 
 public class STKNXControllerApp extends Application {
-	public static final String TAG = "STKNXControllerApp"; 
+	private final String TAG = "STKNXControllerApp"; 
 
 	private static STKNXControllerApp app = null;
 	private static Stack<Activity> activityStack;
@@ -46,6 +45,7 @@ public class STKNXControllerApp extends Application {
 		return app;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate() { 
 		super.onCreate(); 
@@ -56,18 +56,18 @@ public class STKNXControllerApp extends Application {
 			try {
 				timerTaskMap = (Map<String, List<TimingTaskItem>>)FileUtils.readObjectFromFile(this, STKNXControllerConstant.FILE_TIMERTASK/*+"_"+SystemUtil.getVersionCode(this)+".dat"*/);
 			} catch (IOException e) {
-				Log.w(STKNXControllerConstant.DEBUG, "读取定时任务失败"+" " +e.getLocalizedMessage());
+//				Log.w(STKNXControllerConstant.DEBUG, "读取定时任务失败"+" " +e.getLocalizedMessage());
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				Log.w(STKNXControllerConstant.DEBUG, "读取定时任务失败"+" " +e.getLocalizedMessage());
+//				Log.w(STKNXControllerConstant.DEBUG, "读取定时任务失败"+" " +e.getLocalizedMessage());
 				e.printStackTrace();
 			}
 			
 			if (null == timerTaskMap) {      // 读取不成功
-				Log.i(STKNXControllerConstant.DEBUG, "初始化定时任务列表...");
+//				Log.i(STKNXControllerConstant.DEBUG, "初始化定时任务列表...");
 				timerTaskMap = new HashMap<String, List<TimingTaskItem>>(); // 创建定时器任务列表
 			} else {
-				Log.i(STKNXControllerConstant.DEBUG, "已存在定时任务列表："+timerTaskMap);
+//				Log.i(STKNXControllerConstant.DEBUG, "已存在定时任务列表："+timerTaskMap);
 			}
 		}
 		
@@ -79,7 +79,7 @@ public class STKNXControllerApp extends Application {
 	    PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);  
 	    
 	    // 开始时间
-	    long firstime=SystemClock.elapsedRealtime();
+//	    long firstime=SystemClock.elapsedRealtime();
 
 	    AlarmManager am=(AlarmManager)getSystemService(ALARM_SERVICE);
 	    // 5秒一个周期，不停的发送广播
@@ -270,7 +270,7 @@ public class STKNXControllerApp extends Application {
 			FileUtils.writeObjectIntoFile(this, STKNXControllerConstant.FILE_TIMERTASK/*+"_"+SystemUtil.getVersionCode(this)+".dat"*/, timerTaskMap);
 		} catch (IOException e) {
 				
-			Log.e(STKNXControllerConstant.DEBUG, "保存定时任务失败"+"\n" +e.getLocalizedMessage()+"\n"+e.getMessage()+"\n"+e.getCause()+ "\ntimerTaskMap:"+timerTaskMap);
+			Log.e(TAG, "保存定时任务失败"+"\n" +e.getLocalizedMessage()+"\n"+e.getMessage()+"\n"+e.getCause()+ "\ntimerTaskMap:"+timerTaskMap);
 				
 			e.printStackTrace();
 		}

@@ -1,15 +1,13 @@
 package com.sation.knxcontroller.models;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sation.knxcontroller.STKNXControllerConstant;
-import com.sation.knxcontroller.control.TimingTaskItem.KNXGroupAddressAndAction;
 import com.sation.knxcontroller.util.Log;
 
 public class KNXGroupAddress implements Serializable, Cloneable {
+	private final String TAG = "KNXGroupAddress";
 	private static final long serialVersionUID = 1L;
 	
 	//ETS中设备的ID， ETS自动分配
@@ -54,22 +52,6 @@ public class KNXGroupAddress implements Serializable, Cloneable {
 	public void setKnxSubNumber(String number) {
 		KnxSubNumber = number;
 	}
-	
-//	private String KnxSize;
-//	public String getKnxSize() {
-//		return KnxSize;
-//	}
-//	public void setKnxSize(String size) {
-//		KnxSize = size;
-//	}
-	
-//	private String KnxType;
-//	public String getKnxType() {
-//		return KnxType;
-//	}
-//	public void setKnxType(String type) {
-//		KnxType = type;
-//	}
 	
 	//ETS 数据类型
 	private int Type; 
@@ -181,7 +163,7 @@ public class KNXGroupAddress implements Serializable, Cloneable {
 			
 			address.setAddressAction(newActions);
 		} catch (CloneNotSupportedException e) {
-			Log.e(STKNXControllerConstant.DEBUG, e.getLocalizedMessage());
+			Log.e(TAG, e.getLocalizedMessage());
 		}
 		
 		return address;

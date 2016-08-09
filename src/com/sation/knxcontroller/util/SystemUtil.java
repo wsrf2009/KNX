@@ -5,9 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -65,9 +63,9 @@ public class SystemUtil {
             return sdCardFile.getAbsolutePath();
         }
  
-        String path = null;
- 
-        File sdCardFile = null;
+//        String path = null;
+// 
+//        File sdCardFile = null;
  
 //        ArrayList<String> devMountList = getDevMountList();
  

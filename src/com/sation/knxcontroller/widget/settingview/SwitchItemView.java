@@ -1,7 +1,7 @@
 package com.sation.knxcontroller.widget.settingview;
 
 import com.sation.knxcontroller.R;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -34,17 +34,18 @@ public class SwitchItemView extends FrameLayout {
 
 	public SwitchItemView(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
+
 		init(context);
 	}
 
 	public SwitchItemView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
+
 		init(context);
 		readAttrs(context, attrs);
 	}
 
+	@SuppressLint("InflateParams")
 	private void init(Context context) {
 		mInflater = LayoutInflater.from(context);
 		mItemView = mInflater.inflate(R.layout.setting_view_switch_item, null);
@@ -61,7 +62,7 @@ public class SwitchItemView extends FrameLayout {
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// TODO Auto-generated method stub
+
 				if (null != mChangedListener) {
 					mChangedListener.onSwitchItemChanged(isChecked);
 				}
@@ -69,6 +70,7 @@ public class SwitchItemView extends FrameLayout {
 		});
 	}
 
+	@SuppressWarnings("deprecation")
 	private void readAttrs(Context context, AttributeSet attrs) {
 		if (null != attrs) {
 			TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SettingViewItem);
@@ -127,6 +129,7 @@ public class SwitchItemView extends FrameLayout {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void fillData(SettingData data) {
 		if (null != data) {
 			if (!TextUtils.isEmpty(data.getTitle())) {

@@ -7,24 +7,13 @@ import java.util.Calendar;
 
 import com.sation.knxcontroller.R;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver.OnScrollChangedListener;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.NumberPicker.Formatter;
 import android.widget.NumberPicker.OnScrollListener;
 import android.widget.NumberPicker.OnValueChangeListener;
 
-/**
- * @author wangchunfeng
- *
- */
 public class CustomTimerPickerDialog extends PromptDialog.Builder implements OnValueChangeListener, OnScrollListener, Formatter {
 	private NumberPicker npHour;
 	private NumberPicker npMinute;
@@ -105,8 +94,7 @@ public class CustomTimerPickerDialog extends PromptDialog.Builder implements OnV
 
 	@Override
 	public void onScrollStateChange(NumberPicker view, int scrollState) {
-		// TODO Auto-generated method stub
-		
+
 	}
 	
 	public void setHour(int hour) {

@@ -38,21 +38,19 @@ import com.sation.knxcontroller.widget.STKNXTimerButton;
 import com.sation.knxcontroller.widget.STKNXTimerButton.TimerButtonOnClickListener;
 import com.sation.knxcontroller.widget.STKNXValueDisplay;
 import com.sation.knxcontroller.widget.STKNXView;
-
+import com.sation.knxcontroller.widget.STViewPager;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 public class RoomDetailsActivity extends BaseActivity {
-	private ViewPager mViewPage;
+	private final String TAG = "RoomDetailsActivity";
+	private STViewPager mViewPage;
 	private ArrayList<STKNXPage> mPages;
 	private STKNXPage mCurrentSTKNXPage;
 	//当前页面所有控件集合
@@ -72,7 +70,7 @@ public class RoomDetailsActivity extends BaseActivity {
 		//设备状态的广播
 		intentFilter.addAction(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS);
 		registerReceiver(updateDeviceStateReceiver, intentFilter);
-		 
+        
 		initialComponent();
 	}
 	
@@ -96,8 +94,16 @@ public class RoomDetailsActivity extends BaseActivity {
 		unregisterReceiver(mRefreshTimerTaskListReceiver);
 	}
 	
+	@Override
+	public final void onLowMemory(){
+		super.onLowMemory();
+		
+		Log.w(TAG, "onLowMemory()");
+	}
+	
 	private void initialComponent() {
-		this.mViewPage = (ViewPager)findViewById(R.id.viewPage);
+		this.mViewPage = (STViewPager)findViewById(R.id.stViewPager1);
+//		RelativeLayout layout = (RelativeLayout)findViewById(R.id.layContent);
 		this.mPages = new ArrayList<STKNXPage>();
 		KNXRoom mKNXRoom = (KNXRoom) getIntent().getSerializableExtra(STKNXControllerConstant.REMOTE_PARAM_KEY);
 
@@ -112,6 +118,7 @@ public class RoomDetailsActivity extends BaseActivity {
 				pageLayoutParams.topMargin = mKNXPage.Top;
 				page.setLayoutParams(pageLayoutParams);
 				this.mPages.add(page);
+//				layout.addView(page);
 				
 				//增加页面级别的控件
 				createSTKNXControlAndDisplay(page, mKNXPage);
@@ -120,7 +127,7 @@ public class RoomDetailsActivity extends BaseActivity {
 		
 		this.mViewPage.setAdapter(new RoomDetailsPagerAdapter(this.mPages));
 		this.mViewPage.setCurrentItem(0);
-		this.mViewPage.setOnPageChangeListener(new OnPageChangeListener(){
+		this.mViewPage.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
 
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -138,6 +145,8 @@ public class RoomDetailsActivity extends BaseActivity {
 		});
 		
 		viewPagerSelectPage(0);
+		
+//		this.mViewPage.setScanScroll(false);
 	}
 	
 	private void viewPagerSelectPage(int position) {
@@ -159,6 +168,10 @@ public class RoomDetailsActivity extends BaseActivity {
 					((STKNXTimerButton) view).setOnClickListener(buttonAddTimingTaskOnClickListener);
 				}
 				
+				LayoutParams pageLayoutParams = new LayoutParams(view.getWidth(), view.getHeight()); 
+				pageLayoutParams.leftMargin = view.getLeft();
+				pageLayoutParams.topMargin = view.getTop();
+				view.setLayoutParams(pageLayoutParams);
 				parentView.addView(view);
 				
 				if(mKNXControlBase instanceof KNXGroupBox) {
@@ -185,6 +198,7 @@ public class RoomDetailsActivity extends BaseActivity {
 		}
 	}
 	
+	@SuppressLint("UseSparseArrays")
 	private Map<Integer,KNXControlBase> getSceneButtonControl(List<KNXControlBase> currentPageKNXControlBase) {
 		Map<Integer, KNXControlBase> allBaseControl = new HashMap<Integer, KNXControlBase>();
 		Map<String, Integer> groupAddressIndexMap = STKNXControllerApp.getInstance().getGroupAddressIndexMap();
@@ -202,11 +216,11 @@ public class RoomDetailsActivity extends BaseActivity {
 					if(address.getIsCommunication() && address.getIsTransmit()) {
 						byte[] contentBytes = new byte[32];
 						byte[] length  = new byte[1];
-						boolean b1 = KNX0X01Lib.UTestAndCopyObject(currentIndex, contentBytes, length);
+						KNX0X01Lib.UTestAndCopyObject(currentIndex, contentBytes, length);
 
-						boolean b2 = KNX0X01Lib.USetAndRequestObject(currentIndex);
+						KNX0X01Lib.USetAndRequestObject(currentIndex);
 
-						int type = mKNXSelectedAddress.getType();
+						mKNXSelectedAddress.getType();
 						currentValue = getCallBackValue(contentBytes, address);
 					}
 				}  
@@ -263,15 +277,15 @@ public class RoomDetailsActivity extends BaseActivity {
 		public void onReceive(final Context context, Intent intent) {
 			if(intent.getAction().equals(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS)){ 
 				int index = intent.getExtras().getInt(STKNXControllerConstant.GROUP_ADDRESS_INDEX, 0);
-				int valLength = intent.getExtras().getInt(STKNXControllerConstant.GROUP_ADDRESS_NEW_VALUE_LENGTH, 0);
+//				int valLength = intent.getExtras().getInt(STKNXControllerConstant.GROUP_ADDRESS_NEW_VALUE_LENGTH, 0);
 				byte[] array = intent.getExtras().getByteArray(STKNXControllerConstant.GROUP_ADDRESS_NEW_VALUE);
 				try {
 					KNXGroupAddress address = STKNXControllerApp.getInstance().getGroupAddressMap().get(index);
 					String knxId = address.getId();
-					int type = address.getType();
+//					int type = address.getType();
 					int value  = getCallBackValue(array, address);
 
-					Log.i(STKNXControllerConstant.CALLBACK, "当前的knxId："+ knxId +"");
+//					Log.i(STKNXControllerConstant.CALLBACK, "当前的knxId："+ knxId +"");
 					
 					KNXControlBase mKNXControlBase = currentPageKNXControlBaseMap.get(knxId);
 					int controlId = mKNXControlBase.getId(); 
@@ -365,8 +379,7 @@ public class RoomDetailsActivity extends BaseActivity {
 	}
 	
 	@Override
-	protected void onDestroy()
-	{
+	protected void onDestroy() {
 		super.onDestroy(); 
 		unregisterReceiver(updateDeviceStateReceiver); 
 	}

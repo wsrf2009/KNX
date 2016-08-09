@@ -9,12 +9,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.sation.knxcontroller.R;
-import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.models.KNXGroupAddressAction;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.widget.STKNXControl;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 /**
@@ -22,9 +22,7 @@ import android.content.Context;
  *
  */
 public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
-	/**
-	 * 
-	 */
+	private final String TAG = "TimingTaskItem";
 	private static final long serialVersionUID = 1L;
 	private boolean monthly;
 	private boolean weekly;
@@ -121,7 +119,7 @@ public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 			item.setAddressList(newList);
 			
 		} catch (CloneNotSupportedException  e) {
-			Log.e(STKNXControllerConstant.DEBUG, e.getLocalizedMessage());
+			Log.e(TAG, e.getLocalizedMessage());
 		}
 		
 		return item;
@@ -263,6 +261,7 @@ public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 		return this.day;
 	}
 	
+	@SuppressLint("DefaultLocale")
 	public String getDate() {
 		return String.format("%04d-%02d-%02d", this.year, this.month, this.day);
 	}
@@ -288,10 +287,12 @@ public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 		return this.second;
 	}
 	
+	@SuppressLint("DefaultLocale")
 	public String getTimeWithoutSecond() {
 		return String.format("%02d:%02d", this.hour, this.minute);
 	}
 	
+	@SuppressLint("DefaultLocale")
 	public String getTimeWithSecond() {
 		return String.format("%02d:%02d:%02d", this.hour, this.minute, this.second);
 	}
@@ -343,9 +344,7 @@ public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 	}
 	
 	public static class KNXGroupAddressAndAction implements Serializable, Cloneable {
-		/**
-		 * 
-		 */
+		private final String TAG = "KNXGroupAddressAndAction";
 		private static final long serialVersionUID = 1L;
 		public KNXGroupAddressAndAction(KNXGroupAddress address) {
 			this.address = address;
@@ -366,7 +365,7 @@ public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 				addressAndAction = (KNXGroupAddressAndAction)super.clone();
 				
 			} catch (CloneNotSupportedException e) {
-				Log.e(STKNXControllerConstant.DEBUG, e.getLocalizedMessage());
+				Log.e(TAG, e.getLocalizedMessage());
 			}
 			
 			return addressAndAction;

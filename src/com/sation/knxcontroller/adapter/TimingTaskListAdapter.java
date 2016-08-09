@@ -1,22 +1,16 @@
 package com.sation.knxcontroller.adapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import com.sation.knxcontroller.STKNXControllerApp;
-import com.sation.knxcontroller.STKNXControllerConstant;
-import com.sation.knxcontroller.control.TimingTaskItem;
-import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.R;
-
+import com.sation.knxcontroller.control.TimingTaskItem;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -63,6 +57,7 @@ public class TimingTaskListAdapter extends BaseAdapter {
         selectedPosition = position;  
     }  
 
+	@SuppressLint("InflateParams")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		TimingTaskItem item = timingTaskList.get(position);
