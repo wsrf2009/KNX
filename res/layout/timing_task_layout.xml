@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LinearLayout1"
+<LinearLayout android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/default_room_list_pressed"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:focusable="true" 
+   		android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
@@ -104,6 +105,7 @@
                             android:layout_marginRight="10dp"
                             android:gravity="center"
                             android:text="@string/create_task" />
+
                     </RelativeLayout>
                 </RelativeLayout>
             </LinearLayout>
@@ -133,7 +135,7 @@
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="5dp" >
+                    android:paddingTop="5dp">
 
                     <EditText
                         android:id="@+id/timingTaskLayoutTaskItemEditTextName"

@@ -1,5 +1,8 @@
 package com.sation.knxcontroller.widget;
 
+import com.sation.knxcontroller.util.ImageUtils;
+import com.sation.knxcontroller.util.uikit.UIKit;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,12 +11,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
-public class STButton extends View {
+public class STButton extends ViewGroup {
 
-	private final int PADDING = 5;
+	private final int PADDING = 0;
 	
 	public int left;
 	public int top;
@@ -22,53 +29,110 @@ public class STButton extends View {
 	public int backColor;
 	public int radius;
 	public double alpha;
-	public Bitmap backImage;
+	private ImageView mImageView;
 	public String text;
 	public int fontSize;
 	public int fontColor;
 	private SubViewClickListener mSubViewClickListener;
-	
+//	private Handler mHandler;
 	
 	public enum EControlState {
 		Down,
 		Up,
 	}
 	public EControlState mEControlState;
-	
-	private int backImgLeft = 0;
-	private int backImgTop = 0;
-	private int backImgRight = 0;
-	private int backImgBottom = 0;
 
 	protected STButton(Context context) {
 		super(context);
 		
 		this.mEControlState = EControlState.Up;
+		this.mImageView = new ImageView(context);
+		this.addView(this.mImageView);
+		
+//		this.mHandler = new Handler() {
+//			@Override
+//			public void handleMessage(Message msg) {
+//				super.handleMessage(msg);
+//				
+//				if(1 == msg.what) {
+//					Bitmap bm = (Bitmap) msg.obj;
+//					if((null != bm) && (null != mImageView)) {
+//						mImageView.setImageBitmap(bm);
+//					}
+//				}
+//			}
+//		};
+	}
+	
+	public void onDestroy() {
+		this.mImageView = null;
+		this.text = null;
+		this.mSubViewClickListener = null;
 	}
 	
 	public void setSubViewClickListener(SubViewClickListener l) {
 		this.mSubViewClickListener = l;
 	}
 	
+	public void setBackgroundImage(final String imagePath) {
+		
+//		Message msg = new Message();
+//		msg.what = 1;
+//		Bitmap bm = ImageUtils.getDiskBitmap(imagePath);
+//		msg.obj = bm;
+//		this.mHandler.sendMessage(msg);
+		
+//		UIKit.runOnMainThreadAsync(new Runnable() {
+//
+//			@Override
+//			public void run() {
+				Bitmap bm = ImageUtils.getDiskBitmap(imagePath);
+				if((null != bm) && (null != mImageView)) {
+					mImageView.setImageBitmap(bm);
+				}
+//			}
+//			
+//		});
+	}
+	
 	@Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		this.backImgLeft = this.PADDING;
-		this.backImgTop = this.PADDING;
-		int width = this.width - this.PADDING - this.PADDING;
-		int height = this.height - this.PADDING - this.PADDING;
-		if(width > height) {
-			this.backImgRight = this.backImgLeft + height;
-			this.backImgBottom = this.backImgTop + height;
-		} else {
-			this.backImgRight = this.backImgLeft + width;
-			this.backImgBottom = this.backImgTop + width;
-		}
-		
+		measureChildren(widthMeasureSpec, heightMeasureSpec);
+
         /**
          * 最后调用父类方法,把View的大小告诉父布局。
          */
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
     }
+	
+	@Override
+	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+		int childViewCount = getChildCount();
+
+		/*
+		 * 遍历所有childView根据其宽和高，以及margin进行布局
+		 */
+		for (int i = 0; i < childViewCount; i++) {
+			int cl = 0, ct = 0, cr = 0, cb = 0;
+			
+			View view = getChildAt(i);
+			if(view instanceof ImageView) {
+				cl = this.PADDING;
+				ct = this.PADDING;
+				
+				int width = this.width - this.PADDING - this.PADDING;
+				int height = this.height - this.PADDING - this.PADDING;
+				if(width > height) {
+					cr = cl + height;
+					cb = ct + height;
+				} else {
+					cr = cl + width;
+					cb = ct + width;
+				}
+			}
+			view.layout(cl, ct, cr, cb);
+		}
+	}
 
 	@SuppressLint({ "DrawAllocation", "ClickableViewAccessibility" })
 	@Override
@@ -77,16 +141,8 @@ public class STButton extends View {
 
     	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     	paint.setStyle(Paint.Style.FILL_AND_STROKE);	// 充满  
-//    	paint.setAlpha((int)(this.alpha*255));
     	RectF oval3 = new RectF(0, 0, this.getWidth(), this.getHeight());
 
-        /* 绘制背景图片 */
-        if(null != this.backImage) {
-        	Rect resRect = new Rect(0, 0, this.backImage.getWidth(), this.backImage.getHeight());
-        	Rect desRect = new Rect(this.backImgLeft, this.backImgTop, this.backImgRight, this.backImgBottom);
-        	canvas.drawBitmap(this.backImage, resRect, desRect, paint);
-        }
-        
         if(null != this.text) {
         	int x = 0;
         	int y = 0;
@@ -115,12 +171,16 @@ public class STButton extends View {
     	}
 	}
 	
-    @Override
+    @SuppressLint("ClickableViewAccessibility")
+	@Override
     public boolean onTouchEvent(MotionEvent event) {
     	switch (event.getAction()) { 
     		case MotionEvent.ACTION_DOWN:
     			this.mEControlState = EControlState.Down;
     			this.invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(0.6f);
+    			}
     			break; 
     		case MotionEvent.ACTION_UP:
     			this.mEControlState = EControlState.Up;
@@ -128,12 +188,18 @@ public class STButton extends View {
     				this.mSubViewClickListener.onClick(this);
     			}
     			this.invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(1.0f);
+    			}
     			break;
     		case MotionEvent.ACTION_MOVE:
     			break;
     		case MotionEvent.ACTION_CANCEL:
     			this.mEControlState = EControlState.Up;
     			this.invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(1.0f);
+    			}
     			break;
     			
     		default:
@@ -146,5 +212,4 @@ public class STButton extends View {
     public interface SubViewClickListener {
     	public void onClick(STButton view);
     }
-
 }

@@ -36,6 +36,22 @@ public class KNXGroupAddress implements Serializable, Cloneable {
 	public void setKnxAddress(Short mKnxAddress) {
 		KnxAddress = mKnxAddress;
 	}
+	public String getStringKnxAddress() {
+		//高8位模
+        Short HMod = (short) 0xFF00;
+        // 低8位模
+        Short LMod = 0x00FF;
+
+        // 去高位和低位
+        byte highByte = (byte) ((this.KnxAddress & HMod) >> 8);
+        byte lowByte = (byte) (this.KnxAddress & LMod);
+
+        // 对高8位进一步拆分，前5位为主分组，剩下3位是中间分组
+        byte mainAddress = (byte) ((highByte >> 3) & 0x0f);
+        byte middleAddress = (byte) (highByte & 0x07);
+
+        return mainAddress + "/" + middleAddress +"/" + lowByte;
+	}
 	
 	private String KnxMainNumber;
 	public String getKnxMainNumber() {
@@ -44,7 +60,7 @@ public class KNXGroupAddress implements Serializable, Cloneable {
 	public void setKnxMainNumber(String number) {
 		KnxMainNumber = number;
 	}
-	
+
 	private String KnxSubNumber;
 	public String getKnxSubNumber() {
 		return KnxSubNumber;
@@ -52,7 +68,7 @@ public class KNXGroupAddress implements Serializable, Cloneable {
 	public void setKnxSubNumber(String number) {
 		KnxSubNumber = number;
 	}
-	
+
 	//ETS 数据类型
 	private int Type; 
 	public int getType() {

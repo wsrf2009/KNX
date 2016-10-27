@@ -17,7 +17,7 @@
         android:textColor="#ffbbbbbb"
         android:textSize="@dimen/font_size_mini" />
 
-   <LinearLayout
+  <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
@@ -25,12 +25,18 @@
         android:layout_centerVertical="true"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical" >
-
+		
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="center"
+            android:id="@+id/splashabout"
+            android:layout_width="460dp"
+            android:layout_height="155dp"
             android:src="@drawable/companylogo" />
+          <!--   <com.facebook.drawee.view.SimpleDraweeView
+ 			    android:id="@+id/splashabout"
+ 			    android:layout_width="460dp"
+ 			    android:layout_height="155dp"
+ 			    android:src="@drawable/companylogo" /> -->
+
 
         <TextView
             android:layout_width="wrap_content"

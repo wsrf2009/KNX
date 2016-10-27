@@ -3,7 +3,7 @@
 
     <string name="app_name">SKC-S</string>
     <string name="uid_label">SATIONControl</string>
-    <string name="all_rights_reserved"> <![CDATA[Copyright © 2016 SATION. All Rights Reserved.]]></string>
+    <string name="all_rights_reserved"> <![CDATA[Copyright © 2012-2016 SATION. All Rights Reserved.]]></string>
     <string name="browserUrl"><![CDATA[SATION Science & Technology]]></string>
     
     <string name="confirm">确定</string>
@@ -97,9 +97,21 @@
     <string name="english">English</string>
     <string name="chinese">中文（简体）</string>
     
-    <string name="system_status">System Status</string>
+    <string name="setting_Reboot">定时重启</string>
+    
+    <string name="change_password">更改密码</string>
+    <string name="original_password">原密码</string>
+    <string name="new_password">新密码</string>
+    <string name="confirm_new_password">确认新密码</string>
+    <string name="modify">修改</string>
+    <string name="originalpassword_not_right">原密码不正确</string>
+    <string name="newpassword_not_match">新密码不一致</string>
+    
+    <string name="system_status">Others</string>
     <string name="local_ip">本机IP</string>
     <string name="network_disconnect">网络未连接</string>
     <string name="display_system_time">显示系统时间</string>
+    <string name="software_version">软件版本</string>
+    <string name="Record_last_interface">记住最后界面</string>
 
 </resources>

@@ -4,6 +4,7 @@ import com.sation.knxcontroller.control.KNXValueDisplay;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
+import com.sation.knxcontroller.util.uikit.UIKit;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,24 +15,54 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.Handler;
+import android.os.Message;
 
 public class STKNXValueDisplay extends STKNXControl {
 	private final int PADDING = 2;
-	
+
 	private KNXValueDisplay mKNXValueDisplay;
 	private String valueString = "---";
+//	private Handler mHandler;
 
 	public STKNXValueDisplay(Context context, KNXValueDisplay knxValueDisplay) {
 		super(context, knxValueDisplay);
 
 		this.mKNXValueDisplay = knxValueDisplay;
 		this.setId(mKNXValueDisplay.getId());
+		
+//		this.mHandler = new Handler() {
+//			@Override
+//			public void handleMessage(Message msg) {
+//				super.handleMessage(msg);
+//				
+//				if(1 == msg.what) {
+//					invalidate();
+//				}
+//			}
+//		};
+	}
+	
+	@Override
+	public void onDestroy() {
+//		this.mKNXValueDisplay = null;
+		this.valueString = null;
 	}
 	
 	public void setValue(int value) {
 		this.valueString = value+" "+this.mKNXValueDisplay.getUnit();
 	
-		this.invalidate();
+//		Message msg = new Message();
+//		msg.what = 1;
+//		this.mHandler.sendMessage(msg);
+		
+//		UIKit.runOnMainThreadAsync(new Runnable() {
+//
+//			@Override
+//			public void run() {
+				invalidate();
+//			}
+//		});
 	}
 
 	@Override

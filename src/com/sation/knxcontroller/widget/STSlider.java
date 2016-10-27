@@ -1,6 +1,7 @@
 package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.util.ColorUtils;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,8 +13,6 @@ import android.graphics.Shader;
 import android.view.View;
 
 public class STSlider extends View {
-//	public int width;
-//	public int height;
 	public int backColor;
 	public int radius;
 	public double alpha;
@@ -28,6 +27,10 @@ public class STSlider extends View {
 		super(context);
 
 		this.mEControlState = EControlState.Up;
+	}
+	
+	public void onDestroy() {
+		
 	}
 
 	@Override

@@ -149,5 +149,28 @@ public class FileUtils {
   
         return true;  
     }
+	
+	// 读SD中的文件
+	public static String readFileSdcardFile(String fileName) throws IOException {
+		String res = "";
+		try {
+			
+			FileInputStream fin = new FileInputStream(fileName);
+
+			int length = fin.available();
+
+			byte[] buffer = new byte[length];
+			fin.read(buffer);
+
+			res = EncodingUtils.getString(buffer, "UTF-8");
+
+			fin.close();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 
 }

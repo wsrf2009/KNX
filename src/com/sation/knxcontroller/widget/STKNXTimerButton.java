@@ -19,6 +19,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
 
 public class STKNXTimerButton extends STKNXControl {
 	private final int PADDING = 2;
@@ -29,11 +31,10 @@ public class STKNXTimerButton extends STKNXControl {
     	Normal,
     }
     private ControlState mControlState;
-    private int imgX = 0;
     private int imgY = 0;
     private int imgRight = 0;
-    private int imgBottom = 0;
-    private Bitmap image;
+    private String image;
+    private ImageView mImageView;
     private TimerButtonOnClickListener mOnClickListener;
 
 	public STKNXTimerButton(Context context, KNXTimerButton knxTimerButton) {
@@ -45,8 +46,23 @@ public class STKNXTimerButton extends STKNXControl {
 		this.mControlState = ControlState.Normal;
 		
 		if(!StringUtil.isEmpty(this.mKNXTimerButton.Icon)) {
-			this.image = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXTimerButton.Icon);
+			this.image = STKNXControllerConstant.ConfigResImgPath + this.mKNXTimerButton.Icon;
 		}
+		
+		this.mImageView = new ImageView(context);
+		this.addView(this.mImageView);
+		
+		Bitmap bm = ImageUtils.getDiskBitmap(this.image);
+		if(null != bm) {
+			mImageView.setImageBitmap(bm);
+		}
+	}
+	
+	@Override
+	public void onDestroy() {
+//		this.mKNXTimerButton = null;
+		this.mImageView = null;
+		this.mOnClickListener = null;
 	}
 	
 	public void setOnClickListener(TimerButtonOnClickListener l) {
@@ -55,18 +71,36 @@ public class STKNXTimerButton extends STKNXControl {
 
 	@Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		/* 计算图片的显示位置和大小 */
-    	this.imgX = this.PADDING;
-    	this.imgY = this.PADDING;
-    	int height = this.mKNXTimerButton.Height - 2 * this.imgY;
-    	this.imgRight = this.imgX + height;   // 计算出高度
-        this.imgBottom = this.imgY + height;     // 计算出宽度
-        
+		measureChildren(widthMeasureSpec, heightMeasureSpec);
+
         /**
          * 最后调用父类方法,把View的大小告诉父布局。
          */
         setMeasuredDimension(this.mKNXTimerButton.Width, this.mKNXTimerButton.Height);
     }
+	
+	 @Override
+		protected void onLayout(boolean changed, int l, int t, int r, int b) {
+			int childViewCount = getChildCount();
+
+			/*
+			 * 遍历所有childView根据其宽和高，以及margin进行布局
+			 */
+			for (int i = 0; i < childViewCount; i++) {
+				int cl = 0, ct = 0, cr = 0, cb = 0;
+				
+				View view = getChildAt(i);
+				if(view instanceof ImageView) {
+					int imgHeight = this.mKNXTimerButton.Height - 2 * this.imgY;
+					
+					cl = this.PADDING;
+					ct = this.PADDING;
+					cr = this.PADDING+imgHeight;
+					cb = this.PADDING+imgHeight;
+				}
+				view.layout(cl, ct, cr, cb);
+			}
+		}
 
     @SuppressLint("DrawAllocation")
 	@Override
@@ -102,20 +136,26 @@ public class STKNXTimerButton extends STKNXControl {
     	canvas.drawRoundRect(oval3, this.mKNXTimerButton.Radius, this.mKNXTimerButton.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
     	
     	paint.reset();
-        if(null != image) {
-        	Rect resRect = new Rect(0, 0, image.getWidth(), image.getHeight());
-        	Rect desRect = new Rect(this.imgX, this.imgY, this.imgRight, this.imgBottom);
-        	canvas.drawBitmap(image, resRect, desRect, paint);
-        }
 
         if(null != this.mKNXTimerButton.getText()) {
+        	int x = 0;
+        	int y = 0;
+        	Rect bound = new Rect();
+        	paint.getTextBounds(this.mKNXTimerButton.getText(), 0, this.mKNXTimerButton.getText().length(), bound);
+        	if(StringUtil.isEmpty(this.image)) {
+        		x = (getWidth() - 2 *x - bound.width())/2;
+            	y = (getHeight()  + bound.height())/2;
+        	} else {
+        		x=(getWidth()- (this.imgRight+this.PADDING)-this.PADDING -bound.width())/2+this.imgRight+this.PADDING;
+        		y=(getHeight()  + bound.height())/2;
+        	}
+        	
         	/* 绘制文本 */
         	paint.reset();
         	paint.setColor(Color.parseColor(this.mKNXTimerButton.FontColor));
         	paint.setTextSize(this.mKNXTimerButton.FontSize);
-        	Rect bound = new Rect();
         	paint.getTextBounds(this.mKNXTimerButton.getText(), 0, this.mKNXTimerButton.getText().length(), bound);
-        	canvas.drawText(this.mKNXTimerButton.getText(), this.imgRight+this.PADDING*2, getHeight() / 2 + (bound.bottom-bound.top) / 2, paint);
+        	canvas.drawText(this.mKNXTimerButton.getText(), x, y, paint);
         }
         
         switch (mControlState) {
@@ -138,26 +178,33 @@ public class STKNXTimerButton extends STKNXControl {
     	}
     }
     
-    @Override
+    @SuppressLint("ClickableViewAccessibility")
+	@Override
     public boolean onTouchEvent(MotionEvent event) {
     	switch (event.getAction()) { 
     		case MotionEvent.ACTION_DOWN: 
     			this.mControlState = ControlState.Down;
-//    			requestLayout();
     			invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(0.6f);
+    			}
     			break; 
     		case MotionEvent.ACTION_UP: 
     			this.mControlState = ControlState.Normal;
     			if(null != this.mOnClickListener) {
     				this.mOnClickListener.onClick(this);
     			}
-//    			requestLayout();
     			invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(1.0f);
+    			}
     			break;
     		case MotionEvent.ACTION_CANCEL:
     			this.mControlState = ControlState.Normal;
-//    			requestLayout();
     			invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(1.0f);
+    			}
     			break;
     			
     		default:

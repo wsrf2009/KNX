@@ -16,7 +16,6 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 
 public class STKNXLabel extends STKNXControl {
-
 	private KNXLabel mKNXLabel;
 	
 	public STKNXLabel(Context context, KNXLabel label) {
@@ -24,6 +23,11 @@ public class STKNXLabel extends STKNXControl {
 		
 		this.mKNXLabel = label;
 		this.setId(this.mKNXLabel.getId());
+	}
+	
+	@Override
+	public void onDestroy() {
+//		this.mKNXLabel = null;
 	}
 	
 	@Override

@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
-import com.sation.knxcontroller.adapter.RoomDetailsPagerAdapter;
+import com.sation.knxcontroller.adapter.STKNXPagerAdapter;
 import com.sation.knxcontroller.adapter.TimingTaskListAdapter;
 import com.sation.knxcontroller.control.KNXBlinds;
 import com.sation.knxcontroller.control.KNXControlBase;
@@ -19,6 +19,7 @@ import com.sation.knxcontroller.control.KNXSliderSwitch;
 import com.sation.knxcontroller.control.KNXSwitch;
 import com.sation.knxcontroller.control.KNXTimerButton;
 import com.sation.knxcontroller.control.KNXValueDisplay;
+import com.sation.knxcontroller.knxdpt.DPT14;
 import com.sation.knxcontroller.knxdpt.DPT9;
 import com.sation.knxcontroller.knxdpt.KNXDataType;
 import com.sation.knxcontroller.knxdpt.KNXDatapointType;
@@ -29,6 +30,10 @@ import com.sation.knxcontroller.models.KNXRoom;
 import com.sation.knxcontroller.models.KNXSelectedAddress;
 import com.sation.knxcontroller.util.KNX0X01Lib;
 import com.sation.knxcontroller.util.Log;
+import com.sation.knxcontroller.util.StringUtil;
+import com.sation.knxcontroller.util.SystemUtil;
+import com.sation.knxcontroller.util.uikit.UIKit;
+import com.sation.knxcontroller.viewpagerindicator.LinePageIndicator;
 import com.sation.knxcontroller.widget.STKNXDigitalAdjustment;
 import com.sation.knxcontroller.widget.STKNXGroupBox;
 import com.sation.knxcontroller.widget.STKNXPage;
@@ -39,122 +44,271 @@ import com.sation.knxcontroller.widget.STKNXTimerButton.TimerButtonOnClickListen
 import com.sation.knxcontroller.widget.STKNXValueDisplay;
 import com.sation.knxcontroller.widget.STKNXView;
 import com.sation.knxcontroller.widget.STViewPager;
+
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.RelativeLayout.LayoutParams;
 
-public class RoomDetailsActivity extends BaseActivity {
+public class RoomDetailsActivity extends BaseActivity implements OnPageChangeListener {
 	private final String TAG = "RoomDetailsActivity";
-	private STViewPager mViewPage;
-	private ArrayList<STKNXPage> mPages;
-	private STKNXPage mCurrentSTKNXPage;
-	//当前页面所有控件集合
-	List<KNXControlBase> currentPageKNXControlBase = new ArrayList<KNXControlBase>();
-	Map<String, KNXControlBase> currentPageKNXControlBaseMap = new HashMap<String, KNXControlBase>(); 
-	private RefreshTimerTaskListReceiver mRefreshTimerTaskListReceiver;
 	
-	private List<TimingTaskListAdapter> timingTaskAdapterList = new ArrayList<TimingTaskListAdapter>();
+	private STViewPager mViewPager;
+	private LinePageIndicator linePageIndicator;
+	private STKNXPage mCurrentSTKNXPage;
+	
+	private List<KNXPage> mKNXPages;
+	private ArrayList<STKNXPage> mPages;
+	private List<KNXControlBase> currentPageKNXControlBase; //当前页面所有控件集合
+	private Map<String, KNXControlBase> currentPageKNXControlBaseMap;
+	private List<TimingTaskListAdapter> timingTaskAdapterList;
+	private SharedPreferences settings;
+	private STKNXPagerAdapter mSTKNXPagerAdapter;
+	
+//	private boolean displayed;
+//	private boolean bRecordLastInterface;
+	private boolean shouldDestroyActivity;
+	private boolean mCycleDrag; // 循环滑动页面
+	private boolean backToThis;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState); 
+		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.room_details_layout);
+		this.mViewPager = (STViewPager)findViewById(R.id.stViewPager1);
+		this.linePageIndicator = (LinePageIndicator)findViewById(R.id.linePageIndicator);
+		this.mPages = new ArrayList<STKNXPage>();
+		this.currentPageKNXControlBase = new ArrayList<KNXControlBase>();
+		this.currentPageKNXControlBaseMap = new HashMap<String, KNXControlBase>();
+		this.timingTaskAdapterList = new ArrayList<TimingTaskListAdapter>();
+		this.mSTKNXPagerAdapter = new STKNXPagerAdapter();
+		
+//		this.displayed = false;
+		this.shouldDestroyActivity = false;
+		this.mCycleDrag = true;
+		this.backToThis = false;
+		
+		this.settings = getSharedPreferences(
+				STKNXControllerConstant.SETTING_FILE, android.content.Context.MODE_PRIVATE);
 
 		KNX0X01Lib.setContext(this);
-		IntentFilter intentFilter = new IntentFilter();
-		//设备状态的广播
-		intentFilter.addAction(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS);
-		registerReceiver(updateDeviceStateReceiver, intentFilter);
-        
-		initialComponent();
+		createRoom();
 	}
 	
 	@Override
-	public void onResume() {
-		super.onResume();
+	protected void onRestart(){
+		super.onRestart();
+
+		if(STKNXControllerApp.getInstance().getRememberLastInterface()) {
+			final String timerId = "";
+			STKNXControllerApp.getInstance().setLastTimerId(timerId);
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					SharedPreferences.Editor editor = settings.edit(); 
+					editor.putString(STKNXControllerConstant.LAST_TIMER_ID, timerId);
+					editor.commit();
+				}
+				
+			}).start();
+			
+		}
+		
+		this.backToThis = true;
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
 		
 		for(TimingTaskListAdapter adapter : timingTaskAdapterList) {
 			adapter.notifyDataSetChanged();
 		}
 		
-		mRefreshTimerTaskListReceiver = new RefreshTimerTaskListReceiver();
-	    IntentFilter filter = new IntentFilter(STKNXControllerConstant.BROADCAST_REFRESH_TIMING_TASK_LIST);
-	    registerReceiver(mRefreshTimerTaskListReceiver, filter);  
+//	    IntentFilter filter = new IntentFilter(STKNXControllerConstant.BROADCAST_REFRESH_TIMING_TASK_LIST);
+//	    registerReceiver(this.refreshTimerTaskListReceiver, filter);
+	    
+//		new Thread(new Runnable(){
+//
+//			@Override
+//			public void run() {
+//				IntentFilter intentFilter = new IntentFilter();
+//				intentFilter.addAction(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS);
+//				HandlerThread mHandlerThread = new HandlerThread("update status");
+//				Looper looper = mHandlerThread.getLooper();
+//				Handler handler = new Handler(looper);
+//				registerReceiver(updateDeviceStateReceiver, intentFilter, null, handler);
+//			}
+//			
+//		});
+	    //设备状态的广播
+	    IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS);
+//		HandlerThread mHandlerThread = new HandlerThread("update status");
+//		Looper looper = mHandlerThread.getLooper();
+//		Handler handler = new Handler(looper);
+//		registerReceiver(this.updateDeviceStateReceiver, intentFilter, null, handler);
+		registerReceiver(this.updateDeviceStateReceiver, intentFilter);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.i(TAG, "is main thread:"+((Looper.myLooper() != Looper.getMainLooper())?"false":"true"));
+		int pageIndex = 0;
+		if(this.backToThis) {
+			pageIndex = this.mViewPager.getCurrentItem();
+		} else {
+			if(STKNXControllerApp.getInstance().getRememberLastInterface()) {
+				pageIndex = STKNXControllerApp.getInstance().getLastPageIndex();
+				if(this.mPages.size() <= pageIndex) {
+					pageIndex = 0;
+				}
+			}
+		}
+		
+//		Log.i(TAG, "pageIndex:"+pageIndex);
+		if(this.mPages.size() > 0) {
+			this.linePageIndicator.setCurrentItem(pageIndex);
+//			this.mViewPager.setCurrentItem(this.mCycleDrag?pageIndex+1:pageIndex);
+//			if(!this.mCycleDrag) {
+				if(0 == pageIndex) {
+					new Thread(new Runnable(){
+
+						@Override
+						public void run() {
+							viewPagerSelectPage(0);
+						}
+					}).start();
+				}
+//			}
+		}
+
+//	    displayed = true;
 	}
 	
 	@Override
+	public void onBackPressed() {
+//		Log.i(TAG, "displayed:"+displayed);
+//		if(displayed) {
+			super.onBackPressed();
+//		}
+	}
+
+	@Override
 	public void onPause() {
 		super.onPause();
-
-		unregisterReceiver(mRefreshTimerTaskListReceiver);
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		
+		unregisterReceiver(this.updateDeviceStateReceiver);
+//		unregisterReceiver(this.refreshTimerTaskListReceiver);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		this.shouldDestroyActivity = true;
+		
+		this.timingTaskAdapterList = null;
+		this.currentPageKNXControlBaseMap = null;
+		this.currentPageKNXControlBase = null;
+		
+		for(int i=0; i<this.mPages.size(); i++) {
+			STKNXPage page = this.mPages.get(i);
+			page.onDestroy();
+			page = null;
+		}
+		
+		this.mSTKNXPagerAdapter = null;
+		this.mCurrentSTKNXPage = null;
+		this.mPages = null;
+		this.mKNXPages = null;
+		this.mViewPager = null;
+		this.linePageIndicator = null;
+		
+		setContentView(R.layout.view_null);
 	}
 	
 	@Override
 	public final void onLowMemory(){
 		super.onLowMemory();
 		
-		Log.w(TAG, "onLowMemory()");
+//		Log.w(TAG, "onLowMemory()");
 	}
-	
-	private void initialComponent() {
-		this.mViewPage = (STViewPager)findViewById(R.id.stViewPager1);
-//		RelativeLayout layout = (RelativeLayout)findViewById(R.id.layContent);
-		this.mPages = new ArrayList<STKNXPage>();
-		KNXRoom mKNXRoom = (KNXRoom) getIntent().getSerializableExtra(STKNXControllerConstant.REMOTE_PARAM_KEY);
 
-		if (mKNXRoom.getPages() != null && mKNXRoom.getPages().size() > 0 ) { 
-				
-			for (int i = 0; i < mKNXRoom.getPages().size(); i++) {
-				KNXPage mKNXPage = mKNXRoom.getPages().get(i);
-				
-				STKNXPage page = new STKNXPage(this, mKNXPage);
-				LayoutParams pageLayoutParams = new LayoutParams(mKNXPage.Width, mKNXPage.Height); 
-				pageLayoutParams.leftMargin = mKNXPage.Left;
-				pageLayoutParams.topMargin = mKNXPage.Top;
-				page.setLayoutParams(pageLayoutParams);
-				this.mPages.add(page);
-//				layout.addView(page);
-				
-				//增加页面级别的控件
-				createSTKNXControlAndDisplay(page, mKNXPage);
+	private void createRoom() {
+		try {
+			KNXRoom mKNXRoom = (KNXRoom) getIntent().getSerializableExtra(STKNXControllerConstant.REMOTE_PARAM_KEY);
+			this.mKNXPages = mKNXRoom.getPages();
+		
+			if ((null != this.mKNXPages) && (this.mKNXPages.size() > 0 )) {
+				if(this.mCycleDrag) {
+					KNXPage mKNXPage = this.mKNXPages.get(this.mKNXPages.size()-1);
+					STKNXPage page = createPageAndInnerControls(mKNXPage);
+					this.mPages.add(page);
+					
+					if(this.mKNXPages.size() > 1) {
+						for (int i = 0; i < this.mKNXPages.size(); i++) {
+							mKNXPage = this.mKNXPages.get(i);
+							page = createPageAndInnerControls(mKNXPage);
+							this.mPages.add(page);
+						}
+					
+						mKNXPage = this.mKNXPages.get(0);
+						page = createPageAndInnerControls(mKNXPage);
+						this.mPages.add(page);
+					}
+				} else {
+					for (int i = 0; i < this.mKNXPages.size(); i++) {
+						KNXPage mKNXPage = this.mKNXPages.get(i);
+						STKNXPage page = createPageAndInnerControls(mKNXPage);
+						this.mPages.add(page);
+					}
+				}
 			}
+		
+			this.mSTKNXPagerAdapter.setAdapterSource(this.mPages);
+		
+			this.mViewPager.setAdapter(this.mSTKNXPagerAdapter);
+			this.mViewPager.setCycleDrag(this.mCycleDrag);
+			this.mViewPager.addOnPageChangeListener(this);
+
+			this.linePageIndicator.setViewPager(this.mViewPager);
+			this.linePageIndicator.setOnPageChangeListener(this);
+			this.linePageIndicator.setCycleDrag(this.mCycleDrag);
+			this.linePageIndicator.setPageCount(this.mKNXPages.size());
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-		
-		this.mViewPage.setAdapter(new RoomDetailsPagerAdapter(this.mPages));
-		this.mViewPage.setCurrentItem(0);
-		this.mViewPage.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
-
-			@Override
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-			}
-
-			@Override
-			public void onPageSelected(int position) {
-				viewPagerSelectPage(position);
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int state) {
-			}
-			
-		});
-		
-		viewPagerSelectPage(0);
-		
-//		this.mViewPage.setScanScroll(false);
 	}
 	
-	private void viewPagerSelectPage(int position) {
-		this.mCurrentSTKNXPage = this.mPages.get(position);
-		getCurrentPageKNXControl(this.mCurrentSTKNXPage.getKNXPage());
-		//筛选出页面中能控制的按钮
-		Map<Integer,KNXControlBase> mKNXControls = getSceneButtonControl(currentPageKNXControlBase);
-		STKNXControllerApp.getInstance().setCurrentPageKNXControlBaseMap(mKNXControls);
+	private STKNXPage createPageAndInnerControls(KNXPage knxPage) {
+		STKNXPage page = new STKNXPage(this, knxPage);
+		LayoutParams pageLayoutParams = new LayoutParams(knxPage.Width, knxPage.Height);
+		pageLayoutParams.leftMargin = knxPage.Left;
+		pageLayoutParams.topMargin = knxPage.Top;
+		page.setLayoutParams(pageLayoutParams);
+		
+		//增加页面级别的控件
+		createSTKNXControlAndDisplay(page, knxPage);
+		
+		return page;
 	}
 	
 	private void createSTKNXControlAndDisplay(STKNXView parentView, KNXContainer knxContainer) {
@@ -182,15 +336,221 @@ public class RoomDetailsActivity extends BaseActivity {
 		}
 	}
 	
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+		int i = 0;
+		
+		if(this.mCycleDrag) {
+			if((null != this.mPages) && (null != this.mKNXPages) && (null != this.mViewPager)) {
+				if(this.mPages.size() > 1) {
+					if(position < 1) {
+						i = this.mKNXPages.size();
+						this.mViewPager.setCurrentItem(i, false);
+						return;
+					} else if(position > this.mKNXPages.size()) {
+						this.mViewPager.setCurrentItem(1, false);
+						i = 1;
+						return;
+					} else {
+						i = position;
+					}
+					
+					i -= 1;
+				} else {
+					i = position;
+				}
+			} else {
+				return;
+			}
+		} else {
+			i = position;
+		}
+//		Log.i(TAG, "position:"+position +" i:"+i);
+		final int pageIndex = i;
+		if(STKNXControllerApp.getInstance().getRememberLastInterface()) {
+			STKNXControllerApp.getInstance().setLastPageIndex(pageIndex);
+			
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					SharedPreferences.Editor editor = settings.edit(); 
+					editor.putInt(STKNXControllerConstant.LAST_PAGE_INDEX, pageIndex);
+					editor.commit();
+				}
+				
+			}).start();
+			
+		}
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				viewPagerSelectPage(pageIndex);
+			}
+		}).start();
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state) {
+	}
+
+	private boolean isContainsTimer(KNXContainer knxContainer, String timerId) {
+		boolean retval = false;
+		
+		for (int x = 0; x < knxContainer.getControls().size(); x++) {
+			KNXControlBase mKNXControlBase = knxContainer.getControls().get(x);
+			
+			if (mKNXControlBase instanceof KNXTimerButton) {
+				String id = String.valueOf(mKNXControlBase.getId());
+				if(id.equals(timerId)) {
+					retval = true;
+					break;
+				}
+			} else if(mKNXControlBase instanceof KNXGroupBox) {
+				KNXGroupBox mKNXGroupBox = (KNXGroupBox)mKNXControlBase;
+				retval = isContainsTimer(mKNXGroupBox, timerId);
+				if(retval) {
+					break;
+				}
+			}
+		}
+		
+		return retval;
+	}
+	
+	@SuppressLint("UseSparseArrays")
+	private void viewPagerSelectPage(final int position) {
+		if(this.shouldDestroyActivity) {
+			return;
+		}
+		
+		if(null != this.currentPageKNXControlBase) {
+			this.currentPageKNXControlBase.clear();
+		}
+	
+		if(null != this.currentPageKNXControlBaseMap) {
+			this.currentPageKNXControlBaseMap.clear();
+		}
+		
+		//筛选出页面中能控制的按钮
+		if(null == STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap()) {
+			STKNXControllerApp.getInstance().setCurrentPageKNXControlBaseMap(new HashMap<Integer, KNXControlBase>());
+		} else {
+			STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().clear();
+		}
+		
+		try {
+			if((null != this.mPages) && (this.mPages.size() > position)) {
+				this.mCurrentSTKNXPage = this.mPages.get(this.mCycleDrag && this.mPages.size()>1? position+1:position);
+				getCurrentPageKNXControl(this.mCurrentSTKNXPage.getKNXPage());
+//				Log.i(TAG, "position:"+position);
+			}
+		
+			if(STKNXControllerApp.getInstance().getRememberLastInterface()) {
+				String defaultTimerId = STKNXControllerApp.getInstance().getLastTimerId();
+				if((null != this.mCurrentSTKNXPage) && (!StringUtil.isEmpty(defaultTimerId))) {
+					boolean bContains = isContainsTimer(this.mCurrentSTKNXPage.getKNXPage(), defaultTimerId);
+					if(bContains) {
+						final String timerId = "";
+						STKNXControllerApp.getInstance().setLastTimerId(timerId);
+						
+						new Thread(new Runnable() {
+
+							@Override
+							public void run() {
+								SharedPreferences.Editor editor = settings.edit(); 
+								editor.putString(STKNXControllerConstant.LAST_TIMER_ID, timerId);
+								editor.commit();
+							}
+							
+						}).start();
+
+						Intent intent = new Intent(RoomDetailsActivity.this, TimingTaskActivity.class);
+						intent.putExtra(STKNXControllerConstant.CONTROL_ID, defaultTimerId);
+						startActivity(intent);
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
 	private void getCurrentPageKNXControl(KNXContainer container) {
-		for (int x = 0; x < container.getControls().size(); x++) {
-			KNXControlBase mKNXControlBase = container.getControls().get(x);
-			//增加到当前页面所有控件集合
-			this.currentPageKNXControlBase.add(mKNXControlBase);
-			if(mKNXControlBase.getReadAddressId() != null && mKNXControlBase.getReadAddressId().size() > 0) {
-				this.currentPageKNXControlBaseMap.put(getFirstOrNull(mKNXControlBase.getReadAddressId()).getId(), mKNXControlBase);
+		if(null == container) {
+			return;
+		}
+		
+		Map<String, Integer> addressIdIndexMap = STKNXControllerApp.getInstance().getGroupAddressIndexMap();
+		for (int x = 0; (x < container.getControls().size()) && (!this.shouldDestroyActivity); x++) {
+			final KNXControlBase mKNXControlBase = container.getControls().get(x);
+			if(null == mKNXControlBase) {
+				continue;
 			}
 			
+			//增加到当前页面所有控件集合
+			if(null != this.currentPageKNXControlBase) {
+				this.currentPageKNXControlBase.add(mKNXControlBase);
+			}
+			if((mKNXControlBase.getReadAddressId() != null) && 
+					(mKNXControlBase.getReadAddressId().size() > 0) && 
+					(null != this.currentPageKNXControlBaseMap)) {
+				this.currentPageKNXControlBaseMap.put(
+						getFirstOrNull(mKNXControlBase.getReadAddressId()).getId(), mKNXControlBase);
+			}
+			
+			if(mKNXControlBase instanceof KNXBlinds) { // KNXBlinds
+				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(), mKNXControlBase);
+			} else if(mKNXControlBase instanceof KNXSwitch) { // KNXSwitch
+				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(), mKNXControlBase);
+			} else if(mKNXControlBase instanceof KNXSliderSwitch) { // KNXSliderSwitch
+				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(), mKNXControlBase);
+			} else if (mKNXControlBase instanceof KNXTimerButton) {
+				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(), mKNXControlBase);
+			} else if(mKNXControlBase instanceof KNXDigitalAdjustment) {
+				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(), mKNXControlBase);
+			} else if(mKNXControlBase instanceof KNXGroupBox) {
+				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(),  mKNXControlBase);
+			} else if(mKNXControlBase instanceof KNXValueDisplay) {
+				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(),  mKNXControlBase);
+			}
+
+			KNXSelectedAddress mKNXSelectedAddress = getFirstOrNull(mKNXControlBase.getReadAddressId()); // 获取对象的读地址
+			int currentIndex = 0;
+			if(null != mKNXSelectedAddress) {
+				String mETSId = mKNXSelectedAddress.getId();
+				if((null != mETSId) && (null != addressIdIndexMap) && (addressIdIndexMap.containsKey(mETSId))) {
+					currentIndex = STKNXControllerApp.getInstance().getGroupAddressIndexMap().get(mETSId);
+					KNXGroupAddress address = STKNXControllerApp.getInstance().getGroupAddressMap().get(currentIndex);
+//					if(address.getIsCommunication() && address.getIsTransmit()) {
+//					Log.i(TAG, "read status "+ mKNXControlBase.getText());
+						byte[] contentBytes = new byte[32];
+						byte[] length  = new byte[1];
+						KNX0X01Lib.UTestAndCopyObject(currentIndex, contentBytes, length); 			
+						KNX0X01Lib.USetAndRequestObject(currentIndex);
+
+//						mKNXSelectedAddress.getType();
+						final int value = getCallBackValue(contentBytes, address);
+				        
+				        UIKit.runOnMainThreadAsync(new Runnable() {
+
+							@Override
+							public void run() {
+						Log.i(TAG, "is main thread:"+((Looper.myLooper() != Looper.getMainLooper())?"false":"true"));
+								updateKNXControlStatus(mKNXControlBase, value);
+							}
+
+				        });
+//					}
+				}  
+			}
+
 			if(mKNXControlBase instanceof KNXGroupBox) {
 				KNXGroupBox mKNXGroupBox = (KNXGroupBox)mKNXControlBase;
 				getCurrentPageKNXControl(mKNXGroupBox);
@@ -198,135 +558,94 @@ public class RoomDetailsActivity extends BaseActivity {
 		}
 	}
 	
-	@SuppressLint("UseSparseArrays")
-	private Map<Integer,KNXControlBase> getSceneButtonControl(List<KNXControlBase> currentPageKNXControlBase) {
-		Map<Integer, KNXControlBase> allBaseControl = new HashMap<Integer, KNXControlBase>();
-		Map<String, Integer> groupAddressIndexMap = STKNXControllerApp.getInstance().getGroupAddressIndexMap();
-		
-		for (int i = 0; i < currentPageKNXControlBase.size(); i++) {
-			KNXControlBase knxControl = currentPageKNXControlBase.get(i);
-			KNXSelectedAddress mKNXSelectedAddress = getFirstOrNull(knxControl.getReadAddressId()); // 获取对象的读地址
-			int currentIndex = 0;
-			int currentValue = -1;
-			if(null != mKNXSelectedAddress) {
-				String mETSId = mKNXSelectedAddress.getId();
-				if(groupAddressIndexMap.containsKey(mETSId)) {
-					currentIndex = STKNXControllerApp.getInstance().getGroupAddressIndexMap().get(mETSId);
-					KNXGroupAddress address = STKNXControllerApp.getInstance().getGroupAddressMap().get(currentIndex);
-					if(address.getIsCommunication() && address.getIsTransmit()) {
-						byte[] contentBytes = new byte[32];
-						byte[] length  = new byte[1];
-						KNX0X01Lib.UTestAndCopyObject(currentIndex, contentBytes, length);
-
-						KNX0X01Lib.USetAndRequestObject(currentIndex);
-
-						mKNXSelectedAddress.getType();
-						currentValue = getCallBackValue(contentBytes, address);
-					}
-				}  
-			}
-			 
-			if(knxControl instanceof KNXBlinds) { // KNXBlinds
-				allBaseControl.put(knxControl.getId(), knxControl);
-			} else if(knxControl instanceof KNXSwitch) { // KNXSwitch
-				allBaseControl.put(knxControl.getId(), knxControl);
-				
-				if(currentIndex >0) {
-					STKNXSwitch mSTKNXSwitch = (STKNXSwitch) this.mCurrentSTKNXPage.findViewById(knxControl.getId()); // 获取LinearLayout控件 
-					if(null != mSTKNXSwitch) {
-						mSTKNXSwitch.setValue(currentValue);
-					}
-				}
-			} else if(knxControl instanceof KNXSliderSwitch) { // KNXSliderSwitch
-				allBaseControl.put(knxControl.getId(), knxControl);
-			
-				if(currentIndex >0) {
-					STKNXSliderSwitch mSTKNXSliderSwitch = (STKNXSliderSwitch) this.mCurrentSTKNXPage.findViewById(knxControl.getId()); // 获取LinearLayout控件 
-					if(null != mSTKNXSliderSwitch) {
-						mSTKNXSliderSwitch.setProgress(currentValue&0xFF);
-					}
-				}
-			} else if (knxControl instanceof KNXTimerButton) {
-				allBaseControl.put(knxControl.getId(), knxControl);
-			} else if(knxControl instanceof KNXDigitalAdjustment) {
-				allBaseControl.put(knxControl.getId(), knxControl);
-				STKNXDigitalAdjustment mSTKNXDigitalAdjustment = (STKNXDigitalAdjustment) this.mCurrentSTKNXPage.findViewById(knxControl.getId());
-				if(null != mSTKNXDigitalAdjustment) {
-					mSTKNXDigitalAdjustment.setValue(currentValue);
-				}
-			} else if(knxControl instanceof KNXGroupBox) {
-				allBaseControl.put(knxControl.getId(),  knxControl);
-				STKNXGroupBox mSTKNXGroupBox = (STKNXGroupBox) this.mCurrentSTKNXPage.findViewById(knxControl.getId());
-				if(null != mSTKNXGroupBox) {
-					mSTKNXGroupBox.setSelectedValue(currentValue);
-				}
-			} else if(knxControl instanceof KNXValueDisplay) {
-				allBaseControl.put(knxControl.getId(),  knxControl);
-				STKNXValueDisplay mSTKNXValueDisplay = (STKNXValueDisplay) this.mCurrentSTKNXPage.findViewById(knxControl.getId());
-				if(null != mSTKNXValueDisplay) {
-					mSTKNXValueDisplay.setValue(currentValue);
-				}
-			}
+	private void updateKNXControlStatus(KNXControlBase mKNXControlBase, int value) {
+		if(this.shouldDestroyActivity || (null == mKNXControlBase) || (null == mCurrentSTKNXPage)) {
+			return;
 		}
 		
-		return allBaseControl;
+//		Log.i(TAG, "["+mKNXControlBase.getText()+"]"+"="+"["+value+"]");
+		
+		try {
+			if(mKNXControlBase instanceof KNXBlinds) {
+			} else if(mKNXControlBase instanceof KNXSwitch) { 
+				STKNXSwitch mSTKNXSwitch = (STKNXSwitch) mCurrentSTKNXPage.findViewById(mKNXControlBase.getId()); // 获取LinearLayout控件 
+				if(null != mSTKNXSwitch) {
+					mSTKNXSwitch.setValue(value);
+				}
+			} else if(mKNXControlBase instanceof KNXSliderSwitch) {
+				STKNXSliderSwitch mSliderSwitch = (STKNXSliderSwitch) mCurrentSTKNXPage.findViewById(mKNXControlBase.getId()); // 获取LinearLayout控件 
+				if(null != mSliderSwitch) {
+					mSliderSwitch.setProgress(value&0xFF);
+				}
+			} else if(mKNXControlBase instanceof KNXDigitalAdjustment) {
+				STKNXDigitalAdjustment mSTKNXDigitalAdjustment = (STKNXDigitalAdjustment) mCurrentSTKNXPage.findViewById(mKNXControlBase.getId());
+				if(null != mSTKNXDigitalAdjustment) {
+					mSTKNXDigitalAdjustment.setValue(value);
+				}
+			} else if(mKNXControlBase instanceof KNXGroupBox) {
+				STKNXGroupBox mSTKNXGroupBox = (STKNXGroupBox) mCurrentSTKNXPage.findViewById(mKNXControlBase.getId());
+				if(null != mSTKNXGroupBox) {
+					mSTKNXGroupBox.setSelectedValue(value);
+				}
+			} else if(mKNXControlBase instanceof KNXValueDisplay) {
+				STKNXValueDisplay mSTKNXValueDisplay = (STKNXValueDisplay) mCurrentSTKNXPage.findViewById(mKNXControlBase.getId());
+				if(null != mSTKNXValueDisplay) {
+					mSTKNXValueDisplay.setValue(value);
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	private BroadcastReceiver updateDeviceStateReceiver = new BroadcastReceiver() {
 		@Override
-		public void onReceive(final Context context, Intent intent) {
-			if(intent.getAction().equals(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS)){ 
-				int index = intent.getExtras().getInt(STKNXControllerConstant.GROUP_ADDRESS_INDEX, 0);
-//				int valLength = intent.getExtras().getInt(STKNXControllerConstant.GROUP_ADDRESS_NEW_VALUE_LENGTH, 0);
-				byte[] array = intent.getExtras().getByteArray(STKNXControllerConstant.GROUP_ADDRESS_NEW_VALUE);
-				try {
-					KNXGroupAddress address = STKNXControllerApp.getInstance().getGroupAddressMap().get(index);
-					String knxId = address.getId();
-//					int type = address.getType();
-					int value  = getCallBackValue(array, address);
-
-//					Log.i(STKNXControllerConstant.CALLBACK, "当前的knxId："+ knxId +"");
-					
-					KNXControlBase mKNXControlBase = currentPageKNXControlBaseMap.get(knxId);
-					int controlId = mKNXControlBase.getId(); 
-					if(mKNXControlBase instanceof KNXBlinds) {
-						 
-					} else if(mKNXControlBase instanceof KNXSwitch) { 
-						STKNXSwitch mSTKNXSwitch = (STKNXSwitch) mCurrentSTKNXPage.findViewById(controlId); // 获取LinearLayout控件 
-						if(null != mSTKNXSwitch) {
-							mSTKNXSwitch.setValue(value);
+		public void onReceive(final Context context, final Intent intent) {
+			
+			if(intent.getAction().equals(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS)/* &&
+					SystemUtil.isForeground(RoomDetailsActivity.this, "com.sation.knxcontroller.activity.RoomDetailsActivity")*/) {
+				Log.i(TAG, "1");
+//				Log.i(TAG, "is main thread:"+((Looper.myLooper() != Looper.getMainLooper())?"false":"true"));
+//				new Thread(new Runnable() {
+//
+//					@Override
+//					public void run() {
+						int index = intent.getExtras().getInt(STKNXControllerConstant.GROUP_ADDRESS_INDEX, 0);
+						byte[] array = intent.getExtras().getByteArray(STKNXControllerConstant.GROUP_ADDRESS_NEW_VALUE);
+						try {
+							KNXGroupAddress address = STKNXControllerApp.getInstance().getGroupAddressMap().get(index);
+//							Log.i(TAG, "address:" + address);
+							if(null != address) {
+								String knxId = address.getId();
+//								Log.i(TAG, "knxId:"+knxId);
+								if((null != currentPageKNXControlBaseMap) && (null != knxId)) {
+									final KNXControlBase mKNXControlBase = currentPageKNXControlBaseMap.get(knxId);
+//									Log.i(TAG, "mKNXControlBase:"+mKNXControlBase);
+									if(null != mKNXControlBase) {
+										final int value  = getCallBackValue(array, address);
+//										Log.i(TAG, "received status of ["+mKNXControlBase.getText() +"] ... value:"+value);
+//										UIKit.runOnMainThreadAsync(new Runnable() {
+//
+//											@Override
+//											public void run() {
+										Log.i(TAG, "["+address.getStringKnxAddress()+"]"+"="+value);
+												updateKNXControlStatus(mKNXControlBase, value);
+//											}
+//										});
+									}
+								}
+							}
+						} catch (Exception ex) { 
+							ex.printStackTrace();
 						}
-					} else if(mKNXControlBase instanceof KNXSliderSwitch) {
-						STKNXSliderSwitch mSliderSwitch = (STKNXSliderSwitch) mCurrentSTKNXPage.findViewById(controlId); // 获取LinearLayout控件 
-						if(null != mSliderSwitch) {
-							mSliderSwitch.setProgress(value&0xFF);
-						}
-					} else if(mKNXControlBase instanceof KNXDigitalAdjustment) {
-						STKNXDigitalAdjustment mSTKNXDigitalAdjustment = (STKNXDigitalAdjustment) mCurrentSTKNXPage.findViewById(controlId);
-						if(null != mSTKNXDigitalAdjustment) {
-							mSTKNXDigitalAdjustment.setValue(value);
-						}
-					} else if(mKNXControlBase instanceof KNXGroupBox) {
-						Log.e("KNXGroupBox", "value===>"+(value));
-						STKNXGroupBox mSTKNXGroupBox = (STKNXGroupBox) mCurrentSTKNXPage.findViewById(controlId);
-						if(null != mSTKNXGroupBox) {
-							mSTKNXGroupBox.setSelectedValue(value);
-						}
-					} else if(mKNXControlBase instanceof KNXValueDisplay) {
-						STKNXValueDisplay mSTKNXValueDisplay = (STKNXValueDisplay) mCurrentSTKNXPage.findViewById(controlId);
-						if(null != mSTKNXValueDisplay) {
-							mSTKNXValueDisplay.setValue(value);
-						}
-					}
-				} catch (Exception e) { 
-					
-				}
-				 
+//					}
+//				}).start();
+						Log.i(TAG, "2");
 			}
 		}
 	};
 	
-	private int getCallBackValue(byte[] array, KNXGroupAddress address){
+	private int getCallBackValue(byte[] array, KNXGroupAddress address) {
 		KNXDataType type = KNXDataType.values()[address.getType()];
 		int value = 0;
 		switch(type){
@@ -341,8 +660,8 @@ public class RoomDetailsActivity extends BaseActivity {
 				value = array[0];
 				break;
 			case Bit16:
-				if(KNXDatapointType.DPT_9 ==  address.getKnxMainNumber()) {
-					value = (int)DPT9.getFloat(array);
+				if(address.getKnxMainNumber().equals(KNXDatapointType.DPT_9)) {
+					value = (int)DPT9.bytes2float(array);
 				} else {
 					value = array[0]*100+array[1];
 				}
@@ -352,7 +671,12 @@ public class RoomDetailsActivity extends BaseActivity {
 				break;
 			
 			case Bit32:
-				value = array[0]*1000000+array[1]*10000+array[2]*100+array[3];
+				if(address.getKnxMainNumber().equals(KNXDatapointType.DPT_14)) {
+					value = (int)DPT14.bytes2float(array);
+				} else {
+					value = array[0]*1000000+array[1]*10000+array[2]*100+array[3];
+				}
+				
 				break;
 			
 			case Bit48:
@@ -378,12 +702,6 @@ public class RoomDetailsActivity extends BaseActivity {
 		return value;
 	}
 	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy(); 
-		unregisterReceiver(updateDeviceStateReceiver); 
-	}
-	
 	/**
      * 获取map中第一个数据值
      *
@@ -407,27 +725,53 @@ public class RoomDetailsActivity extends BaseActivity {
         return obj;
     }
     
-    TimerButtonOnClickListener buttonAddTimingTaskOnClickListener = new TimerButtonOnClickListener() {
+    private TimerButtonOnClickListener buttonAddTimingTaskOnClickListener = new TimerButtonOnClickListener() {
 		
     	@Override
 		public void onClick(STKNXTimerButton button) {
-			String id = (String)button.getTag();
+			final String id = (String)button.getTag();
+			if(STKNXControllerApp.getInstance().getRememberLastInterface()) {
+				STKNXControllerApp.getInstance().setLastTimerId(id);
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						SharedPreferences.Editor editor = settings.edit(); 
+						editor.putString(STKNXControllerConstant.LAST_TIMER_ID, id);
+						editor.commit();
+					}
+					
+				}).start();
+				
+			}
 			Intent intent = new Intent(RoomDetailsActivity.this, TimingTaskActivity.class);
 			intent.putExtra(STKNXControllerConstant.CONTROL_ID, id);
 			startActivity(intent);
 		}
 	};
 	
-	private class RefreshTimerTaskListReceiver extends BroadcastReceiver {
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-
-			if(intent.getAction().equals(STKNXControllerConstant.BROADCAST_REFRESH_TIMING_TASK_LIST)) {
-				for(TimingTaskListAdapter adapter : timingTaskAdapterList) {
-					adapter.notifyDataSetChanged();
-				}
-			}
-		}
-	}
+//	private BroadcastReceiver refreshTimerTaskListReceiver = new BroadcastReceiver() {
+//
+//		@Override
+//		public void onReceive(Context context, Intent intent) {
+//
+//			if(intent.getAction().equals(STKNXControllerConstant.BROADCAST_REFRESH_TIMING_TASK_LIST)) {
+//				new Thread(new Runnable() {
+//
+//					@Override
+//					public void run() {
+//						try {
+//							for(TimingTaskListAdapter adapter : timingTaskAdapterList) {
+//								adapter.notifyDataSetChanged();
+//							}
+//						} catch (Exception ex) {
+//							ex.printStackTrace();
+//						}
+//					}
+//					
+//				}).start();
+				
+//			}
+//		}
+//	};
 }

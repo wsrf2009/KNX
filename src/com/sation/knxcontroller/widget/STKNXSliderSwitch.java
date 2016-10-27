@@ -5,9 +5,10 @@ import com.sation.knxcontroller.control.KNXSliderSwitch;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
-import com.sation.knxcontroller.util.ImageUtils;
 import com.sation.knxcontroller.util.MathUtils;
 import com.sation.knxcontroller.util.StringUtil;
+import com.sation.knxcontroller.util.uikit.UIKit;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,7 +17,8 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
-
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.view.MotionEvent;
@@ -44,6 +46,7 @@ public class STKNXSliderSwitch extends STKNXControl {
     private float progress;
     private int[] pos = new int[16];;
     private int curPos;
+//    private Handler mHandler;
 
 	public STKNXSliderSwitch(Context context, KNXSliderSwitch knxSliderSwitch) {
 		super(context, knxSliderSwitch);
@@ -63,7 +66,7 @@ public class STKNXSliderSwitch extends STKNXControl {
 		vLeft.alpha = this.mKNXSliderSwitch.Alpha;
 		vLeft.setSubViewClickListener(this.leftClicked);
 		if(!StringUtil.isEmpty(this.mKNXSliderSwitch.getLeftImage())) {
-			vLeft.backImage = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getLeftImage());
+			vLeft.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getLeftImage());
 		}
 		this.addView(vLeft);
 		
@@ -77,7 +80,7 @@ public class STKNXSliderSwitch extends STKNXControl {
 		vLeft.alpha = this.mKNXSliderSwitch.Alpha;
 		vRight.setSubViewClickListener(this.rightClicked);
 		if(!StringUtil.isEmpty(this.mKNXSliderSwitch.getRightImage())) {
-			vRight.backImage = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getRightImage());
+			vRight.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getRightImage());
 		}
 		this.addView(vRight);
 		
@@ -116,7 +119,9 @@ public class STKNXSliderSwitch extends STKNXControl {
 
 	        @Override
 	        public void onEdgeDragStarted(int edgeFlags, int pointerId) {
-	            mViewDragHelper.captureChildView(slider, pointerId);
+	        	if(null != mViewDragHelper) {
+	        		mViewDragHelper.captureChildView(slider, pointerId);
+	        	}
 	        }
 			
 			@Override
@@ -167,6 +172,39 @@ public class STKNXSliderSwitch extends STKNXControl {
 		LayoutParams pageLayoutParams = new LayoutParams(this.SLIDER_WIDTH, this.mKNXSliderSwitch.Height); 
 		slider.setLayoutParams(pageLayoutParams);
 		this.addView(slider);
+		
+//		this.mHandler = new Handler() {
+//			@Override
+//			public void handleMessage(Message msg) {
+//				super.handleMessage(msg);
+//				
+//				if(1 == msg.what) {
+//					requestLayout();
+//				}
+//			}
+//		};
+	}
+	
+	@Override
+	public void onDestroy() {
+//		this.mKNXSliderSwitch = null;
+		this.mViewDragHelper = null;
+		
+		int count = getChildCount();
+		for(int i=0; i<count; i++) {
+			View v = (View)getChildAt(i);
+			if(v instanceof STButton) {
+				STButton stv = (STButton)v;
+				stv.onDestroy();
+				stv = null;
+			} else if (v instanceof STSlider) {
+				STSlider ssv = (STSlider)v;
+				ssv.onDestroy();
+				ssv = null;
+			}
+		}
+		
+		this.slider = null;
 	}
 	
 	private int getThumbScrollRange() { 
@@ -193,10 +231,10 @@ public class STKNXSliderSwitch extends STKNXControl {
         	curPos = MathUtils.getTheClosetIndex(sliderPositionX, pos);
         	sliderPositionX = pos[curPos];
         }
-        
+
         return sliderPositionX;
 	}
-	
+
 	public void setProgress(int p) {
 		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) { 
 			/* 相对调光 */
@@ -208,6 +246,17 @@ public class STKNXSliderSwitch extends STKNXControl {
 		}
 		
 		requestLayout();
+		
+//		UIKit.runOnMainThreadAsync(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//		Message message = new Message();
+//        message.what = 1;
+//        this.mHandler.sendMessage(message);
+				
+//			}
+//		});
 	}
 	
 	private void sliderChanged() {
@@ -294,6 +343,10 @@ public class STKNXSliderSwitch extends STKNXControl {
 	@Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
 		final int action = MotionEventCompat.getActionMasked(event);
+		if(null == this.mViewDragHelper) { 
+			return true;
+		}
+		
         if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
             this.mViewDragHelper.cancel();
             return false;
@@ -370,7 +423,10 @@ public class STKNXSliderSwitch extends STKNXControl {
     @SuppressLint("ClickableViewAccessibility")
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
-    	this.mViewDragHelper.processTouchEvent(event);
+    	if(null != this.mViewDragHelper) {
+    		this.mViewDragHelper.processTouchEvent(event);
+    	}
+    	
     	final float x = event.getX();
 
     	if((x>=this.sliderStartPos) && (x<=(this.getSliderEndPos()+this.SLIDER_WIDTH)) &&

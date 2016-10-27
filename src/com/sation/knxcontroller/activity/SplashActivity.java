@@ -1,6 +1,8 @@
 package com.sation.knxcontroller.activity;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +32,7 @@ import com.sation.knxcontroller.util.BitUtils;
 import com.sation.knxcontroller.util.ByteUtil;
 import com.sation.knxcontroller.util.CompressStatus;
 import com.sation.knxcontroller.util.CopyFileUtil;
+import com.sation.knxcontroller.util.FileUtils;
 import com.sation.knxcontroller.util.KNX0X01Lib;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.NetWorkUtil;
@@ -46,12 +49,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.widget.ImageView;
 import net.lingala.zip4j.exception.ZipException;
 
 public class SplashActivity extends Activity {
-	private final String TAG = "SplashActivity";
+	private static final String TAG = "SplashActivity";
 //	private final static int HEAP_SIZE = 6* 1024* 1024 ;
 //    private final static float TARGET_HEAP_UTILIZATION = 0.75f;
+	private ImageView splashabout;
 	String zipFilePath;
 	
 	private SharedPreferences settings;
@@ -61,6 +66,8 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
 		
+		this.splashabout = (ImageView) findViewById(R.id.splashabout);
+		this.splashabout.setImageResource(R.drawable.companylogo);
 		//设置最小  
 //		VMRuntime.getRuntime().setMinimumHeapSize(HEAP_SIZE);
 //	    VMRuntime.getRuntime().setTargetHeapUtilization(TARGET_HEAP_UTILIZATION);  
@@ -71,31 +78,30 @@ public class SplashActivity extends Activity {
 	    Configuration config = resources.getConfiguration();//获得设置对象  
 	    DisplayMetrics dm = resources.getDisplayMetrics();//获得屏幕参数：主要是分辨率，像素等。  
 		String language = settings.getString(STKNXControllerConstant.APP_APPEARANCE_LANGUAGE, "");
-//		Log.i(STKNXControllerConstant.DEBUG, "language:" + language+"locale:"+Locale.CHINA);
+		Log.i(TAG, "language:" + language+"locale:"+Locale.CHINA);
 		if(language.isEmpty()) {
 			/* 若APP尚未配置语言 */
 		    String locLanguage = config.locale.getLanguage();
-//		    String locCountry = config.locale.getCountry();
-
-//		    Log.i(STKNXControllerConstant.DEBUG, "locLanguage:" + locLanguage+" locCountry:"+locCountry);
-		    
 		    SharedPreferences.Editor editor = settings.edit();
 		    if(locLanguage.equals(Locale.CHINESE.toString())) {
 		    	/* 系统设置为中文 */
 		    	config.locale = Locale.SIMPLIFIED_CHINESE; //简体中文  
 			    editor.putString(STKNXControllerConstant.APP_APPEARANCE_LANGUAGE, Locale.SIMPLIFIED_CHINESE.toString());
+				STKNXControllerApp.getInstance().setLanguage(Locale.SIMPLIFIED_CHINESE.toString());
 		    } else {
 		    	/* 系统设置为其他语言 */
 		    	config.locale = Locale.US; // 美式英语
 		    	editor.putString(STKNXControllerConstant.APP_APPEARANCE_LANGUAGE, Locale.US.toString());
+				STKNXControllerApp.getInstance().setLanguage(Locale.US.toString());
 		    }
 		    editor.commit(); 
 		} else if(language.equals(Locale.SIMPLIFIED_CHINESE.toString())) {
-		    config.locale = Locale.SIMPLIFIED_CHINESE; // 简体中文  
+		    config.locale = Locale.SIMPLIFIED_CHINESE; // 简体中文
+			STKNXControllerApp.getInstance().setLanguage(Locale.SIMPLIFIED_CHINESE.toString());
 		} else {
-		    config.locale = Locale.US; // 美式英语  
+		    config.locale = Locale.US; // 美式英语
+			STKNXControllerApp.getInstance().setLanguage(Locale.US.toString());
 		}
-		
 		resources.updateConfiguration(config, dm);
 		
 		long localVersion = settings.getLong(STKNXControllerConstant.LOCALVERSION, 0);
@@ -103,7 +109,7 @@ public class SplashActivity extends Activity {
 			zipFilePath = STKNXControllerConstant.ConfigFilePath; 
 			File zipFile = new File(zipFilePath);
 			boolean exist = zipFile.exists();
-			if(exist) {
+			if(!exist) {
 				
 			}
 			long lastlastModified = zipFile.lastModified();
@@ -121,7 +127,6 @@ public class SplashActivity extends Activity {
 				new Handler().postDelayed(new Runnable() {
 					@Override
 					public void run() {
-						// startPushService();
 						new AppConfigAsyncTask().execute();
 					}
 				}, 1000);
@@ -129,6 +134,13 @@ public class SplashActivity extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		System.gc();
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -140,6 +152,7 @@ public class SplashActivity extends Activity {
 			case CompressStatus.HANDLING:
 				break;
 			case CompressStatus.COMPLETED:
+				Log.i(TAG, "language:" + "handleMessage():"+"CompressStatus.COMPLETED");
 				new Handler().postDelayed(new Runnable() {
 					@Override
 					public void run() {
@@ -156,59 +169,50 @@ public class SplashActivity extends Activity {
 
 	private void jumpActivity() {
 		//加载KNX lib
-		KNX0X01Lib.loadLibraryTest();
-		KNX0X01Lib.UCLOSENet();
+//		KNX0X01Lib.loadLibraryTest();
+//		KNX0X01Lib.UCLOSENet();
  
 		//初始化连接
-		String mKNXGatewayIP = settings.getString(STKNXControllerConstant.KNX_GATEWAY_IP, 
+		final String mKNXGatewayIP = settings.getString(STKNXControllerConstant.KNX_GATEWAY_IP, 
 				STKNXControllerConstant.KNX_GATEWAY_DEFAULT);
-		int mKNXGatewayPort = settings.getInt(STKNXControllerConstant.KNX_GATEWAY_PORT, 
+		final int mKNXGatewayPort = settings.getInt(STKNXControllerConstant.KNX_GATEWAY_PORT, 
 				STKNXControllerConstant.KNX_GATEWAY_PORT_DEFAULT);
-		int mKNXUDPWorkWay = settings.getInt(STKNXControllerConstant.KNX_UDP_WORK_WAY, 
+		final int mKNXUDPWorkWay = settings.getInt(STKNXControllerConstant.KNX_UDP_WORK_WAY, 
 				STKNXControllerConstant.KNX_UDP_WORK_WAY_DEFAULT);
-		   
-		int type = NetWorkUtil.getAPNType(this);
-		KNX0X01Lib.SetNetworkType(type);
-		boolean isConnect = KNX0X01Lib.UOPENNet(mKNXGatewayIP, mKNXGatewayPort, mKNXUDPWorkWay);
-		
-		Log.d(TAG, "jumpActivity()"+" mKNXGatewayIP: "+mKNXGatewayIP+
-				" mKNXGatewayPort: "+mKNXGatewayPort+" mKNXUDPWorkWay: "+mKNXUDPWorkWay+
-				" isConnect: " + isConnect);
-		
+		  
+		try {
+			Log.i(TAG, "1");
+			final int type = NetWorkUtil.getAPNType(this);
+			
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					
+					
+					Log.i(TAG, "2");
+					KNX0X01Lib.SetNetworkType(type);
+					Log.i(TAG, "3");
+					boolean isConnect = KNX0X01Lib.UOPENNet(mKNXGatewayIP, mKNXGatewayPort, mKNXUDPWorkWay);
+					Log.i(TAG, "4");
+					Log.d(TAG, "jumpActivity()"+" mKNXGatewayIP: "+mKNXGatewayIP+
+							" mKNXGatewayPort: "+mKNXGatewayPort+" mKNXUDPWorkWay: "+mKNXUDPWorkWay+
+							" isConnect: " + isConnect);
+				}
+			
+			}).start();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 		Intent intent = new Intent(SplashActivity.this, RoomTilesListActivity.class);
 		startActivity(intent);
 		finish();
-	}
-
-	// 读SD中的文件
-	public String readFileSdcardFile(String fileName) throws IOException {
-		String res = "";
-		try {
-			
-			FileInputStream fin = new FileInputStream(fileName);
-
-			int length = fin.available();
-
-			byte[] buffer = new byte[length];
-			fin.read(buffer);
-
-			res = EncodingUtils.getString(buffer, "UTF-8");
-
-			fin.close();
-		}
-
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return res;
+		
+		Log.i(TAG, "5");
 	}
 
 	private class AppConfigAsyncTask extends AsyncTask<Void, Void, Void> {
-		
-		public AppConfigAsyncTask() {
-
-		}
-
 		/** 在onPreExecute()完成后立即执行，用于执行较为费时的操作，此方法将接收输入参数和返回计算结果。
 		 * 在执行过程中可以调用publishProgress(Progress... values)来更新进度信息 
 		 */
@@ -216,23 +220,23 @@ public class SplashActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
-				String json = readFileSdcardFile(STKNXControllerConstant.UiMetaFilePath);
+				String json = FileUtils.readFileSdcardFile(STKNXControllerConstant.UiMetaFilePath);
 				GsonBuilder gsonBuilder = new GsonBuilder();
 				gsonBuilder.registerTypeAdapter(KNXControlBase.class, new KNXControlBaseDeserializerAdapter());
 				Gson gson = gsonBuilder.create();
 				KNXApp mKNXApp = gson.fromJson(json, /*new TypeToken<KNXApp>(){}.getType()*/KNXApp.class);
 				STKNXControllerApp.getInstance().setKNXAppConfig(mKNXApp); 
-				String groupAddressJson = readFileSdcardFile(STKNXControllerConstant.GroupAddFilePath);  
+				String groupAddressJson = FileUtils.readFileSdcardFile(STKNXControllerConstant.GroupAddFilePath);  
 				List<KNXGroupAddress> mKNXGroupAddressList = gson.fromJson(groupAddressJson, 
 						new TypeToken<List<KNXGroupAddress>>() { }.getType());
 				Collections.sort(mKNXGroupAddressList, new Comparator<KNXGroupAddress>() { 
 					@Override 
 				    public int compare(KNXGroupAddress o1, KNXGroupAddress o2) {
 				           return (o2.getKnxAddress().compareTo(o1.getKnxAddress()));
-				     }	
+					}
 				}); 
 				//索引号对应的组地址列表
-				Map<Integer, KNXGroupAddress> sortGroupAddressMap = new HashMap<Integer, KNXGroupAddress>(); 
+				Map<Integer, KNXGroupAddress> sortGroupAddressMap = new HashMap<Integer, KNXGroupAddress>();
 				//索引号对应的组地址列表
 				Map<String, Integer> groupAddressIndexMap = new HashMap<String, Integer>(); 
 				Map<String, KNXGroupAddress> groupAddressIdMap = new HashMap<String, KNXGroupAddress>();
@@ -248,10 +252,8 @@ public class SplashActivity extends Activity {
 				String fileName2 =  STKNXControllerConstant.StructFilePath;  
 				String fileName =  getApplicationContext().getFilesDir().getAbsolutePath()+File.separator
 						+ STKNXControllerConstant.StructFile;  
-//				Log.i("debug", "fileName:"+fileName+" "+"fileName2:"+fileName2);
-		        try  
-		        {  
-		            DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));  
+//		        try {  
+		            DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
 		            
 		            out.write(String.valueOf("SATIONGROUP Pad").getBytes());
 		            out.write((byte)0);
@@ -270,30 +272,33 @@ public class SplashActivity extends Activity {
 		            byte[] phyAddress = new byte[6];
 		            out.write(phyAddress); 
 		            
-		            int physicalAddressFirst = settings.getInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_FIRST, 0);
-					int physicalAddressSecond = settings.getInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_SECOND, 0);
-					int physicalAddressThree = settings.getInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THREE, 0); 
+		            int physicalAddressFirst = settings.getInt(
+		            		STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_FIRST, STKNXControllerConstant.PHYSICAL_ADDRESS_VALUE_FIRST);
+					int physicalAddressSecond = settings.getInt(
+							STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_SECOND, STKNXControllerConstant.PHYSICAL_ADDRESS_VALUE_SECOND);
+					int physicalAddressThree = settings.getInt(
+							STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THIRD, STKNXControllerConstant.PHYSICAL_ADDRESS_VALUE_THIRD); 
 					int physicalAddress = (physicalAddressFirst * 16 + physicalAddressSecond) * 256 + physicalAddressThree;
 					out.write(ByteUtil.getBytes((short)physicalAddress));  ///* 备用 */
 					 
 					byte[] phyAddress2 = new byte[4];
 		            out.write(phyAddress2); 
 		            
-		            for (int j = 0; j < mKNXGroupAddressList.size(); j++) {  
+		            for (int j = 0; j < mKNXGroupAddressList.size(); j++) {
 		            	byte config = 1;
 		            	if(mKNXGroupAddressList.get(j).getPriority() == 0) {
-		            		config = BitUtils.setBitValue(config, 0, (byte)0); 
-		            		config = BitUtils.setBitValue(config, 1, (byte)0); 
+		            		config = BitUtils.setBitValue(config, 0, (byte)0);
+		            		config = BitUtils.setBitValue(config, 1, (byte)0);
 		            	} else if(mKNXGroupAddressList.get(j).getPriority() == 1) {
-		            		config = BitUtils.setBitValue(config, 0, (byte)1); 
-		            		config = BitUtils.setBitValue(config, 1, (byte)0); 
+		            		config = BitUtils.setBitValue(config, 0, (byte)1);
+		            		config = BitUtils.setBitValue(config, 1, (byte)0);
 		            	} else if(mKNXGroupAddressList.get(j).getPriority() == 2) {
-		            		config = BitUtils.setBitValue(config, 0, (byte)0); 
-		            		config = BitUtils.setBitValue(config, 1, (byte)1); 
+		            		config = BitUtils.setBitValue(config, 0, (byte)0);
+		            		config = BitUtils.setBitValue(config, 1, (byte)1);
 		            	} else if(mKNXGroupAddressList.get(j).getPriority() == 3) {
-		            		config = BitUtils.setBitValue(config, 0, (byte)1); 
-		            		config = BitUtils.setBitValue(config, 1, (byte)1); 
-			            } 
+		            		config = BitUtils.setBitValue(config, 0, (byte)1);
+		            		config = BitUtils.setBitValue(config, 1, (byte)1);
+			            }
 		            	 
 		            	config = BitUtils.setBitValue(config, 2, mKNXGroupAddressList.get(j).getIsCommunication()); //commuEnable 
 		            	config = BitUtils.setBitValue(config, 3, mKNXGroupAddressList.get(j).getIsRead());      //readEnable             
@@ -317,9 +322,9 @@ public class SplashActivity extends Activity {
 		            } 
 		            out.close();  
 		            
-		        } catch (Exception e) {  
-		            e.printStackTrace();  
-		        }   
+//		        } catch (Exception e) {  
+//		            e.printStackTrace();  
+//		        }   
 				 
 		        CopyFileUtil.copyFile(fileName, fileName2, true);
 		        
@@ -341,6 +346,24 @@ public class SplashActivity extends Activity {
 		/** 当后台操作结束时，此方法将会被调用，计算结果将做为参数传递到此方法中，直接将结果显示到UI组件上。 */
 		@Override
 		protected void onPostExecute(Void result) {
+			Log.i(TAG, "");
+
+			try {
+				byte[] b = new byte[8096];
+				DataInputStream dos = new DataInputStream(new BufferedInputStream(new FileInputStream(STKNXControllerConstant.StructFilePath)));  
+				int len = dos.read(b);
+//				Log.i(TAG, "len:"+len+"   " + new String(b, "UTF-8"));
+//				System.out.println(new String(b, 0, len));
+				System.out.println("len = " + len);
+				for(int i=0; i<len;i++) {
+					System.out.print(String.valueOf(b[i]));
+				}
+				System.out.println();
+				dos.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+	        
 			jumpActivity();
 			super.onPostExecute(result);
 		}
@@ -351,7 +374,6 @@ public class SplashActivity extends Activity {
 			super.onProgressUpdate(values);
 		}
 	}
-	
 	
 	/**
      * 获取map中第一个数据值

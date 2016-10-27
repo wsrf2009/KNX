@@ -3,11 +3,12 @@ package com.sation.knxcontroller.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream; 
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
-import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.R;
+import com.sation.knxcontroller.STKNXControllerApp;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,23 +20,44 @@ public class ImageUtils {
 	
 	public static Bitmap getDiskBitmap(String path) {
 		Bitmap bitmap = null;
+		
+		if(StringUtil.isEmpty(path)) {
+			return bitmap;
+		}
+		
+		if(null == STKNXControllerApp.getInstance().getImageMap()) {
+			STKNXControllerApp.getInstance().setImageMap(new HashMap<String, Bitmap>());
+		}
+		
+		if(STKNXControllerApp.getInstance().getImageMap().containsKey(path)) {
+			bitmap = STKNXControllerApp.getInstance().getImageMap().get(path);
+			if(!bitmap.isRecycled()) {
+				return bitmap;
+			} else {
+				Log.i(TAG, path +" has been recycled!!!");
+			}
+		}
+		
 		try {
-			Log.i("ImageUtils", "path:"+path);
-			Log.i("ImageUtils", "ConfigResImgPath:"+STKNXControllerConstant.ConfigResImgPath);
+			Log.i(TAG, "loading file:"+path);
 			File file = new File(path);
 			if(file.exists()) {
 				BitmapFactory.Options opts = new BitmapFactory.Options();
-		        // 设置为ture只获取图片大小
-		        //opts.inJustDecodeBounds = true;
-		        opts.inPurgeable = true;  
-		        opts.inPreferredConfig = Bitmap.Config.RGB_565; 
+				// 设置为ture只获取图片大小
+				//opts.inJustDecodeBounds = true;
+				opts.inPurgeable = true;  
+				opts.inPreferredConfig = Bitmap.Config.RGB_565; 
+//				opts.inSampleSize = 2;
 				bitmap = BitmapFactory.decodeFile(path, opts);
+
+				STKNXControllerApp.getInstance().getImageMap().put(path, bitmap);
 			} else { 
-				Log.e("debug", file+" is not exist!");
+				Log.e(TAG, file+" is not exist!");
 			}
 		} catch (Exception e) {
-			Log.e("debug", e.getLocalizedMessage());
+			Log.e(TAG, e.getLocalizedMessage());
 		} 
+
 		return bitmap;
 	}
 	
@@ -71,7 +93,6 @@ public class ImageUtils {
 	 * @return
 	 */
 	public static Drawable getDrawable(Context ctx, String imageName) {
-		// TODO need update default icon.
 		Drawable defaultIcon = ctx.getResources().getDrawable(R.drawable.launcher);
 		try {
 			InputStream inputStream = ctx.getAssets().open(imageName);
@@ -84,7 +105,6 @@ public class ImageUtils {
 	}
 
 	public static Drawable getDrawable2(Context ctx, String imageName) {
-		// TODO need update default icon.
 		Drawable defaultIcon = ctx.getResources().getDrawable(R.drawable.launcher);
 		try {
 			InputStream is = FileUtils.getInputStream(ctx, imageName, FileUtils.IMAGE);

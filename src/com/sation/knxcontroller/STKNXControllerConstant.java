@@ -5,10 +5,11 @@ import java.io.File;
 import android.os.Environment;
 
 public class STKNXControllerConstant { 
+	public static final String STKCPLATFORM = "SABRESD-MX6DQ";
 	public static final String slash = "/";
 	public static final String XML_TYPE = "xml";
 	public static final String dot = ".";
- 
+
 	public static final String PASSWORD_UNZIP = "com.sation.knxcontroller.uieditor";
 
 	public static final String ConfigFile = "KnxUiProject.knxuie";
@@ -70,16 +71,39 @@ public class STKNXControllerConstant {
 	
 	public static final String KNX_REFRESH_STATUS_TIMESPAN = "KNX_Refresh_Status_Timespan";
 	
+	public static final String REMEMBER_LAST_INTERFACE = "remember_last_interface";
+	public static final boolean REMEMBER_LAST_INTERFACE_VALUE = true;
+	public static final String LAST_ROOM_INDEX = "last_room_index";
+	public static final String LAST_PAGE_INDEX = "last_page_index";
+	public static final String LAST_TIMER_ID = "last_timer_id";
 	
-	public static final String KNX_PHYSICAL_ADDRESS_FIRST = "KNX_physical_address_first"; 
-	public static final String KNX_PHYSICAL_ADDRESS_SECOND = "KNX_physical_address_Second"; 
-	public static final String KNX_PHYSICAL_ADDRESS_THREE = "KNX_physical_address_Three"; 
+	public static final String KNX_PHYSICAL_ADDRESS_FIRST = "KNX_physical_address_first";
+	public static final String KNX_PHYSICAL_ADDRESS_SECOND = "KNX_physical_address_Second";
+	public static final String KNX_PHYSICAL_ADDRESS_THIRD = "KNX_physical_address_Three";
+	
+	public static final int PHYSICAL_ADDRESS_VALUE_FIRST = 15;
+	public static final int PHYSICAL_ADDRESS_VALUE_SECOND = 15;
+	public static final int PHYSICAL_ADDRESS_VALUE_THIRD = 210;
 	
 	public static final String KNX_SETTING_SCRRENOFF_TIMESPAN = "KNX_Setting_ScreenOff_Timespan";
 	
 	public static final String APP_APPEARANCE_LANGUAGE = "app_appearance_language";
 	
-	public static final String SYSTEMSTATUS_DISPLAY_SYSTEM_TIME = "SystemStatus_Display_System_Time";
+	/* 系统定时启动：默认不重启、默认重启时间 23:30 */
+	public static final String SYSTEM_REBOOT_FLAG = "system_reboot_falg";
+	public static final boolean SYSTEM_REBOOT_FLAG_VALUE = false;
+	public static final String SYSTEM_REBOOT_HOUR = "system_reboot_hour";
+	public static final int SYSTEM_REBOOT_HOUR_VALUE = 23;
+	public static final String SYSTEM_REBOOT_MINUTE = "system_reboot_minute";
+	public static final int SYSTEM_REBOOT_MINUTE_VALUE = 30;
+	
+	/* 系统设置界面密码 */
+	public static final String SYSTEM_SETTING_PASSWORD = "system_setting_password";
+	public static final String SYSTEM_SETTING_PASSWORD_VALUE = "654321";
+	
+	/* 主界面系统时间：默认不显示 */
+	public static final String DISPLAY_SYSTEM_TIME_FLAG = "display_system_time_flag";
+	public static final boolean DISPLAY_SYSTEM_TIME_FLAG_VALUE = false;
 	public static final String BROADCASTRECEIVER_REFRESH_SYSTEM_TIME = "com.sation.knxcontroller.RoomTilesListActivity.RefreshSystemTimeReceiver";
 	public static final String SYSTEMTIME = "SystemTime";
 	

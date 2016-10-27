@@ -5,9 +5,9 @@ import com.sation.knxcontroller.control.KNXDigitalAdjustment;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
-import com.sation.knxcontroller.util.ImageUtils;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.StringUtil;
+import com.sation.knxcontroller.util.uikit.UIKit;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,14 +18,16 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
 
 public class STKNXDigitalAdjustment extends STKNXControl {
 	private static final int PADDING = 2;
 	private static final int SUBVIEW_WIDTH = 40;
 	private KNXDigitalAdjustment mKNXDigitalAdjustment;
     private int currentValue = 20;
-//    private ViewControl vLeft;
-//    private ViewControl vRight;
+//    private Handler mHandler;
 
 	public STKNXDigitalAdjustment(Context context, KNXDigitalAdjustment knxDigitalAdjustment) {
 		super(context, knxDigitalAdjustment);
@@ -43,7 +45,7 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 		vLeft.alpha = this.mKNXDigitalAdjustment.Alpha;
 		vLeft.setSubViewClickListener(this.leftClicked);
 		if(!StringUtil.isEmpty(this.mKNXDigitalAdjustment.LeftImage)) {
-			vLeft.backImage = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXDigitalAdjustment.LeftImage);
+			vLeft.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXDigitalAdjustment.LeftImage);
 		}
 		this.addView(vLeft);
 		
@@ -57,9 +59,35 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 		vRight.alpha = this.mKNXDigitalAdjustment.Alpha;
 		vRight.setSubViewClickListener(this.rightClicked);
 		if(!StringUtil.isEmpty(this.mKNXDigitalAdjustment.LeftImage)) {
-			vRight.backImage = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXDigitalAdjustment.RightImage);
+			vRight.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXDigitalAdjustment.RightImage);
 		}
 		this.addView(vRight);
+		
+//		this.mHandler = new Handler() {
+//			@Override
+//			public void handleMessage(Message msg) {
+//				super.handleMessage(msg);
+//				
+//				if(1 == msg.what) {
+//					invalidate();
+//				}
+//			}
+//		};
+	}
+	
+	@Override
+	public void onDestroy() {
+//		this.mKNXDigitalAdjustment = null;
+		
+		int count = getChildCount();
+		for(int i=0; i<count; i++) {
+			View v = (View)getChildAt(i);
+			if(v instanceof STButton) {
+				STButton stv = (STButton)v;
+				stv.onDestroy();
+				stv = null;
+			}
+		}
 	}
 	
 	STButton.SubViewClickListener leftClicked = new STButton.SubViewClickListener() {
@@ -69,8 +97,6 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 			try {
 				int val = currentValue;
 				val--;
-//				val = Math.max(mKNXDigitalAdjustment.MinValue, val);
-//				val = Math.min(mKNXDigitalAdjustment.MaxValue, val);
 
 				if(mKNXDigitalAdjustment.getReadAddressId().isEmpty()) {
 					setValue(val);
@@ -90,8 +116,6 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 			try {
 				int val = currentValue;
 				val++;
-//				val = Math.max(mKNXDigitalAdjustment.MinValue, val);
-//				val = Math.min(mKNXDigitalAdjustment.MaxValue, val);
 				
 				if(mKNXDigitalAdjustment.getReadAddressId().isEmpty()) {
 					setValue(val);
@@ -107,7 +131,18 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 	
 	public void setValue(int val) {
 		this.currentValue = val;
-		this.invalidate();
+		
+//		Message message = new Message();
+//        message.what = 1;
+//        this.mHandler.sendMessage(message);
+        
+//		UIKit.runOnMainThreadAsync(new Runnable() {
+//
+//			@Override
+//			public void run() {
+				invalidate();
+//			}
+//		});
 	}
 
 	@Override

@@ -2,12 +2,14 @@ package com.sation.knxcontroller.services;
 
 import com.sation.knxcontroller.activity.SplashActivity;
 import com.sation.knxcontroller.util.KNX0X01Lib;
+import com.sation.knxcontroller.util.Log;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
 public class RestartService extends Service {
+	private final String TAG = "RestartService";
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -21,6 +23,7 @@ public class RestartService extends Service {
 			@Override
 			public void run() {
 				try { 
+					Log.i(TAG, "onStartCommand()");
 					KNX0X01Lib.UCLOSENet();
 					
 					Intent intent = new Intent(RestartService.this, SplashActivity.class);

@@ -5,6 +5,7 @@ import java.util.Map;
 import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.control.KNXControlBase;
+import com.sation.knxcontroller.knxdpt.DPT14;
 import com.sation.knxcontroller.knxdpt.DPT9;
 import com.sation.knxcontroller.knxdpt.KNXDataType;
 import com.sation.knxcontroller.knxdpt.KNXDatapointType;
@@ -18,6 +19,7 @@ import android.app.Dialog;
 import android.content.Context;
 
 public class STKNXControl extends STKNXView {
+	private final static String TAG = "STKNXControl";
 	private KNXControlBase mKNXControlBase;
 	private Context mContext;
 	
@@ -75,23 +77,32 @@ public class STKNXControl extends STKNXView {
 	}
   
 	final protected static void sendCommand(final Map<String ,KNXSelectedAddress> mETSID, final String pData, final boolean isSendDefaultValue) {
-		String sendData = pData;
-		if(mETSID != null && mETSID.size() > 0) {
-			Map<String, KNXGroupAddress> mGroupAddressIdMap = STKNXControllerApp.getInstance().getGroupAddressIdMap();
-			
-			for(Map.Entry<String, KNXSelectedAddress> entry:mETSID.entrySet()) {
-			     KNXSelectedAddress mKNXSelectedAddress = entry.getValue();
-			     String addressId = mKNXSelectedAddress.getId();
-			     KNXGroupAddress address = mGroupAddressIdMap.get(addressId);
-			     
-			     if(isSendDefaultValue) {  
-			    	 sendData = String.valueOf(mKNXSelectedAddress.getDefaultValue());
-				 }
+		new Thread(new Runnable(){
 
-			     sendDataToAddress(address, sendData);
+			@Override
+			public void run() {
+				String sendData = pData;
+				if(mETSID != null && mETSID.size() > 0) {
+					Map<String, KNXGroupAddress> mGroupAddressIdMap = STKNXControllerApp.getInstance().getGroupAddressIdMap();
+					
+					for(Map.Entry<String, KNXSelectedAddress> entry:mETSID.entrySet()) {
+					     KNXSelectedAddress mKNXSelectedAddress = entry.getValue();
+					     if(null != mKNXSelectedAddress) {
+					    	 String addressId = mKNXSelectedAddress.getId();
+					    	 if((null != addressId) && (null != mGroupAddressIdMap)) {
+					    		 KNXGroupAddress address = mGroupAddressIdMap.get(addressId);
+					     
+					    		 if(isSendDefaultValue) {  
+					    			 sendData = String.valueOf(mKNXSelectedAddress.getDefaultValue());
+					    		 }
 
-			}   
-		}
+					    		 sendDataToAddress(address, sendData);
+					    	 }
+					     }
+					}   
+				}
+			}
+		}).start();
 	}
 	
 	final public static void sendDataToAddress(final KNXGroupAddress address, final String data) {
@@ -119,7 +130,7 @@ public class STKNXControl extends STKNXView {
 					break;
 				case Bit16:
 					if(address.getKnxMainNumber().equals(KNXDatapointType.DPT_9)) {
-						byteArray = DPT9.getBytes(Float.parseFloat(data));
+						byteArray = DPT9.float2bytes(Float.parseFloat(data));
 					} else {
 						byteArray = new byte[2];
 						String valString = data;
@@ -143,7 +154,11 @@ public class STKNXControl extends STKNXView {
 					break;
 						
 				case Bit32:
+					if(address.getKnxMainNumber().equals(KNXDatapointType.DPT_14)) {
+						byteArray = DPT14.float2bytes(Float.parseFloat(data));
+					} else {
 						
+					}
 					break;
 						
 				case Bit48:
@@ -169,13 +184,16 @@ public class STKNXControl extends STKNXView {
 			if(KNXDataType.Bit1 == KNXDataType.values()[type]) {
 						
 			}
-					 
-			Log.e("STKNXControl", "pData==>"+data+" add type:"+KNXDataType.values()[type]);
 
 			int index = mGroupAddressIndexMap.get(addressId);
-			KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length, 1);
-			
-//			Log.e("STKNXControl", "pData==>"+data+" add type:"+KNXDataType.values()[type]+" len:"+len);
+
+			try {
+				Log.i(TAG, address.getStringKnxAddress() + "===>" + data + " call");
+				KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length, 0);
+				Log.i(TAG, address.getStringKnxAddress() + "===>" + data);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 	
@@ -187,10 +205,15 @@ public class STKNXControl extends STKNXView {
 		Map<String, Integer> mGroupAddressIndexMap = STKNXControllerApp.getInstance().getGroupAddressIndexMap();
 		if(null != mGroupAddressIndexMap) {
 			int index = mGroupAddressIndexMap.get(address.getId());
-		
-//			Log.i(STKNXControllerConstant.DEBUG, "read address <<====== "+address.getName());
 			
-			KNX0X01Lib.USetAndRequestObject(index);
+			try {
+				KNX0X01Lib.USetAndRequestObject(index);
+				
+				Log.i(TAG, address.getStringKnxAddress());
+				
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 	
@@ -208,7 +231,7 @@ public class STKNXControl extends STKNXView {
 		
 	/**
 	 * 自定义控件的自定义事件
-	 * @param iBack 接口类型
+	 * @param
 	 */
 	public void setonClick(ICallBack mICallBack)
 	{

@@ -18,6 +18,7 @@ import com.sation.knxcontroller.control.TimingTaskItem.KNXGroupAddressAndAction;
 import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.models.KNXSelectedAddress;
 import com.sation.knxcontroller.util.Log;
+import com.sation.knxcontroller.util.SystemUtil;
 import com.sation.knxcontroller.widget.CustomDateAndTimeDialog;
 import com.sation.knxcontroller.widget.CustomDateAndTimeDialog.OnDateAndTimeChangedListener;
 import com.sation.knxcontroller.widget.CustomDateAndTimeDialog.OnTimeChangedListener;
@@ -48,6 +49,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class TimingTaskActivity extends BaseActivity {
+	private final static String TAG = "TimingTaskActivity";
 	private ListView lvTimingTaskList;
 	private EditText etTaskName;
 	private RadioButton rbMonthly;
@@ -145,8 +147,8 @@ public class TimingTaskActivity extends BaseActivity {
 	}
 	
 	@Override
-	public void onResume() {
-		super.onResume();
+	public void onStart() {
+		super.onStart();
 		
 		mRefreshTimingTaskListReceiver = new RefreshTimingTaskListReceiver();
         IntentFilter filter = new IntentFilter(STKNXControllerConstant.BROADCAST_REFRESH_TIMING_TASK_LIST);
@@ -154,14 +156,29 @@ public class TimingTaskActivity extends BaseActivity {
 	}
 	
 	@Override
+	public void onResume() {
+		super.onResume();
+	}
+	
+	@Override
 	public void onPause() {
 		super.onPause();
-		
-//		Log.i(STKNXControllerConstant.ACTIVITY_JUMP, "...");
-		
+
 		STKNXControllerApp.getInstance().saveTimerTask();
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
 		
 		unregisterReceiver(mRefreshTimingTaskListReceiver);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		System.gc();
 	}
 
 	/**
@@ -746,9 +763,7 @@ public class TimingTaskActivity extends BaseActivity {
 						}
 					}
 				}
-				
-//				Log.i(STKNXControllerConstant.DEBUG, "timeIsInvalid:"+timeIsInvalid);
-				
+
 				if (timeIsInvalid) {
 					new AlertDialog.Builder(TimingTaskActivity.this) 
 					.setTitle(R.string.error)
@@ -792,72 +807,75 @@ public class TimingTaskActivity extends BaseActivity {
 		
 		Map<Integer, KNXControlBase> controlBaseMap = STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap();
 		KNXControlBase control = controlBaseMap.get(Integer.parseInt(fileName));
-		
-		Map<String ,KNXSelectedAddress> writeAddressMap = control.getWriteAddressIds();
-		Map<String, KNXSelectedAddress> readAddressMap = control.getReadAddressId();
-		if(null != writeAddressMap) {
-			for(Map.Entry<String, KNXSelectedAddress> entry:writeAddressMap.entrySet()) {
-				String id = entry.getKey();
-				Integer index = groupAddressIndexMap.get(id);
-				KNXGroupAddress address = groupAddressMap.get(index);
-				groupList.add(address);
-			}
-		}
-		if(null != readAddressMap) {
-			for(Map.Entry<String, KNXSelectedAddress> entry:readAddressMap.entrySet()) {
-				String id = entry.getKey();
-				Integer index = groupAddressIndexMap.get(id);
-				KNXGroupAddress address = groupAddressMap.get(index);
-				groupList.add(address);
-			}
-		}
-
-		/* 显示组地址的ListView */
-		ListView lvGroupAddressList = new ListView(context);
-		LayoutParams mLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
-        mLayoutParams.height = 300;
-        mLayoutParams.width = LayoutParams.WRAP_CONTENT;
-        lvGroupAddressList.setLayoutParams(mLayoutParams);
-        
-        /* 获得mAddressAndActionAdapter中已选择的组地址 */
-        List<KNXGroupAddress> selectedList = new ArrayList<KNXGroupAddress>();
-        for(KNXGroupAddressAndAction addressAndAction : mAddressAndActionAdapter.getAddressAndActionList()) {
-        	selectedList.add(addressAndAction.getAddress());
-        }
-        
-        /* 给ListView准备内容 */
-        final GroupAddressAdapter mGroupAddressAdapter = new GroupAddressAdapter(context, groupList, selectedList);
-        lvGroupAddressList.setAdapter(mGroupAddressAdapter);
-
-		new PromptDialog.Builder(context)
-		.setTitle(title) 
-		.setIcon(R.drawable.launcher)
-		.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
-		.setView(lvGroupAddressList)
-		.setButton1(R.string.confirm,  new PromptDialog.OnClickListener() {
-					
-			@Override
-			public void onClick(Dialog dialog, int which) {
-				dialog.dismiss(); 
-						
-				/* 替换原来的地址列表 */
-				mAddressAndActionAdapter.clearAddressAndActionList();
-				List<KNXGroupAddress> selectedList = mGroupAddressAdapter.getSelectedAddress();
-				for(KNXGroupAddress address : selectedList) {
-					mAddressAndActionAdapter.addAddressAndAction(new KNXGroupAddressAndAction(address));
+		if(null != control) {
+			Map<String, KNXSelectedAddress> writeAddressMap = control.getWriteAddressIds();
+			Map<String, KNXSelectedAddress> readAddressMap = control.getReadAddressId();
+			if (null != writeAddressMap) {
+				for (Map.Entry<String, KNXSelectedAddress> entry : writeAddressMap.entrySet()) {
+					String id = entry.getKey();
+					Integer index = groupAddressIndexMap.get(id);
+					KNXGroupAddress address = groupAddressMap.get(index);
+					groupList.add(address);
 				}
+			}
+			if (null != readAddressMap) {
+				for (Map.Entry<String, KNXSelectedAddress> entry : readAddressMap.entrySet()) {
+					String id = entry.getKey();
+					Integer index = groupAddressIndexMap.get(id);
+					KNXGroupAddress address = groupAddressMap.get(index);
+					groupList.add(address);
+				}
+			}
 
-				mAddressAndActionAdapter.notifyDataSetChanged();
+			/* 显示组地址的ListView */
+			ListView lvGroupAddressList = new ListView(context);
+			LayoutParams mLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+			mLayoutParams.height = 300;
+			mLayoutParams.width = LayoutParams.WRAP_CONTENT;
+			lvGroupAddressList.setLayoutParams(mLayoutParams);
+        
+        	/* 获得mAddressAndActionAdapter中已选择的组地址 */
+			List<KNXGroupAddress> selectedList = new ArrayList<KNXGroupAddress>();
+			for (KNXGroupAddressAndAction addressAndAction : mAddressAndActionAdapter.getAddressAndActionList()) {
+				selectedList.add(addressAndAction.getAddress());
 			}
-		})
-		.setButton2(R.string.cancel, new PromptDialog.OnClickListener() {
-					
-			@Override
-			public void onClick(Dialog dialog, int which) {
-				dialog.dismiss();
-			}
-		})
-		.show(); 
+        
+        	/* 给ListView准备内容 */
+			final GroupAddressAdapter mGroupAddressAdapter = new GroupAddressAdapter(context, groupList, selectedList);
+			lvGroupAddressList.setAdapter(mGroupAddressAdapter);
+
+			new PromptDialog.Builder(context)
+					.setTitle(title)
+					.setIcon(R.drawable.launcher)
+					.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
+					.setView(lvGroupAddressList)
+					.setButton1(R.string.confirm, new PromptDialog.OnClickListener() {
+
+						@Override
+						public void onClick(Dialog dialog, int which) {
+							dialog.dismiss();
+						
+							/* 替换原来的地址列表 */
+//							mAddressAndActionAdapter.clearAddressAndActionList();
+							List<KNXGroupAddress> selectedList = mGroupAddressAdapter.getSelectedAddress();
+							for (KNXGroupAddress address : selectedList) {
+								mAddressAndActionAdapter.addAddressAndAction(new KNXGroupAddressAndAction(address));
+							}
+
+							mAddressAndActionAdapter.notifyDataSetChanged();
+						}
+					})
+					.setButton2(R.string.cancel, new PromptDialog.OnClickListener() {
+
+						@Override
+						public void onClick(Dialog dialog, int which) {
+							dialog.dismiss();
+						}
+					})
+					.show();
+		} else {
+
+		}
 	}
 
 	
@@ -869,10 +887,17 @@ public class TimingTaskActivity extends BaseActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 
-			if(intent.getAction().equals(STKNXControllerConstant.BROADCAST_REFRESH_TIMING_TASK_LIST)) {
+			if(intent.getAction().equals(STKNXControllerConstant.BROADCAST_REFRESH_TIMING_TASK_LIST)/* &&
+					SystemUtil.isForeground(TimingTaskActivity.this, "com.sation.knxcontroller.activity.TimingTaskActivity")*/) {
 				if(null != mTimingTaskListAdapter) {
-					STKNXControllerApp.getInstance().saveTimerTask();
-					mTimingTaskListAdapter.notifyDataSetChanged();
+					try {
+						Log.i(TAG, "1");
+//						STKNXControllerApp.getInstance().saveTimerTask();
+						mTimingTaskListAdapter.notifyDataSetChanged();
+						Log.i(TAG, "2");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 				}
 			}
 		}

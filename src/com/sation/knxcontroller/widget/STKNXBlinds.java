@@ -5,7 +5,6 @@ import com.sation.knxcontroller.control.KNXBlinds;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
-import com.sation.knxcontroller.util.ImageUtils;
 import com.sation.knxcontroller.util.StringUtil;
 
 import android.annotation.SuppressLint;
@@ -17,11 +16,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.view.View;
 
 public class STKNXBlinds extends STKNXControl {
 	private static final int PADDING = 2;
 	private static final int SUBVIEW_WIDTH = 40;
-	
 	private KNXBlinds mKNXBlinds;
 	
 	public STKNXBlinds(Context context, KNXBlinds knxBlinds) {
@@ -43,7 +42,7 @@ public class STKNXBlinds extends STKNXControl {
 		vLeft.fontColor = Color.parseColor(this.mKNXBlinds.LeftTextFontColor);
 		vLeft.setSubViewClickListener(this.leftClicked);
 		if(!StringUtil.isEmpty(this.mKNXBlinds.LeftImage)) {
-			vLeft.backImage = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXBlinds.LeftImage);
+			vLeft.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXBlinds.LeftImage);
 		}
 		this.addView(vLeft);
 		
@@ -60,9 +59,24 @@ public class STKNXBlinds extends STKNXControl {
 		vRight.fontColor = Color.parseColor(this.mKNXBlinds.RightTextFontColor);
 		vRight.setSubViewClickListener(this.rightClicked);
 		if(!StringUtil.isEmpty(this.mKNXBlinds.RightImage)) {
-			vRight.backImage = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXBlinds.RightImage);
+			vRight.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXBlinds.RightImage);
 		}
 		this.addView(vRight);
+	}
+
+	@Override
+	public void onDestroy() {
+//		this.mKNXBlinds = null;
+		
+		int count = getChildCount();
+		for(int i=0; i<count; i++) {
+			View v = (View)getChildAt(i);
+			if(v instanceof STButton) {
+				STButton stv = (STButton)v;
+				stv.onDestroy();
+				stv = null;
+			}
+		}
 	}
 	
 	STButton.SubViewClickListener leftClicked = new STButton.SubViewClickListener() {

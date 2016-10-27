@@ -2,9 +2,12 @@ package com.sation.knxcontroller.knxdpt;
 
 import java.math.BigDecimal;
 
-public class DPT9 {
+import com.sation.knxcontroller.util.Log;
 
-	public static byte[] getBytes(float f) {
+public class DPT9 {
+	private static final String TAG = "DPT9";
+	
+	public static byte[] float2bytes(float f) {
 		int Ms = (f>=0)?0:1;
 		f = Math.abs(f);
 		
@@ -42,7 +45,7 @@ public class DPT9 {
 		return arr;
 	}
 	
-	public static float getFloat(byte[] arr) {
+	public static float bytes2float(byte[] arr) {
 		if(2 != arr.length) {
 			return .0f;
 		}
@@ -56,7 +59,7 @@ public class DPT9 {
 		}
 		
 		int Ms = (arr[0] >> 7) & 0x01;
-		int E = (arr[0] >> 3) & 0x07;
+		int E = (arr[0] >> 3) & 0x0F;
 		int M = (arr[0]&0x07)*256 + Integer.parseInt(l, 16);
 
 		if(1 == Ms) {
@@ -64,7 +67,8 @@ public class DPT9 {
 		}
 		
 		float f = (M * 0.01f) * (int)Math.pow(2, E);
-		
+		Log.i(TAG, "arr[0] = "+Integer.toHexString(arr[0]&0xFF)+" "+"arr[1] = "+Integer.toHexString(arr[1]&0xFF) +" "+ f);
+		Log.i(TAG, "");
 		return f;
 	}
 

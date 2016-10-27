@@ -3,7 +3,6 @@ package com.sation.knxcontroller.activity;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.sation.knxcontroller.R;
-import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.PreferenceHelper;
@@ -31,15 +30,10 @@ import android.widget.Toast;
 public class BaseActivity extends FragmentActivity {
 	private final String TAG = "BaseActivity";
 	public static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000; // 需要自己定义标志
-
 	private static final int TOAST_DURATION = Toast.LENGTH_SHORT;
-//	private static final int LODING_PROGRESS_ID = 2;
-	// APP当前样式
 	public int currentTheme = R.style.DefaultTheme;
-
 	protected boolean isLandscape = false;
 	protected int lastConfigurationOrientation = -1;
-
 	WakeLock wakeLock = null;
 
 	@Override
@@ -53,15 +47,7 @@ public class BaseActivity extends FragmentActivity {
 		// 设定主题
 		setTheme(currentTheme);
 		super.onCreate(savedInstanceState);
-//		requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//		this.getWindow().setFlags(FLAG_HOMEKEY_DISPATCHED,
-//				FLAG_HOMEKEY_DISPATCHED);// 关键代码
 
-		STKNXControllerApp.getInstance().pushActivity(this);
-
-		 
 		// 获取屏幕尺寸及
 		DisplayMetrics dm = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -77,36 +63,15 @@ public class BaseActivity extends FragmentActivity {
 			isLandscape = false;
 			lastConfigurationOrientation = Configuration.ORIENTATION_PORTRAIT;
 		}
-		// initOrientationListener();
+
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 	}
-
-//	private void initOrientationListener() {
-//		OrientationEventListener orientationListener = new OrientationEventListener(
-//				this) {
-//			@Override
-//			public void onOrientationChanged(int orientation) {
-//				if (orientation > 315 || orientation < 45
-//						|| (orientation > 135 && orientation < 225)) {
-//					// portrait
-//					if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-//						setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-//					}
-//				} else if ((orientation > 225 && orientation < 315)
-//						|| (orientation > 45 && orientation < 135)) {
-//					// landscape
-//					if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-//						setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-//					}
-//				}
-//			}
-//		};
-//		orientationListener.enable();
-//	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		
+		System.gc();
 	}
 
 	@Override
@@ -128,38 +93,16 @@ public class BaseActivity extends FragmentActivity {
 	@Override
 	public void finish() {
 		super.finish();
+		
 		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) { 
 		super.onTouchEvent(event);
-//		Log.i(STKNXControllerConstant.DEBUG, "getAction:"+event.getAction());
-		
+
 		return true;
 	}
-
-	@Override
-	public void onBackPressed() {
-
-		if (this.getClass().getSimpleName()
-				.equalsIgnoreCase("PushMessagesActivity")
-				|| this.getClass().getSimpleName()
-						.equalsIgnoreCase("MyProfileActivity")) {
-			this.finish();
-//			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-		} else {
-			super.onBackPressed();
-		}
-	}
-
-//	@Override
-//	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		if (keyCode == KeyEvent.KEYCODE_HOME) {
-//			return false;
-//		}
-//		return super.onKeyDown(keyCode, event);
-//	}
 
 	@Override
 	public void onLowMemory() {
@@ -174,16 +117,11 @@ public class BaseActivity extends FragmentActivity {
 		if (currentTheme != PreferenceHelper.getTheme(this)) {
 			reload();
 		}
-		
-		//获取锁，保持屏幕亮度
-		//acquireWakeLock();
-		//startTimer();
 	}
 	
 	@Override
 	protected void onPause() { 
 		  super.onPause();
-		  //releaseWakeLock();
     }
 
 	@Override
@@ -267,38 +205,4 @@ public class BaseActivity extends FragmentActivity {
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		return null;
 	}
-
-	/**
-	 * 监听是否点击了home键将客户端推到后台
-	 */
-//	private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
-//		String SYSTEM_HOME_KEY = "homekey";
-//
-//		@Override
-//		public void onReceive(Context context, Intent intent) {
-//			String action = intent.getAction();
-//			if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
-//				Toast.makeText(getApplicationContext(), "home", 1).show();
-//			}
-//		}
-//	};
-
-	// 获取电源锁，保持该服务在屏幕熄灭时仍然获取CPU时，保持运行
-//	private void acquireWakeLock() {
-//		if (wakeLock != null) {
-//			PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
-//			wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK| PowerManager.ON_AFTER_RELEASE, "PostLocationService");
-//			if (wakeLock != null) {
-//				wakeLock.acquire();
-//			}
-//		}
-//	}
-
-	// 释放设备电源锁
-//	private void releaseWakeLock() {
-//		if (wakeLock != null) {
-//			wakeLock.release();
-//			wakeLock = null;
-//		}
-//	} 
 }

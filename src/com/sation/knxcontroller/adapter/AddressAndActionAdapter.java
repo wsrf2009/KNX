@@ -22,6 +22,8 @@ import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import static java.lang.System.in;
+
 /**
  * @author wangchunfeng
  *
@@ -50,6 +52,12 @@ public class AddressAndActionAdapter extends BaseAdapter {
 	}
 	
 	public void addAddressAndAction(KNXGroupAddressAndAction addressAndAction) {
+		for(KNXGroupAddressAndAction aaa : this.addressAndActionList) {
+			if(aaa.getAddress().getKnxAddress() == addressAndAction.getAddress().getKnxAddress()) {
+				return;
+			}
+		}
+
 		addressAndActionList.add(addressAndAction);
 	}
 	
@@ -95,11 +103,9 @@ public class AddressAndActionAdapter extends BaseAdapter {
 		final ViewHolder holder;
 		if(null == convertView) {
 			holder = new ViewHolder();
-			
+
 			convertView = mLayoutInflater.inflate(R.layout.listview_item_layout_detail, null);
-			
 			holder.textViewAddress = (TextView)convertView.findViewById(R.id.listviewItemLayoutDetailTitle);
-//			holder.textViewAction = (TextView)convertView.findViewById(R.id.listviewItemLayoutDetailDetails);
 			holder.spinnerActions = (Spinner)convertView.findViewById(R.id.listviewItemLayoutDetailSpinnerAction);
 			
 			convertView.setTag(holder);
@@ -109,7 +115,7 @@ public class AddressAndActionAdapter extends BaseAdapter {
 		
 		final KNXGroupAddressAndAction addressAndAction = this.addressAndActionList.get(position);
 		KNXGroupAddress address = addressAndAction.getAddress();
-		holder.textViewAddress.setText(address.getName());
+		holder.textViewAddress.setText(address.getName()+"-"+address.getStringKnxAddress());
 		
 		int selectedIndex = -1;
 		int count = 0;
@@ -172,28 +178,12 @@ public class AddressAndActionAdapter extends BaseAdapter {
 			}
 			
 		});
-		
-//		KNXGroupAddressAction action = addressAndAction.getAction();
-//		String actionText = mContext.getResources().getString(R.string.execute_action)+":  ";
-//		String actionContent = "";
-//		if(addressAndAction.getIsRead()) {
-//			actionContent = mContext.getResources().getString(R.string.get_status);
-//		} else if(null != action) {
-//			actionContent = action.getName();
-//		} else {
-//			actionContent = mContext.getResources().getString(R.string.nothing);
-//		}
-		
-//		holder.textViewAction.setText(String.format("%s:  %s", actionText, actionContent));
-		
-//		holder.textViewAddress.setTag(addressList.get(position));
 
 		return convertView;
 	}
 	
 	public class ViewHolder {
 		TextView textViewAddress;
-//		TextView textViewAction;
 		Spinner spinnerActions;
 	}
 

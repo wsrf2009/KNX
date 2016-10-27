@@ -3,10 +3,12 @@ package com.sation.knxcontroller.activity;
 import java.util.Locale;
 
 import com.sation.knxcontroller.R;
+import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.services.RestartService;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.NetWorkUtil;
+import com.sation.knxcontroller.util.SystemUtil;
 import com.sation.knxcontroller.widget.CustomPopDialogFragment;
 import com.sation.knxcontroller.widget.PromptDialog;
 import com.sation.knxcontroller.widget.settingview.ImageItemView;
@@ -38,6 +40,9 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.TimePicker.OnTimeChangedListener;
+import android.widget.Toast;
  
 
 public class SettingDialog {
@@ -48,6 +53,8 @@ public class SettingDialog {
 //	private SettingButton settingDeviceReflashSpan = null; 
 	private SettingButton settingScreenOffSpan = null; 
 	private SettingButton settingLanguage = null;
+	private SettingButton settingReboot = null;
+	private SettingButton settingChangePassword = null;
 	private SettingButton systemStatus = null;
 	private SettingData mItemData = null;
 	private SettingViewItemData mItemViewData = null;
@@ -75,6 +82,8 @@ public class SettingDialog {
 //		settingDeviceReflashSpan = (SettingButton) mView.findViewById(R.id.settingDeviceReflashSpan);
 		settingScreenOffSpan = (SettingButton) mView.findViewById(R.id.settingScreenOffSpan);
 		settingLanguage = (SettingButton) mView.findViewById(R.id.settingLanguage);
+		settingReboot = (SettingButton) mView.findViewById(R.id.settingReboot);
+		settingChangePassword = (SettingButton) mView.findViewById(R.id.settingChangePassword);
 		systemStatus = (SettingButton) mView.findViewById(R.id.systemStatus);
 
 		settingKNXConnect.setOnSettingButtonClickListener(new onSettingButtonClickListener() {
@@ -217,9 +226,12 @@ public class SettingDialog {
 				final EditText txtThree = (EditText) view.findViewById(R.id.txtThree);
 				txtThree.setImeOptions(EditorInfo.IME_ACTION_DONE);
 				
-				int physicalAddressFirst = settings.getInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_FIRST, 0);
-				int physicalAddressSecond = settings.getInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_SECOND, 0);
-				int physicalAddressThree = settings.getInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THREE, 0);
+				int physicalAddressFirst = settings.getInt(
+						STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_FIRST, STKNXControllerConstant.PHYSICAL_ADDRESS_VALUE_FIRST);
+				int physicalAddressSecond = settings.getInt(
+						STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_SECOND, STKNXControllerConstant.PHYSICAL_ADDRESS_VALUE_SECOND);
+				int physicalAddressThree = settings.getInt(
+						STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THIRD, STKNXControllerConstant.PHYSICAL_ADDRESS_VALUE_THIRD);
 				txtFirst.setText(String.valueOf(physicalAddressFirst));
 				txtSecond.setText(String.valueOf(physicalAddressSecond));
 				txtThree.setText(String.valueOf(physicalAddressThree));
@@ -245,7 +257,7 @@ public class SettingDialog {
 										Integer.valueOf(txtFirst.getText().toString()));
 						editor.putInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_SECOND, 
 										Integer.valueOf(txtSecond.getText().toString()));
-						editor.putInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THREE,
+						editor.putInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THIRD,
 										Integer.valueOf(txtThree.getText().toString()));
 						editor.commit();
 						dialog.dismiss(); 
@@ -275,7 +287,7 @@ public class SettingDialog {
 									Integer.valueOf(txtFirst.getText().toString()));
 							editor.putInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_SECOND, 
 									Integer.valueOf(txtSecond.getText().toString()));
-							editor.putInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THREE,
+							editor.putInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THIRD,
 									Integer.valueOf(txtThree.getText().toString()));
 							editor.commit();
 							mPromptDialog.dismiss(); 
@@ -291,52 +303,6 @@ public class SettingDialog {
 				});
 			}
 		});
-		
-//		settingDeviceReflashSpan.setOnSettingButtonClickListener(new onSettingButtonClickListener() {
-//
-//			@Override
-//			public void onSettingButtonClick() { 
-// 	  {
-//				final View view = LayoutInflater.from(mContext).inflate(R.layout.knx_refresh_status_setting, null);  
-//				final EditText txtTimeSpan = (EditText) view.findViewById(R.id.txtTimeSpan);
-////				txtTimeSpan.setInputType(InputType.TYPE_CLASS_DATETIME);
-//				
-//				int knxRefreshStatusTimespan = settings.getInt(ZyyKNXConstant.KNX_REFRESH_STATUS_TIMESPAN, 1000); 
-//				txtTimeSpan.setText(String.valueOf(knxRefreshStatusTimespan));
-//				
-//				new PromptDialog.Builder(mContext)
-//				.setTitle("设置获取设备状态时间间隔") 
-//				.setIcon(R.drawable.launcher)
-//				//.setViewStyle(PromptDialog.VIEW_STYLE_TITLEBAR_SKYBLUE)
-//				.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
-//				//.setMessage("请输入密码")
-//				.setView(view)
-//				.setButton1("取消",  new PromptDialog.OnClickListener() {
-//							
-//							@Override
-//							public void onClick(Dialog dialog, int which) {
-//								dialog.dismiss(); 
-//							}
-//						})
-//				.setButton2("确认", new PromptDialog.OnClickListener() {
-//							
-//							@Override
-//							public void onClick(Dialog dialog, int which) { 
-//								SharedPreferences.Editor editor = settings.edit(); 
-//								editor.putInt(ZyyKNXConstant.KNX_REFRESH_STATUS_TIMESPAN, Integer.valueOf(txtTimeSpan.getText().toString()));
-//								editor.commit();
-//								dialog.dismiss();
-//								//重启启动
-//								ZyyKNXApp.getInstance().startGetKNXResponseService();
-//								mContext.startService(new Intent(mContext, RestartService.class));
-//								((Activity) mContext).finish();
-//								
-//							}
-//						})
-//				.show(); 
-//				 
-//			}
-//		});
 
 		settingScreenOffSpan.setOnSettingButtonClickListener(new onSettingButtonClickListener() {
 
@@ -445,6 +411,7 @@ public class SettingDialog {
 						    resources.updateConfiguration(config, dm);
 						    
 							editor.putString(STKNXControllerConstant.APP_APPEARANCE_LANGUAGE, Locale.SIMPLIFIED_CHINESE.toString());
+							STKNXControllerApp.getInstance().setLanguage(Locale.SIMPLIFIED_CHINESE.toString());
 						} else {
 							Resources resources = mContext.getResources();//获得res资源对象  
 						    Configuration config = resources.getConfiguration();//获得设置对象  
@@ -453,6 +420,7 @@ public class SettingDialog {
 						    resources.updateConfiguration(config, dm);
 						    
 							editor.putString(STKNXControllerConstant.APP_APPEARANCE_LANGUAGE, Locale.US.toString());
+							STKNXControllerApp.getInstance().setLanguage(Locale.US.toString());
 						}
 						editor.commit();
 						dialog.dismiss();
@@ -466,17 +434,157 @@ public class SettingDialog {
 			
 		});
 		
+		settingReboot.setOnSettingButtonClickListener(new onSettingButtonClickListener() {
+
+			@Override
+			public void onSettingButtonClick() {
+				final View view = LayoutInflater.from(mContext).inflate(R.layout.reboot_layout, null);
+				final TextView txtRebootText = (TextView) view.findViewById(R.id.rebootlayout_textview_reboottext);
+				final CheckBox cbRebootEnable = (CheckBox) view.findViewById(R.id.rebootlayout_checkBox_rebootenable);
+				final TimePicker tpRebootTime = (TimePicker) view.findViewById(R.id.rebootlayout_timepicker_reboottime);
+				tpRebootTime.setIs24HourView(true);
+				
+				boolean isEnabled = STKNXControllerApp.getInstance().getAutoRebootFlag();
+				int hour = STKNXControllerApp.getInstance().getHourOfRebooting();
+				int minute = STKNXControllerApp.getInstance().getMinuteOfReboot();
+				
+				String text = String.format("%s%02d%s%02d%s", 
+						mContext.getResources().getString(R.string.everyday), hour, 
+						mContext.getResources().getString(R.string.hour), minute, 
+						mContext.getResources().getString(R.string.minute));
+				txtRebootText.setText(text);
+				cbRebootEnable.setChecked(isEnabled);
+				tpRebootTime.setCurrentHour(hour);
+				tpRebootTime.setCurrentMinute(minute);
+				tpRebootTime.setEnabled(isEnabled);
+				
+				cbRebootEnable.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						tpRebootTime.setEnabled(isChecked);
+					}
+					
+				});
+				
+				tpRebootTime.setOnTimeChangedListener(new OnTimeChangedListener() {
+
+					@Override
+					public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+						String text = String.format("%s%02d%s%02d%s", 
+								mContext.getResources().getString(R.string.everyday), hourOfDay, 
+								mContext.getResources().getString(R.string.hour), minute, 
+								mContext.getResources().getString(R.string.minute));
+						txtRebootText.setText(text);
+					}
+					
+				});
+				
+				new PromptDialog.Builder(mContext)
+				.setTitle(mContext.getResources().getString(R.string.setting_Reboot))
+				.setIcon(R.drawable.launcher)
+				.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
+				.setView(view)
+				.setButton1(mContext.getResources().getString(R.string.cancel), new PromptDialog.OnClickListener() {
+					
+					@Override
+					public void onClick(Dialog dialog, int which) {
+						dialog.dismiss();
+					}
+				})
+				.setButton2(mContext.getResources().getString(R.string.save), new PromptDialog.OnClickListener() {
+					
+					@Override
+					public void onClick(Dialog dialog, int which) {
+						boolean isChecked = cbRebootEnable.isChecked();
+						int hour = tpRebootTime.getCurrentHour();
+						int minute = tpRebootTime.getCurrentMinute();
+						
+						STKNXControllerApp.getInstance().setAutoRebootFlag(isChecked);
+						STKNXControllerApp.getInstance().setHourOfReboot(hour);
+						STKNXControllerApp.getInstance().setMinuteOfReboot(minute);
+						
+						SharedPreferences.Editor editor = settings.edit();
+						editor.putBoolean(STKNXControllerConstant.SYSTEM_REBOOT_FLAG, isChecked);
+						editor.putInt(STKNXControllerConstant.SYSTEM_REBOOT_HOUR, hour);
+						editor.putInt(STKNXControllerConstant.SYSTEM_REBOOT_MINUTE, minute);
+						editor.commit();
+						dialog.dismiss();
+					}
+				})
+				.show();
+			}
+			
+		});
+		
+		settingChangePassword.setOnSettingButtonClickListener(new onSettingButtonClickListener() {
+
+			@Override
+			public void onSettingButtonClick() {
+				final View view = LayoutInflater.from(mContext).inflate(R.layout.changepassword_layout, null);
+				final EditText etOriginal = (EditText) view.findViewById(R.id.changepasswordlayout_edittext_originalpassword);
+				final EditText etNew = (EditText) view.findViewById(R.id.changepasswordlayout_edittext_newpassword);
+				final EditText etConfirm = (EditText) view.findViewById(R.id.changepasswordlayout_edittext_confirmnewpassword);
+				
+				new PromptDialog.Builder(mContext)
+				.setTitle(mContext.getResources().getString(R.string.change_password))
+				.setIcon(R.drawable.launcher)
+				.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
+				.setView(view)
+				.setButton1(mContext.getResources().getString(R.string.cancel), new PromptDialog.OnClickListener() {
+					
+					@Override
+					public void onClick(Dialog dialog, int which) {
+						dialog.dismiss();
+					}
+				})
+				.setButton2(mContext.getResources().getString(R.string.modify), new PromptDialog.OnClickListener() {
+					
+					@Override
+					public void onClick(Dialog dialog, int which) {
+						String pw = settings.getString(STKNXControllerConstant.SYSTEM_SETTING_PASSWORD, 
+								STKNXControllerConstant.SYSTEM_SETTING_PASSWORD_VALUE);
+						if(etOriginal.getText().toString().trim().equals(pw)){
+							String newpw = etNew.getText().toString().trim();
+							if(etConfirm.getText().toString().trim().equals(newpw)) {
+								SharedPreferences.Editor editor = settings.edit();
+								editor.putString(STKNXControllerConstant.SYSTEM_SETTING_PASSWORD, newpw);
+								editor.commit();
+								dialog.dismiss();
+							} else {
+								Toast.makeText(mContext, mContext.getResources().getString(R.string.newpassword_not_match),
+										Toast.LENGTH_SHORT).show();
+							}
+						} else {
+							Toast.makeText(mContext, mContext.getResources().getString(R.string.originalpassword_not_right),
+									Toast.LENGTH_SHORT).show();
+						}
+					}
+				})
+				.show();
+			}
+			
+		});
+		
 		systemStatus.setOnSettingButtonClickListener(new onSettingButtonClickListener(){
 			
 			@Override
 			public void onSettingButtonClick(){
 				final View view = LayoutInflater.from(mContext).inflate(R.layout.system_status, null);
+				
+				final CheckBox cbDisplaySystemTime = (CheckBox) view.findViewById(R.id.systemStatusCheckBoxDisplaySystemTime);
+				boolean displaySystemTime = STKNXControllerApp.getInstance().getDisplayTimeFlag();
+				cbDisplaySystemTime.setChecked(displaySystemTime);
+				
 				final TextView txtLoacalIP = (TextView) view.findViewById(R.id.systemStatusTextViewLocalIP);
 				txtLoacalIP.setText(NetWorkUtil.getIpAddress(mContext));
 				
-				final CheckBox cbDisplaySystemTime = (CheckBox) view.findViewById(R.id.systemStatusCheckBoxDisplaySystemTime);
-				boolean displaySystemTime = settings.getBoolean(STKNXControllerConstant.SYSTEMSTATUS_DISPLAY_SYSTEM_TIME, true);
-				cbDisplaySystemTime.setChecked(displaySystemTime);
+				final TextView txtSoftware = (TextView) view.findViewById(R.id.systemStatusTextViewSoftwareVersion);
+				txtSoftware.setText(SystemUtil.getVersion(mContext));
+				
+				final CheckBox cbRecordLastInterface = (CheckBox) view.findViewById(R.id.systemStatusCheckBoxRecordLastInterface);
+				boolean bRecordLastInterface = STKNXControllerApp.getInstance().getRememberLastInterface();
+				cbRecordLastInterface.setChecked(bRecordLastInterface);
 				
 				new PromptDialog.Builder(mContext)
 				.setTitle(mContext.getResources().getString(R.string.system_status))
@@ -495,13 +603,20 @@ public class SettingDialog {
 					@Override
 					public void onClick(Dialog dialog, int which) {
 						RoomTilesListActivity roomTiles = (RoomTilesListActivity)mContext;
-						if(cbDisplaySystemTime.isChecked()) {
+						boolean display = cbDisplaySystemTime.isChecked();
+						boolean remember = cbRecordLastInterface.isChecked();
+						if(display) {
 							roomTiles.displaySystemTime();
 						} else {
 							roomTiles.undisplaySystemTime();
 						}
+						
+						STKNXControllerApp.getInstance().setDisplayTimeFlag(display);
+						STKNXControllerApp.getInstance().setRememberLastInterface(remember);
+						
 						SharedPreferences.Editor editor = settings.edit();
-						editor.putBoolean(STKNXControllerConstant.SYSTEMSTATUS_DISPLAY_SYSTEM_TIME, cbDisplaySystemTime.isChecked());
+						editor.putBoolean(STKNXControllerConstant.DISPLAY_SYSTEM_TIME_FLAG, display);
+						editor.putBoolean(STKNXControllerConstant.REMEMBER_LAST_INTERFACE, remember);
 						editor.commit();
 						dialog.dismiss();
 					}
@@ -557,6 +672,20 @@ public class SettingDialog {
 		mItemViewData.setData(mItemData);
 		mItemViewData.setItemView(new ImageItemView(mContext));
 		settingLanguage.setAdapter(mItemViewData);
+		
+		mItemViewData = new SettingViewItemData();
+		mItemData = new SettingData();
+		mItemData.setTitle(mContext.getResources().getString(R.string.setting_Reboot));
+		mItemViewData.setData(mItemData);
+		mItemViewData.setItemView(new ImageItemView(mContext));
+		settingReboot.setAdapter(mItemViewData);
+		
+		mItemViewData = new SettingViewItemData();
+		mItemData = new SettingData();
+		mItemData.setTitle(mContext.getResources().getString(R.string.change_password));
+		mItemViewData.setData(mItemData);
+		mItemViewData.setItemView(new ImageItemView(mContext));
+		settingChangePassword.setAdapter(mItemViewData);
 		
 		mItemViewData = new SettingViewItemData();
 		mItemData = new SettingData();

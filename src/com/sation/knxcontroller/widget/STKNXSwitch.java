@@ -1,12 +1,12 @@
 package com.sation.knxcontroller.widget;
 
-
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXSwitch;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 import com.sation.knxcontroller.util.ImageUtils;
+import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.StringUtil;
 
 import android.annotation.SuppressLint;
@@ -19,15 +19,20 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
-
+import android.view.View;
+import android.widget.ImageView;
 
 public class STKNXSwitch extends STKNXControl {
+	private final static String TAG = "STKNXSwitch";
 	private final int PADDING = 2;
 
-    private Bitmap imageOn;
-    private Bitmap imageOff;
-    
+	private String imageOn;
+    private String imageOff;
+    private ImageView mImageView;
+
     private KNXSwitch mKNXSwitch;
     
     private enum ControlState {
@@ -35,15 +40,14 @@ public class STKNXSwitch extends STKNXControl {
     	Normal,
     }
     private ControlState mControlState;
-    private int imgX = 0;
     private int imgY = 0;
     private int imgRight = 0;
-    private int imgBottom = 0;
     private enum SwitchState {
     	On,
     	Off,
     }
     private SwitchState mSwitchState;
+//    private Handler mHandler;
 
 	public STKNXSwitch(Context context, KNXSwitch knxswitch) {
 		super(context, knxswitch);
@@ -55,26 +59,76 @@ public class STKNXSwitch extends STKNXControl {
 		this.mSwitchState = SwitchState.Off;
 
 		if(!StringUtil.isEmpty(this.mKNXSwitch.ImageOn)) {
-			this.imageOn = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXSwitch.ImageOn);
+			this.imageOn = STKNXControllerConstant.ConfigResImgPath + this.mKNXSwitch.ImageOn;
 		}
 			
 		if(!StringUtil.isEmpty(mKNXSwitch.ImageOff)) {
-			this.imageOff = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXSwitch.ImageOff);
+			this.imageOff = STKNXControllerConstant.ConfigResImgPath + this.mKNXSwitch.ImageOff;
 		}
-	} 
+		
+		this.mImageView = new ImageView(context);
+		this.addView(this.mImageView);
+		
+//		this.mHandler = new Handler() {
+//			@Override
+//            public void handleMessage(Message msg){
+//                super.handleMessage(msg);
+//                
+//                if(1 == msg.what){
+//                	Bitmap bm = (Bitmap) msg.obj;
+//                	if((null != bm) && (null != mImageView)) {
+//                		mImageView.setImageBitmap(bm);
+//                	}
+//                }
+//            }
+//		};
+		
+		setControlImage();
+	}
 	
-	 public void setValue(int controlCurrentValue) { 
+	@Override
+	public void onDestroy() {
+		this.imageOn = null;
+		this.imageOff = null;
+//		this.mKNXSwitch = null;
+		this.mImageView = null;
+	}
+	
+	private void setControlImage() {
+
+//		Message message = new Message();
+//        message.what = 1;
+
+		if(SwitchState.On == mSwitchState) {
+			Bitmap bm = ImageUtils.getDiskBitmap(imageOn);
+			if((null != bm) && (null != mImageView)) {
+						mImageView.setImageBitmap(bm);
+//				message.obj = bm;
+			}
+		} else if(SwitchState.Off == mSwitchState) {
+			Bitmap bm = ImageUtils.getDiskBitmap(imageOff);
+			if((null != bm) && (null != mImageView)) {
+						mImageView.setImageBitmap(bm);
+//				message.obj = bm;
+			}
+		}
+				
+//		if(null != message.obj) {
+//			this.mHandler.sendMessage(message);
+//		}
+	}
+	
+	 public void setValue(int controlCurrentValue) {
+		 
+		 Log.i(TAG, this.mKNXSwitch.getText() +"===>>"+controlCurrentValue);
+		 
 		 if(0 == controlCurrentValue) {
 			 this.mSwitchState = SwitchState.Off;
-			 if(null != this.imageOff) {
-				 invalidate();
-			 }
 		 } else {
 			 this.mSwitchState = SwitchState.On;
-			 if(null != this.imageOn) {
-				 invalidate();
-			 }
 		 }
+
+		 setControlImage();
 	 }
     
     private void onClick() {
@@ -87,11 +141,10 @@ public class STKNXSwitch extends STKNXControl {
     		if(this.mKNXSwitch.getReadAddressId().isEmpty() ||
     				this.mKNXSwitch.getWriteAddressIds().containsKey(
     						this.mKNXSwitch.getReadAddressId().keySet().toArray()[0])) {
-    			if (null != this.imageOn) {
-   				 	invalidate();
-    			}
-    			
+
     			this.mSwitchState = SwitchState.On;
+    			
+    			setControlImage();
     		}
     		
     		val = 1;
@@ -99,11 +152,10 @@ public class STKNXSwitch extends STKNXControl {
     		if (this.mKNXSwitch.getReadAddressId().isEmpty() ||
     				this.mKNXSwitch.getWriteAddressIds().containsKey(
     						this.mKNXSwitch.getReadAddressId().keySet().toArray()[0])) {
-    			if(null != this.imageOff) {
-    				invalidate();
-    			}
-    			
+
     			this.mSwitchState = SwitchState.Off;
+    			
+    			setControlImage();
     		}
     		
     		val = 0;
@@ -114,19 +166,43 @@ public class STKNXSwitch extends STKNXControl {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    	measureChildren(widthMeasureSpec, heightMeasureSpec);
     	
-        /* 计算图片的显示位置和大小 */
-    	this.imgX = this.PADDING;
-    	this.imgY = this.PADDING;
-    	int height = this.mKNXSwitch.Height - 2 * this.imgY;
-    	this.imgRight = this.imgX + height;   // 计算出高度
-        this.imgBottom = this.imgY + height;     // 计算出宽度
+//        /* 计算图片的显示位置和大小 */
+//    	this.imgX = this.PADDING;
+//    	this.imgY = this.PADDING;
+//    	int height = this.mKNXSwitch.Height - 2 * this.imgY;
+//    	this.imgRight = this.imgX + height;   // 计算出高度
+//        this.imgBottom = this.imgY + height;     // 计算出宽度
         
         /**
          * 最后调用父类方法,把View的大小告诉父布局。
          */
         setMeasuredDimension(this.mKNXSwitch.Width, this.mKNXSwitch.Height);
     } 
+    
+    @Override
+	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+		int childViewCount = getChildCount();
+
+		/*
+		 * 遍历所有childView根据其宽和高，以及margin进行布局
+		 */
+		for (int i = 0; i < childViewCount; i++) {
+			int cl = 0, ct = 0, cr = 0, cb = 0;
+			
+			View view = getChildAt(i);
+			if(view instanceof ImageView) {
+				int imgHeight = this.mKNXSwitch.Height - 2 * this.imgY;
+				
+				cl = this.PADDING;
+				ct = this.PADDING;
+				cr = this.PADDING+imgHeight;
+				cb = this.PADDING+imgHeight;
+			}
+			view.layout(cl, ct, cr, cb);
+		}
+	}
 
     @SuppressLint("DrawAllocation")
 	@Override
@@ -167,36 +243,21 @@ public class STKNXSwitch extends STKNXControl {
     	}
     	canvas.drawRoundRect(oval3, this.mKNXSwitch.Radius, this.mKNXSwitch.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
 
-        /* 绘制图片 */
-        Bitmap image = null;
-        if(SwitchState.On == this.mSwitchState) {
-        	image = this.imageOn;
-        } else if(SwitchState.Off == this.mSwitchState) {
-       		image = this.imageOff;
-       	}
-        if(null != image) {
-        	paint.reset();
-        	Rect resRect = new Rect(0, 0, image.getWidth(), image.getHeight());
-        	Rect desRect = new Rect(this.imgX, this.imgY, this.imgRight, this.imgBottom);
-        	canvas.drawBitmap(image, resRect, desRect, paint);
-        }
-
         if(null != this.mKNXSwitch.getText()) {
         	int x = 0;
         	int y = 0;
         	Rect bound = new Rect();
         	paint.getTextBounds(this.mKNXSwitch.getText(), 0, this.mKNXSwitch.getText().length(), bound);
-        	if(null != image) {
-        		x= (getWidth()- (this.imgRight+this.PADDING)-this.PADDING -bound.width())/2+this.imgRight+this.PADDING;
-        		y=(getHeight()  + bound.height())/2;
-        	} else {
-        		x = getWidth()/2;
+        	if(StringUtil.isEmpty(this.imageOn) && StringUtil.isEmpty(this.imageOff)) {
+        		x = (getWidth() - 2 *x - bound.width())/2;
             	y = (getHeight()  + bound.height())/2;
+        	} else {
+        		x=(getWidth()- (this.imgRight+this.PADDING)-this.PADDING -bound.width())/2+this.imgRight+this.PADDING;
+        		y=(getHeight()  + bound.height())/2;
         	} 
 
         	/* 绘制文本 */
         	paint.reset();
-//        	paint.setTextAlign(Paint.Align.CENTER);
         	paint.setColor(Color.parseColor(this.mKNXSwitch.FontColor));
         	paint.setTextSize(this.mKNXSwitch.FontSize);
         	canvas.drawText(this.mKNXSwitch.getText(), x, y, paint);
@@ -229,15 +290,24 @@ public class STKNXSwitch extends STKNXControl {
     		case MotionEvent.ACTION_DOWN: 
     			this.mControlState = ControlState.Down;
     			invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(0.6f);
+    			}
     			break; 
     		case MotionEvent.ACTION_UP: 
     			onClick();
     			this.mControlState = ControlState.Normal;
     			invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(1.0f);
+    			}
     			break;
     		case MotionEvent.ACTION_CANCEL:
     			this.mControlState = ControlState.Normal;
     			invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(1.0f);
+    			}
     			break;
     			
     		default:

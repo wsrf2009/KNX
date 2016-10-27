@@ -6,7 +6,9 @@ import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
 import com.sation.knxcontroller.util.ImageUtils;
+import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.StringUtil;
+import com.sation.knxcontroller.util.uikit.UIKit;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,13 +20,20 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class STKNXSceneButton extends STKNXControl {
+	private static final String TAG = "STKNXSceneButton";
 	private final int PADDING = 2;
-    
-	private Bitmap imageOn;
-    private Bitmap imageOff;
+
+	private String imageOn;
+	private String imageOff;
+	private ImageView mImageView;
     
 	public KNXSceneButton mKNXSceneButton;
     
@@ -40,10 +49,9 @@ public class STKNXSceneButton extends STKNXControl {
     }
     private SceneState mSceneState;
     
-    private int imgX = 0;
     private int imgY = 0;
     private int imgRight = 0;
-    private int imgBottom = 0;
+//    private Handler mHandler;
 
 	public STKNXSceneButton(Context context, KNXSceneButton knxSceneButton) {
 		super(context, knxSceneButton);
@@ -55,22 +63,89 @@ public class STKNXSceneButton extends STKNXControl {
 		this.mSceneState = SceneState.Off;
 		
 		if(!StringUtil.isEmpty(this.mKNXSceneButton.ImageOn)) {
-			this.imageOn = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXSceneButton.ImageOn);
+			this.imageOn = STKNXControllerConstant.ConfigResImgPath + this.mKNXSceneButton.ImageOn;
 		}
 			
 		if(!StringUtil.isEmpty(this.mKNXSceneButton.ImageOff)) {
-			this.imageOff = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + this.mKNXSceneButton.ImageOff);
+			this.imageOff = STKNXControllerConstant.ConfigResImgPath + this.mKNXSceneButton.ImageOff;
+		}
+		
+		this.mImageView = new ImageView(context);
+		this.addView(this.mImageView);
+
+		
+		
+//		this.mHandler = new Handler() {
+//			@Override
+//			public void handleMessage(Message msg) {
+//				super.handleMessage(msg);
+//				
+//				if(1 == msg.what) {
+////					setStateSelected();
+//					Bitmap bm = (Bitmap) msg.obj;
+//                	if((null != bm) && (null != mImageView)) {
+//                		mImageView.setImageBitmap(bm);
+//                	}
+//				}
+////				else if(2 == msg.what) {
+////					setStateNotSelected();
+////				}
+//			}
+//		};
+		
+		this.selecte(false);
+	}
+	
+	@Override
+	public void onDestroy() {
+		this.imageOn = null;
+		this.imageOff = null;
+		this.mImageView = null;
+//		this.mKNXSceneButton = null;
+	}
+	
+	private void setStateSelected() {
+		Bitmap bm = ImageUtils.getDiskBitmap(imageOn);
+		if((null != bm) && (null != mImageView)) {
+			mImageView.setImageBitmap(bm);
+//			Message msg = new Message();
+//			msg.what = 1;
+//			msg.obj = bm;
+//			this.mHandler.sendMessage(msg);
 		}
 	}
 	
-	public void setSelected(boolean s) {
-		if(s) {
-			this.mSceneState = SceneState.On;
-		} else {
-			this.mSceneState = SceneState.Off;
+	private void setStateNotSelected() {
+		Bitmap bm = ImageUtils.getDiskBitmap(imageOff);
+		if((null != bm) && (null != mImageView)) {
+			mImageView.setImageBitmap(bm);
+//			Message msg = new Message();
+//			msg.what = 1;
+//			msg.obj = bm;
+//			this.mHandler.sendMessage(msg);
 		}
+	}
+	
+	private void selecte(boolean select) {
+		if(select) {
+			setStateSelected();
+		} else {
+			setStateNotSelected();
+		}
+	}
+	
+	public void setSelected(final boolean s) {
+//		Message msg = new Message();
+//		if(s) {
+//			msg.what = 1;
+//		} else {
+//			msg.what = 2;
+//		}
+//		this.mHandler.sendMessage(msg);
 		
-		invalidate();
+		selecte(s);
+
+//		invalidate();
 	}
     
     private void onClick() {
@@ -87,7 +162,7 @@ public class STKNXSceneButton extends STKNXControl {
     							mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().keySet().toArray()[0])) {
     					mSTKNXGroupBox.setSelectedValue(this.mKNXSceneButton.DefaultValue);
     				}
-    			 
+
     				sendCommandRequest(mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds(), this.mKNXSceneButton.DefaultValue+"", false, null);
     			}
     		}
@@ -96,9 +171,9 @@ public class STKNXSceneButton extends STKNXControl {
     				this.mKNXSceneButton.getWriteAddressIds().containsKey(
     						this.mKNXSceneButton.getReadAddressId().keySet().toArray()[0])) {
     			if(SceneState.On == this.mSceneState) {
-    				this.setSelected(false);
+    				this.selecte(false);
     			} else {
-    				this.setSelected(true);
+    				this.selecte(true);
     			}
     		}
     		
@@ -108,24 +183,42 @@ public class STKNXSceneButton extends STKNXControl {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    	this.imgX = this.PADDING;
-    	this.imgY = this.PADDING;
-    	int height = this.mKNXSceneButton.Height - 2 * this.imgY;
-    	this.imgRight = this.imgX + height;   // 计算出高度
-        this.imgBottom = this.imgY + height;     // 计算出宽度
+    	measureChildren(widthMeasureSpec, heightMeasureSpec);
     	
         /**
          * 最后调用父类方法,把View的大小告诉父布局。
          */
         setMeasuredDimension(this.mKNXSceneButton.Width, this.mKNXSceneButton.Height);
     }
+    
+    @Override
+	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+		int childViewCount = getChildCount();
+
+		/*
+		 * 遍历所有childView根据其宽和高，以及margin进行布局
+		 */
+		for (int i = 0; i < childViewCount; i++) {
+			int cl = 0, ct = 0, cr = 0, cb = 0;
+			
+			View view = getChildAt(i);
+			if(view instanceof ImageView) {
+				int imgHeight = this.mKNXSceneButton.Height - 2 * this.imgY;
+				
+				cl = this.PADDING;
+				ct = this.PADDING;
+				cr = this.PADDING+imgHeight;
+				cb = this.PADDING+imgHeight;
+			}
+			view.layout(cl, ct, cr, cb);
+		}
+	}
 
     @SuppressLint("DrawAllocation")
 	@Override
     protected void onDraw(Canvas canvas) {
     	super.onDraw(canvas);
   
-//    	int backColor = Color.parseColor(this.mKNXSceneButton.BackgroundColor);
     	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     	paint.setStyle(Paint.Style.FILL_AND_STROKE);	// 充满  
     	paint.setAlpha((int)(this.mKNXSceneButton.Alpha*255));
@@ -160,31 +253,17 @@ public class STKNXSceneButton extends STKNXControl {
     	}
     	canvas.drawRoundRect(oval3, this.mKNXSceneButton.Radius, this.mKNXSceneButton.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
 
-        /* 绘制图片 */
-        Bitmap image = null;
-        if(SceneState.On == this.mSceneState) {
-        	image = this.imageOn;
-        } else if(SceneState.Off == this.mSceneState) {
-       		image = this.imageOff;
-       	}
-        if(null != image) {
-        	paint.reset();
-        	Rect resRect = new Rect(0, 0, image.getWidth(), image.getHeight());
-        	Rect desRect = new Rect(this.imgX, this.imgY, this.imgRight, this.imgBottom);
-        	canvas.drawBitmap(image, resRect, desRect, paint);
-        }
- 
         if(null != this.mKNXSceneButton.getText()) {
         	int x = 0;
         	int y = 0;
         	Rect bound = new Rect();
         	paint.getTextBounds(this.mKNXSceneButton.getText(), 0, this.mKNXSceneButton.getText().length(), bound);
-        	if(null != image) {
-        		x=(getWidth()- (this.imgRight+this.PADDING)-this.PADDING -bound.width())/2+this.imgRight+this.PADDING;
-        		y=(getHeight()  + bound.height())/2;
-        	} else {
+        	if(StringUtil.isEmpty(this.imageOn) && StringUtil.isEmpty(this.imageOff)) {
         		x = (getWidth() - 2 *x - bound.width())/2;
             	y = (getHeight()  + bound.height())/2;
+        	} else {
+        		x=(getWidth()- (this.imgRight+this.PADDING)-this.PADDING -bound.width())/2+this.imgRight+this.PADDING;
+        		y=(getHeight()  + bound.height())/2;
         	}
         	
         	/* 绘制文本 */
@@ -221,11 +300,17 @@ public class STKNXSceneButton extends STKNXControl {
     		case MotionEvent.ACTION_DOWN: 
     			this.mControlState = ControlState.Down;
     			invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(0.6f);
+    			}
     			break; 
     		case MotionEvent.ACTION_UP: 
     			onClick();
     			this.mControlState = ControlState.Normal;
     			invalidate();
+    			if(null != this.mImageView) {
+    				this.mImageView.setAlpha(1.0f);
+    			}
     			break;
     		case MotionEvent.ACTION_CANCEL:
     			this.mControlState = ControlState.Normal;

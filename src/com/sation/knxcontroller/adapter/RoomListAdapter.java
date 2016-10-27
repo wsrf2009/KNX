@@ -3,13 +3,17 @@ package com.sation.knxcontroller.adapter;
 import java.util.List;
 
 import com.sation.knxcontroller.R;
+import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.models.KNXRoom;
 import com.sation.knxcontroller.util.ImageUtils;
 import com.sation.knxcontroller.util.StringUtil;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -22,18 +26,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class RoomListAdapter extends BaseAdapter {
-
-	@SuppressWarnings("unused")
-	private Context context;
+	private final String TAG = "RoomListAdapter";
 	
 	public List<KNXRoom> list;
 	private LayoutInflater inflater;
 	public Handler parentHandler;
+	private SharedPreferences settings;
 
+	public RoomListAdapter(Context context) {
+		this.inflater = LayoutInflater.from(context);
+		this.settings = context.getSharedPreferences(
+				STKNXControllerConstant.SETTING_FILE, android.content.Context.MODE_PRIVATE);
+	}
+	
 	public RoomListAdapter(Context context, List<KNXRoom> list) {
-		this.context = context;
+		this(context);
+		
 		this.list = list;
-		inflater = LayoutInflater.from(context);
+	}
+	
+	public void setRoomList(List<KNXRoom> list) {
+		this.list = list;
 	}
 
 	@Override
@@ -72,33 +85,51 @@ public class RoomListAdapter extends BaseAdapter {
 		if (mRoom == null) {
 			return convertView;
 		}
-  
+		holder.room_name.setTextColor(Color.parseColor(mRoom.FontColor));
+		holder.room_name.setTextSize(mRoom.FontSize);
 		holder.room_name.setText(mRoom.getText()); 
-		if (!StringUtil.isEmpty(mRoom.getSymbol())) {
-			String roomIcon = null;
-			if(StringUtil.isEmpty(mRoom.getSymbol())) {
-				roomIcon = STKNXControllerConstant.ConfigResImgPath+"liveroom_background.jpg";
-			} else {
-				roomIcon = STKNXControllerConstant.ConfigResImgPath + mRoom.getSymbol();
-			}
-			Bitmap icon = ImageUtils.getDiskBitmap(roomIcon);
-			if(null != icon) {
-				holder.room_icon.setBackgroundDrawable(new BitmapDrawable(icon)); 
-			} else {
-				holder.room_icon.setImageResource(R.drawable.launcher); 
-			}
-		} else { 
-			holder.room_icon.setImageResource(R.drawable.launcher);    
-		}  
+
+		String roomIcon = null;
+		if(StringUtil.isEmpty(mRoom.getSymbol())) {
+			roomIcon = STKNXControllerConstant.ConfigResImgPath+"liveroom_background.jpg";
+		} else {
+			roomIcon = STKNXControllerConstant.ConfigResImgPath + mRoom.getSymbol();
+		}
+		Bitmap icon = ImageUtils.getDiskBitmap(roomIcon);
+		if(null != icon) {
+			holder.room_icon.setBackgroundDrawable(new BitmapDrawable(icon)); 
+		} else {
+			holder.room_icon.setImageResource(R.drawable.launcher); 
+		}
+
 		holder.room_list_item.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (onItemActionListener != null) {
+					if(STKNXControllerApp.getInstance().getRememberLastInterface()) {
+						STKNXControllerApp.getInstance().setLastRoomIndex(position);
+						
+						new Thread(new Runnable() {
+
+							@Override
+							public void run() {
+								SharedPreferences.Editor editor = settings.edit(); 
+								editor.putInt(STKNXControllerConstant.LAST_ROOM_INDEX, position);
+								editor.commit();
+							}
+							
+						}).start();
+						
+					}
+					
 					onItemActionListener.onItemClick(mRoom);
 				}
 			}
 		});
+		
+		
+		
 		return convertView;
 	}
 

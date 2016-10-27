@@ -19,9 +19,6 @@ import android.widget.TextView;
 
 @SuppressLint("InflateParams") 
 public class PromptDialog extends Dialog {
-
-//	private Context context;
-
 	public static final int VIEW_STYLE_NORMAL			= 0x00000001;
 	public static final int VIEW_STYLE_TITLEBAR			= 0x00000002;
 	public static final int VIEW_STYLE_TITLEBAR_SKYBLUE = 0x00000003;

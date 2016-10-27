@@ -6,7 +6,7 @@
     android:background="#FFF7F7F7"
     android:scrollbars="none" >
 
-    <LinearLayout
+   <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -40,13 +40,22 @@
             android:id="@+id/settingScreenOffSpan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:visibility="visible" >
-
-        </com.sation.knxcontroller.widget.settingview.SettingButton>
+            android:layout_marginBottom="20dp" />
           
          <com.sation.knxcontroller.widget.settingview.SettingButton
              android:id="@+id/settingLanguage"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="20dp" />
+
+         <com.sation.knxcontroller.widget.settingview.SettingButton
+             android:id="@+id/settingReboot"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="20dp" />
+         
+         <com.sation.knxcontroller.widget.settingview.SettingButton
+             android:id="@+id/settingChangePassword"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_marginBottom="20dp" />

@@ -25,6 +25,21 @@ public class STKNXGroupBox extends STKNXViewContainer {
 		this.mKNXGroupBox = groupBox; 
 		this.setId(this.mKNXGroupBox.getId());
 	}
+	
+	@Override
+	public void onDestroy() {
+//		this.mKNXGroupBox = null;
+		
+		int count = getChildCount();
+		for(int i=0; i<count; i++) {
+			View v = (View)getChildAt(i);
+			if(v instanceof STKNXView) {
+				STKNXView sv = (STKNXView)v;
+				sv.onDestroy();
+				sv = null;
+			}
+		}
+	}
 
 	public void setSelectedValue(int value) {
 		for(int i=0; i<this.getChildCount(); i++) {

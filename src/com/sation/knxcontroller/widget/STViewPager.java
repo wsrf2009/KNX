@@ -1,43 +1,55 @@
 package com.sation.knxcontroller.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 public class STViewPager extends ViewPager {
-	private boolean isCanScroll = true;  
-	  
+	private boolean mCycleDrag; // 循环滑动页面
+	
+	@Override
+	public int getCurrentItem() {
+		if(this.mCycleDrag) {
+			return super.getCurrentItem() - 1;
+		} else {
+			return super.getCurrentItem();
+		}
+	}
+
     public STViewPager(Context context) {  
-        super(context);  
+        super(context);
     }  
   
     public STViewPager(Context context, AttributeSet attrs) {  
         super(context, attrs);  
     }  
-  
-    public void setScanScroll(boolean isCanScroll){  
-        this.isCanScroll = isCanScroll;  
-    }  
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-    	super.onInterceptTouchEvent(event);
+    	try {
+    		super.onInterceptTouchEvent(event);
+    	} catch (IllegalArgumentException ex) {
+    		ex.printStackTrace();
+    	}
     	
-		return false;
+    	return false;
     }
     
-    @Override
+    @SuppressLint("ClickableViewAccessibility")
+	@Override
     public boolean onTouchEvent(MotionEvent event) {
-    	super.onTouchEvent(event);
+    	try {
+    		super.onTouchEvent(event);
+    	} catch (IllegalArgumentException ex) {
+    		ex.printStackTrace();
+    	}
     	
     	return true;
     }
     
-    @Override  
-    public void scrollTo(int x, int y){  
-        if (isCanScroll){  
-            super.scrollTo(x, y);  
-        }  
-    }  
+    public void setCycleDrag(boolean drag) {
+    	this.mCycleDrag = drag;
+    }
 }
