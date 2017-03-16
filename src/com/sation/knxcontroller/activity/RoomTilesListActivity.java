@@ -1,7 +1,11 @@
 package com.sation.knxcontroller.activity;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.STKNXControllerApp;
@@ -16,11 +20,9 @@ import com.sation.knxcontroller.util.ImageUtils;
 import com.sation.knxcontroller.util.KNX0X01Lib;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.StringUtil;
-import com.sation.knxcontroller.util.SystemUtil;
 import com.sation.knxcontroller.widget.PromptDialog;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -30,7 +32,13 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,9 +52,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RoomTilesListActivity extends BaseActivity {
+import static android.hardware.SensorManager.SENSOR_DELAY_NORMAL;
+
+public class RoomTilesListActivity extends BaseActivity implements Runnable {
 	private final String TAG = "RoomTilesListActivity";
-	
+	private static final int UPDATE_SYSTEM_TIME = 1;
+	private static final int UPDATE_TEMPERATURE = 2;
+	private static final int UPDATE_LIGHT = 3;
+
 	private RelativeLayout rlayout;
 	private GridView gridView;
 	private RoomListAdapter mRoomListAdapter;
@@ -56,9 +69,14 @@ public class RoomTilesListActivity extends BaseActivity {
 	private SharedPreferences settings;
 	private List<KNXRoom> mRoomList;
 	private ImageView imgRefresh;
-	
-//	private boolean displaySystemTime;
-//	private boolean bRecordLastInterface;
+	private Handler mHandler;
+	private SensorManager mSensorManager;
+	private Sensor tSensor;
+	private Sensor lSensor;
+	private TemperatureListener mTemperatureSensor;
+	private LightLisenter mLightListener;
+	private TextView txtTemperature;
+	private TextView txtLight;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,8 +94,51 @@ public class RoomTilesListActivity extends BaseActivity {
 		this.mRoomList = new ArrayList<KNXRoom>();
 		this.mRoomListAdapter = new RoomListAdapter(this);
 		this.imgRefresh = (ImageView)findViewById(R.id.imgRefresh);
+		this.txtTemperature = (TextView)findViewById(R.id.roomTilesListTextViewTemperature);
+		this.txtLight = (TextView)findViewById(R.id.roomTilesListTextViewLight);
+
+		this.mHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+
+				if(UPDATE_SYSTEM_TIME == msg.what) {
+					String time = (String)msg.obj;
+					if((null != time) && (null != txtSystemTime)) {
+						txtSystemTime.setText(time);
+					}
+				} else if (UPDATE_TEMPERATURE == msg.what) {
+					String temp = (String)msg.obj;
+					if((null != temp) && (null != txtTemperature)) {
+						txtTemperature.setText(temp);
+					}
+				} else if (UPDATE_LIGHT == msg.what) {
+					String light = (String)msg.obj;
+					if ((null != light) && (null != txtLight)) {
+						txtLight.setText(light);
+					}
+				}
+			}
+		};
 
 		initTiles();
+
+		new Thread(this).start();
+
+		this.mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+		List<Sensor> deviceSensors = this.mSensorManager.getSensorList(Sensor.TYPE_ALL);
+		for (Sensor sensor : deviceSensors) {
+			Log.i(TAG, "------------------------");
+			Log.i(TAG, sensor.getName());
+			Log.i(TAG, sensor.getVendor());
+			Log.i(TAG, Integer.toString(sensor.getType()));
+			Log.i(TAG, "------------------------");
+		}
+		this.tSensor = this.mSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+		this.mTemperatureSensor = new TemperatureListener();
+
+		this.lSensor = this.mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+		this.mLightListener = new LightLisenter();
 	}
 	
 	@Override
@@ -91,33 +152,22 @@ public class RoomTilesListActivity extends BaseActivity {
 	    	final int pageIndex = 0;
 	    	STKNXControllerApp.getInstance().setLastRoomIndex(roomIndex);
 	    	STKNXControllerApp.getInstance().setLastPageIndex(pageIndex);
-	    	
-	    	new Thread(new Runnable() {
 
-				@Override
-				public void run() {
-					SharedPreferences.Editor editor = settings.edit(); 
-					editor.putInt(STKNXControllerConstant.LAST_ROOM_INDEX, roomIndex);
-					editor.putInt(STKNXControllerConstant.LAST_PAGE_INDEX, pageIndex);
-					editor.commit();
-				}
-	    		
-	    	}).start();
-			
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putInt(STKNXControllerConstant.LAST_ROOM_INDEX, roomIndex);
+			editor.putInt(STKNXControllerConstant.LAST_PAGE_INDEX, pageIndex);
+			editor.apply();
 		}
 	}
 	
 	@Override
-	protected void onStart(){
+	public void onStart(){
 		super.onStart();
 		
 		Log.i(TAG, "");
 		
-		IntentFilter filter = new IntentFilter(STKNXControllerConstant.BROADCASTRECEIVER_REFRESH_SYSTEM_TIME);
-	    registerReceiver(refreshSystemTimeReceiver, filter);
-	    
-//		this.bRecordLastInterface = settings.getBoolean(STKNXControllerConstant.RECORD_LAST_INTERFACE,
-//	    		STKNXControllerConstant.RECORD_LAST_INTERFACE_VALUE);
+//		IntentFilter filter = new IntentFilter(STKNXControllerConstant.BROADCASTRECEIVER_REFRESH_SYSTEM_TIME);
+//	    registerReceiver(refreshSystemTimeReceiver, filter);
 	}
 
 	@Override
@@ -145,6 +195,13 @@ public class RoomTilesListActivity extends BaseActivity {
 				}
 			}
 		}
+
+//		this.mSensorManager.registerListener(this.mTemperatureSensor,
+//				this.tSensor,
+//				SENSOR_DELAY_NORMAL);
+//		this.mSensorManager.registerListener(this.mLightListener,
+//				this.lSensor,
+//				SENSOR_DELAY_NORMAL);
 	}
 	
 	@Override
@@ -152,15 +209,18 @@ public class RoomTilesListActivity extends BaseActivity {
 		super.onPause();
 		
 		Log.i(TAG, "");
+
+//		this.mSensorManager.unregisterListener(this.mTemperatureSensor, this.tSensor);
+//		this.mSensorManager.unregisterListener(this.mLightListener, this.lSensor);
 	} 
 	
 	@Override
-	protected void onStop() {
+	public void onStop() {
 		super.onStop();
 		
 		Log.i(TAG, "");
 		
-		unregisterReceiver(refreshSystemTimeReceiver);
+//		unregisterReceiver(refreshSystemTimeReceiver);
 	}
 
 	@Override
@@ -180,7 +240,7 @@ public class RoomTilesListActivity extends BaseActivity {
 		
 		setContentView(R.layout.view_null);
 	}
-	
+
 	public void displaySystemTime() {
         txtSystemTime.setVisibility(View.VISIBLE);
 	}
@@ -192,26 +252,25 @@ public class RoomTilesListActivity extends BaseActivity {
 	@SuppressWarnings("deprecation")
 	private void initTiles() {   
 		KNXApp mControlEditor = STKNXControllerApp.getInstance().getAppConfig();
-		if(null != mControlEditor) {
-			if(!StringUtil.isEmpty(mControlEditor.BackgroundImage)) {
-				Bitmap backImg = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath +mControlEditor.BackgroundImage);
-				if(null != backImg) {
-					this.rlayout.setBackground(new BitmapDrawable(backImg));
-				}
+		if(null == mControlEditor) {
+//			restartThisApp();
+			return;
+		}
+
+		if(!StringUtil.isEmpty(mControlEditor.getBackgroundImage())) {
+			Bitmap backImg = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath + mControlEditor.getBackgroundImage());
+			if(null != backImg) {
+				this.rlayout.setBackground(new BitmapDrawable(backImg));
 			}
+		}
 			
-			this.mRoomList.clear();
-			for (int i = 0; i < mControlEditor.getAreas().size(); i++) { 
-				KNXArea mArea = mControlEditor.getAreas().get(i);
-				for (int j = 0; j < mArea.getRooms().size(); j++) { 
-					KNXRoom mRoom = mArea.getRooms().get(j);
-					this.mRoomList.add(mRoom);
-				}
+		this.mRoomList.clear();
+		for (int i = 0; i < mControlEditor.getAreas().size(); i++) {
+			KNXArea mArea = mControlEditor.getAreas().get(i);
+			for (int j = 0; j < mArea.getRooms().size(); j++) {
+				KNXRoom mRoom = mArea.getRooms().get(j);
+				this.mRoomList.add(mRoom);
 			}
-		} else { // restart the app
-			Log.i(TAG, "restart this app");
-//			this.imgRefresh.callOnClick();
-			restartThisApp();
 		}
  
 		this.mRoomListAdapter.setRoomList(this.mRoomList);
@@ -222,11 +281,7 @@ public class RoomTilesListActivity extends BaseActivity {
 			public void onItemClick(final KNXRoom mRoom) { 
 				//进入房间具体设置
 				if(StringUtil.isEmpty(mRoom.getPinCode())) {
-					Intent intent = new Intent(RoomTilesListActivity.this, RoomDetailsActivity.class);
-					Bundle bundle = new Bundle();
-					bundle.putSerializable(STKNXControllerConstant.REMOTE_PARAM_KEY, mRoom);
-					intent.putExtras(bundle);
-					startActivity(intent);
+					jumpToRoomDetailsActivity(mRoom);
 				} else {
 					
 					final View view = LayoutInflater.from(RoomTilesListActivity.this).inflate(R.layout.password_layout, null);  
@@ -248,13 +303,8 @@ public class RoomTilesListActivity extends BaseActivity {
 						public void onClick(Dialog dialog, int which) {
 						EditText txtPassword = (EditText) view.findViewById(R.id.txtPassword);
 						dialog.dismiss();
-						if(txtPassword.getText().toString().trim().equalsIgnoreCase(mRoom.getPinCode())) { 
-										
-							Intent intent = new Intent(RoomTilesListActivity.this, RoomDetailsActivity.class);
-							Bundle bundle = new Bundle();
-							bundle.putSerializable(STKNXControllerConstant.REMOTE_PARAM_KEY, mRoom);
-							intent.putExtras(bundle);
-							startActivity(intent);
+						if(txtPassword.getText().toString().trim().equalsIgnoreCase(mRoom.getPinCode())) {
+							jumpToRoomDetailsActivity(mRoom);
 						} else {
 							Toast.makeText(RoomTilesListActivity.this, getResources().getString(R.string.password_error), 
 										Toast.LENGTH_SHORT).show();
@@ -279,7 +329,8 @@ public class RoomTilesListActivity extends BaseActivity {
 				 final String pw = settings.getString(STKNXControllerConstant.SYSTEM_SETTING_PASSWORD, 
 							STKNXControllerConstant.SYSTEM_SETTING_PASSWORD_VALUE).trim();
 				 if(pw.isEmpty()) {
-					 new SettingDialog(RoomTilesListActivity.this).Show();
+//					 new SettingDialog(RoomTilesListActivity.this).Show();
+					 jumpToSettingsActivity();
 				 } else {
 					 final PromptDialog mPrompDialog = new PromptDialog.Builder(RoomTilesListActivity.this)
 							 .setTitle(getResources().getString(R.string.access_restriction)) 
@@ -300,7 +351,8 @@ public class RoomTilesListActivity extends BaseActivity {
 												
 									 if(txtPassword.getText().toString().trim().equals(pw)) {  
 										 dialog.dismiss();
-										 new SettingDialog(RoomTilesListActivity.this).Show(); 
+//										 new SettingDialog(RoomTilesListActivity.this).Show();
+										 jumpToSettingsActivity();
 									 } else {
 										 Toast.makeText(RoomTilesListActivity.this, getResources().getString(R.string.password_error), 
 												 Toast.LENGTH_SHORT).show();
@@ -327,7 +379,8 @@ public class RoomTilesListActivity extends BaseActivity {
 					               			mPrompDialog.dismiss();
 					               		}
 					               		
-					               		new SettingDialog(RoomTilesListActivity.this).Show(); 
+//					               		new SettingDialog(RoomTilesListActivity.this).Show();
+										jumpToSettingsActivity();
 					               	} else {
 					               		Toast.makeText(RoomTilesListActivity.this, getResources().getString(R.string.password_error),
 					               				Toast.LENGTH_SHORT).show();
@@ -360,7 +413,7 @@ public class RoomTilesListActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				//重启启动
-				restartThisApp();
+				restartThisApplication();
 			}
 			
 		});
@@ -368,40 +421,120 @@ public class RoomTilesListActivity extends BaseActivity {
 
 	@Override
 	public void onBackPressed() {
-		if(android.os.Build.MODEL.equals(STKNXControllerConstant.STKCPLATFORM)) { // 若是世讯十寸机
-			return;
-		} else {
+		if(!android.os.Build.MODEL.equals(STKNXControllerConstant.STKCPLATFORM)) { // 若不是世讯十寸机，则退出程序
 			STKNXControllerApp.getInstance().onDestroy();
 			KNX0X01Lib.UCLOSENet();
 
 			super.onBackPressed();
 		}
 	}
-	
-	private BroadcastReceiver refreshSystemTimeReceiver = new BroadcastReceiver() {
+
+	private void jumpToRoomDetailsActivity(final KNXRoom mRoom) {
+		Intent intent = new Intent(RoomTilesListActivity.this, RoomDetailsActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(STKNXControllerConstant.REMOTE_PARAM_KEY, mRoom);
+		intent.putExtras(bundle);
+		startActivity(intent);
+
+		overridePendingTransition(R.anim.scale_from_center,
+				R.anim.scale_to_center);
+	}
+
+	private void jumpToSettingsActivity() {
+		Intent intent = new Intent(RoomTilesListActivity.this, SettingsActivity.class);
+		startActivity(intent);
+
+		overridePendingTransition(R.anim.scale_leftbottom_in, R.anim.scale_righttop_out);
+	}
+
+	@Override
+	public void run() {
+		do {
+			try {
+				/* 刷新主界面时间 */
+				if(STKNXControllerApp.getInstance().getDisplayTimeFlag()) {
+					final Calendar c = Calendar.getInstance();
+					int year = c.get(Calendar.YEAR);
+					int month = c.get(Calendar.MONTH)+1;
+					int day = c.get(Calendar.DAY_OF_MONTH);
+					int hour = c.get(Calendar.HOUR_OF_DAY); // 24小时制的时间
+					int minute = c.get(Calendar.MINUTE);
+					int second = c.get(Calendar.SECOND);
+					int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+					String weekday = "";
+
+					if (1 == dayOfWeek) { // 周日
+						weekday = this.getResources().getString(R.string.sunday);
+					} else if (2 == dayOfWeek) { // 周一
+						weekday = this.getResources().getString(R.string.monday);
+					} else if (3 == dayOfWeek) { // 周二
+						weekday = this.getResources().getString(R.string.tuesday);
+					} else if (4 == dayOfWeek) { // 周三
+						weekday = this.getResources().getString(R.string.wednesday);
+					} else if (5 == dayOfWeek) { // 周四
+						weekday = this.getResources().getString(R.string.thursday);
+					} else if (6 == dayOfWeek) { // 周五
+						weekday = this.getResources().getString(R.string.friday);
+					} else if (7 == dayOfWeek) { // 周六
+						weekday = this.getResources().getString(R.string.saturday);
+					}
+
+					String languange = STKNXControllerApp.getInstance().getLanguage();
+					String time;
+					if ((null != languange) && languange.equals(Locale.SIMPLIFIED_CHINESE.toString())) {
+						time = String.format(Locale.getDefault(), "%04d/%02d/%02d  %02d:%02d:%02d  %s",
+								year, month, day, hour, minute, second, weekday);
+					} else {
+						time = String.format(Locale.getDefault(), "%02d/%02d/%04d  %02d:%02d:%02d  %s",
+								month, day, year, hour, minute, second, weekday);
+					}
+
+					Message msg = new Message();
+					msg.what = UPDATE_SYSTEM_TIME;
+					msg.obj = time;
+					this.mHandler.sendMessage(msg);
+				}
+
+				Thread.sleep(1000);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		} while (true);
+	}
+
+	private class TemperatureListener implements SensorEventListener {
+		@Override
+		public void onSensorChanged(SensorEvent event) {
+			float tempArray = event.values[0];
+			BigDecimal tempBD = new BigDecimal(tempArray);
+			double tempDouble = tempBD.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+			Log.i(TAG, "temperature changed==>" + tempDouble);
+			Message msg = new Message();
+			msg.what = UPDATE_TEMPERATURE;
+			msg.obj = String.valueOf(tempDouble) + " ℃";
+			mHandler.sendMessage(msg);
+		}
 
 		@Override
-		public void onReceive(Context context, final Intent intent) {
-
-			if(intent.getAction().equals(STKNXControllerConstant.BROADCASTRECEIVER_REFRESH_SYSTEM_TIME)/* &&
-					SystemUtil.isForeground(RoomTilesListActivity.this, "com.sation.knxcontroller.activity.RoomTilesListActivity")*/) {
-				if(STKNXControllerApp.getInstance().getDisplayTimeFlag()) {
-					if(null != txtSystemTime) {
-						try {
-							Log.i(TAG, "1");
-			            	txtSystemTime.setText(intent.getStringExtra(STKNXControllerConstant.SYSTEMTIME));
-			            	Log.i(TAG, "2");
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
-					}
-				}
-			}
+		public void onAccuracyChanged(Sensor sensor, int accuracy) {
+			Log.i(TAG, "onAccuracyChanged");
 		}
-	};
+	}
 
-	private void restartThisApp() {
-		RoomTilesListActivity.this.startService(new Intent(RoomTilesListActivity.this, RestartService.class));
-		((Activity) RoomTilesListActivity.this).finish();
+	private class LightLisenter implements SensorEventListener {
+		@Override
+		public void onSensorChanged(SensorEvent event) {
+			float lightArray = event.values[0];
+			BigDecimal lightBD = new BigDecimal(lightArray);
+			double lightDouble = lightBD.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+			Log.i(TAG, "light changed ==> " + lightDouble);
+			Message msg = new Message();
+			msg.what = UPDATE_LIGHT;
+			msg.obj = String.valueOf(lightDouble) + " lux";
+			mHandler.sendMessage(msg);
+		}
+
+		@Override
+		public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 	}
 }

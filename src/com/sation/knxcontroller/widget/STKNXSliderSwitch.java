@@ -2,6 +2,7 @@ package com.sation.knxcontroller.widget;
 
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXSliderSwitch;
+import com.sation.knxcontroller.models.KNXView;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
@@ -29,7 +30,7 @@ public class STKNXSliderSwitch extends STKNXControl {
 	private static final int PADDING = 2;
 	private static final int SUBVIEW_WIDTH = 40;
     private final int SLIDER_EDGE_WIDTH = 3;
-    private final int SLIDER_WIDTH = 40;
+//    private final int SLIDER_WIDTH = 40;
 	
     private KNXSliderSwitch mKNXSliderSwitch;
     private STSlider slider;
@@ -56,11 +57,19 @@ public class STKNXSliderSwitch extends STKNXControl {
 		
 		this.mSliderState = ESliderState.Normal;
 
+		/* 第一个按钮 左边/下边的 */
 		STButton vLeft = new STButton(context);
-		vLeft.width = Math.max(this.mKNXSliderSwitch.Height-2*STKNXSliderSwitch.PADDING, STKNXSliderSwitch.SUBVIEW_WIDTH);
-		vLeft.height = this.mKNXSliderSwitch.Height-2*STKNXSliderSwitch.PADDING;
-		vLeft.left = STKNXSliderSwitch.PADDING;
-		vLeft.top = STKNXSliderSwitch.PADDING;
+		if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+			vLeft.left = STKNXSliderSwitch.PADDING;
+			vLeft.top = STKNXSliderSwitch.PADDING;
+			vLeft.height = this.mKNXSliderSwitch.Height - 2 * vLeft.top;
+			vLeft.width = this.mKNXSliderSwitch.Height - 2 * vLeft.top;
+		} else {
+			vLeft.left = STKNXSliderSwitch.PADDING;
+			vLeft.width = this.mKNXSliderSwitch.Width - 2 * vLeft.left;
+			vLeft.height = this.mKNXSliderSwitch.Width - 2 * vLeft.left;
+			vLeft.top = this.mKNXSliderSwitch.Height - STKNXSliderSwitch.PADDING - vLeft.height;
+		}
 		vLeft.backColor = Color.parseColor(this.mKNXSliderSwitch.BackgroundColor);
 		vLeft.radius = this.mKNXSliderSwitch.Radius;
 		vLeft.alpha = this.mKNXSliderSwitch.Alpha;
@@ -69,12 +78,20 @@ public class STKNXSliderSwitch extends STKNXControl {
 			vLeft.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getLeftImage());
 		}
 		this.addView(vLeft);
-		
+
+		/* 第二个按钮 右边/上边 */
 		STButton vRight = new STButton(context);
-		vRight.width = Math.max(this.mKNXSliderSwitch.Height-2*STKNXSliderSwitch.PADDING, STKNXSliderSwitch.SUBVIEW_WIDTH);
-		vRight.height = this.mKNXSliderSwitch.Height-2*STKNXSliderSwitch.PADDING;
-		vRight.left = this.mKNXSliderSwitch.Width - STKNXSliderSwitch.PADDING - vRight.width;
-		vRight.top = STKNXSliderSwitch.PADDING;
+		if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+			vRight.top = STKNXSliderSwitch.PADDING;
+			vRight.height = this.mKNXSliderSwitch.Height - 2 * vRight.top;
+			vRight.width = this.mKNXSliderSwitch.Height - 2 * vRight.top;
+			vRight.left = this.mKNXSliderSwitch.Width - STKNXSliderSwitch.PADDING - vRight.width;
+		} else {
+			vRight.left = STKNXSliderSwitch.PADDING;
+			vRight.top = STKNXSliderSwitch.PADDING;
+			vRight.width = this.mKNXSliderSwitch.Width - 2 * vRight.left;
+			vRight.height = this.mKNXSliderSwitch.Width - 2 * vRight.left;
+		}
 		vLeft.backColor = Color.parseColor(this.mKNXSliderSwitch.BackgroundColor);
 		vLeft.radius = this.mKNXSliderSwitch.Radius;
 		vLeft.alpha = this.mKNXSliderSwitch.Alpha;
@@ -83,19 +100,30 @@ public class STKNXSliderSwitch extends STKNXControl {
 			vRight.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getRightImage());
 		}
 		this.addView(vRight);
-		
-		this.sliderStartPos = vLeft.left+vLeft.width+STKNXSliderSwitch.PADDING;
-		this.sliderWidth = this.mKNXSliderSwitch.Width-this.sliderStartPos*2;
+
+		if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+			this.sliderStartPos = vLeft.left + vLeft.width + STKNXSliderSwitch.PADDING;
+			this.sliderWidth = this.mKNXSliderSwitch.Width - (vLeft.left + vLeft.width) - (vRight.width + STKNXSliderSwitch.PADDING) - STKNXSliderSwitch.PADDING * 2;
+		} else {
+			this.sliderStartPos = vLeft.top -  STKNXSliderSwitch.PADDING  - this.mKNXSliderSwitch.getSliderWidth();
+			this.sliderWidth = this.mKNXSliderSwitch.Height - (vRight.top + vRight.height + STKNXSliderSwitch.PADDING) - (this.mKNXSliderSwitch.Height - this.sliderStartPos);
+		}
 		this.sliderPositionX = this.sliderStartPos;
 		
 		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
 			int range = getThumbScrollRange();
 			int interval = range/15;
-			for(int i=0; i<16; i++) {
-				pos[i] = this.sliderStartPos+ i*interval;
+			if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+				for (int i = 0; i < 16; i++) {
+					pos[i] = this.sliderStartPos + i * interval;
+				}
+				pos[15] = this.sliderStartPos + range;
+			} else {
+				for (int i = 0; i < 16; i++) {
+					pos[i] = this.sliderStartPos - i * interval;
+				}
+				pos[15] = this.sliderStartPos - range;
 			}
-			pos[15] = this.sliderStartPos+range;
-			
 			this.curPos = 8;
 			this.sliderPositionX = this.pos[this.curPos];
 		}
@@ -127,13 +155,23 @@ public class STKNXSliderSwitch extends STKNXControl {
 			@Override
 			public int clampViewPositionHorizontal(View child, int left, int dx) {
 				mSliderState = ESliderState.Dragging;
-                return sliderPositionX = getSliderPosX(left);
+				if (KNXView.EOrientation.Horizontal == mKNXSliderSwitch.getOrientation()) {
+					return sliderPositionX = getSliderPosX(left);
+//					return left;
+				} else {
+					return super.clampViewPositionHorizontal(child, left, dx);
+				}
 			} 
 			
 			@Override
 			public int clampViewPositionVertical(View child, int top, int dy) {
 				mSliderState = ESliderState.Dragging;
-				return super.clampViewPositionVertical(child, top, dy);
+				if (KNXView.EOrientation.Horizontal == mKNXSliderSwitch.getOrientation()) {
+					return super.clampViewPositionVertical(child, top, dy);
+				} else {
+					return sliderPositionX = getSliderPosX(top);
+//					return top;
+				}
 			}
 			
 			@Override
@@ -151,16 +189,30 @@ public class STKNXSliderSwitch extends STKNXControl {
 				slider.mEControlState = STSlider.EControlState.Up;
 				sliderChanged();
 				mSliderState = ESliderState.Normal;
+
+//				if(KNXView.EOrientation.Horizontal == mKNXSliderSwitch.getOrientation()) {
+//					sliderPositionX = getSliderPosX((int)xvel);
+//				} else {
+//					sliderPositionX = getSliderPosX((int)yvel);
+//				}
 			}
 			
 			@Override
 			public int getViewHorizontalDragRange(View child){
-				return getThumbScrollRange();
+				if(KNXView.EOrientation.Horizontal == mKNXSliderSwitch.getOrientation()) {
+					return getThumbScrollRange();
+				} else {
+					return 0;
+				}
 			}
 			
 			@Override
 			public int getViewVerticalDragRange(View child){
-				return 0;
+				if(KNXView.EOrientation.Horizontal == mKNXSliderSwitch.getOrientation()) {
+					return 0;
+				} else {
+					return getThumbScrollRange();
+				}
 			}
 		});
 
@@ -168,8 +220,8 @@ public class STKNXSliderSwitch extends STKNXControl {
 		slider.backColor = Color.parseColor(this.mKNXSliderSwitch.BackgroundColor);
 		slider.radius = this.mKNXSliderSwitch.Radius;
 		slider.alpha = this.mKNXSliderSwitch.Alpha;
-		
-		LayoutParams pageLayoutParams = new LayoutParams(this.SLIDER_WIDTH, this.mKNXSliderSwitch.Height); 
+		slider.orientation = this.mKNXSliderSwitch.getOrientation();
+		LayoutParams pageLayoutParams = new LayoutParams(this.mKNXSliderSwitch.getSliderWidth(), this.mKNXSliderSwitch.Height);
 		slider.setLayoutParams(pageLayoutParams);
 		this.addView(slider);
 		
@@ -207,8 +259,12 @@ public class STKNXSliderSwitch extends STKNXControl {
 		this.slider = null;
 	}
 	
-	private int getThumbScrollRange() { 
-		return this.sliderWidth-this.SLIDER_WIDTH;
+	private int getThumbScrollRange() {
+		if (KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+			return this.sliderWidth - this.mKNXSliderSwitch.getSliderWidth();
+		} else {
+			return this.sliderWidth;
+		}
 	}
 	
 	private int getSliderStartPos() {
@@ -216,36 +272,54 @@ public class STKNXSliderSwitch extends STKNXControl {
 	}
 	
 	private int getSliderEndPos(){
-		return this.getSliderStartPos()+this.getThumbScrollRange();
+		if (KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+			return this.getSliderStartPos() + this.getThumbScrollRange();
+		} else {
+			return this.getSliderStartPos() - this.getThumbScrollRange();
+		}
 	}
 	
 	private int getSliderPos(float progress){
 		int pos = (int)(progress * getThumbScrollRange());
-		return this.sliderStartPos+pos;
+		if (KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+			return this.sliderStartPos + pos;
+		} else {
+			return this.sliderStartPos - pos;
+		}
 	}
 	
 	private int getSliderPosX(int position) {
-		this.sliderPositionX = Math.max(getSliderStartPos(), position);
-        sliderPositionX = Math.min(sliderPositionX, getSliderEndPos());
-        if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) {
-        	curPos = MathUtils.getTheClosetIndex(sliderPositionX, pos);
-        	sliderPositionX = pos[curPos];
-        }
+		if (KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+			this.sliderPositionX = Math.max(getSliderStartPos(), position);
+			this.sliderPositionX = Math.min(this.sliderPositionX, getSliderEndPos());
+			if (EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
+				this.curPos = MathUtils.getTheClosetIndex(this.sliderPositionX, pos);
+				this.sliderPositionX = this.pos[curPos];
+			}
+		} else {
+			this.sliderPositionX = Math.min(getSliderStartPos(), position);
+			this.sliderPositionX = Math.max(this.sliderPositionX, getSliderEndPos());
+			if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
+				this.curPos = MathUtils.getTheClosetIndex(this.sliderPositionX, pos);
+				this.sliderPositionX = this.pos[curPos];
+			}
+		}
 
-        return sliderPositionX;
+        return this.sliderPositionX;
 	}
 
 	public void setProgress(int p) {
 		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) { 
 			/* 相对调光 */
-			this.sliderPositionX = this.pos[8];
+//			this.sliderPositionX = this.pos[8];
 		} else {
 			/* 绝对调光 */
 			this.progress = (float)p/255;
 			this.sliderPositionX = getSliderPos(this.progress);
+			requestLayout();
 		}
 		
-		requestLayout();
+
 		
 //		UIKit.runOnMainThreadAsync(new Runnable() {
 //
@@ -270,8 +344,11 @@ public class STKNXSliderSwitch extends STKNXControl {
 			
 			 sendCommandRequest(this.mKNXSliderSwitch.getWriteAddressIds(), val+"", false, null);
 		} else {
-			
-			progress = (float)(sliderPositionX-this.getSliderStartPos())/this.getThumbScrollRange();
+			if (KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+				progress = (float) (sliderPositionX - this.getSliderStartPos()) / this.getThumbScrollRange();
+			} else {
+				progress = (float) (this.getSliderStartPos() - sliderPositionX) / this.getThumbScrollRange();
+			}
     		if(progress>1){
     			progress = 1;
     		}
@@ -366,10 +443,17 @@ public class STKNXSliderSwitch extends STKNXControl {
 
 			int cl = 0, ct = 0, cr = 0, cb = 0;
 			if(view instanceof STSlider) {
-				cl = this.sliderPositionX;
-				ct = 0; 
-				cr = cl+this.SLIDER_WIDTH;
-				cb = ct+this.getHeight();
+				if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+					cl = this.sliderPositionX;
+					ct = 0;
+					cr = cl + this.mKNXSliderSwitch.getSliderWidth();
+					cb = ct + this.getHeight();
+				} else {
+					cl = 0;
+					ct = this.sliderPositionX;
+					cr = cl+this.getWidth();
+					cb = ct+this.mKNXSliderSwitch.getSliderWidth();
+				}
 			} else if(view instanceof STButton){
 				STButton button = (STButton)view;
 				cl = button.left;
@@ -396,6 +480,17 @@ public class STKNXSliderSwitch extends STKNXControl {
         int y = this.SLIDER_EDGE_WIDTH;  // 
         int width = this.getWidth();
         int height = this.getHeight() - 2 * y;
+		if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+			x = 0;
+			y = this.SLIDER_EDGE_WIDTH;
+			width = this.getWidth();
+			height = this.getHeight() - 2 * y;
+		} else {
+			x = this.SLIDER_EDGE_WIDTH;
+			y = 0;
+			width = this.getWidth() - 2 * x;
+			height = this.getHeight();
+		}
         RectF rect1 = new RectF(x, y, x+width, y+height);
     	if(EFlatStyle.Stereo == this.mKNXSliderSwitch.getFlatStyle()) {	// 画立体感的圆角矩形 
         
@@ -407,12 +502,22 @@ public class STKNXSliderSwitch extends STKNXControl {
     		
     		/* 各颜色所在的位置 */
     		float positions[] = new float[3];
-    		positions[0] = .0f;
-    		positions[1] = .3f;
-    		positions[2] = 1.0f;
-    		
-    		Shader mShader = new LinearGradient(0, 0, 0, getHeight(), 
-    			colors, positions, Shader.TileMode.CLAMP); // 设置渐变色 这个正方形的颜色是改变的 , 一个材质,打造出一个线性梯度沿著一条线。  
+			Shader mShader;
+
+			if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+				positions[0] = .0f;
+				positions[1] = .3f;
+				positions[2] = 1.0f;
+
+				mShader = new LinearGradient(0, 0, 0, getHeight(),
+						colors, positions, Shader.TileMode.CLAMP); // 设置渐变色 这个正方形的颜色是改变的 , 一个材质,打造出一个线性梯度沿著一条线。
+			} else {
+				positions[0] = .0f;
+				positions[1] = .7f;
+				positions[2] = 1.0f;
+				mShader = new  LinearGradient(0, 0, getWidth(), 0,
+						colors, positions, Shader.TileMode.CLAMP);
+			}
     		paint.setShader(mShader);  
     	} else {	// 画扁平风格的圆角矩形
     		paint.setARGB((int)(this.mKNXSliderSwitch.Alpha*255), Color.red(backColor), Color.green(backColor), Color.blue(backColor));
@@ -427,29 +532,55 @@ public class STKNXSliderSwitch extends STKNXControl {
     		this.mViewDragHelper.processTouchEvent(event);
     	}
     	
-    	final float x = event.getX();
+    	final float x;
+		if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+			x = event.getX();
 
-    	if((x>=this.sliderStartPos) && (x<=(this.getSliderEndPos()+this.SLIDER_WIDTH)) &&
-    			(ESliderState.Normal == this.mSliderState)) {
-    		switch (event.getAction()) { 
-    			case MotionEvent.ACTION_DOWN: 
-    				this.sliderPositionX = getSliderPosX((int)x-this.SLIDER_WIDTH/2);
-    				this.slider.requestLayout();
-    				break;
-    			case MotionEvent.ACTION_UP:
-    				this.sliderChanged();
-    				break;
-    			
-    			case MotionEvent.ACTION_MOVE:
-    				this.sliderPositionX = getSliderPosX((int)x-this.SLIDER_WIDTH/2);
-    				this.slider.requestLayout();
-    				break;
-    			
-    			default:
-    				break;
-    		}
-    	}
-    	 
+			if((x>=this.sliderStartPos) && (x<=(this.getSliderEndPos()+this.mKNXSliderSwitch.getSliderWidth())) &&
+					(ESliderState.Normal == this.mSliderState)) {
+				switch (event.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						this.sliderPositionX = getSliderPosX((int)x-this.mKNXSliderSwitch.getSliderWidth()/2);
+						this.slider.requestLayout();
+						break;
+					case MotionEvent.ACTION_UP:
+						this.sliderChanged();
+						break;
+
+					case MotionEvent.ACTION_MOVE:
+						this.sliderPositionX = getSliderPosX((int)x-this.mKNXSliderSwitch.getSliderWidth()/2);
+						this.slider.requestLayout();
+						break;
+
+					default:
+						break;
+				}
+			}
+		} else {
+			x = event.getY();
+
+			if((x <= this.sliderStartPos) && (x >= (this.getSliderEndPos())) &&
+					(ESliderState.Normal == this.mSliderState)) {
+				switch (event.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						this.sliderPositionX = getSliderPosX( (int)x + this.mKNXSliderSwitch.getSliderWidth()/2 );
+						this.slider.requestLayout();
+						break;
+					case MotionEvent.ACTION_UP:
+						this.sliderChanged();
+						break;
+
+					case MotionEvent.ACTION_MOVE:
+						this.sliderPositionX = getSliderPosX((int)x+this.mKNXSliderSwitch.getSliderWidth()/2);
+						this.slider.requestLayout();
+						break;
+
+					default:
+						break;
+				}
+			}
+		}
+
     	return true;
     }
 }

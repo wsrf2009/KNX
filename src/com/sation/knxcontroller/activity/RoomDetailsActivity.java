@@ -2,6 +2,7 @@ package com.sation.knxcontroller.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -31,7 +32,6 @@ import com.sation.knxcontroller.models.KNXSelectedAddress;
 import com.sation.knxcontroller.util.KNX0X01Lib;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.StringUtil;
-import com.sation.knxcontroller.util.SystemUtil;
 import com.sation.knxcontroller.util.uikit.UIKit;
 import com.sation.knxcontroller.viewpagerindicator.LinePageIndicator;
 import com.sation.knxcontroller.widget.STKNXDigitalAdjustment;
@@ -52,10 +52,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
-import android.os.Message;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.RelativeLayout.LayoutParams;
 
@@ -69,13 +66,11 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 	private List<KNXPage> mKNXPages;
 	private ArrayList<STKNXPage> mPages;
 	private List<KNXControlBase> currentPageKNXControlBase; //当前页面所有控件集合
-	private Map<String, KNXControlBase> currentPageKNXControlBaseMap;
+	private Map<KNXControlBase, String> currentPageKNXControlBaseMap;
 	private List<TimingTaskListAdapter> timingTaskAdapterList;
 	private SharedPreferences settings;
 	private STKNXPagerAdapter mSTKNXPagerAdapter;
-	
-//	private boolean displayed;
-//	private boolean bRecordLastInterface;
+
 	private boolean shouldDestroyActivity;
 	private boolean mCycleDrag; // 循环滑动页面
 	private boolean backToThis;
@@ -89,11 +84,10 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 		this.linePageIndicator = (LinePageIndicator)findViewById(R.id.linePageIndicator);
 		this.mPages = new ArrayList<STKNXPage>();
 		this.currentPageKNXControlBase = new ArrayList<KNXControlBase>();
-		this.currentPageKNXControlBaseMap = new HashMap<String, KNXControlBase>();
+		this.currentPageKNXControlBaseMap = new HashMap<KNXControlBase, String>();
 		this.timingTaskAdapterList = new ArrayList<TimingTaskListAdapter>();
 		this.mSTKNXPagerAdapter = new STKNXPagerAdapter();
-		
-//		this.displayed = false;
+
 		this.shouldDestroyActivity = false;
 		this.mCycleDrag = true;
 		this.backToThis = false;
@@ -112,17 +106,9 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 		if(STKNXControllerApp.getInstance().getRememberLastInterface()) {
 			final String timerId = "";
 			STKNXControllerApp.getInstance().setLastTimerId(timerId);
-			new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-					SharedPreferences.Editor editor = settings.edit(); 
-					editor.putString(STKNXControllerConstant.LAST_TIMER_ID, timerId);
-					editor.commit();
-				}
-				
-			}).start();
-			
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString(STKNXControllerConstant.LAST_TIMER_ID, timerId);
+			editor.apply();
 		}
 		
 		this.backToThis = true;
@@ -135,30 +121,10 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 		for(TimingTaskListAdapter adapter : timingTaskAdapterList) {
 			adapter.notifyDataSetChanged();
 		}
-		
-//	    IntentFilter filter = new IntentFilter(STKNXControllerConstant.BROADCAST_REFRESH_TIMING_TASK_LIST);
-//	    registerReceiver(this.refreshTimerTaskListReceiver, filter);
-	    
-//		new Thread(new Runnable(){
-//
-//			@Override
-//			public void run() {
-//				IntentFilter intentFilter = new IntentFilter();
-//				intentFilter.addAction(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS);
-//				HandlerThread mHandlerThread = new HandlerThread("update status");
-//				Looper looper = mHandlerThread.getLooper();
-//				Handler handler = new Handler(looper);
-//				registerReceiver(updateDeviceStateReceiver, intentFilter, null, handler);
-//			}
-//			
-//		});
+
 	    //设备状态的广播
 	    IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS);
-//		HandlerThread mHandlerThread = new HandlerThread("update status");
-//		Looper looper = mHandlerThread.getLooper();
-//		Handler handler = new Handler(looper);
-//		registerReceiver(this.updateDeviceStateReceiver, intentFilter, null, handler);
 		registerReceiver(this.updateDeviceStateReceiver, intentFilter);
 	}
 
@@ -177,8 +143,7 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 				}
 			}
 		}
-		
-//		Log.i(TAG, "pageIndex:"+pageIndex);
+
 		if(this.mPages.size() > 0) {
 			this.linePageIndicator.setCurrentItem(pageIndex);
 //			this.mViewPager.setCurrentItem(this.mCycleDrag?pageIndex+1:pageIndex);
@@ -194,16 +159,11 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 				}
 //			}
 		}
-
-//	    displayed = true;
 	}
 	
 	@Override
 	public void onBackPressed() {
-//		Log.i(TAG, "displayed:"+displayed);
-//		if(displayed) {
-			super.onBackPressed();
-//		}
+		super.onBackPressed();
 	}
 
 	@Override
@@ -216,7 +176,6 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 		super.onStop();
 		
 		unregisterReceiver(this.updateDeviceStateReceiver);
-//		unregisterReceiver(this.refreshTimerTaskListReceiver);
 	}
 	
 	@Override
@@ -248,8 +207,13 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 	@Override
 	public final void onLowMemory(){
 		super.onLowMemory();
-		
-//		Log.w(TAG, "onLowMemory()");
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
+
+		overridePendingTransition(R.anim.scale_from_center, R.anim.scale_to_center);
 	}
 
 	private void createRoom() {
@@ -342,7 +306,7 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 
 	@Override
 	public void onPageSelected(int position) {
-		int i = 0;
+		int i;
 		
 		if(this.mCycleDrag) {
 			if((null != this.mPages) && (null != this.mKNXPages) && (null != this.mViewPager)) {
@@ -353,7 +317,7 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 						return;
 					} else if(position > this.mKNXPages.size()) {
 						this.mViewPager.setCurrentItem(1, false);
-						i = 1;
+//						i = 1;
 						return;
 					} else {
 						i = position;
@@ -373,18 +337,10 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 		final int pageIndex = i;
 		if(STKNXControllerApp.getInstance().getRememberLastInterface()) {
 			STKNXControllerApp.getInstance().setLastPageIndex(pageIndex);
-			
-			new Thread(new Runnable() {
 
-				@Override
-				public void run() {
-					SharedPreferences.Editor editor = settings.edit(); 
-					editor.putInt(STKNXControllerConstant.LAST_PAGE_INDEX, pageIndex);
-					editor.commit();
-				}
-				
-			}).start();
-			
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putInt(STKNXControllerConstant.LAST_PAGE_INDEX, pageIndex);
+			editor.apply();
 		}
 
 		new Thread(new Runnable() {
@@ -456,20 +412,13 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 				String defaultTimerId = STKNXControllerApp.getInstance().getLastTimerId();
 				if((null != this.mCurrentSTKNXPage) && (!StringUtil.isEmpty(defaultTimerId))) {
 					boolean bContains = isContainsTimer(this.mCurrentSTKNXPage.getKNXPage(), defaultTimerId);
-					if(bContains) {
+					if (bContains) {
 						final String timerId = "";
 						STKNXControllerApp.getInstance().setLastTimerId(timerId);
-						
-						new Thread(new Runnable() {
 
-							@Override
-							public void run() {
-								SharedPreferences.Editor editor = settings.edit(); 
-								editor.putString(STKNXControllerConstant.LAST_TIMER_ID, timerId);
-								editor.commit();
-							}
-							
-						}).start();
+						SharedPreferences.Editor editor = settings.edit();
+						editor.putString(STKNXControllerConstant.LAST_TIMER_ID, timerId);
+						editor.apply();
 
 						Intent intent = new Intent(RoomDetailsActivity.this, TimingTaskActivity.class);
 						intent.putExtra(STKNXControllerConstant.CONTROL_ID, defaultTimerId);
@@ -490,6 +439,8 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 		Map<String, Integer> addressIdIndexMap = STKNXControllerApp.getInstance().getGroupAddressIndexMap();
 		for (int x = 0; (x < container.getControls().size()) && (!this.shouldDestroyActivity); x++) {
 			final KNXControlBase mKNXControlBase = container.getControls().get(x);
+			boolean readStatus = false;
+
 			if(null == mKNXControlBase) {
 				continue;
 			}
@@ -502,53 +453,56 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 					(mKNXControlBase.getReadAddressId().size() > 0) && 
 					(null != this.currentPageKNXControlBaseMap)) {
 				this.currentPageKNXControlBaseMap.put(
-						getFirstOrNull(mKNXControlBase.getReadAddressId()).getId(), mKNXControlBase);
+						mKNXControlBase, getFirstOrNull(mKNXControlBase.getReadAddressId()).getId());
 			}
 			
 			if(mKNXControlBase instanceof KNXBlinds) { // KNXBlinds
 				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(), mKNXControlBase);
 			} else if(mKNXControlBase instanceof KNXSwitch) { // KNXSwitch
 				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(), mKNXControlBase);
+				readStatus = true;
 			} else if(mKNXControlBase instanceof KNXSliderSwitch) { // KNXSliderSwitch
 				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(), mKNXControlBase);
+				readStatus = true;
 			} else if (mKNXControlBase instanceof KNXTimerButton) {
 				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(), mKNXControlBase);
 			} else if(mKNXControlBase instanceof KNXDigitalAdjustment) {
 				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(), mKNXControlBase);
+				readStatus = true;
 			} else if(mKNXControlBase instanceof KNXGroupBox) {
 				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(),  mKNXControlBase);
+				readStatus = true;
 			} else if(mKNXControlBase instanceof KNXValueDisplay) {
 				STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().put(mKNXControlBase.getId(),  mKNXControlBase);
+				readStatus = true;
 			}
 
-			KNXSelectedAddress mKNXSelectedAddress = getFirstOrNull(mKNXControlBase.getReadAddressId()); // 获取对象的读地址
-			int currentIndex = 0;
-			if(null != mKNXSelectedAddress) {
-				String mETSId = mKNXSelectedAddress.getId();
-				if((null != mETSId) && (null != addressIdIndexMap) && (addressIdIndexMap.containsKey(mETSId))) {
-					currentIndex = STKNXControllerApp.getInstance().getGroupAddressIndexMap().get(mETSId);
-					KNXGroupAddress address = STKNXControllerApp.getInstance().getGroupAddressMap().get(currentIndex);
+			if(readStatus) {
+				KNXSelectedAddress mKNXSelectedAddress = getFirstOrNull(mKNXControlBase.getReadAddressId()); // 获取对象的读地址
+				int currentIndex;
+				if (null != mKNXSelectedAddress) {
+					String mETSId = mKNXSelectedAddress.getId();
+					if ((null != mETSId) && (null != addressIdIndexMap) && (addressIdIndexMap.containsKey(mETSId))) {
+						currentIndex = STKNXControllerApp.getInstance().getGroupAddressIndexMap().get(mETSId);
+						KNXGroupAddress address = STKNXControllerApp.getInstance().getGroupAddressMap().get(currentIndex);
 //					if(address.getIsCommunication() && address.getIsTransmit()) {
 //					Log.i(TAG, "read status "+ mKNXControlBase.getText());
 						byte[] contentBytes = new byte[32];
-						byte[] length  = new byte[1];
-						KNX0X01Lib.UTestAndCopyObject(currentIndex, contentBytes, length); 			
+						byte[] length = new byte[1];
+						KNX0X01Lib.UTestAndCopyObject(currentIndex, contentBytes, length);
 						KNX0X01Lib.USetAndRequestObject(currentIndex);
 
-//						mKNXSelectedAddress.getType();
 						final int value = getCallBackValue(contentBytes, address);
-				        
-				        UIKit.runOnMainThreadAsync(new Runnable() {
+
+						UIKit.runOnMainThreadAsync(new Runnable() {
 
 							@Override
 							public void run() {
-						Log.i(TAG, "is main thread:"+((Looper.myLooper() != Looper.getMainLooper())?"false":"true"));
 								updateKNXControlStatus(mKNXControlBase, value);
 							}
-
-				        });
-//					}
-				}  
+						});
+					}
+				}
 			}
 
 			if(mKNXControlBase instanceof KNXGroupBox) {
@@ -567,6 +521,7 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 		
 		try {
 			if(mKNXControlBase instanceof KNXBlinds) {
+
 			} else if(mKNXControlBase instanceof KNXSwitch) { 
 				STKNXSwitch mSTKNXSwitch = (STKNXSwitch) mCurrentSTKNXPage.findViewById(mKNXControlBase.getId()); // 获取LinearLayout控件 
 				if(null != mSTKNXSwitch) {
@@ -619,20 +574,35 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 								String knxId = address.getId();
 //								Log.i(TAG, "knxId:"+knxId);
 								if((null != currentPageKNXControlBaseMap) && (null != knxId)) {
-									final KNXControlBase mKNXControlBase = currentPageKNXControlBaseMap.get(knxId);
-//									Log.i(TAG, "mKNXControlBase:"+mKNXControlBase);
-									if(null != mKNXControlBase) {
-										final int value  = getCallBackValue(array, address);
-//										Log.i(TAG, "received status of ["+mKNXControlBase.getText() +"] ... value:"+value);
-//										UIKit.runOnMainThreadAsync(new Runnable() {
-//
-//											@Override
-//											public void run() {
-										Log.i(TAG, "["+address.getStringKnxAddress()+"]"+"="+value);
+									Iterator iter = currentPageKNXControlBaseMap.entrySet().iterator();
+									while (iter.hasNext()) {
+										Map.Entry entry = (Map.Entry) iter.next();
+										Object key = entry.getKey();
+										Object val = entry.getValue();
+										if(val.equals(knxId)) {
+											KNXControlBase mKNXControlBase = (KNXControlBase) key;
+											if(null != mKNXControlBase) {
+												final int value  = getCallBackValue(array, address);
+												Log.i(TAG, "received status of ["+mKNXControlBase.getText() +"] ... value:"+value);
+												Log.i(TAG, "["+address.getStringKnxAddress()+"]"+"="+value);
 												updateKNXControlStatus(mKNXControlBase, value);
-//											}
-//										});
+											}
+										}
 									}
+//									final KNXControlBase mKNXControlBase = currentPageKNXControlBaseMap.get(knxId);
+////									Log.i(TAG, "mKNXControlBase:"+mKNXControlBase);
+//									if(null != mKNXControlBase) {
+//										final int value  = getCallBackValue(array, address);
+//										Log.i(TAG, "received status of ["+mKNXControlBase.getText() +"] ... value:"+value);
+////										UIKit.runOnMainThreadAsync(new Runnable() {
+////
+////											@Override
+////											public void run() {
+//										Log.i(TAG, "["+address.getStringKnxAddress()+"]"+"="+value);
+//												updateKNXControlStatus(mKNXControlBase, value);
+////											}
+////										});
+//									}
 								}
 							}
 						} catch (Exception ex) { 
@@ -732,23 +702,24 @@ public class RoomDetailsActivity extends BaseActivity implements OnPageChangeLis
 			final String id = (String)button.getTag();
 			if(STKNXControllerApp.getInstance().getRememberLastInterface()) {
 				STKNXControllerApp.getInstance().setLastTimerId(id);
-				new Thread(new Runnable() {
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putString(STKNXControllerConstant.LAST_TIMER_ID, id);
+				editor.apply();
 
-					@Override
-					public void run() {
-						SharedPreferences.Editor editor = settings.edit(); 
-						editor.putString(STKNXControllerConstant.LAST_TIMER_ID, id);
-						editor.commit();
-					}
-					
-				}).start();
-				
 			}
-			Intent intent = new Intent(RoomDetailsActivity.this, TimingTaskActivity.class);
-			intent.putExtra(STKNXControllerConstant.CONTROL_ID, id);
-			startActivity(intent);
+
+			jumpToTimingTaskActivity(id);
 		}
 	};
+
+	private void jumpToTimingTaskActivity(String id) {
+		Intent intent = new Intent(this, TimingTaskActivity.class);
+		intent.putExtra(STKNXControllerConstant.CONTROL_ID, id);
+		startActivity(intent);
+
+		overridePendingTransition(R.anim.scale_from_center,
+				R.anim.scale_to_center);
+	}
 	
 //	private BroadcastReceiver refreshTimerTaskListReceiver = new BroadcastReceiver() {
 //

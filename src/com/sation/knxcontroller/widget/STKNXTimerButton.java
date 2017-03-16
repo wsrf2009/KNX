@@ -45,8 +45,8 @@ public class STKNXTimerButton extends STKNXControl {
 		
 		this.mControlState = ControlState.Normal;
 		
-		if(!StringUtil.isEmpty(this.mKNXTimerButton.Icon)) {
-			this.image = STKNXControllerConstant.ConfigResImgPath + this.mKNXTimerButton.Icon;
+		if(!StringUtil.isEmpty(this.mKNXTimerButton.getIcon())) {
+			this.image = STKNXControllerConstant.ConfigResImgPath + this.mKNXTimerButton.getIcon();
 		}
 		
 		this.mImageView = new ImageView(context);

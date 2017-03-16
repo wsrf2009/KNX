@@ -1,0 +1,206 @@
+[
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_dialog_header.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\bg_dialog_header.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_dialog_button_middle.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\bg_dialog_button_middle.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_right_selector.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_right_selector.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\switch_toggle.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\switch_toggle.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_button_background_focused_checked.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_button_background_focused_checked.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_single_normal.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_single_normal.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\progress_horizontal.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\progress_horizontal.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\menu_setting_icon.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\menu_setting_icon.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_blinds_background_down.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_blinds_background_down.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\horizontal_seekbar_background.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\horizontal_seekbar_background.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_title_bar_bg_skyblue.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_title_bar_bg_skyblue.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\button_background_focused.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\button_background_focused.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_left_pressed.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_left_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_center_selector.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_center_selector.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_left_normal.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_left_normal.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_dialog_header_raw.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\bg_dialog_header_raw.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_dialog_button_left.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\bg_dialog_button_left.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_toggle_bg.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\btn_toggle_bg.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\menu.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\menu.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_bg_normal.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_bg_normal.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_single_selector.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_single_selector.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_blinds_background_up_focused_pressed.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_blinds_background_up_focused_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_blinds_background_down_focused.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_blinds_background_down_focused.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\setting_view_item_selector.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\setting_view_item_selector.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_button_background_focused.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_button_background_focused.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\slider_thumb.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\slider_thumb.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\seek_thumb_pressed.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\seek_thumb_pressed.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_single_pressed.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_single_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_login_qq_shape.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\dialog_login_qq_shape.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_blinds_background_up.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_blinds_background_up.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\chevron.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\chevron.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\coversation_bg.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\coversation_bg.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\horizontal_seekbar_progress.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\horizontal_seekbar_progress.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_button_background_focused_checked_pressed.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_button_background_focused_checked_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_button_background.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_button_background.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\my_progress.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\my_progress.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_button_background_focused_pressed.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_button_background_focused_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\seek_thumb_selected.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\seek_thumb_selected.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_right_normal.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_right_normal.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\background_fenced.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\background_fenced.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_left_selector.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_left_selector.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\shixun_roomlist_logo.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\shixun_roomlist_logo.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_right_pressed.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_right_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\logo.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\logo.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_blinds_background_down_focused_pressed.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_blinds_background_down_focused_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\button_background.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\button_background.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_center_pressed.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_center_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\seek_thumb_normal.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\seek_thumb_normal.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_center_normal.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_center_normal.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\refresh.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\refresh.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_blinds_background_up_focused.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\default_blinds_background_up_focused.xml"
+    }
+]

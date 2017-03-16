@@ -29,10 +29,24 @@ public class KNXDigitalAdjustment extends KNXControlBase {
 //	public Map<String ,KNXSelectedAddress> getWriteAddressIds() {
 //		return WriteAddressIds;
 //	}
-	
-	public String LeftImage;
 
-	public String RightImage;
+	private String LeftImage;
+	public String getLeftImage() {
+		if(null != this.LeftImage) {
+			return this.getImagePath()+this.LeftImage;
+		} else {
+			return null;
+		}
+	}
+
+	private String RightImage;
+	public String getRightImage() {
+		if (null != this.RightImage) {
+			return this.getImagePath() + this.RightImage;
+		} else {
+			return null;
+		}
+	}
 	
 	public int DigitalNumber;
 	public EDigitalNumber getDigitalNumber() {

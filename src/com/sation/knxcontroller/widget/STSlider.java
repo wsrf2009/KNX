@@ -1,5 +1,6 @@
 package com.sation.knxcontroller.widget;
 
+import com.sation.knxcontroller.models.KNXView;
 import com.sation.knxcontroller.util.ColorUtils;
 
 import android.annotation.SuppressLint;
@@ -16,6 +17,7 @@ public class STSlider extends View {
 	public int backColor;
 	public int radius;
 	public double alpha;
+	public KNXView.EOrientation orientation;
 
 	public enum EControlState {
 		Down,
@@ -59,12 +61,22 @@ public class STSlider extends View {
         sliderColors[2] = ColorUtils.changeBrightnessOfColor(sliderColor, -30);
 
         float sliderPositions[] = new float[3];
-        sliderPositions[0] = .0f;
-        sliderPositions[1] = .3f;
-        sliderPositions[2] = 1.0f;
+		Shader sliderShader;
 
-        Shader sliderShader = new LinearGradient(0, 0, 0, getHeight(),
-        		sliderColors, sliderPositions, Shader.TileMode.CLAMP); // 设置渐变色 这个正方形的颜色是改变的 , 一个材质,打造出一个线性梯度沿著一条线。
+		if(KNXView.EOrientation.Horizontal == this.orientation) {
+			sliderPositions[0] = .0f;
+			sliderPositions[1] = .3f;
+			sliderPositions[2] = 1.0f;
+
+			sliderShader = new LinearGradient(0, 0, 0, getHeight(),
+					sliderColors, sliderPositions, Shader.TileMode.CLAMP); // 设置渐变色 这个正方形的颜色是改变的 , 一个材质,打造出一个线性梯度沿著一条线。
+		} else {
+			sliderPositions[0] = .0f;
+			sliderPositions[1] = .7f;
+			sliderPositions[2] = 1.0f;
+			sliderShader = new  LinearGradient(0, 0, getWidth(), 0,
+					sliderColors, sliderPositions, Shader.TileMode.CLAMP);
+		}
     	paint.setShader(sliderShader);
     	canvas.drawRoundRect(oval3, this.radius, this.radius, paint);
 

@@ -1,5 +1,7 @@
 package com.sation.knxcontroller.control;
 
+import android.graphics.drawable.GradientDrawable;
+
 public class KNXSliderSwitch extends KNXControlBase {
 	private static final long serialVersionUID = 1L;
 	
@@ -16,7 +18,11 @@ public class KNXSliderSwitch extends KNXControlBase {
 	//Slider左边背景图片(SliderSymbol与此属性不能共存)
 	private String LeftImage;
 	public String getLeftImage() {
-		return LeftImage;
+		if (null != this.LeftImage) {
+			return this.getImagePath() + this.LeftImage;
+		} else {
+			return null;
+		}
 	}
 //	public void setLeftImage(String leftImage) {
 //		LeftImage = leftImage;
@@ -25,7 +31,11 @@ public class KNXSliderSwitch extends KNXControlBase {
 	//Slider左边背景图片(SliderSymbol与此属性不能共存)
 	private String RightImage;
 	public String getRightImage() {
-		return RightImage;
+		if (null != this.RightImage) {
+			return this.getImagePath() + this.RightImage;
+		} else {
+			return null;
+		}
 	}
 //	public void setRightImage(String rightImage) {
 //		RightImage = rightImage;
@@ -34,7 +44,11 @@ public class KNXSliderSwitch extends KNXControlBase {
 	//Slider滑动图片
 	private String SliderImage;
 	public String getSliderImage() {
-		return SliderImage;
+		if (null != this.SliderImage) {
+			return this.getImagePath() + this.SliderImage;
+		} else {
+			return null;
+		}
 	}
 //	public void setSliderImage(String sliderImage) {
 //		SliderImage = sliderImage;
@@ -43,5 +57,18 @@ public class KNXSliderSwitch extends KNXControlBase {
 	public int IsRelativeControl;
 	public EBool getIsRelativeControl(){
 		return EBool.values()[this.IsRelativeControl];
+	}
+
+	private int Orientation;
+	public EOrientation getOrientation() {
+		return EOrientation.values()[this.Orientation];
+	}
+
+	private int SliderWidth;
+	public int getSliderWidth() {
+		return SliderWidth;
+	}
+	public void setSliderWidth(int width) {
+		this.SliderWidth = width;
 	}
 }

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="uid_label">SATIONControl</string>
-    <string name="all_rights_reserved"> <![CDATA[Copyright © 2012-2016 SATION. All Rights Reserved.]]></string>
+    <string name="all_rights_reserved"> <![CDATA[Copyright © 2012-2017 SATION. All Rights Reserved.]]></string>
     <string name="browserUrl">世讯科技</string>
 
     <string name="confirm">确定</string>
@@ -115,5 +115,16 @@
     <string name="display_system_time">显示系统时间</string>
     <string name="software_version">软件版本</string>
     <string name="Record_last_interface">记住最后界面</string>
+
+    <string name="upgrade_software">升级软件</string>
+    <string name="upgrade_project">升级工程</string>
+
+    <string name="no_project_file">没有发现工程文件 KnxUiProject.knxuie</string>
+    <string name="same_project_file">与当前工程相同</string>
+    <string name="project_file_invalid">工程文件无效，应为*.knxuie类型文件</string>
+    <string name="project_file_error">工程文件错误</string>
+    <string name="copy_project_file_failed">复制工程文件失败</string>
+    <string name="not_a_apk">选中的不是APK文件</string>
+    <string name="invalid_apk">无效的APK文件</string>
 
 </resources>

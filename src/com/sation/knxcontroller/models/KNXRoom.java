@@ -9,7 +9,11 @@ public class KNXRoom extends KNXView implements Serializable {
 	
 	private String Symbol; 
 	public String getSymbol() {
-		return Symbol;
+		if (null != this.Symbol) {
+			return this.getImagePath() + this.Symbol;
+		} else {
+			return null;
+		}
 	} 
 //	public void setSymbol(String symbol) {
 //		Symbol = symbol;

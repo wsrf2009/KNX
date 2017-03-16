@@ -62,12 +62,12 @@ public class STKNXSceneButton extends STKNXControl {
 		this.mControlState = ControlState.Normal;
 		this.mSceneState = SceneState.Off;
 		
-		if(!StringUtil.isEmpty(this.mKNXSceneButton.ImageOn)) {
-			this.imageOn = STKNXControllerConstant.ConfigResImgPath + this.mKNXSceneButton.ImageOn;
+		if(!StringUtil.isEmpty(this.mKNXSceneButton.getImageOn())) {
+			this.imageOn = STKNXControllerConstant.ConfigResImgPath + this.mKNXSceneButton.getImageOn();
 		}
 			
-		if(!StringUtil.isEmpty(this.mKNXSceneButton.ImageOff)) {
-			this.imageOff = STKNXControllerConstant.ConfigResImgPath + this.mKNXSceneButton.ImageOff;
+		if(!StringUtil.isEmpty(this.mKNXSceneButton.getImageOff())) {
+			this.imageOff = STKNXControllerConstant.ConfigResImgPath + this.mKNXSceneButton.getImageOff();
 		}
 		
 		this.mImageView = new ImageView(context);

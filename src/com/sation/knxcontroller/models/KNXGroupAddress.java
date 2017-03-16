@@ -38,17 +38,17 @@ public class KNXGroupAddress implements Serializable, Cloneable {
 	}
 	public String getStringKnxAddress() {
 		//高8位模
-        Short HMod = (short) 0xFF00;
+        int HMod = (short) 0xFF00;
         // 低8位模
-        Short LMod = 0x00FF;
+        int LMod = 0x00FF;
 
         // 去高位和低位
-        byte highByte = (byte) ((this.KnxAddress & HMod) >> 8);
-        byte lowByte = (byte) (this.KnxAddress & LMod);
+        int highByte = (this.KnxAddress & HMod) >> 8;
+        int lowByte = this.KnxAddress & LMod;
 
         // 对高8位进一步拆分，前5位为主分组，剩下3位是中间分组
-        byte mainAddress = (byte) ((highByte >> 3) & 0x0f);
-        byte middleAddress = (byte) (highByte & 0x07);
+        int mainAddress = (highByte >> 3) & 0x0f;
+        int middleAddress = highByte & 0x07;
 
         return mainAddress + "/" + middleAddress +"/" + lowByte;
 	}

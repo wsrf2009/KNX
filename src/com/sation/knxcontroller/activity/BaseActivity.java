@@ -1,40 +1,39 @@
 package com.sation.knxcontroller.activity;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.STKNXControllerConstant;
+import com.sation.knxcontroller.services.RestartService;
+import com.sation.knxcontroller.util.FileUtils;
 import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.PreferenceHelper;
+import com.sation.knxcontroller.util.SystemUtil;
+import com.sation.knxcontroller.util.uikit.ApkUtils;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.PowerManager.WakeLock;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.Surface;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
+
+import static com.sation.knxcontroller.util.FileUtils.CopyStatus.COPY_SUCCESSFUL;
+import static com.sation.knxcontroller.util.FileUtils.CopyStatus.SAME_FILE;
+import static com.sation.knxcontroller.util.FileUtils.CopyStatus.SAME_PATH;
 
 public class BaseActivity extends FragmentActivity {
 	private final String TAG = "BaseActivity";
-	public static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000; // 需要自己定义标志
-	private static final int TOAST_DURATION = Toast.LENGTH_SHORT;
 	public int currentTheme = R.style.DefaultTheme;
 	protected boolean isLandscape = false;
 	protected int lastConfigurationOrientation = -1;
-	WakeLock wakeLock = null;
+
+	private final static int APKFILE = 1001;
+	private final static int PROJECTFILE = 1002;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class BaseActivity extends FragmentActivity {
 				.getDefaultDisplay();
 		if (display != null
 				&& (display.getRotation() == Surface.ROTATION_0 || display
-						.getRotation() == Surface.ROTATION_180)) {
+				.getRotation() == Surface.ROTATION_180)) {
 			isLandscape = true;
 			lastConfigurationOrientation = Configuration.ORIENTATION_LANDSCAPE;
 		} else {
@@ -70,35 +69,12 @@ public class BaseActivity extends FragmentActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		
+
 		System.gc();
 	}
 
 	@Override
-	public void startActivity(Intent intent) {
-		super.startActivity(intent);
-		if (getIntent().hasExtra(STKNXControllerConstant.MENU_DRAWER_TRIGGER_KEY)) {
-
-		} else {
-			overridePendingTransition(R.anim.push_right_in,
-					R.anim.push_right_out);
-		}
-	}
-
-	public void startActivityForResult(Intent intent, int requestCode) {
-		super.startActivityForResult(intent, requestCode);
-		overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
-	}
-
-	@Override
-	public void finish() {
-		super.finish();
-		
-		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-	}
-	
-	@Override
-	public boolean onTouchEvent(MotionEvent event) { 
+	public boolean onTouchEvent(MotionEvent event) {
 		super.onTouchEvent(event);
 
 		return true;
@@ -107,7 +83,7 @@ public class BaseActivity extends FragmentActivity {
 	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
-		
+
 		Log.w(TAG, "onLowMemory()");
 	}
 
@@ -118,11 +94,11 @@ public class BaseActivity extends FragmentActivity {
 			reload();
 		}
 	}
-	
+
 	@Override
-	protected void onPause() { 
-		  super.onPause();
-    }
+	protected void onPause() {
+		super.onPause();
+	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
@@ -139,70 +115,95 @@ public class BaseActivity extends FragmentActivity {
 		startActivity(intent);
 	}
 
-	protected Response.ErrorListener createMyReqErrorListener() {
-		return new Response.ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-
-			}
-		};
-	}
-
-	/**
-	 * 遍历布局，并禁用所有子控件
-	 * 
-	 * @param viewGroup
-	 *            布局对象
-	 */
-	public void disableSubControls(ViewGroup viewGroup) {
-		for (int i = 0; i < viewGroup.getChildCount(); i++) {
-			View v = viewGroup.getChildAt(i);
-			if (v instanceof ViewGroup) {
-				if (v instanceof Spinner) {
-					Spinner spinner = (Spinner) v;
-					spinner.setClickable(false);
-					spinner.setEnabled(false);
-
-					Log.i("A Spinner is unabled");
-				} else if (v instanceof ListView) {
-					((ListView) v).setClickable(false);
-					((ListView) v).setEnabled(false);
-
-					Log.i("A ListView is unabled");
-				} else {
-					disableSubControls((ViewGroup) v);
-				}
-			} else if (v instanceof EditText) {
-				((EditText) v).setEnabled(false);
-				((EditText) v).setClickable(false);
-
-				Log.i("A EditText is unabled");
-			} else if (v instanceof Button) {
-				((Button) v).setEnabled(false);
-
-				Log.i("A Button is unabled");
-			}
-		}
-	}
-
-	/**
-	 * @param resId
-	 *            resource id
-	 */
-	public void displayToast(int resId) {
-		Toast.makeText(this, resId, TOAST_DURATION).show();
-	}
-
-	/**
-	 * @param text
-	 *            desplay text
-	 */
-	public void displayToast(CharSequence text) {
-		Toast.makeText(this, text, TOAST_DURATION).show();
+	@Override
+	public void onStart() {
+		super.onStart();
 	}
 
 	@Override
-	protected Dialog onCreateDialog(int id, Bundle args) {
-		return null;
+	public void onStop() {
+		super.onStop();
+	}
+
+	protected void restartThisApplication() {
+		startService(new Intent(this, RestartService.class));
+		finish();
+	}
+
+	protected void upgradeSoftware() {
+		Intent intent = new Intent();
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+		intent.setType("*/*");
+		intent.addCategory(Intent.CATEGORY_OPENABLE);
+		startActivityForResult(intent, APKFILE);
+	}
+
+	protected void upgradeProject() {
+		Intent intent = new Intent();
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+		intent.setType("*/*");
+		intent.addCategory(Intent.CATEGORY_OPENABLE);
+		startActivityForResult(intent, PROJECTFILE);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+//        Log.i(TAG, "requestCode:" + requestCode + " resultCode:" + resultCode + " data:" + data);
+		if (RESULT_OK != resultCode) {
+//            Log.e(TAG, "Error resultCode:" + resultCode);
+		} else if (APKFILE == requestCode) {
+			String mFilePath = Uri.decode(data.getDataString());
+//            Log.i(TAG, "mFilePath:" + mFilePath);
+			mFilePath = mFilePath.substring(7, mFilePath.length());
+//            Log.i(TAG, "mFilePath:" + mFilePath);
+
+			try
+			{
+				if (mFilePath.endsWith("apk")) {
+					String pn = ApkUtils.getPackageNameWithFileName(this, mFilePath);
+					if ((null != pn) && pn.equals(SystemUtil.getPackageName(this))) {
+						ApkUtils.install(this, mFilePath);
+					} else {
+						Toast.makeText(this, getResources().getString(R.string.invalid_apk), Toast.LENGTH_LONG).show();
+					}
+				} else {
+					Toast.makeText(this, getResources().getString(R.string.not_a_apk), Toast.LENGTH_LONG).show();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		} else if (PROJECTFILE == requestCode) {
+			String mFilePath = Uri.decode(data.getDataString());
+//            Log.i(TAG, "mFilePath:" + mFilePath);
+			mFilePath = mFilePath.substring(7, mFilePath.length());
+//            Log.i(TAG, "mFilePath:" + mFilePath);
+
+			try {
+//                File newPro = new File(mFilePath);
+//                String proName = newPro.getName();
+//                String suffix = proName.substring(proName.lastIndexOf(".") + 1);
+				if (mFilePath.endsWith(STKNXControllerConstant.SuffixConfigFile)) {
+//                    Log.i(TAG, "project file:" + proName + " prefix:" + suffix);
+					FileUtils.CopyStatus status = FileUtils.copyFile(mFilePath, STKNXControllerConstant.ConfigFilePath, true);
+					if (COPY_SUCCESSFUL == status) {
+						Log.i(TAG, "restart this Application");
+						restartThisApplication();
+//						finish();
+					} else if ((SAME_PATH == status) || (SAME_FILE == status)) {
+						Log.e(TAG, getResources().getString(R.string.same_project_file));
+						Toast.makeText(this, getResources().getString(R.string.same_project_file), Toast.LENGTH_LONG).show();
+					} else {
+						Log.e(TAG, getResources().getString(R.string.copy_project_file_failed));
+						Toast.makeText(this, getResources().getString(R.string.copy_project_file_failed), Toast.LENGTH_LONG).show();
+					}
+				} else {
+					Log.e(TAG, getResources().getString(R.string.project_file_invalid));
+					Toast.makeText(this, getResources().getString(R.string.project_file_invalid), Toast.LENGTH_LONG).show();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 }

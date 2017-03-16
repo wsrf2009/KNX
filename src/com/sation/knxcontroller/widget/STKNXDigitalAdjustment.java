@@ -44,8 +44,8 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 		vLeft.radius = this.mKNXDigitalAdjustment.Radius;
 		vLeft.alpha = this.mKNXDigitalAdjustment.Alpha;
 		vLeft.setSubViewClickListener(this.leftClicked);
-		if(!StringUtil.isEmpty(this.mKNXDigitalAdjustment.LeftImage)) {
-			vLeft.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXDigitalAdjustment.LeftImage);
+		if(!StringUtil.isEmpty(this.mKNXDigitalAdjustment.getLeftImage())) {
+			vLeft.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXDigitalAdjustment.getLeftImage());
 		}
 		this.addView(vLeft);
 		
@@ -58,8 +58,8 @@ public class STKNXDigitalAdjustment extends STKNXControl {
 		vRight.radius = this.mKNXDigitalAdjustment.Radius;
 		vRight.alpha = this.mKNXDigitalAdjustment.Alpha;
 		vRight.setSubViewClickListener(this.rightClicked);
-		if(!StringUtil.isEmpty(this.mKNXDigitalAdjustment.LeftImage)) {
-			vRight.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXDigitalAdjustment.RightImage);
+		if(!StringUtil.isEmpty(this.mKNXDigitalAdjustment.getLeftImage())) {
+			vRight.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXDigitalAdjustment.getRightImage());
 		}
 		this.addView(vRight);
 		

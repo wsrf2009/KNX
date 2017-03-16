@@ -40,13 +40,14 @@ public class STViewPager extends ViewPager {
     @SuppressLint("ClickableViewAccessibility")
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
+		boolean retval = true;
     	try {
-    		super.onTouchEvent(event);
+			retval = super.onTouchEvent(event);
     	} catch (IllegalArgumentException ex) {
     		ex.printStackTrace();
     	}
     	
-    	return true;
+    	return retval;
     }
     
     public void setCycleDrag(boolean drag) {

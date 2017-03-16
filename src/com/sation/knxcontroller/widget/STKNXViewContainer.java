@@ -55,22 +55,26 @@ public class STKNXViewContainer extends STKNXControl {
 	@Override
 	protected void onDraw(Canvas canvas) {
     	super.onDraw(canvas);
-    	
-    	Paint paint = new Paint();
+
+		try {
+			Paint paint = new Paint();
     	/* 画圆角矩形  */
-    	paint.setStyle(Paint.Style.FILL_AND_STROKE);	// 充满  
-    	paint.setAntiAlias(true);// 设置画笔的锯齿效果  
-    	paint.setColor(Color.parseColor(this.mKNXView.BackgroundColor));
-    	paint.setAlpha((int)(this.mKNXView.Alpha*255));
-        RectF oval3 = new RectF(0, 0, getWidth(), getHeight());// 设置个新的长方形  
-        canvas.drawRoundRect(oval3, this.mKNXView.Radius, this.mKNXView.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
-        
-        if(null != this.mKNXView.BackgroundImage) {
-        	Bitmap backimg = ImageUtils.getDiskBitmap(
-					STKNXControllerConstant.ConfigResImgPath + this.mKNXView.BackgroundImage);
-        	Rect resRect = new Rect(0, 0, backimg.getWidth(), backimg.getHeight());
-        	Rect desRect = new Rect(0, 0, this.mKNXView.Width, this.mKNXView.Height);
-			canvas.drawBitmap(backimg, resRect, desRect, paint);
+			paint.setStyle(Paint.Style.FILL_AND_STROKE);    // 充满
+			paint.setAntiAlias(true);// 设置画笔的锯齿效果
+			paint.setColor(Color.parseColor(this.mKNXView.BackgroundColor));
+			paint.setAlpha((int) (this.mKNXView.Alpha * 255));
+			RectF oval3 = new RectF(0, 0, getWidth(), getHeight());// 设置个新的长方形
+			canvas.drawRoundRect(oval3, this.mKNXView.Radius, this.mKNXView.Radius, paint);//第二个参数是x半径，第三个参数是y半径
+
+			if (null != this.mKNXView.getBackgroundImage()) {
+				Bitmap backimg = ImageUtils.getDiskBitmap(
+						STKNXControllerConstant.ConfigResImgPath + this.mKNXView.getBackgroundImage());
+				Rect resRect = new Rect(0, 0, backimg.getWidth(), backimg.getHeight());
+				Rect desRect = new Rect(0, 0, this.mKNXView.Width, this.mKNXView.Height);
+				canvas.drawBitmap(backimg, resRect, desRect, paint);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 

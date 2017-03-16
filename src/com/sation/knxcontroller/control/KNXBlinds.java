@@ -12,8 +12,15 @@ public class KNXBlinds extends KNXControlBase {
 //	public Map<String ,KNXSelectedAddress> getWriteAddressIds() {
 //		return WriteAddressIds;
 //	}
-	
-	public String LeftImage;
+
+	private String LeftImage;
+	public String getLeftImage() {
+		if (null != this.LeftImage) {
+			return this.getImagePath() + this.LeftImage;
+		} else {
+			return null;
+		}
+	}
 	
 	public String LeftText;
 	
@@ -21,7 +28,14 @@ public class KNXBlinds extends KNXControlBase {
 	
 	public String LeftTextFontColor;
 	
-	public String RightImage;
+	private String RightImage;
+	public String getRightImage() {
+		if (null != this.LeftImage) {
+			return this.getImagePath() + this.RightImage;
+		} else {
+			return null;
+		}
+	}
 	
 	public String RightText;
 	

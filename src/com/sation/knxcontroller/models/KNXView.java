@@ -1,6 +1,9 @@
 package com.sation.knxcontroller.models;
 
-import java.io.Serializable; 
+import com.sation.knxcontroller.STKNXControllerConstant;
+
+import java.io.File;
+import java.io.Serializable;
 
 public class KNXView implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +23,17 @@ public class KNXView implements Serializable {
 
         Yes
     }
+
+	public enum EOrientation
+	{
+		// 摘要:
+		//     水平放置控件或元素。
+		Horizontal,
+		//
+		// 摘要:
+		//     垂直放置控件或元素。
+		Vertical,
+	}
 	
 	/**
 	 * 界面元素的ID，整个应用唯一
@@ -99,7 +113,14 @@ public class KNXView implements Serializable {
 	/**
 	 * 控件的背景图片
 	 * */
-	public String BackgroundImage;
+	private String BackgroundImage;
+	public String getBackgroundImage() {
+		if (null != this.BackgroundImage) {
+			return this.getImagePath() + this.BackgroundImage;
+		} else {
+			return null;
+		}
+	}
 	
 	/**
 	 * 控件的字体颜色
@@ -110,4 +131,11 @@ public class KNXView implements Serializable {
 	 * 控件的字体大小
 	 * */
 	public int FontSize;
+
+	/*
+	* 获得控件图片目录的相对路径
+	* */
+	protected String getImagePath() {
+		return STKNXControllerConstant.PrefixResImg + this.getId() + File.separator;
+	}
 }

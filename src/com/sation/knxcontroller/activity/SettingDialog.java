@@ -56,8 +56,10 @@ public class SettingDialog {
 	private SettingButton settingReboot = null;
 	private SettingButton settingChangePassword = null;
 	private SettingButton systemStatus = null;
-	private SettingData mItemData = null;
-	private SettingViewItemData mItemViewData = null;
+	private SettingButton upgradeSoftware = null;
+	private SettingButton upgradeProject = null;
+//	private SettingData mItemData = null;
+//	private SettingViewItemData mItemViewData = null;
 //	private List<SettingViewItemData> mListData = new ArrayList<SettingViewItemData>();
 	
 	public SettingDialog(Context context) { 
@@ -75,7 +77,7 @@ public class SettingDialog {
 		mCustomPopDialogFragment.setTitle(mContext.getResources().getString(R.string.setting));
 		mCustomPopDialogFragment.setContentView(mView);
 		mCustomPopDialogFragment.show(((FragmentActivity) mContext).getSupportFragmentManager(), "TelephoneMonitoring");
-		mCustomPopDialogFragment.setWindowSize(0.6, 0.6);
+		mCustomPopDialogFragment.setWindowSize(0.6, 0.9);
 
 		settingKNXConnect = (SettingButton) mView.findViewById(R.id.settingKNXConnect);
 		settingPhysicalAddress = (SettingButton) mView.findViewById(R.id.settingPhysicalAddress); 
@@ -85,6 +87,8 @@ public class SettingDialog {
 		settingReboot = (SettingButton) mView.findViewById(R.id.settingReboot);
 		settingChangePassword = (SettingButton) mView.findViewById(R.id.settingChangePassword);
 		systemStatus = (SettingButton) mView.findViewById(R.id.systemStatus);
+		this.upgradeSoftware = (SettingButton) mView.findViewById(R.id.settingUpgradeSoftware);
+		this.upgradeProject = (SettingButton) mView.findViewById(R.id.settingUpgradeProject);
 
 		settingKNXConnect.setOnSettingButtonClickListener(new onSettingButtonClickListener() {
 
@@ -161,7 +165,7 @@ public class SettingDialog {
 							editor.putInt(STKNXControllerConstant.KNX_UDP_WORK_WAY, 
 									STKNXControllerConstant.KNX_UDP_WORK_WAY_GROUP_BROADCAST);
 						}
-						editor.commit(); 
+						editor.apply();
 						dialog.dismiss();
 						
 						//重启启动
@@ -198,7 +202,7 @@ public class SettingDialog {
 								editor.putInt(STKNXControllerConstant.KNX_UDP_WORK_WAY, 
 									STKNXControllerConstant.KNX_UDP_WORK_WAY_GROUP_BROADCAST);
 							}
-							editor.commit(); 
+							editor.apply();
 							mPromptDialog.dismiss();
 							//重启启动
 							mContext.startService(new Intent(mContext, RestartService.class));
@@ -259,7 +263,7 @@ public class SettingDialog {
 										Integer.valueOf(txtSecond.getText().toString()));
 						editor.putInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THIRD,
 										Integer.valueOf(txtThree.getText().toString()));
-						editor.commit();
+						editor.apply();
 						dialog.dismiss(); 
 						//重启启动
 						mContext.startService(new Intent(mContext, RestartService.class));
@@ -289,7 +293,7 @@ public class SettingDialog {
 									Integer.valueOf(txtSecond.getText().toString()));
 							editor.putInt(STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THIRD,
 									Integer.valueOf(txtThree.getText().toString()));
-							editor.commit();
+							editor.apply();
 							mPromptDialog.dismiss(); 
 							//重启启动
 							mContext.startService(new Intent(mContext, RestartService.class));
@@ -333,15 +337,19 @@ public class SettingDialog {
 					.setButton2(mContext.getResources().getString(R.string.save), new PromptDialog.OnClickListener() {
 							
 						@Override
-						public void onClick(Dialog dialog, int which) { 
-							int time = Integer.valueOf(txtTimeSpan.getText().toString());
-							if(time > 0) {
-								Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000*time);
-							} else {
-								Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, -1); // 屏幕不休眠
+						public void onClick(Dialog dialog, int which) {
+							try {
+								int time = Integer.valueOf(txtTimeSpan.getText().toString());
+								if (time > 0) {
+									Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000 * time);
+								} else {
+									Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, -1); // 屏幕不休眠
+								}
+
+								dialog.dismiss();
+							} catch (Exception ex) {
+								ex.printStackTrace();
 							}
-	
-							dialog.dismiss();
 						}
 					})
 					.show(); 
@@ -422,7 +430,7 @@ public class SettingDialog {
 							editor.putString(STKNXControllerConstant.APP_APPEARANCE_LANGUAGE, Locale.US.toString());
 							STKNXControllerApp.getInstance().setLanguage(Locale.US.toString());
 						}
-						editor.commit();
+						editor.apply();
 						dialog.dismiss();
 						
 						mContext.startService(new Intent(mContext, RestartService.class));
@@ -508,7 +516,7 @@ public class SettingDialog {
 						editor.putBoolean(STKNXControllerConstant.SYSTEM_REBOOT_FLAG, isChecked);
 						editor.putInt(STKNXControllerConstant.SYSTEM_REBOOT_HOUR, hour);
 						editor.putInt(STKNXControllerConstant.SYSTEM_REBOOT_MINUTE, minute);
-						editor.commit();
+						editor.apply();
 						dialog.dismiss();
 					}
 				})
@@ -549,7 +557,7 @@ public class SettingDialog {
 							if(etConfirm.getText().toString().trim().equals(newpw)) {
 								SharedPreferences.Editor editor = settings.edit();
 								editor.putString(STKNXControllerConstant.SYSTEM_SETTING_PASSWORD, newpw);
-								editor.commit();
+								editor.apply();
 								dialog.dismiss();
 							} else {
 								Toast.makeText(mContext, mContext.getResources().getString(R.string.newpassword_not_match),
@@ -617,11 +625,22 @@ public class SettingDialog {
 						SharedPreferences.Editor editor = settings.edit();
 						editor.putBoolean(STKNXControllerConstant.DISPLAY_SYSTEM_TIME_FLAG, display);
 						editor.putBoolean(STKNXControllerConstant.REMEMBER_LAST_INTERFACE, remember);
-						editor.commit();
+						editor.apply();
 						dialog.dismiss();
 					}
 				})
 				.show();
+			}
+		});
+
+		upgradeSoftware.setOnSettingButtonClickListener(new onSettingButtonClickListener() {
+			@Override
+			public void onSettingButtonClick() {
+				Intent intent = new Intent();
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+				intent.setType("*/*");
+				intent.addCategory(Intent.CATEGORY_OPENABLE);
+				((FragmentActivity) mContext).startActivityForResult(intent, Activity.RESULT_OK);
 			}
 		});
 
@@ -638,8 +657,8 @@ public class SettingDialog {
 	}
 	
 	private void initView() {
-		mItemViewData = new SettingViewItemData();
-		mItemData = new SettingData();
+		SettingViewItemData mItemViewData = new SettingViewItemData();
+		SettingData mItemData = new SettingData();
 		mItemData.setTitle(mContext.getResources().getString(R.string.setting_knx_gateway));
 		mItemViewData.setData(mItemData);
 		mItemViewData.setItemView(new ImageItemView(mContext));
@@ -686,6 +705,20 @@ public class SettingDialog {
 		mItemViewData.setData(mItemData);
 		mItemViewData.setItemView(new ImageItemView(mContext));
 		settingChangePassword.setAdapter(mItemViewData);
+
+		mItemViewData = new SettingViewItemData();
+		mItemData = new SettingData();
+		mItemData.setTitle(mContext.getResources().getString(R.string.upgrade_software));
+		mItemViewData.setData(mItemData);
+		mItemViewData.setItemView(new ImageItemView(mContext));
+		upgradeSoftware.setAdapter(mItemViewData);
+
+		mItemViewData = new SettingViewItemData();
+		mItemData = new SettingData();
+		mItemData.setTitle(mContext.getResources().getString(R.string.upgrade_project));
+		mItemViewData.setData(mItemData);
+		mItemViewData.setItemView(new ImageItemView(mContext));
+		upgradeProject.setAdapter(mItemViewData);
 		
 		mItemViewData = new SettingViewItemData();
 		mItemData = new SettingData();

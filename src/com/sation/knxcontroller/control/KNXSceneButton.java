@@ -12,12 +12,26 @@ public class KNXSceneButton extends KNXControlBase {
 //	public Map<String ,KNXSelectedAddress> getWriteAddressIds() {
 //		return WriteAddressIds;
 //	}
-	
-	public String ImageOn;
+
+	private String ImageOn;
+	public String getImageOn() {
+		if(null != this.ImageOn) {
+			return this.getImagePath() + this.ImageOn;
+		} else {
+			return null;
+		}
+	}
 	
 	public String ColorOn;
-	
-	public String ImageOff;
+
+	private String ImageOff;
+	public String getImageOff() {
+		if(null != this.ImageOff) {
+			return this.getImagePath() + this.ImageOff;
+		} else {
+			return null;
+		}
+	}
 	
 	public String ColorOff;
 	

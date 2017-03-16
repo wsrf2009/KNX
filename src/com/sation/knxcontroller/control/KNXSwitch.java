@@ -14,11 +14,25 @@ public class KNXSwitch extends KNXControlBase {
 //	}
 	
 	//开关开启时图片
-	public String ImageOn;
+	private String ImageOn;
+	public String getImageOn() {
+		if (null != this.ImageOn) {
+			return this.getImagePath() + this.ImageOn;
+		} else {
+			return null;
+		}
+	}
 	
 	public String ColorOn;
 
-	public String ImageOff;
+	private String ImageOff;
+	public String getImageOff() {
+		if (null != this.ImageOff) {
+			return this.getImagePath() + this.ImageOff;
+		} else {
+			return null;
+		}
+	}
 	
 	public String ColorOff;
 	

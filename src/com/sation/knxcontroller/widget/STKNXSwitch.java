@@ -58,12 +58,12 @@ public class STKNXSwitch extends STKNXControl {
 		this.mControlState = ControlState.Normal;
 		this.mSwitchState = SwitchState.Off;
 
-		if(!StringUtil.isEmpty(this.mKNXSwitch.ImageOn)) {
-			this.imageOn = STKNXControllerConstant.ConfigResImgPath + this.mKNXSwitch.ImageOn;
+		if(!StringUtil.isEmpty(this.mKNXSwitch.getImageOn())) {
+			this.imageOn = STKNXControllerConstant.ConfigResImgPath + this.mKNXSwitch.getImageOn();
 		}
 			
-		if(!StringUtil.isEmpty(mKNXSwitch.ImageOff)) {
-			this.imageOff = STKNXControllerConstant.ConfigResImgPath + this.mKNXSwitch.ImageOff;
+		if(!StringUtil.isEmpty(mKNXSwitch.getImageOff())) {
+			this.imageOff = STKNXControllerConstant.ConfigResImgPath + this.mKNXSwitch.getImageOff();
 		}
 		
 		this.mImageView = new ImageView(context);

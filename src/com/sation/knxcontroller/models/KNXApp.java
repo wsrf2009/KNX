@@ -18,7 +18,11 @@ public class KNXApp extends KNXView implements Serializable {
 	//企业 Logo
 	private String Logo;  
 	public String getLogo() {
-		return Logo;
+		if (null != this.getLogo()) {
+			return this.getImagePath() + this.Logo;
+		} else {
+			return null;
+		}
 	}
 //	public void setLogo(String logo) {
 //		Logo = logo;
@@ -27,7 +31,11 @@ public class KNXApp extends KNXView implements Serializable {
 	//应用程序图标
 	private String Symbol;
 	public String getSymbol() {
-		return Symbol;
+		if (null != this.Symbol) {
+			return this.getImagePath() + this.Symbol;
+		} else {
+			return null;
+		}
 	}
 //	public void setSymbol(String symbol) {
 //		Symbol = symbol;

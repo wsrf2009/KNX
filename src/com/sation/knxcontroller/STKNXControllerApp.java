@@ -1,35 +1,51 @@
 package com.sation.knxcontroller;
 
 
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.util.EncodingUtils;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.sation.knxcontroller.control.KNXControlBase;
 import com.sation.knxcontroller.control.KNXControlBaseDeserializerAdapter;
 import com.sation.knxcontroller.control.TimingTaskItem;
 import com.sation.knxcontroller.models.KNXApp;
 import com.sation.knxcontroller.models.KNXGroupAddress;
-import com.sation.knxcontroller.services.RestartService;
+import com.sation.knxcontroller.util.BitUtils;
+import com.sation.knxcontroller.util.ByteUtil;
+import com.sation.knxcontroller.util.CompressStatus;
 import com.sation.knxcontroller.util.FileUtils;
+import com.sation.knxcontroller.util.KNX0X01Lib;
 import com.sation.knxcontroller.util.Log;
+import com.sation.knxcontroller.util.NetWorkUtil;
+import com.sation.knxcontroller.util.ZipUtil;
 
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
 
-public class STKNXControllerApp extends Application {
+import static com.sation.knxcontroller.util.ZipUtil.NO_ERROR;
+
+public class STKNXControllerApp extends Application implements Runnable {
 	private final String TAG = "STKNXControllerApp"; 
 	private static STKNXControllerApp app = null;
+	private SharedPreferences settings;
 	
 	public final static synchronized STKNXControllerApp getInstance() {
 		if (app == null) {
@@ -63,8 +79,9 @@ public class STKNXControllerApp extends Application {
 				Log.i(TAG, "Read timing task successful!"+ " count = "+ timerTaskMap.size());
 			}
 		}
-		
-		SharedPreferences settings = getSharedPreferences(STKNXControllerConstant.SETTING_FILE, android.content.Context.MODE_PRIVATE);
+
+		/* 定时重启 */
+		settings = getSharedPreferences(STKNXControllerConstant.SETTING_FILE, android.content.Context.MODE_PRIVATE);
 		boolean reboot = settings.getBoolean(STKNXControllerConstant.SYSTEM_REBOOT_FLAG, 
 				STKNXControllerConstant.SYSTEM_REBOOT_FLAG_VALUE);
 		this.setAutoRebootFlag(reboot);
@@ -74,11 +91,13 @@ public class STKNXControllerApp extends Application {
 		int minute = settings.getInt(STKNXControllerConstant.SYSTEM_REBOOT_MINUTE, 
 				STKNXControllerConstant.SYSTEM_REBOOT_MINUTE_VALUE);
 		this.setMinuteOfReboot(minute);
-		
+
+		/* 是否显示系统时间 */
 		boolean display = settings.getBoolean(STKNXControllerConstant.DISPLAY_SYSTEM_TIME_FLAG,
 				STKNXControllerConstant.DISPLAY_SYSTEM_TIME_FLAG_VALUE);
 		this.setDisplayTimeFlag(display);
 
+		/* 重启APP后是否返回到重启前APP所在界面 */
 		boolean remember = settings.getBoolean(STKNXControllerConstant.REMEMBER_LAST_INTERFACE,
 	    		STKNXControllerConstant.REMEMBER_LAST_INTERFACE_VALUE);
 		this.setRememberLastInterface(remember);
@@ -90,6 +109,8 @@ public class STKNXControllerApp extends Application {
 		this.setLastTimerId(timerId);
 		
 		startTimingTaskService();
+
+		new Thread(this).start();
 	}
 	
 	public void onDestroy() {
@@ -213,10 +234,10 @@ public class STKNXControllerApp extends Application {
 	}
 		
 	public void saveTimerTask() {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
+//		new Thread(new Runnable() {
+//
+//			@Override
+//			public void run() {
 				try {
 					FileUtils.writeObjectIntoFile(STKNXControllerApp.this, STKNXControllerConstant.FILE_TIMERTASK, timerTaskMap);
 				} catch (IOException e) {
@@ -225,8 +246,8 @@ public class STKNXControllerApp extends Application {
 						
 					e.printStackTrace();
 				}
-			}
-		}).start();
+//			}
+//		}).start();
 	}
 
 	/* 定时重启系统 */
@@ -298,5 +319,230 @@ public class STKNXControllerApp extends Application {
 	}
 	public void setLanguage(String language) {
 		this.mLanguage = language;
+	}
+
+	@Override
+	public void run() {
+		do {
+			try {
+				Thread.sleep(5000);
+
+				if(this.getAutoRebootFlag()) {
+					final Calendar c = Calendar.getInstance();
+					int hour = c.get(Calendar.HOUR_OF_DAY); // 24小时制的时间
+					int minute = c.get(Calendar.MINUTE);
+					int second = c.get(Calendar.SECOND);
+
+					if((hour == STKNXControllerApp.getInstance().getHourOfRebooting()) &&
+							(minute == STKNXControllerApp.getInstance().getMinuteOfReboot()) &&
+							(second < 20)) {
+						Intent mIntent = new Intent();
+						ComponentName comp = new ComponentName("com.example.sationsystem",
+								"com.example.sationsystem.ServiceReboot");
+						mIntent.setComponent(comp);
+						this.startService(mIntent);
+					}
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		} while (true);
+	}
+
+	public void getProject(final Handler handler) {
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					String zipFilePath = STKNXControllerConstant.ConfigFilePath;
+					File zipFile = new File(zipFilePath);
+					if (zipFile.exists()) {
+						long localVersion = settings.getLong(STKNXControllerConstant.LOCALVERSION, 0);
+						long lastlastModified = zipFile.lastModified();
+						if (lastlastModified == 0 || lastlastModified != localVersion) {
+							SharedPreferences.Editor editor = settings.edit();
+							editor.putLong(STKNXControllerConstant.LOCALVERSION, lastlastModified);
+							editor.apply();
+
+							int err = ZipUtil.unZipFileWithProgress(zipFile, STKNXControllerConstant.ProRootPath, false, null, false);
+							if (NO_ERROR != err) {
+								Message msg = new Message();
+								msg.what = CompressStatus.ERROR_UNZIP;
+								handler.sendMessage(msg);
+
+								return;
+							}
+						}
+
+//						Thread.sleep(1000);
+						boolean b = parseProjectFile();
+						if (b) {
+							Message msg = new Message();
+							msg.what = CompressStatus.PARSE_COMPLETED;
+							handler.sendMessage(msg);
+						} else {
+							Message msg = new Message();
+							msg.what = CompressStatus.ERROR_PARSE;
+							handler.sendMessage(msg);
+						}
+
+					} else {
+						Message msg = new Message();
+						msg.what = CompressStatus.ERROR_NO_FILE;
+						handler.sendMessage(msg);
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}, 1000);
+	}
+
+	private boolean parseProjectFile() {
+		try {
+			String json = FileUtils.readFileSdcardFile(STKNXControllerConstant.UiMetaFilePath);
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gsonBuilder.registerTypeAdapter(KNXControlBase.class, new KNXControlBaseDeserializerAdapter());
+			Gson gson = gsonBuilder.create();
+			KNXApp mKNXApp = gson.fromJson(json, /*new TypeToken<KNXApp>(){}.getType()*/KNXApp.class);
+			STKNXControllerApp.getInstance().setKNXAppConfig(mKNXApp);
+			String groupAddressJson = FileUtils.readFileSdcardFile(STKNXControllerConstant.GroupAddFilePath);
+			List<KNXGroupAddress> mKNXGroupAddressList = gson.fromJson(groupAddressJson,
+					new TypeToken<List<KNXGroupAddress>>() {
+					}.getType());
+			Collections.sort(mKNXGroupAddressList, new Comparator<KNXGroupAddress>() {
+				@Override
+				public int compare(KNXGroupAddress o1, KNXGroupAddress o2) {
+					return (o2.getKnxAddress().compareTo(o1.getKnxAddress()));
+				}
+			});
+			//索引号对应的组地址列表
+			Map<Integer, KNXGroupAddress> sortGroupAddressMap = new HashMap<Integer, KNXGroupAddress>();
+			//索引号对应的组地址列表
+			Map<String, Integer> groupAddressIndexMap = new HashMap<String, Integer>();
+			Map<String, KNXGroupAddress> groupAddressIdMap = new HashMap<String, KNXGroupAddress>();
+			for (int i = 0; i < mKNXGroupAddressList.size(); i++) {
+				sortGroupAddressMap.put(i + 1, mKNXGroupAddressList.get(i));
+				groupAddressIndexMap.put(mKNXGroupAddressList.get(i).getId(), i + 1);
+				groupAddressIdMap.put(mKNXGroupAddressList.get(i).getId(), mKNXGroupAddressList.get(i));
+			}
+			STKNXControllerApp.getInstance().setGroupAddressMap(sortGroupAddressMap);
+			STKNXControllerApp.getInstance().setGroupAddressIndexMap(groupAddressIndexMap);
+			STKNXControllerApp.getInstance().setGroupAddressIdMap(groupAddressIdMap);
+
+			String fileName2 = STKNXControllerConstant.StructFilePath;
+			String fileName = getApplicationContext().getFilesDir().getAbsolutePath() + File.separator
+					+ STKNXControllerConstant.StructFile;
+			DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
+
+			out.write(String.valueOf("SATIONGROUP Pad").getBytes());
+			out.write((byte) 0);
+			//组对象结构
+
+			out.write(ByteUtil.getBytes((short) (mKNXGroupAddressList.size() + 1))); // 对象个数
+			out.write(ByteUtil.getBytes((short) 0));                       //  /* 备用 */
+			out.write(ByteUtil.getBytes(0));                             // /* 组队象数组指针 */
+			//组关联表结构表数据
+			out.write(ByteUtil.getBytes((short) 0));                           ///* 关联表个数 */
+			out.write(ByteUtil.getBytes((short) 0));                           // /* 备用 */
+			out.write(ByteUtil.getBytes(0));                             // /* 关联表所在位置指针*/
+			//对象结构表数据
+
+			//组地址
+			byte[] phyAddress = new byte[6];
+			out.write(phyAddress);
+
+			int physicalAddressFirst = settings.getInt(
+					STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_FIRST, STKNXControllerConstant.PHYSICAL_ADDRESS_VALUE_FIRST);
+			int physicalAddressSecond = settings.getInt(
+					STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_SECOND, STKNXControllerConstant.PHYSICAL_ADDRESS_VALUE_SECOND);
+			int physicalAddressThree = settings.getInt(
+					STKNXControllerConstant.KNX_PHYSICAL_ADDRESS_THIRD, STKNXControllerConstant.PHYSICAL_ADDRESS_VALUE_THIRD);
+			int physicalAddress = (physicalAddressFirst * 16 + physicalAddressSecond) * 256 + physicalAddressThree;
+			out.write(ByteUtil.getBytes((short) physicalAddress));  ///* 备用 */
+
+			byte[] phyAddress2 = new byte[4];
+			out.write(phyAddress2);
+
+			for (int j = 0; j < mKNXGroupAddressList.size(); j++) {
+				byte config = 1;
+				if (mKNXGroupAddressList.get(j).getPriority() == 0) {
+					config = BitUtils.setBitValue(config, 0, (byte) 0);
+					config = BitUtils.setBitValue(config, 1, (byte) 0);
+				} else if (mKNXGroupAddressList.get(j).getPriority() == 1) {
+					config = BitUtils.setBitValue(config, 0, (byte) 1);
+					config = BitUtils.setBitValue(config, 1, (byte) 0);
+				} else if (mKNXGroupAddressList.get(j).getPriority() == 2) {
+					config = BitUtils.setBitValue(config, 0, (byte) 0);
+					config = BitUtils.setBitValue(config, 1, (byte) 1);
+				} else if (mKNXGroupAddressList.get(j).getPriority() == 3) {
+					config = BitUtils.setBitValue(config, 0, (byte) 1);
+					config = BitUtils.setBitValue(config, 1, (byte) 1);
+				}
+
+				config = BitUtils.setBitValue(config, 2, mKNXGroupAddressList.get(j).getIsCommunication()); //commuEnable
+				config = BitUtils.setBitValue(config, 3, mKNXGroupAddressList.get(j).getIsRead());      //readEnable
+				config = BitUtils.setBitValue(config, 4, mKNXGroupAddressList.get(j).getIsWrite());     //writeEnable
+				config = BitUtils.setBitValue(config, 6, mKNXGroupAddressList.get(j).getIsTransmit());  //transEnable
+				config = BitUtils.setBitValue(config, 7, mKNXGroupAddressList.get(j).getIsUpgrade());   //updateEnable
+
+				out.write(config);
+
+				out.write((byte) (mKNXGroupAddressList.get(j).getType()));  ///* 数据类型，长度    */
+				if (mKNXGroupAddressList.get(j).getIsRead()) {
+					out.write(ByteUtil.getBytes(mKNXGroupAddressList.get(j).getReadTimeSpan()));  ///* 读取轮训时间 */
+				} else {
+					out.write(ByteUtil.getBytes((short) 0));  ///* 读取轮训 */
+				}
+				out.write(ByteUtil.getBytes(mKNXGroupAddressList.get(j).getKnxAddress()));   //读地址
+				out.write(ByteUtil.getBytes(mKNXGroupAddressList.get(j).getKnxAddress()));   //写地址
+				out.write(ByteUtil.getBytes(j));   ///* 指向obj数值存储位置 */
+				//out.writeShort(1);   //读地址
+				//out.writeShort(2);   //写地址
+			}
+			out.close();
+
+			FileUtils.CopyStatus status = FileUtils.copyFile(fileName, fileName2, true);
+			if ((FileUtils.CopyStatus.COPY_SUCCESSFUL == status)
+					|| (FileUtils.CopyStatus.SAME_PATH == status)
+					|| (FileUtils.CopyStatus.SAME_PATH == status)) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	public void loadLibrary() {
+		KNX0X01Lib.UCLOSENet();
+
+		//初始化连接
+		final String mKNXGatewayIP = settings.getString(STKNXControllerConstant.KNX_GATEWAY_IP,
+				STKNXControllerConstant.KNX_GATEWAY_DEFAULT);
+		final int mKNXGatewayPort = settings.getInt(STKNXControllerConstant.KNX_GATEWAY_PORT,
+				STKNXControllerConstant.KNX_GATEWAY_PORT_DEFAULT);
+		final int mKNXUDPWorkWay = settings.getInt(STKNXControllerConstant.KNX_UDP_WORK_WAY,
+				STKNXControllerConstant.KNX_UDP_WORK_WAY_DEFAULT);
+
+		try {
+			final int type = NetWorkUtil.getAPNType(this);
+
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					KNX0X01Lib.SetNetworkType(type);
+					boolean isConnect = KNX0X01Lib.UOPENNet(mKNXGatewayIP, mKNXGatewayPort, mKNXUDPWorkWay);
+				}
+
+			}).start();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 }

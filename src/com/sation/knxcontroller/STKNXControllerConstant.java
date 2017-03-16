@@ -12,7 +12,10 @@ public class STKNXControllerConstant {
 
 	public static final String PASSWORD_UNZIP = "com.sation.knxcontroller.uieditor";
 
+	public static final String SuffixConfigFile = "knxuie";
 	public static final String ConfigFile = "KnxUiProject.knxuie";
+
+	public static final String PrefixResImg = "id_";
 	
 	public static final String UiMetaFile = "KnxUiMetaData.json";
 	public static final String GroupAddFile = "GroupAddress.json";
@@ -91,11 +94,12 @@ public class STKNXControllerConstant {
 	
 	/* 系统定时启动：默认不重启、默认重启时间 23:30 */
 	public static final String SYSTEM_REBOOT_FLAG = "system_reboot_falg";
-	public static final boolean SYSTEM_REBOOT_FLAG_VALUE = false;
+	public static final boolean SYSTEM_REBOOT_FLAG_VALUE = true;
 	public static final String SYSTEM_REBOOT_HOUR = "system_reboot_hour";
-	public static final int SYSTEM_REBOOT_HOUR_VALUE = 23;
+	public static final int SYSTEM_REBOOT_HOUR_VALUE = 03;
 	public static final String SYSTEM_REBOOT_MINUTE = "system_reboot_minute";
-	public static final int SYSTEM_REBOOT_MINUTE_VALUE = 30;
+	public static final int SYSTEM_REBOOT_MINUTE_VALUE = 00;
+	public static final String SYSTEM_REBOOT_EXECUTE_FLAG = "system_reboot_execute_flag";
 	
 	/* 系统设置界面密码 */
 	public static final String SYSTEM_SETTING_PASSWORD = "system_setting_password";
@@ -103,7 +107,7 @@ public class STKNXControllerConstant {
 	
 	/* 主界面系统时间：默认不显示 */
 	public static final String DISPLAY_SYSTEM_TIME_FLAG = "display_system_time_flag";
-	public static final boolean DISPLAY_SYSTEM_TIME_FLAG_VALUE = false;
+	public static final boolean DISPLAY_SYSTEM_TIME_FLAG_VALUE = true;
 	public static final String BROADCASTRECEIVER_REFRESH_SYSTEM_TIME = "com.sation.knxcontroller.RoomTilesListActivity.RefreshSystemTimeReceiver";
 	public static final String SYSTEMTIME = "SystemTime";
 	

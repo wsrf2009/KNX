@@ -7,8 +7,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import com.sation.knxcontroller.R;
+import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.models.KNXGroupAddressAction;
 import com.sation.knxcontroller.util.Log;
@@ -50,6 +52,7 @@ public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 	public int decCounterSecond;
 	private List<KNXGroupAddressAndAction> addressList;
 	private String name;
+	private boolean isPaused;
 
 	public TimingTaskItem() {
 		/* 默认为一次性 */
@@ -101,6 +104,8 @@ public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 		this.decCounterHour = this.intervalHour;
 		this.decCounterMinute = this.intervalMinute;
 		this.decCounterSecond = this.intveralSecond;
+
+		this.isPaused = false;
 		
 		this.addressList = new ArrayList<KNXGroupAddressAndAction>();
 	}
@@ -332,22 +337,42 @@ public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 		return this.name;
 	}
 
-	@Override
-	public void run() {
-		for(KNXGroupAddressAndAction addressAndAction : addressList) {
-			if(addressAndAction.getIsRead()) {
-				STKNXControl.readDataFromAddress(addressAndAction.address);
-			} else if (null != addressAndAction.action) {
-				STKNXControl.sendDataToAddress(addressAndAction.address, String.valueOf(addressAndAction.action.getValue()));
+	public void setIsPaused(boolean paused) {
+		this.isPaused = paused;
+	}
+	public boolean getIsPaused() {
+		return this.isPaused;
+	}
+
+	public void execute() {
+		Map<String, KNXGroupAddress> addrMap = STKNXControllerApp.getInstance().getGroupAddressIdMap();
+		if(null != addrMap) {
+			for (KNXGroupAddressAndAction addressAndAction : addressList) {
+				KNXGroupAddress address = addrMap.get(addressAndAction.getAddressId());
+				if(null != address) {
+					if (addressAndAction.getIsRead()) {
+//				STKNXControl.readDataFromAddress(addressAndAction.address);
+						STKNXControl.readDataFromAddress(address);
+					} else if (null != addressAndAction.action) {
+//				STKNXControl.sendDataToAddress(addressAndAction.address, String.valueOf(addressAndAction.action.getValue()));
+						STKNXControl.sendDataToAddress(address, String.valueOf(addressAndAction.action.getValue()));
+					}
+				}
 			}
 		}
+	}
+
+	@Override
+	public void run() {
+		this.execute();
 	}
 	
 	public static class KNXGroupAddressAndAction implements Serializable, Cloneable {
 		private final String TAG = "KNXGroupAddressAndAction";
 		private static final long serialVersionUID = 1L;
 		public KNXGroupAddressAndAction(KNXGroupAddress address) {
-			this.address = address;
+//			this.address = address;
+			this.addressId = address.getId();
 			List<KNXGroupAddressAction> defaultActions = address.getAddressAction();
 			if((null != defaultActions) && (defaultActions.size() > 0) && (address.getIsCommunication() && address.getIsWrite())) {
 				this.action = defaultActions.get(0);
@@ -371,12 +396,23 @@ public class TimingTaskItem implements Serializable, Cloneable, Runnable  {
 			return addressAndAction;
 		}
 		
-		private KNXGroupAddress address;
-		public void setAddress(KNXGroupAddress address) {
-			this.address = address;
+//		private KNXGroupAddress address;
+//		public void setAddress(KNXGroupAddress address) {
+//			this.address = address;
+//		}
+//		public KNXGroupAddress getAddress() {
+//			return this.address;
+//		}
+		private  String addressId;
+		public void setAddressId(String addrId) {
+			this.addressId = addrId;
 		}
-		public KNXGroupAddress getAddress() {
-			return this.address;
+		public String getAddressId() {
+//			if(null == this.addressId || this.addressId.isEmpty()) {
+//				return address.getId();
+//			} else {
+				return this.addressId;
+//			}
 		}
 		
 		private KNXGroupAddressAction action;

@@ -62,7 +62,14 @@ public class KNXControlBase extends KNXView implements Serializable {
 		return EBool.values()[this.Clickable];
 	}
 	
-	public String Icon;
+	private String Icon;
+	public String getIcon() {
+		if (null != this.Icon) {
+			return this.getImagePath() + this.Icon;
+		} else {
+			return null;
+		}
+	}
 	
 	///控件当前的值
 	public int ControlCurrentValue;

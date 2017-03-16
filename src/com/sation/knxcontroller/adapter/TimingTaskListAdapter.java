@@ -3,6 +3,7 @@ package com.sation.knxcontroller.adapter;
 import java.util.List;
 
 import com.sation.knxcontroller.R;
+import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.control.TimingTaskItem;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,8 +62,8 @@ public class TimingTaskListAdapter extends BaseAdapter {
 	@SuppressLint("InflateParams")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		TimingTaskItem item = timingTaskList.get(position);
-		ViewHolder holder;
+		final TimingTaskItem item = timingTaskList.get(position);
+		final ViewHolder holder;
 		if(null == convertView) {
 			holder = new ViewHolder();
 			
@@ -70,6 +72,24 @@ public class TimingTaskListAdapter extends BaseAdapter {
 			holder.title = (TextView)convertView.findViewById(R.id.listviewItemLayoutSubtitleDisclosureIndicatorTitle);
 			holder.subtitle = (TextView)convertView.findViewById(R.id.listviewItemLayoutSubtitleDisclosureIndicatorSubtitle);
 			holder.background = (RelativeLayout)convertView.findViewById(R.id.listviewItemLayoutSubtitleDisclosureIndicator);
+			holder.ibPaused = (ImageButton)convertView.findViewById(R.id.listviewItemLayoutSubtitleDisclosureIndicatorImageButton);
+			holder.ibPaused.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					TimingTaskItem m = timingTaskList.get((Integer) (v.getTag()));
+					if(m.getIsPaused()) {
+						m.setIsPaused((false));
+//						holder.ibPaused.setImageResource(android.R.drawable.ic_media_pause);
+					} else {
+						m.setIsPaused(true);
+//						holder.ibPaused.setImageResource(android.R.drawable.ic_media_play);
+					}
+
+					TimingTaskListAdapter.this.notifyDataSetChanged();
+					STKNXControllerApp.getInstance().saveTimerTask();
+				}
+			});
+			holder.ibPaused.setTag(new Integer(position));
 			
 			convertView.setTag(holder);
 		} else {
@@ -81,34 +101,26 @@ public class TimingTaskListAdapter extends BaseAdapter {
 		}
 		
 		if(item.isMonthlySelected()) {
-//			holder.title.setText(item.getTimeWithoutSecond());
-//			holder.subtitle.setText(mContext.getResources().getString(R.string.monthly) +item.getDay()+ 
-//					mContext.getResources().getString(R.string.day));
 			holder.subtitle.setText(String.format("%s%s%s %s", mContext.getResources().getString(R.string.monthly),
 					item.getDay(), mContext.getResources().getString(R.string.day), item.getTimeWithoutSecond()));
 		} else if(item.isWeeklySelected()) {
-//			holder.title.setText(item.getTimeWithoutSecond());
-//			holder.subtitle.setText(item.getWeekly(mContext));
 			holder.subtitle.setText(String.format("%s %s", item.getWeekly(mContext), item.getTimeWithoutSecond()));
 		} else if(item.isEverydaySelected()) {
-//			holder.title.setText(item.getTimeWithoutSecond());
-//			holder.subtitle.setText(mContext.getResources().getString(R.string.everyday));
 			holder.subtitle.setText(String.format("%s %s", mContext.getResources().getString(R.string.everyday), item.getTimeWithoutSecond()));
 		} else if(item.isLoopSelected()) {
-//			holder.title.setText(item.getTimeWithSecond());
-//			holder.subtitle.setText(String.format("%s: %d%s%d%s%d%s", mContext.getResources().getString(R.string.cycle_interval), 
-//					item.getIntervalHour(), mContext.getResources().getString(R.string.unit_hour), 
-//					item.getIntervalMinute(), mContext.getResources().getString(R.string.unit_minute), 
-//					item.getIntervalSecond(), mContext.getResources().getString(R.string.second)));
 			holder.subtitle.setText(String.format("%s %s: %d%s%d%s%d%s", item.getTimeWithSecond(),
 					mContext.getResources().getString(R.string.cycle_interval), 
 					item.getIntervalHour(), mContext.getResources().getString(R.string.unit_hour), 
 					item.getIntervalMinute(), mContext.getResources().getString(R.string.unit_minute), 
 					item.getIntervalSecond(), mContext.getResources().getString(R.string.second)));
 		} else if(item.isOneOffSelected()) {
-//			holder.title.setText(item.getTimeWithoutSecond());
-//			holder.subtitle.setText(item.getDate());
 			holder.subtitle.setText(String.format("%s %s", item.getDate(), item.getTimeWithoutSecond()));
+		}
+
+		if(item.getIsPaused()) {
+			holder.ibPaused.setImageResource(android.R.drawable.ic_media_play);
+		} else {
+			holder.ibPaused.setImageResource(android.R.drawable.ic_media_pause);
 		}
 		
 		if (selectedPosition == position) {  
@@ -118,8 +130,7 @@ public class TimingTaskListAdapter extends BaseAdapter {
         } else {  
         	holder.title.setTextColor(Color.BLACK); 
         	holder.subtitle.setTextColor(Color.BLACK); 
-        	holder.background.setBackgroundColor(Color.TRANSPARENT);     
-
+        	holder.background.setBackgroundColor(Color.TRANSPARENT);
         }  
 		
 		return convertView;
@@ -129,6 +140,7 @@ public class TimingTaskListAdapter extends BaseAdapter {
 		public TextView title;
 		public TextView subtitle;
 		public RelativeLayout background;
+		public ImageButton ibPaused;
 	}
 
 }

@@ -41,8 +41,8 @@ public class STKNXBlinds extends STKNXControl {
 		vLeft.fontSize = this.mKNXBlinds.LeftTextFontSize;
 		vLeft.fontColor = Color.parseColor(this.mKNXBlinds.LeftTextFontColor);
 		vLeft.setSubViewClickListener(this.leftClicked);
-		if(!StringUtil.isEmpty(this.mKNXBlinds.LeftImage)) {
-			vLeft.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXBlinds.LeftImage);
+		if(!StringUtil.isEmpty(this.mKNXBlinds.getLeftImage())) {
+			vLeft.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXBlinds.getLeftImage());
 		}
 		this.addView(vLeft);
 		
@@ -58,8 +58,8 @@ public class STKNXBlinds extends STKNXControl {
 		vRight.fontSize = this.mKNXBlinds.RightTextFontSize;
 		vRight.fontColor = Color.parseColor(this.mKNXBlinds.RightTextFontColor);
 		vRight.setSubViewClickListener(this.rightClicked);
-		if(!StringUtil.isEmpty(this.mKNXBlinds.RightImage)) {
-			vRight.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXBlinds.RightImage);
+		if(!StringUtil.isEmpty(this.mKNXBlinds.getRightImage())) {
+			vRight.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXBlinds.getRightImage());
 		}
 		this.addView(vRight);
 	}

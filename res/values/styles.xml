@@ -42,6 +42,8 @@
         
         <item name="styleBlindsDown">@style/Default.Button.Blinds.Down</item>
         <item name="styleBlindsUp">@style/Default.Button.Blinds.Up</item>
+
+        <item name="android:textEditSuggestionItemLayout">?android:attr/textEditSuggestionItemLayout</item>
     </style>
     <!-- DefaultTheme风格 -->
     <style name="Default">

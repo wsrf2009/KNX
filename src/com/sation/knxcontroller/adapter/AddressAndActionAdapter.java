@@ -4,8 +4,10 @@
 package com.sation.knxcontroller.adapter;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sation.knxcontroller.R;
+import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.control.TimingTaskItem.KNXGroupAddressAndAction;
 import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.models.KNXGroupAddressAction;
@@ -51,15 +53,15 @@ public class AddressAndActionAdapter extends BaseAdapter {
 		}
 	}
 	
-	public void addAddressAndAction(KNXGroupAddressAndAction addressAndAction) {
-		for(KNXGroupAddressAndAction aaa : this.addressAndActionList) {
-			if(aaa.getAddress().getKnxAddress() == addressAndAction.getAddress().getKnxAddress()) {
-				return;
-			}
-		}
-
-		addressAndActionList.add(addressAndAction);
-	}
+//	public void addAddressAndAction(KNXGroupAddressAndAction addressAndAction) {
+//		for(KNXGroupAddressAndAction aaa : this.addressAndActionList) {
+//			if(aaa.getAddress().getKnxAddress() == addressAndAction.getAddress().getKnxAddress()) {
+//				return;
+//			}
+//		}
+//
+//		addressAndActionList.add(addressAndAction);
+//	}
 	
 	public List<KNXGroupAddressAndAction> getAddressAndActionList() {
 		return this.addressAndActionList;
@@ -101,6 +103,8 @@ public class AddressAndActionAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater mLayoutInflater = LayoutInflater.from(mContext);
 		final ViewHolder holder;
+		final Map<String, KNXGroupAddress> addrMap = STKNXControllerApp.getInstance().getGroupAddressIdMap();
+
 		if(null == convertView) {
 			holder = new ViewHolder();
 
@@ -114,7 +118,8 @@ public class AddressAndActionAdapter extends BaseAdapter {
 		}
 		
 		final KNXGroupAddressAndAction addressAndAction = this.addressAndActionList.get(position);
-		KNXGroupAddress address = addressAndAction.getAddress();
+//		KNXGroupAddress address = addressAndAction.getAddress();
+		KNXGroupAddress address = addrMap.get(addressAndAction.getAddressId());
 		holder.textViewAddress.setText(address.getName()+"-"+address.getStringKnxAddress());
 		
 		int selectedIndex = -1;
@@ -156,6 +161,8 @@ public class AddressAndActionAdapter extends BaseAdapter {
 		
 		if(selectedIndex >= 0) {
 			holder.spinnerActions.setSelection(selectedIndex, true);
+		} else if (null != currentAction) {
+
 		}
 		
 		holder.spinnerActions.setOnItemSelectedListener(new OnItemSelectedListener(){
@@ -163,7 +170,8 @@ public class AddressAndActionAdapter extends BaseAdapter {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				String selectedActionName = (String)holder.spinnerActions.getSelectedItem();
-				for(KNXGroupAddressAction action : addressAndAction.getAddress().getAddressAction()) {
+//				for(KNXGroupAddressAction action : addressAndAction.getAddress().getAddressAction()) {
+				for(KNXGroupAddressAction action : addrMap.get(addressAndAction.getAddressId()).getAddressAction()) {
 					if (action.getName().equals(selectedActionName)) {
 						addressAndAction.setAction(action);
 

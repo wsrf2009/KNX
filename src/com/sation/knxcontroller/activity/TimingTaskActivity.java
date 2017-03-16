@@ -2,7 +2,10 @@ package com.sation.knxcontroller.activity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import com.sation.knxcontroller.R;
@@ -18,7 +21,6 @@ import com.sation.knxcontroller.control.TimingTaskItem.KNXGroupAddressAndAction;
 import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.models.KNXSelectedAddress;
 import com.sation.knxcontroller.util.Log;
-import com.sation.knxcontroller.util.SystemUtil;
 import com.sation.knxcontroller.widget.CustomDateAndTimeDialog;
 import com.sation.knxcontroller.widget.CustomDateAndTimeDialog.OnDateAndTimeChangedListener;
 import com.sation.knxcontroller.widget.CustomDateAndTimeDialog.OnTimeChangedListener;
@@ -37,6 +39,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -50,7 +53,6 @@ import android.widget.TextView;
 
 public class TimingTaskActivity extends BaseActivity {
 	private final static String TAG = "TimingTaskActivity";
-	private ListView lvTimingTaskList;
 	private EditText etTaskName;
 	private RadioButton rbMonthly;
 	private RadioButton rbWeekly;
@@ -62,7 +64,7 @@ public class TimingTaskActivity extends BaseActivity {
     private TimingTaskItem currentTask;
     private ListView lvGroupAddressList;
     private Button bDeleteTask;
-    private Button bCreateTask;
+//    private Button bCreateTask;
     private Button bAddOrRemoveGroupAddress;
     private TimingTaskListAdapter mTimingTaskListAdapter = null;
     private Button bSaveModify;
@@ -101,7 +103,7 @@ public class TimingTaskActivity extends BaseActivity {
 		}
 
 		/* ListView 定时任务列表 */
-		lvTimingTaskList = (ListView)findViewById(R.id.timingTaskLayoutTimingTaskList);
+		ListView lvTimingTaskList = (ListView)findViewById(R.id.timingTaskLayoutTimingTaskList);
         mTimingTaskListAdapter = new TimingTaskListAdapter(this, timingTaskList);
 		lvTimingTaskList.setAdapter(mTimingTaskListAdapter);
 		lvTimingTaskList.setOnItemClickListener(new TimingTaskListOnItemClickListener());
@@ -112,7 +114,7 @@ public class TimingTaskActivity extends BaseActivity {
 		bDeleteTask.setOnClickListener(new DeleteTaskOnClickListener());
 		
 		/* Button 创建任务按钮 */
-		bCreateTask = (Button)findViewById(R.id.buttonCreateTask);
+		Button bCreateTask = (Button)findViewById(R.id.buttonCreateTask);
 		bCreateTask.setOnClickListener(new CreateTaskOnClickListener());
 		
 		etTaskName = (EditText)findViewById(R.id.timingTaskLayoutTaskItemEditTextName);
@@ -181,6 +183,13 @@ public class TimingTaskActivity extends BaseActivity {
 		System.gc();
 	}
 
+	@Override
+	public void finish() {
+		super.finish();
+
+		overridePendingTransition(R.anim.scale_from_center, R.anim.scale_to_center);
+	}
+
 	/**
 	 *  刷新定时任务执行方式的界面 
 	 */
@@ -222,11 +231,10 @@ public class TimingTaskActivity extends BaseActivity {
 	
 	@SuppressLint("DefaultLocale")
 	private String getMonthlyContent(TimingTaskItem item) {
-		String text = String.format("%s: %02d%s  %02d%s%02d%s", getResources().getString(R.string.monthly), 
+		return String.format("%s: %02d%s  %02d%s%02d%s", getResources().getString(R.string.monthly),
 				item.getDay(), getResources().getString(R.string.day),
 				item.getHour(), getResources().getString(R.string.hour),
 				item.getMinute(), getResources().getString(R.string.minute));
-		return text;
 	}
 	
 	@SuppressLint("DefaultLocale")
@@ -239,29 +247,26 @@ public class TimingTaskActivity extends BaseActivity {
 	
 	@SuppressLint("DefaultLocale")
 	private String getEverydayContent(TimingTaskItem item) {
-		String text = String.format("%s: %02d%s%02d%s", getResources().getString(R.string.everyday),
+		return String.format("%s: %02d%s%02d%s", getResources().getString(R.string.everyday),
 				item.getHour(), getResources().getString(R.string.hour),
 				item.getMinute(), getResources().getString(R.string.minute));
-		return text;
 	}
 	
 	@SuppressLint("DefaultLocale")
 	private String getCycleContent(TimingTaskItem item) {
-		String text = String.format("%s: %d%s%d%s%d%s", getResources().getString(R.string.cycle_interval), 
+		return String.format("%s: %d%s%d%s%d%s", getResources().getString(R.string.cycle_interval),
 				item.getIntervalHour(), getResources().getString(R.string.unit_hour), 
 				item.getIntervalMinute(), getResources().getString(R.string.unit_minute), 
 				item.getIntervalSecond(), getResources().getString(R.string.second));
-		return text;
 	}
 	
 	@SuppressLint("DefaultLocale")
 	private String getOneOffContent(TimingTaskItem item) {
-		String text = String.format("%04d%s%02d%s%02d%s  %02d%s%02d%s", item.getYear(), getResources().getString(R.string.year), 
+		return String.format("%04d%s%02d%s%02d%s  %02d%s%02d%s", item.getYear(), getResources().getString(R.string.year),
 				item.getMonth(), getResources().getString(R.string.month), 
 				item.getDay(), getResources().getString(R.string.day),
 				item.getHour(), getResources().getString(R.string.hour),
 				item.getMinute(), getResources().getString(R.string.minute));
-		return text;
 	}
 	
 	private void enableTimingTaskEditor() {
@@ -368,7 +373,7 @@ public class TimingTaskActivity extends BaseActivity {
 			oldTask = null;
 			currentTask = new TimingTaskItem();
 			refreshThisUI(currentTask);
-			popGroupAddressSelectWindow(TimingTaskActivity.this, getResources().getString(R.string.add_address_to_task), true);
+			popGroupAddressSelectWindow(TimingTaskActivity.this, getResources().getString(R.string.add_address_to_task));
 
 			enableTimingTaskEditor();
 			
@@ -713,12 +718,11 @@ public class TimingTaskActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View v) {
- 
-			popGroupAddressSelectWindow(v.getContext(), 
-					v.getContext().getResources().getString(R.string.add_or_remove_group_address), false);
+
+			popGroupAddressSelectWindow(v.getContext(),
+					v.getContext().getResources().getString(R.string.add_or_remove_group_address));
 		}
-		
-	};
+	}
 	
 	/**
 	 *  保存定时任务按钮点击事件 
@@ -780,6 +784,8 @@ public class TimingTaskActivity extends BaseActivity {
 				oldTask = null;
 			}
 
+			currentTask.setAddressList(mAddressAndActionAdapter.getAddressAndActionList());
+
 			mTimingTaskListAdapter.addTimingTask(currentTask);
 
 			mTimingTaskListAdapter.setSelectedPosition(-1);
@@ -792,18 +798,19 @@ public class TimingTaskActivity extends BaseActivity {
 			STKNXControllerApp.getInstance().saveTimerTask();
 		}
 		
-	};
+	}
 	
 	/**
 	 *  弹出组地址选择框
 	 */
-	private void popGroupAddressSelectWindow(Context context, String title, final boolean isAddTask) {
+	private void popGroupAddressSelectWindow(Context context, String title) {
 		
 		/* 获取当前定时器的地址列表 */
 		List<KNXGroupAddress> groupList = new ArrayList<KNXGroupAddress>();
 
 		Map<String, Integer> groupAddressIndexMap = STKNXControllerApp.getInstance().getGroupAddressIndexMap();
 		Map<Integer, KNXGroupAddress> groupAddressMap = STKNXControllerApp.getInstance().getGroupAddressMap();
+		Map<String, KNXGroupAddress> addrMap = STKNXControllerApp.getInstance().getGroupAddressIdMap();
 		
 		Map<Integer, KNXControlBase> controlBaseMap = STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap();
 		KNXControlBase control = controlBaseMap.get(Integer.parseInt(fileName));
@@ -837,7 +844,8 @@ public class TimingTaskActivity extends BaseActivity {
         	/* 获得mAddressAndActionAdapter中已选择的组地址 */
 			List<KNXGroupAddress> selectedList = new ArrayList<KNXGroupAddress>();
 			for (KNXGroupAddressAndAction addressAndAction : mAddressAndActionAdapter.getAddressAndActionList()) {
-				selectedList.add(addressAndAction.getAddress());
+//				selectedList.add(addressAndAction.getAddress());
+				selectedList.add(addrMap.get(addressAndAction.getAddressId()));
 			}
         
         	/* 给ListView准备内容 */
@@ -858,10 +866,24 @@ public class TimingTaskActivity extends BaseActivity {
 							/* 替换原来的地址列表 */
 //							mAddressAndActionAdapter.clearAddressAndActionList();
 							List<KNXGroupAddress> selectedList = mGroupAddressAdapter.getSelectedAddress();
+							List<KNXGroupAddressAndAction> list = new ArrayList<KNXGroupAddressAndAction>();
 							for (KNXGroupAddress address : selectedList) {
-								mAddressAndActionAdapter.addAddressAndAction(new KNXGroupAddressAndAction(address));
+								boolean isContains = false;
+								for (KNXGroupAddressAndAction AAA : mAddressAndActionAdapter.getAddressAndActionList()) {
+									if(AAA.getAddressId().equals(address.getId())) {
+										list.add(AAA);
+										isContains = true;
+										break;
+									}
+								}
+
+								if (!isContains) {
+									list.add(new KNXGroupAddressAndAction(address));
+								}
+//								mAddressAndActionAdapter.addAddressAndAction(new KNXGroupAddressAndAction(address));
 							}
 
+							mAddressAndActionAdapter.setAddressAndActionList(list);
 							mAddressAndActionAdapter.notifyDataSetChanged();
 						}
 					})
@@ -873,12 +895,9 @@ public class TimingTaskActivity extends BaseActivity {
 						}
 					})
 					.show();
-		} else {
-
 		}
 	}
 
-	
 	/**
 	 *  定时任务列表刷新事件接收器
 	 */
@@ -891,10 +910,10 @@ public class TimingTaskActivity extends BaseActivity {
 					SystemUtil.isForeground(TimingTaskActivity.this, "com.sation.knxcontroller.activity.TimingTaskActivity")*/) {
 				if(null != mTimingTaskListAdapter) {
 					try {
-						Log.i(TAG, "1");
+//						Log.i(TAG, "1");
 //						STKNXControllerApp.getInstance().saveTimerTask();
 						mTimingTaskListAdapter.notifyDataSetChanged();
-						Log.i(TAG, "2");
+//						Log.i(TAG, "2");
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}

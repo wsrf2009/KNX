@@ -1,0 +1,90 @@
+[
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_symbol_light_down.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_symbol_light_down.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\launcher.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\launcher.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_background_down_pressed.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_background_down_pressed.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_button_background_normal.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_button_background_normal.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_symbol_arrow_up.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_symbol_arrow_up.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_symbol_arrow_down.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_symbol_arrow_down.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_symbol_light_up.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_symbol_light_up.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_focus_overlay.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_focus_overlay.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_button_background_pressed.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_button_background_pressed.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\setting_view_arrow.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\setting_view_arrow.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_button_background_checked.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_button_background_checked.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_symbol_volume_up.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_symbol_volume_up.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_button_background_checked_pressed.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_button_background_checked_pressed.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_background_up_normal.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_background_up_normal.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_symbol_volume_down.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_symbol_volume_down.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\button_background_normal.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\button_background_normal.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\button_background_checked.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\button_background_checked.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\button_background_pressed.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\button_background_pressed.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\button_background_checked_pressed.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\button_background_checked_pressed.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_background_up_pressed.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_background_up_pressed.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\setting_view_check.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\setting_view_check.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_background_down_normal.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_background_down_normal.9.png"
+    }
+]
