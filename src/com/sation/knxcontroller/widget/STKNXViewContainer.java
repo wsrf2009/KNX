@@ -34,7 +34,7 @@ public class STKNXViewContainer extends STKNXControl {
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		int cCount = getChildCount();
-		
+
 		/*
 		 * 遍历所有childView根据其宽和高，以及margin进行布局
 		 */
@@ -50,50 +50,23 @@ public class STKNXViewContainer extends STKNXControl {
 			childView.layout(cl, ct, cr, cb);
 		}
 	}
-	
-	@SuppressLint("DrawAllocation")
-	@Override
-	protected void onDraw(Canvas canvas) {
-    	super.onDraw(canvas);
 
-		try {
-			Paint paint = new Paint();
-    	/* 画圆角矩形  */
-			paint.setStyle(Paint.Style.FILL_AND_STROKE);    // 充满
-			paint.setAntiAlias(true);// 设置画笔的锯齿效果
-			paint.setColor(Color.parseColor(this.mKNXView.BackgroundColor));
-			paint.setAlpha((int) (this.mKNXView.Alpha * 255));
-			RectF oval3 = new RectF(0, 0, getWidth(), getHeight());// 设置个新的长方形
-			canvas.drawRoundRect(oval3, this.mKNXView.Radius, this.mKNXView.Radius, paint);//第二个参数是x半径，第三个参数是y半径
-
-			if (null != this.mKNXView.getBackgroundImage()) {
-				Bitmap backimg = ImageUtils.getDiskBitmap(
-						STKNXControllerConstant.ConfigResImgPath + this.mKNXView.getBackgroundImage());
-				Rect resRect = new Rect(0, 0, backimg.getWidth(), backimg.getHeight());
-				Rect desRect = new Rect(0, 0, this.mKNXView.Width, this.mKNXView.Height);
-				canvas.drawBitmap(backimg, resRect, desRect, paint);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
+//	@SuppressLint("DrawAllocation")
 //	@Override
-//	public LayoutParams generateLayoutParams(AttributeSet attrs) {
-//		return new MarginLayoutParams(getContext(), attrs);
-//	}
+//	protected void onDraw(Canvas canvas) {
+//    	super.onDraw(canvas);
 //
-//	@Override
-//	protected LayoutParams generateDefaultLayoutParams() {
-//		Log.e(TAG, "generateDefaultLayoutParams");
-//		return new MarginLayoutParams(LayoutParams.MATCH_PARENT,
-//				LayoutParams.MATCH_PARENT);
+//		try {
+//			Paint paint = new Paint();
+//    	/* 画圆角矩形  */
+//			paint.setStyle(Paint.Style.FILL_AND_STROKE);    // 充满
+//			paint.setAntiAlias(true);// 设置画笔的锯齿效果
+//			paint.setColor(Color.parseColor(this.mKNXView.BackgroundColor));
+//			paint.setAlpha((int) (this.mKNXView.Alpha * 255));
+//			RectF oval3 = new RectF(0, 0, getWidth(), getHeight());// 设置个新的长方形
+//			canvas.drawRoundRect(oval3, this.mKNXView.Radius, this.mKNXView.Radius, paint);//第二个参数是x半径，第三个参数是y半径
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//		}
 //	}
-//
-//	@Override
-//	protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-//		Log.e(TAG, "generateLayoutParams p");
-//		return new MarginLayoutParams(p);
-//	}
-
 }

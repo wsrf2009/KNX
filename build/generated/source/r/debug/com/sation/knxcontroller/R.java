@@ -9,73 +9,58 @@ package com.sation.knxcontroller;
 
 public final class R {
     public static final class anim {
-        public static final int cycle=0x7f040000;
-        public static final int push_left_in=0x7f040001;
-        public static final int push_left_out=0x7f040002;
-        public static final int push_right_in=0x7f040003;
-        public static final int push_right_out=0x7f040004;
-        public static final int rotate=0x7f040005;
-        public static final int scale_from_center=0x7f040006;
-        public static final int scale_leftbottom_in=0x7f040007;
-        public static final int scale_leftbottom_out=0x7f040008;
-        public static final int scale_righttop_in=0x7f040009;
-        public static final int scale_righttop_out=0x7f04000a;
-        public static final int scale_to_center=0x7f04000b;
+        public static final int alpha_50_100=0x7f050000;
+        public static final int background_animation_down=0x7f050001;
+        public static final int background_animation_up=0x7f050002;
+        public static final int cycle=0x7f050003;
+        public static final int push_left_in=0x7f050004;
+        public static final int push_left_out=0x7f050005;
+        public static final int push_right_in=0x7f050006;
+        public static final int push_right_out=0x7f050007;
+        public static final int rotate_anti_clockwise_180_degree=0x7f050008;
+        public static final int rotate_clockwise_180_degree=0x7f050009;
+        public static final int scale_from_center_600=0x7f05000a;
+        public static final int scale_from_center_bounce=0x7f05000b;
+        public static final int scale_leftbottom_in=0x7f05000c;
+        public static final int scale_leftbottom_out=0x7f05000d;
+        public static final int scale_righttop_in=0x7f05000e;
+        public static final int scale_righttop_out=0x7f05000f;
+        public static final int scale_to_center_300_bounce=0x7f050010;
+        public static final int scale_to_center_600=0x7f050011;
+        public static final int scale_zoom_in_100=0x7f050012;
+        public static final int scale_zoom_out_100=0x7f050013;
+        public static final int scale_zoom_out_300=0x7f050014;
+        public static final int translate_bounce_down_up=0x7f050015;
+        public static final int translate_up_down=0x7f050016;
     }
     public static final class array {
-        public static final int list_preference_entries=0x7f060000;
-        public static final int list_preference_entry_values=0x7f060001;
-        public static final int multi_select_list_preference_default_value=0x7f060002;
-        public static final int pref_example_list_titles=0x7f060003;
-        public static final int pref_example_list_values=0x7f060004;
-        public static final int pref_sync_frequency_titles=0x7f060005;
-        public static final int pref_sync_frequency_values=0x7f060006;
+        public static final int list_preference_entries=0x7f070000;
+        public static final int list_preference_entry_values=0x7f070001;
+        public static final int multi_select_list_preference_default_value=0x7f070002;
+        public static final int pref_example_list_titles=0x7f070003;
+        public static final int pref_example_list_values=0x7f070004;
+        public static final int pref_sync_frequency_titles=0x7f070005;
+        public static final int pref_sync_frequency_values=0x7f070006;
     }
     public static final class attr {
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int StyleToggleButton=0x7f010000;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int arrow=0x7f010024;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int background=0x7f010029;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int check=0x7f010025;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int checked=0x7f010028;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+        public static final int arc_background_color=0x7f010049;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int clickable=0x7f010027;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int drawable=0x7f010023;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int iOSStyle=0x7f01001c;
+        public static final int arc_front_color=0x7f01004a;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -85,79 +70,87 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int iconPadding=0x7f01001a;
+        public static final int arc_width=0x7f010048;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int image=0x7f010026;
+        public static final int arrow=0x7f010042;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int imgArrowDown=0x7f010001;
+        public static final int background=0x7f010047;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int imgArrowUp=0x7f010002;
+        public static final int bar=0x7f010008;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int imgLightDown=0x7f010003;
+        public static final int barCentral=0x7f01000d;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int barCentralHeight=0x7f01000f;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int barCentralWidth=0x7f01000e;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int barHeight=0x7f010009;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int imgLightUp=0x7f010004;
+        public static final int check=0x7f010043;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int checked=0x7f010046;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int clickable=0x7f010045;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int imgVolumeDown=0x7f010005;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+        public static final int decrease=0x7f010012;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
          */
-        public static final int imgVolumeUp=0x7f010006;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleBlindsDown=0x7f010007;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleBlindsUp=0x7f010008;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleButton=0x7f010009;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleDialogButton=0x7f01000a;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleGridLayout=0x7f01000b;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleGroupItem=0x7f01000c;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleLable=0x7f01000d;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleMediaButton=0x7f01000e;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleMySilder=0x7f01000f;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleRoomListDivider=0x7f010010;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int styleSliderSwitch=0x7f010011;
+        public static final int decreaseHeight=0x7f010014;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -165,132 +158,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int subTitle=0x7f01001e;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int subTitleColor=0x7f010020;
-        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-         */
-        public static final int subTitleSize=0x7f010022;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int switchMinHeight=0x7f010012;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int switchMinWidth=0x7f010013;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int switchPadding=0x7f010014;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int switchTextAppearanceAttrib=0x7f010015;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int textAllCaps=0x7f01002f;
-        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int textColor=0x7f010016;
-        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int textColorHighlight=0x7f01002c;
-        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int textColorHint=0x7f01002d;
-        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int textColorLink=0x7f01002e;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int textSize=0x7f010017;
-        /** <p>Must be one or more (separated by '|') of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>normal</code></td><td>0</td><td></td></tr>
-<tr><td><code>bold</code></td><td>1</td><td></td></tr>
-<tr><td><code>italic</code></td><td>2</td><td></td></tr>
-</table>
-         */
-        public static final int textStyle=0x7f01002a;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int thumb=0x7f010018;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int thumbTextPadding=0x7f010019;
+        public static final int decreasePrefix=0x7f010018;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -298,33 +166,63 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int title=0x7f01001d;
+        public static final int decreaseSuffix=0x7f010019;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int decreaseWidth=0x7f010013;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int dimmingBreak=0x7f01001c;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int disabled_text_color=0x7f01002d;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int titleColor=0x7f01001f;
-        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        public static final int down_middle_disabled=0x7f010029;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
          */
-        public static final int titleSize=0x7f010021;
-        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        public static final int down_middle_enabled=0x7f01002a;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be one of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>normal</code></td><td>0</td><td></td></tr>
-<tr><td><code>sans</code></td><td>1</td><td></td></tr>
-<tr><td><code>serif</code></td><td>2</td><td></td></tr>
-<tr><td><code>monospace</code></td><td>3</td><td></td></tr>
-</table>
          */
-        public static final int typeface=0x7f01002b;
+        public static final int down_min_disabled=0x7f01002b;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int down_min_enabled=0x7f01002c;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int drawable=0x7f010041;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int enabled_text_color=0x7f01002e;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -332,534 +230,1180 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int vertical=0x7f01001b;
+        public static final int iOSStyle=0x7f01003a;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int image=0x7f010044;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int increase=0x7f010015;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int increaseHeight=0x7f010017;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int increasePrefix=0x7f01001a;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int increaseSuffix=0x7f01001b;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int increaseWidth=0x7f010016;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int max_disabled=0x7f010027;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int max_drawable=0x7f010053;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int max_enabled=0x7f010028;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int max_value=0x7f010037;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int min_drawable=0x7f010052;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int prefix=0x7f010021;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int progress_background=0x7f010001;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int progress_front=0x7f010002;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int progress_max=0x7f010003;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int progress_text_color=0x7f010006;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int progress_text_size=0x7f010007;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int progress_text_stroke_width=0x7f010005;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int progress_width=0x7f010000;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int seekbar_disabled=0x7f010035;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int seekbar_enabled=0x7f010034;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int seekbar_max_value=0x7f01004b;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int seekbar_value=0x7f010038;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int seekbar_width=0x7f010036;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int show_progress_text=0x7f010004;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int show_text=0x7f01004c;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int spacing=0x7f010039;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int start_angle=0x7f010050;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int subTitle=0x7f01003c;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int subTitleColor=0x7f01003e;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+         */
+        public static final int subTitleSize=0x7f010040;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int suffix=0x7f010022;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int sweep_angle=0x7f010051;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int textBackground=0x7f01001f;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int textColor=0x7f01001e;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>top</code></td><td>1</td><td></td></tr>
+<tr><td><code>bottom</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int textOrientation=0x7f010020;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int textSize=0x7f01001d;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int text_color=0x7f01004e;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int text_down_middle=0x7f010032;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int text_down_min=0x7f010033;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int text_max=0x7f010031;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int text_prefix=0x7f010054;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int text_size=0x7f01004f;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int text_stroke_width=0x7f01004d;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int text_suffix=0x7f010055;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int text_up_middle=0x7f010030;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int text_up_min=0x7f01002f;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int thumbHeight=0x7f010011;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int thumbWidth=0x7f010010;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int tick=0x7f01000a;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int tickHeight=0x7f01000c;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int tickWidth=0x7f01000b;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int title=0x7f01003b;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int titleColor=0x7f01003d;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+         */
+        public static final int titleSize=0x7f01003f;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int up_middle_disabled=0x7f010025;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int up_middle_enabled=0x7f010026;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int up_min_disabled=0x7f010023;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int up_min_enabled=0x7f010024;
     }
     public static final class color {
-        public static final int connection_error=0x7f070000;
-        public static final int default_focus_overlay=0x7f070001;
-        public static final int default_room_list_pressed=0x7f070002;
-        public static final int default_screen_bg=0x7f070003;
-        public static final int default_text=0x7f070012;
-        public static final int default_text_color_room_list=0x7f070004;
-        public static final int default_text_color_widget=0x7f070005;
-        public static final int default_text_shadow_color_room_list=0x7f070006;
-        public static final int listview_diviver_color1=0x7f070007;
-        public static final int listview_diviver_color2=0x7f070008;
-        public static final int setting_view_item_bg_normal=0x7f070009;
-        public static final int setting_view_item_bg_pressed=0x7f07000a;
-        public static final int setting_view_item_subtitle_text=0x7f07000b;
-        public static final int setting_view_item_title_text=0x7f07000c;
-        public static final int switcher_background=0x7f07000d;
-        public static final int switcher_cursor_drag=0x7f07000e;
-        public static final int switcher_cursor_on=0x7f07000f;
-        public static final int transparent=0x7f070010;
-        public static final int white=0x7f070011;
+        public static final int area_item_background=0x7f080000;
+        public static final int areas_background=0x7f080001;
+        public static final int connection_error=0x7f080002;
+        public static final int default_focus_overlay=0x7f080003;
+        public static final int default_room_list_pressed=0x7f080004;
+        public static final int default_screen_bg=0x7f080005;
+        public static final int default_text=0x7f080015;
+        public static final int default_text_color_room_list=0x7f080006;
+        public static final int default_text_color_widget=0x7f080007;
+        public static final int default_text_shadow_color_room_list=0x7f080008;
+        public static final int listview_diviver_color1=0x7f080009;
+        public static final int listview_diviver_color2=0x7f08000a;
+        public static final int rooms_background=0x7f08000b;
+        public static final int setting_view_item_bg_normal=0x7f08000c;
+        public static final int setting_view_item_bg_pressed=0x7f08000d;
+        public static final int setting_view_item_subtitle_text=0x7f08000e;
+        public static final int setting_view_item_title_text=0x7f08000f;
+        public static final int switcher_background=0x7f080010;
+        public static final int switcher_cursor_drag=0x7f080011;
+        public static final int switcher_cursor_on=0x7f080012;
+        public static final int transparent=0x7f080013;
+        public static final int white=0x7f080014;
     }
     public static final class dimen {
-        public static final int font_size_large=0x7f080000;
-        public static final int font_size_medium=0x7f080001;
-        public static final int font_size_mini=0x7f080002;
-        public static final int font_size_mix=0x7f080003;
-        public static final int polished_width_navigation_bar=0x7f080004;
-        public static final int setting_view_lr_padding=0x7f080005;
-        public static final int setting_view_min_height=0x7f080006;
-        public static final int setting_view_subtitle_size=0x7f080007;
-        public static final int setting_view_tb_padding=0x7f080008;
-        public static final int setting_view_title_size=0x7f080009;
-        public static final int switch_button_height=0x7f08000a;
-        public static final int switch_button_width=0x7f08000b;
+        public static final int area_item_height=0x7f090000;
+        public static final int area_item_horiz_space=0x7f090001;
+        public static final int area_item_icon_height=0x7f090002;
+        public static final int area_item_icon_width=0x7f090003;
+        public static final int area_item_width=0x7f090004;
+        public static final int font_size_large=0x7f090005;
+        public static final int font_size_medium=0x7f090006;
+        public static final int font_size_mini=0x7f090007;
+        public static final int font_size_mix=0x7f090008;
+        public static final int polished_width_navigation_bar=0x7f090009;
+        public static final int room_item_icon_height=0x7f09000a;
+        public static final int room_item_icon_width=0x7f09000b;
+        public static final int room_item_width=0x7f09000c;
+        public static final int setting_view_lr_padding=0x7f09000d;
+        public static final int setting_view_min_height=0x7f09000e;
+        public static final int setting_view_subtitle_size=0x7f09000f;
+        public static final int setting_view_tb_padding=0x7f090010;
+        public static final int setting_view_title_size=0x7f090011;
+        public static final int switch_button_height=0x7f090012;
+        public static final int switch_button_width=0x7f090013;
     }
     public static final class drawable {
-        public static final int background_fenced=0x7f020000;
-        public static final int bg_btn_dialog_left=0x7f020001;
-        public static final int bg_btn_dialog_middle=0x7f020002;
-        public static final int bg_dialog_button_left=0x7f020003;
-        public static final int bg_dialog_button_middle=0x7f020004;
-        public static final int bg_dialog_header=0x7f020005;
-        public static final int bg_dialog_header_raw=0x7f020006;
-        public static final int bg_dialog_new=0x7f020007;
-        public static final int btn_toggle_bg=0x7f020008;
-        public static final int button_background=0x7f020009;
-        public static final int button_background_checked=0x7f02000a;
-        public static final int button_background_checked_pressed=0x7f02000b;
-        public static final int button_background_focused=0x7f02000c;
-        public static final int button_background_normal=0x7f02000d;
-        public static final int button_background_pressed=0x7f02000e;
-        public static final int chevron=0x7f02000f;
-        public static final int chevron_default=0x7f020010;
-        public static final int chevron_white=0x7f020011;
-        public static final int companylogo=0x7f020012;
-        public static final int cover_default_bg=0x7f020013;
-        public static final int coversation_bg=0x7f020014;
-        public static final int default_blinds_background_down=0x7f020015;
-        public static final int default_blinds_background_down_focused=0x7f020016;
-        public static final int default_blinds_background_down_focused_pressed=0x7f020017;
-        public static final int default_blinds_background_down_normal=0x7f020018;
-        public static final int default_blinds_background_down_pressed=0x7f020019;
-        public static final int default_blinds_background_up=0x7f02001a;
-        public static final int default_blinds_background_up_focused=0x7f02001b;
-        public static final int default_blinds_background_up_focused_pressed=0x7f02001c;
-        public static final int default_blinds_background_up_normal=0x7f02001d;
-        public static final int default_blinds_background_up_pressed=0x7f02001e;
-        public static final int default_blinds_symbol_arrow_down=0x7f02001f;
-        public static final int default_blinds_symbol_arrow_up=0x7f020020;
-        public static final int default_blinds_symbol_light_down=0x7f020021;
-        public static final int default_blinds_symbol_light_up=0x7f020022;
-        public static final int default_blinds_symbol_volume_down=0x7f020023;
-        public static final int default_blinds_symbol_volume_up=0x7f020024;
-        public static final int default_button_background=0x7f020025;
-        public static final int default_button_background_checked=0x7f020026;
-        public static final int default_button_background_checked_pressed=0x7f020027;
-        public static final int default_button_background_focused=0x7f020028;
-        public static final int default_button_background_focused_checked=0x7f020029;
-        public static final int default_button_background_focused_checked_pressed=0x7f02002a;
-        public static final int default_button_background_focused_pressed=0x7f02002b;
-        public static final int default_button_background_normal=0x7f02002c;
-        public static final int default_button_background_pressed=0x7f02002d;
-        public static final int default_focus_overlay=0x7f02002e;
-        public static final int dialog_login_qq_shape=0x7f02002f;
-        public static final int divider=0x7f020030;
-        public static final int fynn_prompt_dialog_bg_normal=0x7f020031;
-        public static final int fynn_prompt_dialog_btn_center_normal=0x7f020032;
-        public static final int fynn_prompt_dialog_btn_center_pressed=0x7f020033;
-        public static final int fynn_prompt_dialog_btn_center_selector=0x7f020034;
-        public static final int fynn_prompt_dialog_btn_left_normal=0x7f020035;
-        public static final int fynn_prompt_dialog_btn_left_pressed=0x7f020036;
-        public static final int fynn_prompt_dialog_btn_left_selector=0x7f020037;
-        public static final int fynn_prompt_dialog_btn_right_normal=0x7f020038;
-        public static final int fynn_prompt_dialog_btn_right_pressed=0x7f020039;
-        public static final int fynn_prompt_dialog_btn_right_selector=0x7f02003a;
-        public static final int fynn_prompt_dialog_btn_single_normal=0x7f02003b;
-        public static final int fynn_prompt_dialog_btn_single_pressed=0x7f02003c;
-        public static final int fynn_prompt_dialog_btn_single_selector=0x7f02003d;
-        public static final int fynn_prompt_dialog_title_bar_bg_skyblue=0x7f02003e;
-        public static final int horizontal_seekbar_background=0x7f02003f;
-        public static final int horizontal_seekbar_progress=0x7f020040;
-        public static final int ic_screen_sms_close=0x7f020041;
-        public static final int launcher=0x7f020042;
-        public static final int listview_item_horizontal_divider=0x7f020043;
-        public static final int listview_item_vertical_divider=0x7f020044;
-        public static final int logo=0x7f020045;
-        public static final int menu=0x7f020046;
-        public static final int menu_setting_icon=0x7f020047;
-        public static final int my_progress=0x7f020048;
-        public static final int progress_horizontal=0x7f020049;
-        public static final int refresh=0x7f02004a;
-        public static final int room_list_bg=0x7f02004b;
-        public static final int seek_thumb_normal=0x7f02004c;
-        public static final int seek_thumb_pressed=0x7f02004d;
-        public static final int seek_thumb_selected=0x7f02004e;
-        public static final int setting_view_arrow=0x7f02004f;
-        public static final int setting_view_check=0x7f020050;
-        public static final int setting_view_item_selector=0x7f020051;
-        public static final int shixun_roomlist_logo=0x7f020052;
-        public static final int slider_thumb=0x7f020053;
-        public static final int switch_btn_bg_green=0x7f020054;
-        public static final int switch_btn_bg_white=0x7f020055;
-        public static final int switch_btn_normal=0x7f020056;
-        public static final int switch_btn_pressed=0x7f020057;
-        public static final int switch_toggle=0x7f020058;
-        public static final int switch_toggle_off=0x7f020059;
-        public static final int switch_toggle_on=0x7f02005a;
+        public static final int area_list_item_background=0x7f020000;
+        public static final int background_fenced=0x7f020001;
+        public static final int bg_btn_dialog_left=0x7f020002;
+        public static final int bg_btn_dialog_middle=0x7f020003;
+        public static final int bg_dialog_button_left=0x7f020004;
+        public static final int bg_dialog_button_middle=0x7f020005;
+        public static final int bg_dialog_header=0x7f020006;
+        public static final int bg_dialog_header_raw=0x7f020007;
+        public static final int bg_dialog_new=0x7f020008;
+        public static final int bg_seekbar_display1=0x7f020009;
+        public static final int bg_seekbar_display2=0x7f02000a;
+        public static final int bg_seekbar_display_above=0x7f02000b;
+        public static final int bg_seekbar_display_below=0x7f02000c;
+        public static final int bg_seekbar_progress_drawable=0x7f02000d;
+        public static final int blinds=0x7f02000e;
+        public static final int blinds_slat_disable=0x7f02000f;
+        public static final int blinds_slat_down_middle=0x7f020010;
+        public static final int blinds_slat_down_middle_disable=0x7f020011;
+        public static final int blinds_slat_down_min=0x7f020012;
+        public static final int blinds_slat_down_min_disable=0x7f020013;
+        public static final int blinds_slat_max=0x7f020014;
+        public static final int blinds_slat_max_disable=0x7f020015;
+        public static final int blinds_slat_up_middle=0x7f020016;
+        public static final int blinds_slat_up_middle_disable=0x7f020017;
+        public static final int blinds_slat_up_min=0x7f020018;
+        public static final int blinds_slat_up_min_disable=0x7f020019;
+        public static final int blinds_up_down=0x7f02001a;
+        public static final int btn_toggle_bg=0x7f02001b;
+        public static final int building_edit_128x128=0x7f02001c;
+        public static final int button_background=0x7f02001d;
+        public static final int button_background_checked=0x7f02001e;
+        public static final int button_background_checked_pressed=0x7f02001f;
+        public static final int button_background_focused=0x7f020020;
+        public static final int button_background_normal=0x7f020021;
+        public static final int button_background_pressed=0x7f020022;
+        public static final int chevron=0x7f020023;
+        public static final int chevron_default=0x7f020024;
+        public static final int chevron_white=0x7f020025;
+        public static final int circular_green_30dp=0x7f020026;
+        public static final int companylogo=0x7f020027;
+        public static final int cover_default_bg=0x7f020028;
+        public static final int coversation_bg=0x7f020029;
+        public static final int default_blinds_background_down=0x7f02002a;
+        public static final int default_blinds_background_down_focused=0x7f02002b;
+        public static final int default_blinds_background_down_focused_pressed=0x7f02002c;
+        public static final int default_blinds_background_down_normal=0x7f02002d;
+        public static final int default_blinds_background_down_pressed=0x7f02002e;
+        public static final int default_blinds_background_up=0x7f02002f;
+        public static final int default_blinds_background_up_focused=0x7f020030;
+        public static final int default_blinds_background_up_focused_pressed=0x7f020031;
+        public static final int default_blinds_background_up_normal=0x7f020032;
+        public static final int default_blinds_background_up_pressed=0x7f020033;
+        public static final int default_blinds_symbol_arrow_down=0x7f020034;
+        public static final int default_blinds_symbol_arrow_up=0x7f020035;
+        public static final int default_blinds_symbol_light_down=0x7f020036;
+        public static final int default_blinds_symbol_light_up=0x7f020037;
+        public static final int default_blinds_symbol_volume_down=0x7f020038;
+        public static final int default_blinds_symbol_volume_up=0x7f020039;
+        public static final int default_button_background=0x7f02003a;
+        public static final int default_button_background_checked=0x7f02003b;
+        public static final int default_button_background_checked_pressed=0x7f02003c;
+        public static final int default_button_background_focused=0x7f02003d;
+        public static final int default_button_background_focused_checked=0x7f02003e;
+        public static final int default_button_background_focused_checked_pressed=0x7f02003f;
+        public static final int default_button_background_focused_pressed=0x7f020040;
+        public static final int default_button_background_normal=0x7f020041;
+        public static final int default_button_background_pressed=0x7f020042;
+        public static final int default_focus_overlay=0x7f020043;
+        public static final int detail_icon_schedule_ball=0x7f020044;
+        public static final int dialog_login_qq_shape=0x7f020045;
+        public static final int dimmer_max=0x7f020046;
+        public static final int dimmer_min=0x7f020047;
+        public static final int dimmer_off=0x7f020048;
+        public static final int dimmer_on=0x7f020049;
+        public static final int dimmer_relatively_background=0x7f02004a;
+        public static final int dimmingcontrol_central=0x7f02004b;
+        public static final int dimmingcontrol_thumb=0x7f02004c;
+        public static final int dimmingcontrol_tick=0x7f02004d;
+        public static final int divider=0x7f02004e;
+        public static final int down=0x7f02004f;
+        public static final int down1=0x7f020050;
+        public static final int fynn_prompt_dialog_bg_normal=0x7f020051;
+        public static final int fynn_prompt_dialog_btn_center_normal=0x7f020052;
+        public static final int fynn_prompt_dialog_btn_center_pressed=0x7f020053;
+        public static final int fynn_prompt_dialog_btn_center_selector=0x7f020054;
+        public static final int fynn_prompt_dialog_btn_left_normal=0x7f020055;
+        public static final int fynn_prompt_dialog_btn_left_pressed=0x7f020056;
+        public static final int fynn_prompt_dialog_btn_left_selector=0x7f020057;
+        public static final int fynn_prompt_dialog_btn_right_normal=0x7f020058;
+        public static final int fynn_prompt_dialog_btn_right_pressed=0x7f020059;
+        public static final int fynn_prompt_dialog_btn_right_selector=0x7f02005a;
+        public static final int fynn_prompt_dialog_btn_single_normal=0x7f02005b;
+        public static final int fynn_prompt_dialog_btn_single_pressed=0x7f02005c;
+        public static final int fynn_prompt_dialog_btn_single_selector=0x7f02005d;
+        public static final int fynn_prompt_dialog_title_bar_bg_skyblue=0x7f02005e;
+        public static final int horizontal_seekbar_background=0x7f02005f;
+        public static final int horizontal_seekbar_progress=0x7f020060;
+        public static final int ic_screen_sms_close=0x7f020061;
+        public static final int icon_seekbar_thumb=0x7f020062;
+        public static final int left1=0x7f020063;
+        public static final int listview_item_horizontal_divider=0x7f020064;
+        public static final int listview_item_vertical_divider=0x7f020065;
+        public static final int logo=0x7f020066;
+        public static final int menu=0x7f020067;
+        public static final int menu_setting_icon=0x7f020068;
+        public static final int my_progress=0x7f020069;
+        public static final int open_perecent_bg=0x7f02006a;
+        public static final int player_settings_bright_thumb=0x7f02006b;
+        public static final int position_of_shutter_thumb=0x7f02006c;
+        public static final int progress_horizontal=0x7f02006d;
+        public static final int rectangle=0x7f02006e;
+        public static final int refresh=0x7f02006f;
+        public static final int right1=0x7f020070;
+        public static final int room_list_bg=0x7f020071;
+        public static final int seek=0x7f020072;
+        public static final int seek_bar=0x7f020073;
+        public static final int seek_bar1=0x7f020074;
+        public static final int seek_bkg=0x7f020075;
+        public static final int seek_thumb=0x7f020076;
+        public static final int seek_thumb_normal=0x7f020077;
+        public static final int seek_thumb_pressed=0x7f020078;
+        public static final int seek_thumb_selected=0x7f020079;
+        public static final int seekbar_horizontal=0x7f02007a;
+        public static final int seekbar_position_of_shutter_pro=0x7f02007b;
+        public static final int seekbar_thumb_normal=0x7f02007c;
+        public static final int seekbar_thumb_pressed=0x7f02007d;
+        public static final int setting_bright_seekbar_background=0x7f02007e;
+        public static final int setting_bright_seekbar_progress=0x7f02007f;
+        public static final int setting_view_arrow=0x7f020080;
+        public static final int setting_view_check=0x7f020081;
+        public static final int setting_view_item_selector=0x7f020082;
+        public static final int shixun_roomlist_logo=0x7f020083;
+        public static final int shutter_detail_background=0x7f020084;
+        public static final int shutter_off=0x7f020085;
+        public static final int shutter_on=0x7f020086;
+        public static final int shutter_on_off=0x7f020087;
+        public static final int slider_thumb=0x7f020088;
+        public static final int switch_btn_bg_green=0x7f020089;
+        public static final int switch_btn_bg_white=0x7f02008a;
+        public static final int switch_btn_normal=0x7f02008b;
+        public static final int switch_btn_pressed=0x7f02008c;
+        public static final int switch_toggle=0x7f02008d;
+        public static final int switch_toggle_off=0x7f02008e;
+        public static final int switch_toggle_on=0x7f02008f;
+        public static final int up=0x7f020090;
+        public static final int up1=0x7f020091;
+        public static final int volumn_bg=0x7f020092;
+        public static final int volumn_front=0x7f020093;
+        public static final int volumn_primary=0x7f020094;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f0a00a3;
-        public static final int RelativeLayout1=0x7f0a000f;
-        public static final int RelativeLayout111=0x7f0a00a8;
-        public static final int RelativeLayout11251=0x7f0a00b5;
-        public static final int SettingButton_ChangePassword=0x7f0a008d;
-        public static final int SettingButton_KNXGateway=0x7f0a0088;
-        public static final int SettingButton_Language=0x7f0a008b;
-        public static final int SettingButton_PhysicalAddress=0x7f0a0089;
-        public static final int SettingButton_Reboot=0x7f0a008c;
-        public static final int SettingButton_ScreenOff=0x7f0a008a;
-        public static final int SettingButton_SystemStatus=0x7f0a0090;
-        public static final int SettingButton_UpgradeProject=0x7f0a008f;
-        public static final int SettingButton_UpgradeSoftware=0x7f0a008e;
-        public static final int TextView1=0x7f0a0026;
-        public static final int TextView2=0x7f0a0028;
-        public static final int aboutWebView=0x7f0a0057;
-        public static final int background=0x7f0a0056;
-        public static final int bold=0x7f0a0000;
-        public static final int btn_divider1=0x7f0a0020;
-        public static final int btn_divider2=0x7f0a0022;
-        public static final int btn_view=0x7f0a001e;
-        public static final int buttonAddOrRemoveGroupAddress=0x7f0a00b6;
-        public static final int buttonCreateTask=0x7f0a00aa;
-        public static final int buttonDeleteTask=0x7f0a00a9;
-        public static final int buttonSaveTask=0x7f0a00b7;
-        public static final int button_center=0x7f0a0021;
-        public static final int button_left=0x7f0a001f;
-        public static final int button_right=0x7f0a0023;
-        public static final int changepasswordlayout_edittext_confirmnewpassword=0x7f0a000e;
-        public static final int changepasswordlayout_edittext_newpassword=0x7f0a000c;
-        public static final int changepasswordlayout_edittext_originalpassword=0x7f0a000a;
-        public static final int checkBoxGroupAddress=0x7f0a0024;
-        public static final int closeBtn=0x7f0a003a;
-        public static final int copy_right=0x7f0a0091;
-        public static final int customTimePickerLayouNumberPickerTimeIntervalHour=0x7f0a0010;
-        public static final int customTimePickerLayouNumberPickerTimeIntervalMinute=0x7f0a0012;
-        public static final int customTimePickerLayouNumberPickerTimeIntervalSecond=0x7f0a0014;
-        public static final int datePickerDateTimeLayoutDate=0x7f0a0015;
-        public static final int dialog=0x7f0a0017;
-        public static final int dialogCancelBtn=0x7f0a0046;
-        public static final int dialogConfirmBtn=0x7f0a0042;
-        public static final int dialogContent=0x7f0a003d;
-        public static final int dialogNeutralBtn=0x7f0a0044;
-        public static final int dialogProgressBar=0x7f0a003e;
-        public static final int dialogTips=0x7f0a003f;
-        public static final int dialogTitle=0x7f0a0039;
-        public static final int dialog_bottom=0x7f0a0041;
-        public static final int dialog_content=0x7f0a003b;
-        public static final int dialog_frame=0x7f0a0037;
-        public static final int dialog_msg_panel=0x7f0a003c;
-        public static final int dialog_title_layout=0x7f0a0038;
-        public static final int gridView=0x7f0a005c;
-        public static final int imgMenuSettting=0x7f0a005e;
-        public static final int imgRefresh=0x7f0a005f;
-        public static final int imgSettting=0x7f0a005d;
-        public static final int italic=0x7f0a0001;
-        public static final int iv_divider_line_left=0x7f0a0043;
-        public static final int iv_divider_line_right=0x7f0a0045;
-        public static final int iv_divider_line_top=0x7f0a0040;
-        public static final int layout_addview=0x7f0a001b;
-        public static final int linePageIndicator=0x7f0a0051;
-        public static final int listviewItemLayoutDetail=0x7f0a0006;
-        public static final int listviewItemLayoutDetailDetails=0x7f0a0030;
-        public static final int listviewItemLayoutDetailSpinnerAction=0x7f0a0031;
-        public static final int listviewItemLayoutDetailTitle=0x7f0a002f;
-        public static final int listviewItemLayoutSubtitleDisclosureIndicator=0x7f0a0032;
-        public static final int listviewItemLayoutSubtitleDisclosureIndicatorImageButton=0x7f0a0035;
-        public static final int listviewItemLayoutSubtitleDisclosureIndicatorImageView=0x7f0a0034;
-        public static final int listviewItemLayoutSubtitleDisclosureIndicatorSubtitle=0x7f0a0036;
-        public static final int listviewItemLayoutSubtitleDisclosureIndicatorTitle=0x7f0a0033;
-        public static final int listview_divider_line=0x7f0a002e;
-        public static final int message=0x7f0a001c;
-        public static final int monospace=0x7f0a0003;
-        public static final int msg_btn_divider=0x7f0a001d;
-        public static final int normal=0x7f0a0002;
-        public static final int periodicityLayoutLinearLayout1=0x7f0a009a;
-        public static final int periodicityLayoutLinearLayout2=0x7f0a009f;
-        public static final int radioButtonActionIsSelected=0x7f0a0008;
-        public static final int radioButtonUDPGroupBroadcast=0x7f0a002b;
-        public static final int radioButtonUDPPeerToPeer=0x7f0a002c;
-        public static final int rebootlayout_checkBox_rebootenable=0x7f0a004d;
-        public static final int rebootlayout_textview_reboot=0x7f0a004c;
-        public static final int rebootlayout_textview_reboottext=0x7f0a004e;
-        public static final int rebootlayout_timepicker_reboottime=0x7f0a004f;
-        public static final int roomTilesListLayoutRelativeLayout=0x7f0a0055;
-        public static final int roomTilesListRelativeLayoutSystemTime=0x7f0a0058;
-        public static final int roomTilesListTextViewDateTime=0x7f0a0059;
-        public static final int roomTilesListTextViewLight=0x7f0a005b;
-        public static final int roomTilesListTextViewTemperature=0x7f0a005a;
-        public static final int room_icon=0x7f0a0053;
-        public static final int room_list_item=0x7f0a0052;
-        public static final int room_name=0x7f0a0054;
-        public static final int sans=0x7f0a0004;
-        public static final int serif=0x7f0a0005;
-        public static final int settingChangePassword=0x7f0a0067;
-        public static final int settingKNXConnect=0x7f0a0062;
-        public static final int settingLanguage=0x7f0a0065;
-        public static final int settingLanguageRadioButtonChinese=0x7f0a0061;
-        public static final int settingLanguageRadioButtonEnglish=0x7f0a0060;
-        public static final int settingPhysicalAddress=0x7f0a0063;
-        public static final int settingReboot=0x7f0a0066;
-        public static final int settingScreenOffSpan=0x7f0a0064;
-        public static final int settingUpgradeProject=0x7f0a0069;
-        public static final int settingUpgradeSoftware=0x7f0a0068;
-        public static final int setting_view_basic_item_h_arrow=0x7f0a006f;
-        public static final int setting_view_basic_item_h_container=0x7f0a006b;
-        public static final int setting_view_basic_item_h_icon=0x7f0a006c;
-        public static final int setting_view_basic_item_h_subtitle=0x7f0a006e;
-        public static final int setting_view_basic_item_h_title=0x7f0a006d;
-        public static final int setting_view_basic_item_v_arrow=0x7f0a0074;
-        public static final int setting_view_basic_item_v_container=0x7f0a0070;
-        public static final int setting_view_basic_item_v_icon=0x7f0a0071;
-        public static final int setting_view_basic_item_v_subtitle=0x7f0a0073;
-        public static final int setting_view_basic_item_v_title=0x7f0a0072;
-        public static final int setting_view_check_item_check=0x7f0a0078;
-        public static final int setting_view_check_item_container=0x7f0a0075;
-        public static final int setting_view_check_item_icon=0x7f0a0076;
-        public static final int setting_view_check_item_title=0x7f0a0077;
-        public static final int setting_view_check_item_v_check=0x7f0a007d;
-        public static final int setting_view_check_item_v_container=0x7f0a0079;
-        public static final int setting_view_check_item_v_icon=0x7f0a007a;
-        public static final int setting_view_check_item_v_subtitle=0x7f0a007c;
-        public static final int setting_view_check_item_v_title=0x7f0a007b;
-        public static final int setting_view_image_item_arrow=0x7f0a0082;
-        public static final int setting_view_image_item_container=0x7f0a007e;
-        public static final int setting_view_image_item_icon=0x7f0a007f;
-        public static final int setting_view_image_item_image=0x7f0a0081;
-        public static final int setting_view_image_item_title=0x7f0a0080;
-        public static final int setting_view_switch_item_container=0x7f0a0083;
-        public static final int setting_view_switch_item_icon=0x7f0a0084;
-        public static final int setting_view_switch_item_switch=0x7f0a0086;
-        public static final int setting_view_switch_item_title=0x7f0a0085;
-        public static final int settings=0x7f0a0087;
-        public static final int splashabout=0x7f0a0092;
-        public static final int stViewPager1=0x7f0a0050;
-        public static final int systemStatus=0x7f0a006a;
-        public static final int systemStatusCheckBoxDisplaySystemTime=0x7f0a0093;
-        public static final int systemStatusCheckBoxRecordLastInterface=0x7f0a0097;
-        public static final int systemStatusTextViewLocalIP=0x7f0a0094;
-        public static final int systemStatusTextViewSoftwareVersion=0x7f0a0095;
-        public static final int task_item_title=0x7f0a0098;
-        public static final int textView1=0x7f0a0009;
-        public static final int textView2=0x7f0a000b;
-        public static final int textView3=0x7f0a000d;
-        public static final int textView4=0x7f0a0096;
-        public static final int textViewActionItemActionName=0x7f0a0007;
-        public static final int textViewGroupAddressName=0x7f0a002a;
-        public static final int timeAndWeekdayLayoutCheckBoxFriday=0x7f0a00a0;
-        public static final int timeAndWeekdayLayoutCheckBoxMonday=0x7f0a009b;
-        public static final int timeAndWeekdayLayoutCheckBoxSaturday=0x7f0a00a1;
-        public static final int timeAndWeekdayLayoutCheckBoxSunday=0x7f0a00a2;
-        public static final int timeAndWeekdayLayoutCheckBoxThursday=0x7f0a009e;
-        public static final int timeAndWeekdayLayoutCheckBoxTuesday=0x7f0a009c;
-        public static final int timeAndWeekdayLayoutCheckBoxWednesday=0x7f0a009d;
-        public static final int timeAndWeekdayLayoutTimePickerTime=0x7f0a0099;
-        public static final int timePickerDateTimeLayoutTime=0x7f0a0016;
-        public static final int timingTaskLayoutExecuteWayBackground=0x7f0a00ae;
-        public static final int timingTaskLayoutExecuteWayCycle=0x7f0a00b2;
-        public static final int timingTaskLayoutExecuteWayDetail=0x7f0a0011;
-        public static final int timingTaskLayoutExecuteWayEveryday=0x7f0a00b1;
-        public static final int timingTaskLayoutExecuteWayMonthly=0x7f0a00af;
-        public static final int timingTaskLayoutExecuteWayOneOff=0x7f0a00b3;
-        public static final int timingTaskLayoutExecuteWayWeekly=0x7f0a00b0;
-        public static final int timingTaskLayoutGroupAddressList=0x7f0a00b4;
-        public static final int timingTaskLayoutLinearLayoutTaskDetailBackground=0x7f0a00ab;
-        public static final int timingTaskLayoutLinearLayoutTimingTaskListBackground=0x7f0a00a4;
-        public static final int timingTaskLayoutRelativeLayoutTaskDetailBackground=0x7f0a0025;
-        public static final int timingTaskLayoutRelativeLayoutTimingListBackground=0x7f0a00a6;
-        public static final int timingTaskLayoutTaskExecuteWayTitle=0x7f0a00ad;
-        public static final int timingTaskLayoutTaskItemEditTextName=0x7f0a00ac;
-        public static final int timingTaskLayoutTaskObjectTitle=0x7f0a0013;
-        public static final int timingTaskLayoutTimerName=0x7f0a00a5;
-        public static final int timingTaskLayoutTimingTaskList=0x7f0a00a7;
-        public static final int title=0x7f0a0019;
-        public static final int title_msg_divider=0x7f0a001a;
-        public static final int titlebar=0x7f0a0018;
-        public static final int tvPassword=0x7f0a0047;
-        public static final int txtFirst=0x7f0a0049;
-        public static final int txtIP=0x7f0a0027;
-        public static final int txtPassword=0x7f0a0048;
-        public static final int txtPort=0x7f0a0029;
-        public static final int txtSecond=0x7f0a004a;
-        public static final int txtThree=0x7f0a004b;
-        public static final int txtTimeSpan=0x7f0a002d;
+        public static final int LinearLayout1=0x7f0b00c2;
+        public static final int RelativeLayout1=0x7f0b000b;
+        public static final int RelativeLayout111=0x7f0b00c7;
+        public static final int RelativeLayout11251=0x7f0b00d4;
+        public static final int SettingButton_ChangePassword=0x7f0b0089;
+        public static final int SettingButton_KNXGateway=0x7f0b0084;
+        public static final int SettingButton_Language=0x7f0b0087;
+        public static final int SettingButton_PhysicalAddress=0x7f0b0085;
+        public static final int SettingButton_Reboot=0x7f0b0088;
+        public static final int SettingButton_ScreenOff=0x7f0b0086;
+        public static final int SettingButton_SystemStatus=0x7f0b008c;
+        public static final int SettingButton_UpgradeProject=0x7f0b008b;
+        public static final int SettingButton_UpgradeSoftware=0x7f0b008a;
+        public static final int TextView1=0x7f0b0022;
+        public static final int TextView2=0x7f0b0024;
+        public static final int aboutWebView=0x7f0b0057;
+        public static final int bottom=0x7f0b0000;
+        public static final int btn_divider1=0x7f0b001c;
+        public static final int btn_divider2=0x7f0b001e;
+        public static final int btn_view=0x7f0b001a;
+        public static final int buttonAddOrRemoveGroupAddress=0x7f0b00d5;
+        public static final int buttonCreateTask=0x7f0b00c9;
+        public static final int buttonDeleteTask=0x7f0b00c8;
+        public static final int buttonProjectFile=0x7f0b008f;
+        public static final int buttonSaveTask=0x7f0b00d6;
+        public static final int button_center=0x7f0b001d;
+        public static final int button_left=0x7f0b001b;
+        public static final int button_right=0x7f0b001f;
+        public static final int changepasswordlayout_edittext_confirmnewpassword=0x7f0b000a;
+        public static final int changepasswordlayout_edittext_newpassword=0x7f0b0008;
+        public static final int changepasswordlayout_edittext_originalpassword=0x7f0b0006;
+        public static final int checkBoxGroupAddress=0x7f0b0020;
+        public static final int closeBtn=0x7f0b0039;
+        public static final int content=0x7f0b0061;
+        public static final int copy_right=0x7f0b008e;
+        public static final int customTimePickerLayouNumberPickerTimeIntervalHour=0x7f0b000c;
+        public static final int customTimePickerLayouNumberPickerTimeIntervalMinute=0x7f0b000e;
+        public static final int customTimePickerLayouNumberPickerTimeIntervalSecond=0x7f0b0010;
+        public static final int datePickerDateTimeLayoutDate=0x7f0b0011;
+        public static final int dialog=0x7f0b0013;
+        public static final int dialogCancelBtn=0x7f0b0045;
+        public static final int dialogConfirmBtn=0x7f0b0041;
+        public static final int dialogContent=0x7f0b003c;
+        public static final int dialogNeutralBtn=0x7f0b0043;
+        public static final int dialogProgressBar=0x7f0b003d;
+        public static final int dialogTips=0x7f0b003e;
+        public static final int dialogTitle=0x7f0b0038;
+        public static final int dialog_bottom=0x7f0b0040;
+        public static final int dialog_content=0x7f0b003a;
+        public static final int dialog_frame=0x7f0b0036;
+        public static final int dialog_msg_panel=0x7f0b003b;
+        public static final int dialog_title_layout=0x7f0b0037;
+        public static final int dimmer_detail_WArc_seekbar_dim_absolutely=0x7f0b0095;
+        public static final int dimmer_detail_dimmingcontrol_dim_relatively=0x7f0b009a;
+        public static final int dimmer_detail_imagebutton_off=0x7f0b0097;
+        public static final int dimmer_detail_imagebutton_on=0x7f0b0098;
+        public static final int dimmer_detail_relativelayout=0x7f0b0092;
+        public static final int dimmer_detail_relativelayout_dim_absolutely=0x7f0b0094;
+        public static final int dimmer_detail_relativelayout_dim_relatively=0x7f0b0099;
+        public static final int dimmer_detail_relativelayout_switch_op=0x7f0b0096;
+        public static final int dimmer_detail_textview_title=0x7f0b0093;
+        public static final int gridView=0x7f0b005c;
+        public static final int handle=0x7f0b0062;
+        public static final int icon=0x7f0b002b;
+        public static final int imageButton=0x7f0b00d7;
+        public static final int imageView_blinds=0x7f0b00a7;
+        public static final int imageView_shutter=0x7f0b00a3;
+        public static final int imgMenuSettting=0x7f0b005e;
+        public static final int imgRefresh=0x7f0b005f;
+        public static final int imgSettting=0x7f0b005d;
+        public static final int iv_divider_line_left=0x7f0b0042;
+        public static final int iv_divider_line_right=0x7f0b0044;
+        public static final int iv_divider_line_top=0x7f0b003f;
+        public static final int layout_addview=0x7f0b0017;
+        public static final int linePageIndicator=0x7f0b0050;
+        public static final int list_item=0x7f0b002a;
+        public static final int listviewItemLayoutDetail=0x7f0b0002;
+        public static final int listviewItemLayoutDetailDetails=0x7f0b002f;
+        public static final int listviewItemLayoutDetailSpinnerAction=0x7f0b0030;
+        public static final int listviewItemLayoutDetailTitle=0x7f0b002e;
+        public static final int listviewItemLayoutSubtitleDisclosureIndicator=0x7f0b0031;
+        public static final int listviewItemLayoutSubtitleDisclosureIndicatorImageButton=0x7f0b0034;
+        public static final int listviewItemLayoutSubtitleDisclosureIndicatorImageView=0x7f0b0033;
+        public static final int listviewItemLayoutSubtitleDisclosureIndicatorSubtitle=0x7f0b0035;
+        public static final int listviewItemLayoutSubtitleDisclosureIndicatorTitle=0x7f0b0032;
+        public static final int listview_divider_line=0x7f0b002d;
+        public static final int message=0x7f0b0018;
+        public static final int msg_btn_divider=0x7f0b0019;
+        public static final int name=0x7f0b002c;
+        public static final int periodicityLayoutLinearLayout1=0x7f0b00b9;
+        public static final int periodicityLayoutLinearLayout2=0x7f0b00be;
+        public static final int radioButtonActionIsSelected=0x7f0b0004;
+        public static final int radioButtonUDPGroupBroadcast=0x7f0b0027;
+        public static final int radioButtonUDPPeerToPeer=0x7f0b0028;
+        public static final int rebootlayout_checkBox_rebootenable=0x7f0b004c;
+        public static final int rebootlayout_textview_reboot=0x7f0b004b;
+        public static final int rebootlayout_textview_reboottext=0x7f0b004d;
+        public static final int rebootlayout_timepicker_reboottime=0x7f0b004e;
+        public static final int roomListLayoutGridView=0x7f0b0055;
+        public static final int roomListlayoutRelativeLayout=0x7f0b0054;
+        public static final int roomTilesListLayoutGridView=0x7f0b0064;
+        public static final int roomTilesListLayoutHandleImage=0x7f0b0063;
+        public static final int roomTilesListLayoutRelativeLayout=0x7f0b0056;
+        public static final int roomTilesListLayoutWrappingSlidingDrawer=0x7f0b0060;
+        public static final int roomTilesListRelativeLayoutSystemTime=0x7f0b0058;
+        public static final int roomTilesListTextViewDateTime=0x7f0b0059;
+        public static final int roomTilesListTextViewLight=0x7f0b005b;
+        public static final int roomTilesListTextViewTemperature=0x7f0b005a;
+        public static final int room_icon=0x7f0b0052;
+        public static final int room_list_item=0x7f0b0051;
+        public static final int room_name=0x7f0b0053;
+        public static final int settingLanguageRadioButtonChinese=0x7f0b0066;
+        public static final int settingLanguageRadioButtonEnglish=0x7f0b0065;
+        public static final int setting_view_basic_item_h_arrow=0x7f0b006b;
+        public static final int setting_view_basic_item_h_container=0x7f0b0067;
+        public static final int setting_view_basic_item_h_icon=0x7f0b0068;
+        public static final int setting_view_basic_item_h_subtitle=0x7f0b006a;
+        public static final int setting_view_basic_item_h_title=0x7f0b0069;
+        public static final int setting_view_basic_item_v_arrow=0x7f0b0070;
+        public static final int setting_view_basic_item_v_container=0x7f0b006c;
+        public static final int setting_view_basic_item_v_icon=0x7f0b006d;
+        public static final int setting_view_basic_item_v_subtitle=0x7f0b006f;
+        public static final int setting_view_basic_item_v_title=0x7f0b006e;
+        public static final int setting_view_check_item_check=0x7f0b0074;
+        public static final int setting_view_check_item_container=0x7f0b0071;
+        public static final int setting_view_check_item_icon=0x7f0b0072;
+        public static final int setting_view_check_item_title=0x7f0b0073;
+        public static final int setting_view_check_item_v_check=0x7f0b0079;
+        public static final int setting_view_check_item_v_container=0x7f0b0075;
+        public static final int setting_view_check_item_v_icon=0x7f0b0076;
+        public static final int setting_view_check_item_v_subtitle=0x7f0b0078;
+        public static final int setting_view_check_item_v_title=0x7f0b0077;
+        public static final int setting_view_image_item_arrow=0x7f0b007e;
+        public static final int setting_view_image_item_container=0x7f0b007a;
+        public static final int setting_view_image_item_icon=0x7f0b007b;
+        public static final int setting_view_image_item_image=0x7f0b007d;
+        public static final int setting_view_image_item_title=0x7f0b007c;
+        public static final int setting_view_switch_item_container=0x7f0b007f;
+        public static final int setting_view_switch_item_icon=0x7f0b0080;
+        public static final int setting_view_switch_item_switch=0x7f0b0082;
+        public static final int setting_view_switch_item_title=0x7f0b0081;
+        public static final int settings=0x7f0b0083;
+        public static final int shutter_detail_imagebutton_down=0x7f0b00a0;
+        public static final int shutter_detail_imagebutton_stop=0x7f0b00a1;
+        public static final int shutter_detail_imagebutton_up=0x7f0b009f;
+        public static final int shutter_detail_relativelayout=0x7f0b009c;
+        public static final int shutter_detail_relativelayout_position_of_blinds=0x7f0b00a6;
+        public static final int shutter_detail_relativelayout_position_of_shutter=0x7f0b00a2;
+        public static final int shutter_detail_relativelayout_shutter_op=0x7f0b009e;
+        public static final int shutter_detail_sectionalseekbar_position_of_slat=0x7f0b00a8;
+        public static final int shutter_detail_seekbar_position_of_shutter=0x7f0b00a4;
+        public static final int shutter_detail_textview_postition_of_blinds=0x7f0b00a9;
+        public static final int shutter_detail_textview_postition_of_shutter=0x7f0b00a5;
+        public static final int shutter_detail_textview_title=0x7f0b009d;
+        public static final int splashabout=0x7f0b008d;
+        public static final int stViewPager1=0x7f0b004f;
+        public static final int st_knx_imagebutton_imageView=0x7f0b0090;
+        public static final int stknx_dimmer_detail_relativelayout=0x7f0b0091;
+        public static final int stknx_shutter_detail_relativelayout=0x7f0b009b;
+        public static final int systemStatusCheckBoxDisplaySystemTime=0x7f0b00b2;
+        public static final int systemStatusCheckBoxRecordLastInterface=0x7f0b00b6;
+        public static final int systemStatusTextViewLocalIP=0x7f0b00b3;
+        public static final int systemStatusTextViewSoftwareVersion=0x7f0b00b4;
+        public static final int systemsleepsetting_radioButton_fifteenseconds=0x7f0b00aa;
+        public static final int systemsleepsetting_radioButton_fiveminutes=0x7f0b00ae;
+        public static final int systemsleepsetting_radioButton_neversleep=0x7f0b00b1;
+        public static final int systemsleepsetting_radioButton_oneminute=0x7f0b00ac;
+        public static final int systemsleepsetting_radioButton_tenminutes=0x7f0b00af;
+        public static final int systemsleepsetting_radioButton_thirtyminutes=0x7f0b00b0;
+        public static final int systemsleepsetting_radioButton_thirtyseconds=0x7f0b00ab;
+        public static final int systemsleepsetting_radioButton_twominutes=0x7f0b00ad;
+        public static final int task_item_title=0x7f0b00b7;
+        public static final int textView1=0x7f0b0005;
+        public static final int textView2=0x7f0b0007;
+        public static final int textView3=0x7f0b0009;
+        public static final int textView4=0x7f0b00b5;
+        public static final int textViewActionItemActionName=0x7f0b0003;
+        public static final int textViewGroupAddressName=0x7f0b0026;
+        public static final int timeAndWeekdayLayoutCheckBoxFriday=0x7f0b00bf;
+        public static final int timeAndWeekdayLayoutCheckBoxMonday=0x7f0b00ba;
+        public static final int timeAndWeekdayLayoutCheckBoxSaturday=0x7f0b00c0;
+        public static final int timeAndWeekdayLayoutCheckBoxSunday=0x7f0b00c1;
+        public static final int timeAndWeekdayLayoutCheckBoxThursday=0x7f0b00bd;
+        public static final int timeAndWeekdayLayoutCheckBoxTuesday=0x7f0b00bb;
+        public static final int timeAndWeekdayLayoutCheckBoxWednesday=0x7f0b00bc;
+        public static final int timeAndWeekdayLayoutTimePickerTime=0x7f0b00b8;
+        public static final int timePickerDateTimeLayoutTime=0x7f0b0012;
+        public static final int timingTaskLayoutExecuteWayBackground=0x7f0b00cd;
+        public static final int timingTaskLayoutExecuteWayCycle=0x7f0b00d1;
+        public static final int timingTaskLayoutExecuteWayDetail=0x7f0b000d;
+        public static final int timingTaskLayoutExecuteWayEveryday=0x7f0b00d0;
+        public static final int timingTaskLayoutExecuteWayMonthly=0x7f0b00ce;
+        public static final int timingTaskLayoutExecuteWayOneOff=0x7f0b00d2;
+        public static final int timingTaskLayoutExecuteWayWeekly=0x7f0b00cf;
+        public static final int timingTaskLayoutGroupAddressList=0x7f0b00d3;
+        public static final int timingTaskLayoutLinearLayoutTaskDetailBackground=0x7f0b00ca;
+        public static final int timingTaskLayoutLinearLayoutTimingTaskListBackground=0x7f0b00c3;
+        public static final int timingTaskLayoutRelativeLayoutTaskDetailBackground=0x7f0b0021;
+        public static final int timingTaskLayoutRelativeLayoutTimingListBackground=0x7f0b00c5;
+        public static final int timingTaskLayoutTaskExecuteWayTitle=0x7f0b00cc;
+        public static final int timingTaskLayoutTaskItemEditTextName=0x7f0b00cb;
+        public static final int timingTaskLayoutTaskObjectTitle=0x7f0b000f;
+        public static final int timingTaskLayoutTimerName=0x7f0b00c4;
+        public static final int timingTaskLayoutTimingTaskList=0x7f0b00c6;
+        public static final int title=0x7f0b0015;
+        public static final int title_msg_divider=0x7f0b0016;
+        public static final int titlebar=0x7f0b0014;
+        public static final int top=0x7f0b0001;
+        public static final int tvPassword=0x7f0b0046;
+        public static final int txtFirst=0x7f0b0048;
+        public static final int txtIP=0x7f0b0023;
+        public static final int txtPassword=0x7f0b0047;
+        public static final int txtPort=0x7f0b0025;
+        public static final int txtSecond=0x7f0b0049;
+        public static final int txtThree=0x7f0b004a;
+        public static final int txtTimeSpan=0x7f0b0029;
+        public static final int webcamer_detail_disconnect=0x7f0b00d9;
+        public static final int webcamer_detail_listview_camers=0x7f0b00da;
+        public static final int webcamer_detail_refresh=0x7f0b00d8;
+        public static final int webcamer_item_connected=0x7f0b00de;
+        public static final int webcamer_item_connecting=0x7f0b00df;
+        public static final int webcamer_item_detail=0x7f0b00dd;
+        public static final int webcamer_item_icon=0x7f0b00db;
+        public static final int webcamer_item_name=0x7f0b00dc;
     }
     public static final class layout {
-        public static final int action_item_layout=0x7f030000;
-        public static final int changepassword_layout=0x7f030001;
-        public static final int custom_time_picker_layout=0x7f030002;
-        public static final int date_time_layout=0x7f030003;
-        public static final int fynn_prompt_dialog_normal=0x7f030004;
-        public static final int fynn_prompt_dialog_titlebar=0x7f030005;
-        public static final int fynn_prompt_dialog_titlebar_skyblue=0x7f030006;
-        public static final int group_address_item_layout=0x7f030007;
-        public static final int knx_gateway_setting=0x7f030008;
-        public static final int knx_refresh_status_setting=0x7f030009;
-        public static final int listview_divider_line=0x7f03000a;
-        public static final int listview_divider_line2=0x7f03000b;
-        public static final int listview_item_layout_detail=0x7f03000c;
-        public static final int listview_item_layout_subtitle_disclosure_indicator=0x7f03000d;
-        public static final int my_dialog=0x7f03000e;
-        public static final int password_layout=0x7f03000f;
-        public static final int physical_address_setting=0x7f030010;
-        public static final int reboot_layout=0x7f030011;
-        public static final int room_details_layout=0x7f030012;
-        public static final int room_list_item=0x7f030013;
-        public static final int room_tiles_list_layout=0x7f030014;
-        public static final int setting_language=0x7f030015;
-        public static final int setting_layout=0x7f030016;
-        public static final int setting_view_basic_item_h=0x7f030017;
-        public static final int setting_view_basic_item_v=0x7f030018;
-        public static final int setting_view_check_item_h=0x7f030019;
-        public static final int setting_view_check_item_v=0x7f03001a;
-        public static final int setting_view_image_item=0x7f03001b;
-        public static final int setting_view_switch_item=0x7f03001c;
-        public static final int settings=0x7f03001d;
-        public static final int splash=0x7f03001e;
-        public static final int system_status=0x7f03001f;
-        public static final int task_item=0x7f030020;
-        public static final int time_and_weekday_layout=0x7f030021;
-        public static final int timing_task_layout=0x7f030022;
-        public static final int view_null=0x7f030023;
+        public static final int action_item_layout=0x7f040000;
+        public static final int changepassword_layout=0x7f040001;
+        public static final int custom_time_picker_layout=0x7f040002;
+        public static final int date_time_layout=0x7f040003;
+        public static final int fynn_prompt_dialog_normal=0x7f040004;
+        public static final int fynn_prompt_dialog_titlebar=0x7f040005;
+        public static final int fynn_prompt_dialog_titlebar_skyblue=0x7f040006;
+        public static final int group_address_item_layout=0x7f040007;
+        public static final int knx_gateway_setting=0x7f040008;
+        public static final int knx_refresh_status_setting=0x7f040009;
+        public static final int list_item=0x7f04000a;
+        public static final int listview_divider_line=0x7f04000b;
+        public static final int listview_divider_line2=0x7f04000c;
+        public static final int listview_item_layout_detail=0x7f04000d;
+        public static final int listview_item_layout_subtitle_disclosure_indicator=0x7f04000e;
+        public static final int my_dialog=0x7f04000f;
+        public static final int password_layout=0x7f040010;
+        public static final int physical_address_setting=0x7f040011;
+        public static final int reboot_layout=0x7f040012;
+        public static final int room_details_layout=0x7f040013;
+        public static final int room_list_item=0x7f040014;
+        public static final int room_list_layout=0x7f040015;
+        public static final int room_tiles_list_layout=0x7f040016;
+        public static final int setting_language=0x7f040017;
+        public static final int setting_view_basic_item_h=0x7f040018;
+        public static final int setting_view_basic_item_v=0x7f040019;
+        public static final int setting_view_check_item_h=0x7f04001a;
+        public static final int setting_view_check_item_v=0x7f04001b;
+        public static final int setting_view_image_item=0x7f04001c;
+        public static final int setting_view_switch_item=0x7f04001d;
+        public static final int settings=0x7f04001e;
+        public static final int splash=0x7f04001f;
+        public static final int st_knx_imagebutton=0x7f040020;
+        public static final int stknx_dimmer_detail=0x7f040021;
+        public static final int stknx_shutter_detail=0x7f040022;
+        public static final int system_sleep_setting=0x7f040023;
+        public static final int system_status=0x7f040024;
+        public static final int task_item=0x7f040025;
+        public static final int time_and_weekday_layout=0x7f040026;
+        public static final int timing_task_layout=0x7f040027;
+        public static final int view_null=0x7f040028;
+        public static final int webcamer_detail=0x7f040029;
+        public static final int webcamer_item=0x7f04002a;
+    }
+    public static final class mipmap {
+        public static final int ic_launcher=0x7f030000;
+        public static final int launcher=0x7f030001;
     }
     public static final class string {
-        public static final int Record_last_interface=0x7f050000;
-        public static final int access_restriction=0x7f050001;
-        public static final int action_name=0x7f050002;
-        public static final int action_name_already_exits=0x7f050003;
-        public static final int action_parameter=0x7f050004;
-        public static final int add_address_to_task=0x7f050005;
-        public static final int add_or_remove_group_address=0x7f050006;
-        public static final int all_rights_reserved=0x7f050007;
-        public static final int app_name=0x7f050065;
-        public static final int are_you_sure_to_delete_the_task=0x7f050008;
-        public static final int backlight_time=0x7f050009;
-        public static final int browserUrl=0x7f05000a;
-        public static final int cancel=0x7f05000b;
-        public static final int change_password=0x7f05000c;
-        public static final int chinese=0x7f05000d;
-        public static final int close=0x7f05000e;
-        public static final int confirm=0x7f05000f;
-        public static final int confirm_new_password=0x7f050010;
-        public static final int copy_project_file_failed=0x7f050011;
-        public static final int create_task=0x7f050012;
-        public static final int custom_action=0x7f050013;
-        public static final int cycle=0x7f050014;
-        public static final int cycle_interval=0x7f050015;
-        public static final int day=0x7f050016;
-        public static final int default_action=0x7f050017;
-        public static final int delete=0x7f050018;
-        public static final int delete_task=0x7f050019;
-        public static final int display_system_time=0x7f05001a;
-        public static final int english=0x7f05001b;
-        public static final int error=0x7f05001c;
-        public static final int everyday=0x7f05001d;
-        public static final int execute_action=0x7f05001e;
-        public static final int friday=0x7f05001f;
-        public static final int gateway_address=0x7f050020;
-        public static final int gateway_port=0x7f050021;
-        public static final int get_status=0x7f050022;
-        public static final int go=0x7f050023;
-        public static final int hint_for_action_name=0x7f050024;
-        public static final int hint_for_action_value=0x7f050025;
-        public static final int hour=0x7f050026;
-        public static final int input_value_is_invalid=0x7f050027;
-        public static final int invalid_apk=0x7f050028;
-        public static final int local_ip=0x7f050029;
-        public static final int minute=0x7f05002a;
-        public static final int modify=0x7f05002b;
-        public static final int monday=0x7f05002c;
-        public static final int month=0x7f05002d;
-        public static final int monthly=0x7f05002e;
-        public static final int network_disconnect=0x7f05002f;
-        public static final int new_password=0x7f050030;
-        public static final int newpassword_not_match=0x7f050031;
-        public static final int no_project_file=0x7f050032;
-        public static final int not_a_apk=0x7f050033;
-        public static final int nothing=0x7f050034;
-        public static final int oneoff=0x7f050035;
-        public static final int open=0x7f050036;
-        public static final int original_password=0x7f050037;
-        public static final int originalpassword_not_right=0x7f050038;
-        public static final int password_error=0x7f050039;
-        public static final int physical_address=0x7f05003a;
-        public static final int pref_default_display_name=0x7f050066;
-        public static final int pref_description_social_recommendations=0x7f050067;
-        public static final int pref_header_data_sync=0x7f050068;
-        public static final int pref_header_general=0x7f050069;
-        public static final int pref_header_notifications=0x7f05006a;
-        public static final int pref_ringtone_silent=0x7f05006b;
-        public static final int pref_title_add_friends_to_messages=0x7f05006c;
-        public static final int pref_title_display_name=0x7f05006d;
-        public static final int pref_title_new_message_notifications=0x7f05006e;
-        public static final int pref_title_ringtone=0x7f05006f;
-        public static final int pref_title_social_recommendations=0x7f050070;
-        public static final int pref_title_sync_frequency=0x7f050071;
-        public static final int pref_title_system_sync_settings=0x7f050072;
-        public static final int pref_title_vibrate=0x7f050073;
-        public static final int project_file_error=0x7f05003b;
-        public static final int project_file_invalid=0x7f05003c;
-        public static final int prompt=0x7f05003d;
-        public static final int radiobutton_title_groupbroadcast=0x7f05003e;
-        public static final int radiobutton_title_peertopeer=0x7f05003f;
-        public static final int same_project_file=0x7f050040;
-        public static final int saturday=0x7f050041;
-        public static final int save=0x7f050042;
-        public static final int save_modify=0x7f050043;
-        public static final int second=0x7f050044;
-        public static final int set_action=0x7f050045;
-        public static final int set_date_and_time=0x7f050046;
-        public static final int set_day_and_time=0x7f050047;
-        public static final int set_loop_way=0x7f050048;
-        public static final int set_time=0x7f050049;
-        public static final int set_time_and_weekday=0x7f05004a;
-        public static final int setting=0x7f05004b;
-        public static final int setting_Reboot=0x7f05004c;
-        public static final int setting_back_light_time=0x7f05004d;
-        public static final int setting_knx_gateway=0x7f05004e;
-        public static final int setting_language=0x7f05004f;
-        public static final int setting_physical_address=0x7f050050;
-        public static final int software_version=0x7f050051;
-        public static final int sunday=0x7f050052;
-        public static final int system_status=0x7f050053;
-        public static final int task_detail=0x7f050054;
-        public static final int task_execution_object=0x7f050055;
-        public static final int task_execution_way=0x7f050056;
-        public static final int task_list___=0x7f050057;
-        public static final int textview_title_udp_work_way=0x7f050058;
-        public static final int the_current_task_time_has_expired=0x7f050059;
-        public static final int thursday=0x7f05005a;
-        public static final int title_activity_settings=0x7f050074;
-        public static final int tuesday=0x7f05005b;
-        public static final int uid_label=0x7f05005c;
-        public static final int unit_hour=0x7f05005d;
-        public static final int unit_minute=0x7f05005e;
-        public static final int upgrade_project=0x7f05005f;
-        public static final int upgrade_software=0x7f050060;
-        public static final int wednesday=0x7f050061;
-        public static final int weekly=0x7f050062;
-        public static final int year=0x7f050063;
-        public static final int you_are_not_set_action_yet=0x7f050064;
+        public static final int Record_last_interface=0x7f060000;
+        public static final int access_restriction=0x7f060001;
+        public static final int action_name=0x7f060002;
+        public static final int action_name_already_exits=0x7f060003;
+        public static final int action_parameter=0x7f060004;
+        public static final int add_address_to_task=0x7f060005;
+        public static final int add_or_remove_group_address=0x7f060006;
+        public static final int all_rights_reserved=0x7f060007;
+        public static final int app_name=0x7f060076;
+        public static final int are_you_sure_to_delete_the_task=0x7f060008;
+        public static final int backlight_time=0x7f060009;
+        public static final int browserUrl=0x7f06000a;
+        public static final int cancel=0x7f06000b;
+        public static final int change_password=0x7f06000c;
+        public static final int chinese=0x7f06000d;
+        public static final int close=0x7f06000e;
+        public static final int confirm=0x7f06000f;
+        public static final int confirm_new_password=0x7f060010;
+        public static final int connecting_to=0x7f060011;
+        public static final int copy_project_file_failed=0x7f060012;
+        public static final int create_task=0x7f060013;
+        public static final int custom_action=0x7f060014;
+        public static final int cycle=0x7f060015;
+        public static final int cycle_interval=0x7f060016;
+        public static final int day=0x7f060017;
+        public static final int default_action=0x7f060018;
+        public static final int delete=0x7f060019;
+        public static final int delete_task=0x7f06001a;
+        public static final int dimming_break=0x7f06001b;
+        public static final int dimming_down=0x7f06001c;
+        public static final int dimming_up=0x7f06001d;
+        public static final int display_system_time=0x7f06001e;
+        public static final int editor_version_error=0x7f06001f;
+        public static final int english=0x7f060020;
+        public static final int error=0x7f060021;
+        public static final int error_connect=0x7f060022;
+        public static final int everyday=0x7f060023;
+        public static final int execute_action=0x7f060024;
+        public static final int fifteen_seconds=0x7f060025;
+        public static final int five_minutes=0x7f060026;
+        public static final int friday=0x7f060027;
+        public static final int gateway_address=0x7f060028;
+        public static final int gateway_port=0x7f060029;
+        public static final int get_status=0x7f06002a;
+        public static final int go=0x7f06002b;
+        public static final int hint_for_action_name=0x7f06002c;
+        public static final int hint_for_action_value=0x7f06002d;
+        public static final int hour=0x7f06002e;
+        public static final int input_value_is_invalid=0x7f06002f;
+        public static final int invalid_apk=0x7f060030;
+        public static final int local_ip=0x7f060031;
+        public static final int minute=0x7f060032;
+        public static final int modify=0x7f060033;
+        public static final int monday=0x7f060034;
+        public static final int month=0x7f060035;
+        public static final int monthly=0x7f060036;
+        public static final int network_disconnect=0x7f060037;
+        public static final int never_sleep=0x7f060038;
+        public static final int new_password=0x7f060039;
+        public static final int newpassword_not_match=0x7f06003a;
+        public static final int no_project_file=0x7f06003b;
+        public static final int not_a_apk=0x7f06003c;
+        public static final int nothing=0x7f06003d;
+        public static final int one_minute=0x7f06003e;
+        public static final int oneoff=0x7f06003f;
+        public static final int open=0x7f060040;
+        public static final int original_password=0x7f060041;
+        public static final int originalpassword_not_right=0x7f060042;
+        public static final int password_error=0x7f060043;
+        public static final int physical_address=0x7f060044;
+        public static final int please_input_password=0x7f060045;
+        public static final int pls_wt=0x7f060046;
+        public static final int pref_default_display_name=0x7f060077;
+        public static final int pref_description_social_recommendations=0x7f060078;
+        public static final int pref_header_data_sync=0x7f060079;
+        public static final int pref_header_general=0x7f06007a;
+        public static final int pref_header_notifications=0x7f06007b;
+        public static final int pref_ringtone_silent=0x7f06007c;
+        public static final int pref_title_add_friends_to_messages=0x7f06007d;
+        public static final int pref_title_display_name=0x7f06007e;
+        public static final int pref_title_new_message_notifications=0x7f06007f;
+        public static final int pref_title_ringtone=0x7f060080;
+        public static final int pref_title_social_recommendations=0x7f060081;
+        public static final int pref_title_sync_frequency=0x7f060082;
+        public static final int pref_title_system_sync_settings=0x7f060083;
+        public static final int pref_title_vibrate=0x7f060084;
+        public static final int project_file_corrupted=0x7f060047;
+        public static final int project_file_error=0x7f060048;
+        public static final int project_file_invalid=0x7f060049;
+        public static final int prompt=0x7f06004a;
+        public static final int radiobutton_title_groupbroadcast=0x7f06004b;
+        public static final int radiobutton_title_peertopeer=0x7f06004c;
+        public static final int same_project_file=0x7f06004d;
+        public static final int saturday=0x7f06004e;
+        public static final int save=0x7f06004f;
+        public static final int save_modify=0x7f060050;
+        public static final int second=0x7f060051;
+        public static final int set_action=0x7f060052;
+        public static final int set_date_and_time=0x7f060053;
+        public static final int set_day_and_time=0x7f060054;
+        public static final int set_loop_way=0x7f060055;
+        public static final int set_time=0x7f060056;
+        public static final int set_time_and_weekday=0x7f060057;
+        public static final int setting=0x7f060058;
+        public static final int setting_Reboot=0x7f060059;
+        public static final int setting_back_light_time=0x7f06005a;
+        public static final int setting_knx_gateway=0x7f06005b;
+        public static final int setting_language=0x7f06005c;
+        public static final int setting_physical_address=0x7f06005d;
+        public static final int software_version=0x7f06005e;
+        public static final int sunday=0x7f06005f;
+        public static final int system_status=0x7f060060;
+        public static final int task_detail=0x7f060061;
+        public static final int task_execution_object=0x7f060062;
+        public static final int task_execution_way=0x7f060063;
+        public static final int task_list___=0x7f060064;
+        public static final int ten_minutes=0x7f060065;
+        public static final int textview_title_udp_work_way=0x7f060066;
+        public static final int the_current_task_time_has_expired=0x7f060067;
+        public static final int thirty_minutes=0x7f060068;
+        public static final int thirty_seconds=0x7f060069;
+        public static final int thursday=0x7f06006a;
+        public static final int title_activity_settings=0x7f060085;
+        public static final int tuesday=0x7f06006b;
+        public static final int two_minutes=0x7f06006c;
+        public static final int uid_label=0x7f06006d;
+        public static final int unit_hour=0x7f06006e;
+        public static final int unit_minute=0x7f06006f;
+        public static final int upgrade_project=0x7f060070;
+        public static final int upgrade_software=0x7f060071;
+        public static final int wednesday=0x7f060072;
+        public static final int weekly=0x7f060073;
+        public static final int year=0x7f060074;
+        public static final int you_are_not_set_action_yet=0x7f060075;
     }
     public static final class style {
-        public static final int BaseTheme=0x7f090000;
-        public static final int Default=0x7f090001;
-        public static final int Default_Button=0x7f090002;
-        public static final int Default_Button_Blinds_Down=0x7f090003;
-        public static final int Default_Button_Blinds_Up=0x7f090004;
-        public static final int Default_Dialog_Button=0x7f090005;
-        public static final int Default_GrayText=0x7f090006;
-        public static final int Default_GrayTextShadow=0x7f090007;
-        public static final int Default_GridLayout=0x7f090008;
-        public static final int Default_GroupItem=0x7f090009;
-        public static final int Default_MediaButton=0x7f09000a;
-        public static final int Default_RoomList=0x7f09000b;
-        public static final int Default_RoomList_Divider=0x7f09000c;
-        public static final int Default_Silder=0x7f09000d;
-        public static final int Default_SliderSwitch=0x7f09000e;
-        public static final int Default_SliderSwitchTextAppearance=0x7f09000f;
-        public static final int Default_ToggleButton=0x7f090010;
-        public static final int Default_Widget_Button=0x7f090011;
-        public static final int DefaultTheme=0x7f090012;
-        public static final int NumberPicker=0x7f090013;
-        public static final int PromptDialogStyle=0x7f090014;
-        public static final int SettingViewArrow=0x7f090015;
-        public static final int SettingViewCheck=0x7f090016;
-        public static final int SettingViewContainer=0x7f090017;
-        public static final int SettingViewIcon=0x7f090018;
-        public static final int SettingViewImage=0x7f090019;
-        public static final int SettingViewRight=0x7f09001a;
-        public static final int SettingViewSubtitleH=0x7f09001b;
-        public static final int SettingViewSubtitleV=0x7f09001c;
-        public static final int SettingViewSwitch=0x7f09001d;
-        public static final int SettingViewTextH=0x7f09001e;
-        public static final int SettingViewTextV=0x7f09001f;
-        public static final int SettingViewTitleH=0x7f090020;
-        public static final int SettingViewTitleV=0x7f090021;
-        public static final int WhiteTheme=0x7f090022;
-        public static final int dialog=0x7f090023;
+        public static final int BaseTheme=0x7f0a0000;
+        public static final int DefaultTheme=0x7f0a0001;
+        public static final int PopupWindowAnimation_ShutterDetail=0x7f0a0002;
+        public static final int PromptDialogStyle=0x7f0a0003;
+        public static final int SettingViewArrow=0x7f0a0004;
+        public static final int SettingViewCheck=0x7f0a0005;
+        public static final int SettingViewContainer=0x7f0a0006;
+        public static final int SettingViewIcon=0x7f0a0007;
+        public static final int SettingViewImage=0x7f0a0008;
+        public static final int SettingViewRight=0x7f0a0009;
+        public static final int SettingViewSubtitleH=0x7f0a000a;
+        public static final int SettingViewSubtitleV=0x7f0a000b;
+        public static final int SettingViewSwitch=0x7f0a000c;
+        public static final int SettingViewTextH=0x7f0a000d;
+        public static final int SettingViewTextV=0x7f0a000e;
+        public static final int SettingViewTitleH=0x7f0a000f;
+        public static final int SettingViewTitleV=0x7f0a0010;
+        public static final int WhiteTheme=0x7f0a0011;
+        public static final int Widget_SeekBar_Normal=0x7f0a0012;
+        public static final int dialog=0x7f0a0013;
     }
     public static final class styleable {
-        /** Attributes that can be used with a IconButton.
+        /** Attributes that can be used with a CircleSeekBar.
            <p>Includes the following attributes:</p>
            <table>
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #IconButton_iconPadding com.sation.knxcontroller:iconPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleSeekBar_android_thumb android:thumb}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleSeekBar_progress_background com.sation.knxcontroller:progress_background}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleSeekBar_progress_front com.sation.knxcontroller:progress_front}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleSeekBar_progress_max com.sation.knxcontroller:progress_max}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleSeekBar_progress_text_color com.sation.knxcontroller:progress_text_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleSeekBar_progress_text_size com.sation.knxcontroller:progress_text_size}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleSeekBar_progress_text_stroke_width com.sation.knxcontroller:progress_text_stroke_width}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleSeekBar_progress_width com.sation.knxcontroller:progress_width}</code></td><td></td></tr>
+           <tr><td><code>{@link #CircleSeekBar_show_progress_text com.sation.knxcontroller:show_progress_text}</code></td><td></td></tr>
            </table>
-           @see #IconButton_iconPadding
+           @see #CircleSeekBar_android_thumb
+           @see #CircleSeekBar_progress_background
+           @see #CircleSeekBar_progress_front
+           @see #CircleSeekBar_progress_max
+           @see #CircleSeekBar_progress_text_color
+           @see #CircleSeekBar_progress_text_size
+           @see #CircleSeekBar_progress_text_stroke_width
+           @see #CircleSeekBar_progress_width
+           @see #CircleSeekBar_show_progress_text
          */
-        public static final int[] IconButton = {
-            0x7f01001a
+        public static final int[] CircleSeekBar = {
+            0x01010142, 0x7f010000, 0x7f010001, 0x7f010002,
+            0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006,
+            0x7f010007
         };
         /**
-          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#iconPadding}
-          attribute's value can be found in the {@link #IconButton} array.
+          <p>This symbol is the offset where the {@link android.R.attr#thumb}
+          attribute's value can be found in the {@link #CircleSeekBar} array.
+          @attr name android:thumb
+        */
+        public static final int CircleSeekBar_android_thumb = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#progress_background}
+          attribute's value can be found in the {@link #CircleSeekBar} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:progress_background
+        */
+        public static final int CircleSeekBar_progress_background = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#progress_front}
+          attribute's value can be found in the {@link #CircleSeekBar} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:progress_front
+        */
+        public static final int CircleSeekBar_progress_front = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#progress_max}
+          attribute's value can be found in the {@link #CircleSeekBar} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:progress_max
+        */
+        public static final int CircleSeekBar_progress_max = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#progress_text_color}
+          attribute's value can be found in the {@link #CircleSeekBar} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:progress_text_color
+        */
+        public static final int CircleSeekBar_progress_text_color = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#progress_text_size}
+          attribute's value can be found in the {@link #CircleSeekBar} array.
 
 
           <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
@@ -870,91 +1414,44 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.sation.knxcontroller:iconPadding
+          @attr name com.sation.knxcontroller:progress_text_size
         */
-        public static final int IconButton_iconPadding = 0;
-        /** Attributes that can be used with a ProgressBar.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ProgressBar_android_max android:max}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_maxHeight android:maxHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_maxWidth android:maxWidth}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_minHeight android:minHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_minWidth android:minWidth}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_progress android:progress}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_progressDrawable android:progressDrawable}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_android_secondaryProgress android:secondaryProgress}</code></td><td></td></tr>
-           <tr><td><code>{@link #ProgressBar_vertical com.sation.knxcontroller:vertical}</code></td><td></td></tr>
-           </table>
-           @see #ProgressBar_android_max
-           @see #ProgressBar_android_maxHeight
-           @see #ProgressBar_android_maxWidth
-           @see #ProgressBar_android_minHeight
-           @see #ProgressBar_android_minWidth
-           @see #ProgressBar_android_progress
-           @see #ProgressBar_android_progressDrawable
-           @see #ProgressBar_android_secondaryProgress
-           @see #ProgressBar_vertical
-         */
-        public static final int[] ProgressBar = {
-            0x0101011f, 0x01010120, 0x01010136, 0x01010137,
-            0x01010138, 0x0101013c, 0x0101013f, 0x01010140,
-            0x7f01001b
-        };
+        public static final int CircleSeekBar_progress_text_size = 8;
         /**
-          <p>This symbol is the offset where the {@link android.R.attr#max}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:max
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#progress_text_stroke_width}
+          attribute's value can be found in the {@link #CircleSeekBar} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:progress_text_stroke_width
         */
-        public static final int ProgressBar_android_max = 2;
+        public static final int CircleSeekBar_progress_text_stroke_width = 6;
         /**
-          <p>This symbol is the offset where the {@link android.R.attr#maxHeight}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:maxHeight
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#progress_width}
+          attribute's value can be found in the {@link #CircleSeekBar} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:progress_width
         */
-        public static final int ProgressBar_android_maxHeight = 1;
+        public static final int CircleSeekBar_progress_width = 1;
         /**
-          <p>This symbol is the offset where the {@link android.R.attr#maxWidth}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:maxWidth
-        */
-        public static final int ProgressBar_android_maxWidth = 0;
-        /**
-          <p>This symbol is the offset where the {@link android.R.attr#minHeight}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:minHeight
-        */
-        public static final int ProgressBar_android_minHeight = 7;
-        /**
-          <p>This symbol is the offset where the {@link android.R.attr#minWidth}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:minWidth
-        */
-        public static final int ProgressBar_android_minWidth = 6;
-        /**
-          <p>This symbol is the offset where the {@link android.R.attr#progress}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:progress
-        */
-        public static final int ProgressBar_android_progress = 3;
-        /**
-          <p>This symbol is the offset where the {@link android.R.attr#progressDrawable}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:progressDrawable
-        */
-        public static final int ProgressBar_android_progressDrawable = 5;
-        /**
-          <p>This symbol is the offset where the {@link android.R.attr#secondaryProgress}
-          attribute's value can be found in the {@link #ProgressBar} array.
-          @attr name android:secondaryProgress
-        */
-        public static final int ProgressBar_android_secondaryProgress = 4;
-        /**
-          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#vertical}
-          attribute's value can be found in the {@link #ProgressBar} array.
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#show_progress_text}
+          attribute's value can be found in the {@link #CircleSeekBar} array.
 
 
           <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
@@ -963,36 +1460,856 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.sation.knxcontroller:vertical
+          @attr name com.sation.knxcontroller:show_progress_text
         */
-        public static final int ProgressBar_vertical = 8;
-        /** Attributes that can be used with a SeekBar.
+        public static final int CircleSeekBar_show_progress_text = 5;
+        /** Attributes that can be used with a DimmingControl.
            <p>Includes the following attributes:</p>
            <table>
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SeekBar_android_thumb android:thumb}</code></td><td></td></tr>
-           <tr><td><code>{@link #SeekBar_android_thumbOffset android:thumbOffset}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_android_textColor android:textColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_android_textSize android:textSize}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_android_thumb android:thumb}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_bar com.sation.knxcontroller:bar}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_barCentral com.sation.knxcontroller:barCentral}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_barCentralHeight com.sation.knxcontroller:barCentralHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_barCentralWidth com.sation.knxcontroller:barCentralWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_barHeight com.sation.knxcontroller:barHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_decrease com.sation.knxcontroller:decrease}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_decreaseHeight com.sation.knxcontroller:decreaseHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_decreasePrefix com.sation.knxcontroller:decreasePrefix}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_decreaseSuffix com.sation.knxcontroller:decreaseSuffix}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_decreaseWidth com.sation.knxcontroller:decreaseWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_dimmingBreak com.sation.knxcontroller:dimmingBreak}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_increase com.sation.knxcontroller:increase}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_increaseHeight com.sation.knxcontroller:increaseHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_increasePrefix com.sation.knxcontroller:increasePrefix}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_increaseSuffix com.sation.knxcontroller:increaseSuffix}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_increaseWidth com.sation.knxcontroller:increaseWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_thumbHeight com.sation.knxcontroller:thumbHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_thumbWidth com.sation.knxcontroller:thumbWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_tick com.sation.knxcontroller:tick}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_tickHeight com.sation.knxcontroller:tickHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #DimmingControl_tickWidth com.sation.knxcontroller:tickWidth}</code></td><td></td></tr>
            </table>
-           @see #SeekBar_android_thumb
-           @see #SeekBar_android_thumbOffset
+           @see #DimmingControl_android_textColor
+           @see #DimmingControl_android_textSize
+           @see #DimmingControl_android_thumb
+           @see #DimmingControl_bar
+           @see #DimmingControl_barCentral
+           @see #DimmingControl_barCentralHeight
+           @see #DimmingControl_barCentralWidth
+           @see #DimmingControl_barHeight
+           @see #DimmingControl_decrease
+           @see #DimmingControl_decreaseHeight
+           @see #DimmingControl_decreasePrefix
+           @see #DimmingControl_decreaseSuffix
+           @see #DimmingControl_decreaseWidth
+           @see #DimmingControl_dimmingBreak
+           @see #DimmingControl_increase
+           @see #DimmingControl_increaseHeight
+           @see #DimmingControl_increasePrefix
+           @see #DimmingControl_increaseSuffix
+           @see #DimmingControl_increaseWidth
+           @see #DimmingControl_thumbHeight
+           @see #DimmingControl_thumbWidth
+           @see #DimmingControl_tick
+           @see #DimmingControl_tickHeight
+           @see #DimmingControl_tickWidth
          */
-        public static final int[] SeekBar = {
-            0x01010142, 0x01010143
+        public static final int[] DimmingControl = {
+            0x01010095, 0x01010098, 0x01010142, 0x7f010008,
+            0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c,
+            0x7f01000d, 0x7f01000e, 0x7f01000f, 0x7f010010,
+            0x7f010011, 0x7f010012, 0x7f010013, 0x7f010014,
+            0x7f010015, 0x7f010016, 0x7f010017, 0x7f010018,
+            0x7f010019, 0x7f01001a, 0x7f01001b, 0x7f01001c
         };
         /**
+          <p>This symbol is the offset where the {@link android.R.attr#textColor}
+          attribute's value can be found in the {@link #DimmingControl} array.
+          @attr name android:textColor
+        */
+        public static final int DimmingControl_android_textColor = 1;
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#textSize}
+          attribute's value can be found in the {@link #DimmingControl} array.
+          @attr name android:textSize
+        */
+        public static final int DimmingControl_android_textSize = 0;
+        /**
           <p>This symbol is the offset where the {@link android.R.attr#thumb}
-          attribute's value can be found in the {@link #SeekBar} array.
+          attribute's value can be found in the {@link #DimmingControl} array.
           @attr name android:thumb
         */
-        public static final int SeekBar_android_thumb = 0;
+        public static final int DimmingControl_android_thumb = 2;
         /**
-          <p>This symbol is the offset where the {@link android.R.attr#thumbOffset}
-          attribute's value can be found in the {@link #SeekBar} array.
-          @attr name android:thumbOffset
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#bar}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:bar
         */
-        public static final int SeekBar_android_thumbOffset = 1;
+        public static final int DimmingControl_bar = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#barCentral}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:barCentral
+        */
+        public static final int DimmingControl_barCentral = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#barCentralHeight}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:barCentralHeight
+        */
+        public static final int DimmingControl_barCentralHeight = 10;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#barCentralWidth}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:barCentralWidth
+        */
+        public static final int DimmingControl_barCentralWidth = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#barHeight}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:barHeight
+        */
+        public static final int DimmingControl_barHeight = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#decrease}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:decrease
+        */
+        public static final int DimmingControl_decrease = 13;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#decreaseHeight}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:decreaseHeight
+        */
+        public static final int DimmingControl_decreaseHeight = 15;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#decreasePrefix}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:decreasePrefix
+        */
+        public static final int DimmingControl_decreasePrefix = 19;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#decreaseSuffix}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:decreaseSuffix
+        */
+        public static final int DimmingControl_decreaseSuffix = 20;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#decreaseWidth}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:decreaseWidth
+        */
+        public static final int DimmingControl_decreaseWidth = 14;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#dimmingBreak}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:dimmingBreak
+        */
+        public static final int DimmingControl_dimmingBreak = 23;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#increase}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:increase
+        */
+        public static final int DimmingControl_increase = 16;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#increaseHeight}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:increaseHeight
+        */
+        public static final int DimmingControl_increaseHeight = 18;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#increasePrefix}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:increasePrefix
+        */
+        public static final int DimmingControl_increasePrefix = 21;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#increaseSuffix}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:increaseSuffix
+        */
+        public static final int DimmingControl_increaseSuffix = 22;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#increaseWidth}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:increaseWidth
+        */
+        public static final int DimmingControl_increaseWidth = 17;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#thumbHeight}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:thumbHeight
+        */
+        public static final int DimmingControl_thumbHeight = 12;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#thumbWidth}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:thumbWidth
+        */
+        public static final int DimmingControl_thumbWidth = 11;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#tick}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:tick
+        */
+        public static final int DimmingControl_tick = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#tickHeight}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:tickHeight
+        */
+        public static final int DimmingControl_tickHeight = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#tickWidth}
+          attribute's value can be found in the {@link #DimmingControl} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:tickWidth
+        */
+        public static final int DimmingControl_tickWidth = 6;
+        /** Attributes that can be used with a MSeekBar.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #MSeekBar_prefix com.sation.knxcontroller:prefix}</code></td><td></td></tr>
+           <tr><td><code>{@link #MSeekBar_suffix com.sation.knxcontroller:suffix}</code></td><td></td></tr>
+           <tr><td><code>{@link #MSeekBar_textBackground com.sation.knxcontroller:textBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #MSeekBar_textColor com.sation.knxcontroller:textColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #MSeekBar_textOrientation com.sation.knxcontroller:textOrientation}</code></td><td></td></tr>
+           <tr><td><code>{@link #MSeekBar_textSize com.sation.knxcontroller:textSize}</code></td><td></td></tr>
+           </table>
+           @see #MSeekBar_prefix
+           @see #MSeekBar_suffix
+           @see #MSeekBar_textBackground
+           @see #MSeekBar_textColor
+           @see #MSeekBar_textOrientation
+           @see #MSeekBar_textSize
+         */
+        public static final int[] MSeekBar = {
+            0x7f01001d, 0x7f01001e, 0x7f01001f, 0x7f010020,
+            0x7f010021, 0x7f010022
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#prefix}
+          attribute's value can be found in the {@link #MSeekBar} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:prefix
+        */
+        public static final int MSeekBar_prefix = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#suffix}
+          attribute's value can be found in the {@link #MSeekBar} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:suffix
+        */
+        public static final int MSeekBar_suffix = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textBackground}
+          attribute's value can be found in the {@link #MSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:textBackground
+        */
+        public static final int MSeekBar_textBackground = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textColor}
+          attribute's value can be found in the {@link #MSeekBar} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:textColor
+        */
+        public static final int MSeekBar_textColor = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textOrientation}
+          attribute's value can be found in the {@link #MSeekBar} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>top</code></td><td>1</td><td></td></tr>
+<tr><td><code>bottom</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name com.sation.knxcontroller:textOrientation
+        */
+        public static final int MSeekBar_textOrientation = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textSize}
+          attribute's value can be found in the {@link #MSeekBar} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:textSize
+        */
+        public static final int MSeekBar_textSize = 0;
+        /** Attributes that can be used with a SectionalSeekBar.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SectionalSeekBar_android_textSize android:textSize}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_android_thumb android:thumb}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_disabled_text_color com.sation.knxcontroller:disabled_text_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_down_middle_disabled com.sation.knxcontroller:down_middle_disabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_down_middle_enabled com.sation.knxcontroller:down_middle_enabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_down_min_disabled com.sation.knxcontroller:down_min_disabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_down_min_enabled com.sation.knxcontroller:down_min_enabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_enabled_text_color com.sation.knxcontroller:enabled_text_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_max_disabled com.sation.knxcontroller:max_disabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_max_enabled com.sation.knxcontroller:max_enabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_max_value com.sation.knxcontroller:max_value}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_seekbar_disabled com.sation.knxcontroller:seekbar_disabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_seekbar_enabled com.sation.knxcontroller:seekbar_enabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_seekbar_value com.sation.knxcontroller:seekbar_value}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_seekbar_width com.sation.knxcontroller:seekbar_width}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_spacing com.sation.knxcontroller:spacing}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_text_down_middle com.sation.knxcontroller:text_down_middle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_text_down_min com.sation.knxcontroller:text_down_min}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_text_max com.sation.knxcontroller:text_max}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_text_up_middle com.sation.knxcontroller:text_up_middle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_text_up_min com.sation.knxcontroller:text_up_min}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_up_middle_disabled com.sation.knxcontroller:up_middle_disabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_up_middle_enabled com.sation.knxcontroller:up_middle_enabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_up_min_disabled com.sation.knxcontroller:up_min_disabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #SectionalSeekBar_up_min_enabled com.sation.knxcontroller:up_min_enabled}</code></td><td></td></tr>
+           </table>
+           @see #SectionalSeekBar_android_textSize
+           @see #SectionalSeekBar_android_thumb
+           @see #SectionalSeekBar_disabled_text_color
+           @see #SectionalSeekBar_down_middle_disabled
+           @see #SectionalSeekBar_down_middle_enabled
+           @see #SectionalSeekBar_down_min_disabled
+           @see #SectionalSeekBar_down_min_enabled
+           @see #SectionalSeekBar_enabled_text_color
+           @see #SectionalSeekBar_max_disabled
+           @see #SectionalSeekBar_max_enabled
+           @see #SectionalSeekBar_max_value
+           @see #SectionalSeekBar_seekbar_disabled
+           @see #SectionalSeekBar_seekbar_enabled
+           @see #SectionalSeekBar_seekbar_value
+           @see #SectionalSeekBar_seekbar_width
+           @see #SectionalSeekBar_spacing
+           @see #SectionalSeekBar_text_down_middle
+           @see #SectionalSeekBar_text_down_min
+           @see #SectionalSeekBar_text_max
+           @see #SectionalSeekBar_text_up_middle
+           @see #SectionalSeekBar_text_up_min
+           @see #SectionalSeekBar_up_middle_disabled
+           @see #SectionalSeekBar_up_middle_enabled
+           @see #SectionalSeekBar_up_min_disabled
+           @see #SectionalSeekBar_up_min_enabled
+         */
+        public static final int[] SectionalSeekBar = {
+            0x01010095, 0x01010142, 0x7f010023, 0x7f010024,
+            0x7f010025, 0x7f010026, 0x7f010027, 0x7f010028,
+            0x7f010029, 0x7f01002a, 0x7f01002b, 0x7f01002c,
+            0x7f01002d, 0x7f01002e, 0x7f01002f, 0x7f010030,
+            0x7f010031, 0x7f010032, 0x7f010033, 0x7f010034,
+            0x7f010035, 0x7f010036, 0x7f010037, 0x7f010038,
+            0x7f010039
+        };
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#textSize}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+          @attr name android:textSize
+        */
+        public static final int SectionalSeekBar_android_textSize = 0;
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#thumb}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+          @attr name android:thumb
+        */
+        public static final int SectionalSeekBar_android_thumb = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#disabled_text_color}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:disabled_text_color
+        */
+        public static final int SectionalSeekBar_disabled_text_color = 12;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#down_middle_disabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:down_middle_disabled
+        */
+        public static final int SectionalSeekBar_down_middle_disabled = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#down_middle_enabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:down_middle_enabled
+        */
+        public static final int SectionalSeekBar_down_middle_enabled = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#down_min_disabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:down_min_disabled
+        */
+        public static final int SectionalSeekBar_down_min_disabled = 10;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#down_min_enabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:down_min_enabled
+        */
+        public static final int SectionalSeekBar_down_min_enabled = 11;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#enabled_text_color}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:enabled_text_color
+        */
+        public static final int SectionalSeekBar_enabled_text_color = 13;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#max_disabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:max_disabled
+        */
+        public static final int SectionalSeekBar_max_disabled = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#max_enabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:max_enabled
+        */
+        public static final int SectionalSeekBar_max_enabled = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#max_value}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:max_value
+        */
+        public static final int SectionalSeekBar_max_value = 22;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#seekbar_disabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:seekbar_disabled
+        */
+        public static final int SectionalSeekBar_seekbar_disabled = 20;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#seekbar_enabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:seekbar_enabled
+        */
+        public static final int SectionalSeekBar_seekbar_enabled = 19;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#seekbar_value}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:seekbar_value
+        */
+        public static final int SectionalSeekBar_seekbar_value = 23;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#seekbar_width}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:seekbar_width
+        */
+        public static final int SectionalSeekBar_seekbar_width = 21;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#spacing}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:spacing
+        */
+        public static final int SectionalSeekBar_spacing = 24;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#text_down_middle}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:text_down_middle
+        */
+        public static final int SectionalSeekBar_text_down_middle = 17;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#text_down_min}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:text_down_min
+        */
+        public static final int SectionalSeekBar_text_down_min = 18;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#text_max}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:text_max
+        */
+        public static final int SectionalSeekBar_text_max = 16;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#text_up_middle}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:text_up_middle
+        */
+        public static final int SectionalSeekBar_text_up_middle = 15;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#text_up_min}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:text_up_min
+        */
+        public static final int SectionalSeekBar_text_up_min = 14;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#up_middle_disabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:up_middle_disabled
+        */
+        public static final int SectionalSeekBar_up_middle_disabled = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#up_middle_enabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:up_middle_enabled
+        */
+        public static final int SectionalSeekBar_up_middle_enabled = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#up_min_disabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:up_min_disabled
+        */
+        public static final int SectionalSeekBar_up_min_disabled = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#up_min_enabled}
+          attribute's value can be found in the {@link #SectionalSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:up_min_enabled
+        */
+        public static final int SectionalSeekBar_up_min_enabled = 3;
         /** Attributes that can be used with a SettingView.
            <p>Includes the following attributes:</p>
            <table>
@@ -1004,7 +2321,7 @@ containing a value of this type.
            @see #SettingView_iOSStyle
          */
         public static final int[] SettingView = {
-            0x7f01001c
+            0x7f01003a
         };
         /**
           <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#iOSStyle}
@@ -1055,10 +2372,10 @@ containing a value of this type.
            @see #SettingViewItem_titleSize
          */
         public static final int[] SettingViewItem = {
-            0x7f01001d, 0x7f01001e, 0x7f01001f, 0x7f010020,
-            0x7f010021, 0x7f010022, 0x7f010023, 0x7f010024,
-            0x7f010025, 0x7f010026, 0x7f010027, 0x7f010028,
-            0x7f010029
+            0x7f01003b, 0x7f01003c, 0x7f01003d, 0x7f01003e,
+            0x7f01003f, 0x7f010040, 0x7f010041, 0x7f010042,
+            0x7f010043, 0x7f010044, 0x7f010045, 0x7f010046,
+            0x7f010047
         };
         /**
           <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#arrow}
@@ -1212,70 +2529,59 @@ in (inches), mm (millimeters).
           @attr name com.sation.knxcontroller:titleSize
         */
         public static final int SettingViewItem_titleSize = 4;
-        /** Attributes that can be used with a Theme.
+        /** Attributes that can be used with a WArcSeekBar.
            <p>Includes the following attributes:</p>
            <table>
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #Theme_android_disabledAlpha android:disabledAlpha}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_android_thumb android:thumb}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_arc_background_color com.sation.knxcontroller:arc_background_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_arc_front_color com.sation.knxcontroller:arc_front_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_arc_width com.sation.knxcontroller:arc_width}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_max_drawable com.sation.knxcontroller:max_drawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_min_drawable com.sation.knxcontroller:min_drawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_seekbar_max_value com.sation.knxcontroller:seekbar_max_value}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_show_text com.sation.knxcontroller:show_text}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_start_angle com.sation.knxcontroller:start_angle}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_sweep_angle com.sation.knxcontroller:sweep_angle}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_text_color com.sation.knxcontroller:text_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_text_prefix com.sation.knxcontroller:text_prefix}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_text_size com.sation.knxcontroller:text_size}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_text_stroke_width com.sation.knxcontroller:text_stroke_width}</code></td><td></td></tr>
+           <tr><td><code>{@link #WArcSeekBar_text_suffix com.sation.knxcontroller:text_suffix}</code></td><td></td></tr>
            </table>
-           @see #Theme_android_disabledAlpha
+           @see #WArcSeekBar_android_thumb
+           @see #WArcSeekBar_arc_background_color
+           @see #WArcSeekBar_arc_front_color
+           @see #WArcSeekBar_arc_width
+           @see #WArcSeekBar_max_drawable
+           @see #WArcSeekBar_min_drawable
+           @see #WArcSeekBar_seekbar_max_value
+           @see #WArcSeekBar_show_text
+           @see #WArcSeekBar_start_angle
+           @see #WArcSeekBar_sweep_angle
+           @see #WArcSeekBar_text_color
+           @see #WArcSeekBar_text_prefix
+           @see #WArcSeekBar_text_size
+           @see #WArcSeekBar_text_stroke_width
+           @see #WArcSeekBar_text_suffix
          */
-        public static final int[] Theme = {
-            0x01010033
+        public static final int[] WArcSeekBar = {
+            0x01010142, 0x7f010048, 0x7f010049, 0x7f01004a,
+            0x7f01004b, 0x7f01004c, 0x7f01004d, 0x7f01004e,
+            0x7f01004f, 0x7f010050, 0x7f010051, 0x7f010052,
+            0x7f010053, 0x7f010054, 0x7f010055
         };
         /**
-          <p>This symbol is the offset where the {@link android.R.attr#disabledAlpha}
-          attribute's value can be found in the {@link #Theme} array.
-          @attr name android:disabledAlpha
+          <p>This symbol is the offset where the {@link android.R.attr#thumb}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+          @attr name android:thumb
         */
-        public static final int Theme_android_disabledAlpha = 0;
-        /** Attributes that can be used with a sliderSwitchTextAppearanceAttrib.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #sliderSwitchTextAppearanceAttrib_textAllCaps com.sation.knxcontroller:textAllCaps}</code></td><td></td></tr>
-           <tr><td><code>{@link #sliderSwitchTextAppearanceAttrib_textColor com.sation.knxcontroller:textColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #sliderSwitchTextAppearanceAttrib_textColorHighlight com.sation.knxcontroller:textColorHighlight}</code></td><td></td></tr>
-           <tr><td><code>{@link #sliderSwitchTextAppearanceAttrib_textColorHint com.sation.knxcontroller:textColorHint}</code></td><td></td></tr>
-           <tr><td><code>{@link #sliderSwitchTextAppearanceAttrib_textColorLink com.sation.knxcontroller:textColorLink}</code></td><td></td></tr>
-           <tr><td><code>{@link #sliderSwitchTextAppearanceAttrib_textSize com.sation.knxcontroller:textSize}</code></td><td></td></tr>
-           <tr><td><code>{@link #sliderSwitchTextAppearanceAttrib_textStyle com.sation.knxcontroller:textStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #sliderSwitchTextAppearanceAttrib_typeface com.sation.knxcontroller:typeface}</code></td><td></td></tr>
-           </table>
-           @see #sliderSwitchTextAppearanceAttrib_textAllCaps
-           @see #sliderSwitchTextAppearanceAttrib_textColor
-           @see #sliderSwitchTextAppearanceAttrib_textColorHighlight
-           @see #sliderSwitchTextAppearanceAttrib_textColorHint
-           @see #sliderSwitchTextAppearanceAttrib_textColorLink
-           @see #sliderSwitchTextAppearanceAttrib_textSize
-           @see #sliderSwitchTextAppearanceAttrib_textStyle
-           @see #sliderSwitchTextAppearanceAttrib_typeface
-         */
-        public static final int[] sliderSwitchTextAppearanceAttrib = {
-            0x7f010016, 0x7f010017, 0x7f01002a, 0x7f01002b,
-            0x7f01002c, 0x7f01002d, 0x7f01002e, 0x7f01002f
-        };
+        public static final int WArcSeekBar_android_thumb = 0;
         /**
-          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textAllCaps}
-          attribute's value can be found in the {@link #sliderSwitchTextAppearanceAttrib} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.sation.knxcontroller:textAllCaps
-        */
-        public static final int sliderSwitchTextAppearanceAttrib_textAllCaps = 7;
-        /**
-          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textColor}
-          attribute's value can be found in the {@link #sliderSwitchTextAppearanceAttrib} array.
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#arc_background_color}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
 
 
           <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
@@ -1285,12 +2591,12 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.sation.knxcontroller:textColor
+          @attr name com.sation.knxcontroller:arc_background_color
         */
-        public static final int sliderSwitchTextAppearanceAttrib_textColor = 0;
+        public static final int WArcSeekBar_arc_background_color = 2;
         /**
-          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textColorHighlight}
-          attribute's value can be found in the {@link #sliderSwitchTextAppearanceAttrib} array.
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#arc_front_color}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
 
 
           <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
@@ -1300,42 +2606,12 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.sation.knxcontroller:textColorHighlight
+          @attr name com.sation.knxcontroller:arc_front_color
         */
-        public static final int sliderSwitchTextAppearanceAttrib_textColorHighlight = 4;
+        public static final int WArcSeekBar_arc_front_color = 3;
         /**
-          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textColorHint}
-          attribute's value can be found in the {@link #sliderSwitchTextAppearanceAttrib} array.
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.sation.knxcontroller:textColorHint
-        */
-        public static final int sliderSwitchTextAppearanceAttrib_textColorHint = 5;
-        /**
-          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textColorLink}
-          attribute's value can be found in the {@link #sliderSwitchTextAppearanceAttrib} array.
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.sation.knxcontroller:textColorLink
-        */
-        public static final int sliderSwitchTextAppearanceAttrib_textColorLink = 6;
-        /**
-          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textSize}
-          attribute's value can be found in the {@link #sliderSwitchTextAppearanceAttrib} array.
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#arc_width}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
 
 
           <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
@@ -1346,47 +2622,159 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.sation.knxcontroller:textSize
+          @attr name com.sation.knxcontroller:arc_width
         */
-        public static final int sliderSwitchTextAppearanceAttrib_textSize = 1;
+        public static final int WArcSeekBar_arc_width = 1;
         /**
-          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#textStyle}
-          attribute's value can be found in the {@link #sliderSwitchTextAppearanceAttrib} array.
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#max_drawable}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
 
 
-          <p>Must be one or more (separated by '|') of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>normal</code></td><td>0</td><td></td></tr>
-<tr><td><code>bold</code></td><td>1</td><td></td></tr>
-<tr><td><code>italic</code></td><td>2</td><td></td></tr>
-</table>
-          @attr name com.sation.knxcontroller:textStyle
-        */
-        public static final int sliderSwitchTextAppearanceAttrib_textStyle = 2;
-        /**
-          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#typeface}
-          attribute's value can be found in the {@link #sliderSwitchTextAppearanceAttrib} array.
-
-
-          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be one of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>normal</code></td><td>0</td><td></td></tr>
-<tr><td><code>sans</code></td><td>1</td><td></td></tr>
-<tr><td><code>serif</code></td><td>2</td><td></td></tr>
-<tr><td><code>monospace</code></td><td>3</td><td></td></tr>
-</table>
-          @attr name com.sation.knxcontroller:typeface
+          @attr name com.sation.knxcontroller:max_drawable
         */
-        public static final int sliderSwitchTextAppearanceAttrib_typeface = 3;
+        public static final int WArcSeekBar_max_drawable = 12;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#min_drawable}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.sation.knxcontroller:min_drawable
+        */
+        public static final int WArcSeekBar_min_drawable = 11;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#seekbar_max_value}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:seekbar_max_value
+        */
+        public static final int WArcSeekBar_seekbar_max_value = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#show_text}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:show_text
+        */
+        public static final int WArcSeekBar_show_text = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#start_angle}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:start_angle
+        */
+        public static final int WArcSeekBar_start_angle = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#sweep_angle}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:sweep_angle
+        */
+        public static final int WArcSeekBar_sweep_angle = 10;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#text_color}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:text_color
+        */
+        public static final int WArcSeekBar_text_color = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#text_prefix}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:text_prefix
+        */
+        public static final int WArcSeekBar_text_prefix = 13;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#text_size}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:text_size
+        */
+        public static final int WArcSeekBar_text_size = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#text_stroke_width}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:text_stroke_width
+        */
+        public static final int WArcSeekBar_text_stroke_width = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.sation.knxcontroller.R.attr#text_suffix}
+          attribute's value can be found in the {@link #WArcSeekBar} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.sation.knxcontroller:text_suffix
+        */
+        public static final int WArcSeekBar_text_suffix = 14;
     };
 }

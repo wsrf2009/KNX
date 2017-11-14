@@ -1,9 +1,19 @@
 package com.sation.knxcontroller.widget;
 
+import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.control.KNXValueDisplay;
+import com.sation.knxcontroller.knxdpt.DPT14;
+import com.sation.knxcontroller.knxdpt.DPT7;
+import com.sation.knxcontroller.knxdpt.DPT9;
+import com.sation.knxcontroller.knxdpt.KNXDatapointType;
+import com.sation.knxcontroller.models.KNXGroupAddress;
+import com.sation.knxcontroller.models.KNXSelectedAddress;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
+import com.sation.knxcontroller.util.Log;
+import com.sation.knxcontroller.util.MapUtils;
+import com.sation.knxcontroller.util.MathUtils;
 import com.sation.knxcontroller.util.uikit.UIKit;
 
 import android.annotation.SuppressLint;
@@ -18,51 +28,86 @@ import android.graphics.Shader;
 import android.os.Handler;
 import android.os.Message;
 
+import java.lang.ref.WeakReference;
+
 public class STKNXValueDisplay extends STKNXControl {
+	private static final String TAG = "STKNXValueDisplay";
 	private final int PADDING = 2;
 
 	private KNXValueDisplay mKNXValueDisplay;
 	private String valueString = "---";
-//	private Handler mHandler;
 
 	public STKNXValueDisplay(Context context, KNXValueDisplay knxValueDisplay) {
 		super(context, knxValueDisplay);
 
 		this.mKNXValueDisplay = knxValueDisplay;
 		this.setId(mKNXValueDisplay.getId());
-		
-//		this.mHandler = new Handler() {
-//			@Override
-//			public void handleMessage(Message msg) {
-//				super.handleMessage(msg);
-//				
-//				if(1 == msg.what) {
-//					invalidate();
-//				}
-//			}
-//		};
+	}
+
+	@Override
+	public void onSuspend() {
+
+	}
+
+	@Override
+	public void onResume() {
+		copyStatusAndRequest();
 	}
 	
 	@Override
 	public void onDestroy() {
-//		this.mKNXValueDisplay = null;
-		this.valueString = null;
+		super.onDestroy();
+	}
+
+	private static class STKNXValueDisplayHandler extends Handler {
+		WeakReference<STKNXValueDisplay> mValueDisplay;
+
+		private STKNXValueDisplayHandler(STKNXValueDisplay vd) {
+			super(vd.getContext().getMainLooper());
+
+			mValueDisplay = new WeakReference<STKNXValueDisplay>(vd);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			setControlImage(mValueDisplay.get());
+		}
+	}
+
+	private static void setControlImage(STKNXValueDisplay mValueDisplay) {
+		mValueDisplay.invalidate();
+	}
+
+	private void updateControlState() {
+		STKNXValueDisplayHandler mHandler = new STKNXValueDisplayHandler(STKNXValueDisplay.this);
+		mHandler.sendEmptyMessage(0);
 	}
 	
-	public void setValue(int value) {
-		this.valueString = value+" "+this.mKNXValueDisplay.getUnit();
-	
-//		Message msg = new Message();
-//		msg.what = 1;
-//		this.mHandler.sendMessage(msg);
-		
-//		UIKit.runOnMainThreadAsync(new Runnable() {
-//
-//			@Override
-//			public void run() {
-				invalidate();
-//			}
-//		});
+	public void setValue(byte[] array) {
+		KNXGroupAddress address = this.mKNXValueDisplay.getReadAddress();
+		if (null != address) {
+			double value;
+
+			/* 根据组地址的DPT解析数据 */
+			if (address.getKnxMainNumber().equals(KNXDatapointType.DPT_7)) {
+				value = DPT7.bytes2int(array);
+			} else if (address.getKnxMainNumber().equals(KNXDatapointType.DPT_9)) {
+				value = DPT9.bytes2float(array);
+			} else if (address.getKnxMainNumber().equals(KNXDatapointType.DPT_14)) {
+				value = DPT14.bytes2float(array);
+			} else {
+				value = KNXDatapointType.bytes2int(array, address.getType());
+			}
+
+            if(mKNXValueDisplay.getDecimalDigitInt() <= 0) {
+                this.valueString = (int)value +"";
+            } else {
+                this.valueString = MathUtils.Rounding(value, (this.mKNXValueDisplay.getDecimalDigitInt())) + "";
+            }
+            this.valueString += " " + this.mKNXValueDisplay.getUnit();
+
+			updateControlState();
+		}
 	}
 
 	@Override
@@ -85,8 +130,8 @@ public class STKNXValueDisplay extends STKNXControl {
     		/* 渐变色，颜色数组 */
     		int colors[] = new int[3];
     		colors[0] = ColorUtils.changeBrightnessOfColor(backColor, 100);
-    		colors[1] = backColor;
-    		colors[2] = ColorUtils.changeBrightnessOfColor(backColor, -50);
+			colors[1] = backColor;
+			colors[2] = ColorUtils.changeBrightnessOfColor(backColor, -50);
     		
     		/* 各颜色所在的位置 */
     		float positions[] = new float[3];
@@ -101,20 +146,11 @@ public class STKNXValueDisplay extends STKNXControl {
     		paint.setARGB((int)(this.mKNXValueDisplay.Alpha*255), Color.red(backColor), Color.green(backColor), Color.blue(backColor));
     	}
     	canvas.drawRoundRect(oval3, this.mKNXValueDisplay.Radius, this.mKNXValueDisplay.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
-    	
-    	int x = this.PADDING;
-    	int y = this.PADDING;
-    	int fontColor = Color.parseColor(this.mKNXValueDisplay.FontColor);
-    	paint.reset();
-    	paint.setColor(fontColor);
-    	paint.setTextSize(this.mKNXValueDisplay.FontSize);
-    	
-    	if(null != this.valueString) { 
-    		Rect bound = new Rect();
-        	paint.getTextBounds(this.valueString, 0, this.valueString.length(), bound);
-        	x = (getWidth() - 2 *x - bound.width())/2;
-        	y = (getHeight()  + bound.height())/2;
-        	canvas.drawText(this.valueString, x, y, paint);
+
+    	if(null != this.valueString) {
+			Paint textPaint = this.mKNXValueDisplay.ValueFont.getTextPaint();
+			int baseY = (int) ((oval3.height() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
+			canvas.drawText(this.valueString, oval3.width()/2, baseY, textPaint);
     	}
     	
     	if(EBool.Yes == this.mKNXValueDisplay.getDisplayBorder()) {
@@ -123,5 +159,28 @@ public class STKNXValueDisplay extends STKNXControl {
     		paint.setColor(Color.parseColor(this.mKNXValueDisplay.BorderColor));
     		canvas.drawRoundRect(oval3, this.mKNXValueDisplay.Radius, this.mKNXValueDisplay.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
     	}
+	}
+
+	@Override
+	public void copyStatusAndRequest() {
+		super.copyStatusAndRequest();
+
+		byte[] bytes = getControlStatus(this.mKNXValueDisplay.getReadAddressId(), true);
+		if (null != bytes) {
+			this.setValue(bytes);
+		}
+	}
+
+	@Override
+	public void statusUpdate(int asp, KNXGroupAddress address) {
+		super.statusUpdate(asp, address);
+
+		KNXSelectedAddress readAddr = MapUtils.getFirstOrNull(this.mKNXValueDisplay.getReadAddressId());
+		if  (null != readAddr) {
+			if (address.getId().equals(readAddr.getId())) {
+				byte[] bytes = copyObjectStatus(asp);
+				this.setValue(bytes);
+			}
+		}
 	}
 }

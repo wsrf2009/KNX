@@ -39,6 +39,15 @@
     <string name="unit_hour">小时</string>
     <string name="unit_minute">分钟</string>
     
+    <string name="fifteen_seconds">15秒</string>
+    <string name="thirty_seconds">30秒</string>
+    <string name="one_minute">1分钟</string>
+    <string name="two_minutes">2分钟</string>
+    <string name="five_minutes">5分钟</string>
+    <string name="ten_minutes">10分钟</string>
+    <string name="thirty_minutes">30分钟</string>
+    <string name="never_sleep">永不休眠</string>
+    
     <string name="task_list___">任务列表———</string>
     <string name="task_detail">任务详情</string>
     <string name="task_execution_way">任务执行方式</string>
@@ -48,9 +57,7 @@
     <string name="close">关闭</string>
     <string name="prompt">提示</string>
     <string name="error">错误</string>
-    
-    
-    
+
     <string name="get_status">获取状态</string>
     <string name="set_action">设置行为</string>
     <string name="default_action">默认行为</string>
@@ -123,8 +130,20 @@
     <string name="same_project_file">与当前工程相同</string>
     <string name="project_file_invalid">工程文件无效，应为*.knxuie类型文件</string>
     <string name="project_file_error">工程文件错误</string>
+    <string name="project_file_corrupted">工程文件已损坏，请重新生成</string>
     <string name="copy_project_file_failed">复制工程文件失败</string>
+    <string name="editor_version_error">工程文件编辑器版本过低，请使用最新的编辑器保存生成</string>
     <string name="not_a_apk">选中的不是APK文件</string>
     <string name="invalid_apk">无效的APK文件</string>
+
+    <string name="please_input_password">请输入密码</string>
+
+    <string name="dimming_down">调暗</string>
+    <string name="dimming_up">调亮</string>
+    <string name="dimming_break">中止</string>
+
+    <string name="pls_wt">请稍等...</string>
+    <string name="connecting_to">正在连接到</string>
+    <string name="error_connect">连接错误</string>
 
 </resources>

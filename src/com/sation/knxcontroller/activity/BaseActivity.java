@@ -14,6 +14,8 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.PowerManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -130,6 +132,9 @@ public class BaseActivity extends FragmentActivity {
 		finish();
 	}
 
+	/**
+	 * 浏览APK文件
+	 */
 	protected void upgradeSoftware() {
 		Intent intent = new Intent();
 		intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -138,6 +143,9 @@ public class BaseActivity extends FragmentActivity {
 		startActivityForResult(intent, APKFILE);
 	}
 
+	/**
+	 * 浏览工程文件
+	 */
 	protected void upgradeProject() {
 		Intent intent = new Intent();
 		intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -149,14 +157,11 @@ public class BaseActivity extends FragmentActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-//        Log.i(TAG, "requestCode:" + requestCode + " resultCode:" + resultCode + " data:" + data);
+
 		if (RESULT_OK != resultCode) {
-//            Log.e(TAG, "Error resultCode:" + resultCode);
-		} else if (APKFILE == requestCode) {
+		} else if (APKFILE == requestCode) { // 选中的是APK文件
 			String mFilePath = Uri.decode(data.getDataString());
-//            Log.i(TAG, "mFilePath:" + mFilePath);
 			mFilePath = mFilePath.substring(7, mFilePath.length());
-//            Log.i(TAG, "mFilePath:" + mFilePath);
 
 			try
 			{
@@ -173,24 +178,17 @@ public class BaseActivity extends FragmentActivity {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-		} else if (PROJECTFILE == requestCode) {
+		} else if (PROJECTFILE == requestCode) { // 选中的是工程文件
 			String mFilePath = Uri.decode(data.getDataString());
-//            Log.i(TAG, "mFilePath:" + mFilePath);
 			mFilePath = mFilePath.substring(7, mFilePath.length());
-//            Log.i(TAG, "mFilePath:" + mFilePath);
 
 			try {
-//                File newPro = new File(mFilePath);
-//                String proName = newPro.getName();
-//                String suffix = proName.substring(proName.lastIndexOf(".") + 1);
 				if (mFilePath.endsWith(STKNXControllerConstant.SuffixConfigFile)) {
-//                    Log.i(TAG, "project file:" + proName + " prefix:" + suffix);
 					FileUtils.CopyStatus status = FileUtils.copyFile(mFilePath, STKNXControllerConstant.ConfigFilePath, true);
-					if (COPY_SUCCESSFUL == status) {
+					if ((COPY_SUCCESSFUL == status) || (SAME_PATH == status)) {
 						Log.i(TAG, "restart this Application");
 						restartThisApplication();
-//						finish();
-					} else if ((SAME_PATH == status) || (SAME_FILE == status)) {
+					} else if (SAME_FILE == status) {
 						Log.e(TAG, getResources().getString(R.string.same_project_file));
 						Toast.makeText(this, getResources().getString(R.string.same_project_file), Toast.LENGTH_LONG).show();
 					} else {
@@ -205,5 +203,10 @@ public class BaseActivity extends FragmentActivity {
 				ex.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
 	}
 }

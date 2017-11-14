@@ -1,6 +1,9 @@
 package com.sation.knxcontroller.widget;
 
+import com.sation.knxcontroller.models.KNXFont;
+import com.sation.knxcontroller.models.KNXView;
 import com.sation.knxcontroller.util.ImageUtils;
+import com.sation.knxcontroller.util.StringUtil;
 import com.sation.knxcontroller.util.uikit.UIKit;
 
 import android.annotation.SuppressLint;
@@ -11,6 +14,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.view.MotionEvent;
@@ -19,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 public class STButton extends ViewGroup {
-
 	private final int PADDING = 0;
 	
 	public int left;
@@ -31,10 +35,12 @@ public class STButton extends ViewGroup {
 	public double alpha;
 	private ImageView mImageView;
 	public String text;
-	public int fontSize;
-	public int fontColor;
+//	public int fontSize;
+//	public int fontColor;
+	public KNXFont mTextFont;
+	public KNXView.EBool clickable;
+//	private Bitmap backgroundImage;
 	private SubViewClickListener mSubViewClickListener;
-//	private Handler mHandler;
 	
 	public enum EControlState {
 		Down,
@@ -44,29 +50,18 @@ public class STButton extends ViewGroup {
 
 	protected STButton(Context context) {
 		super(context);
+
+		setWillNotDraw(false);
 		
 		this.mEControlState = EControlState.Up;
 		this.mImageView = new ImageView(context);
 		this.addView(this.mImageView);
-		
-//		this.mHandler = new Handler() {
-//			@Override
-//			public void handleMessage(Message msg) {
-//				super.handleMessage(msg);
-//				
-//				if(1 == msg.what) {
-//					Bitmap bm = (Bitmap) msg.obj;
-//					if((null != bm) && (null != mImageView)) {
-//						mImageView.setImageBitmap(bm);
-//					}
-//				}
-//			}
-//		};
 	}
 	
 	public void onDestroy() {
 		this.mImageView = null;
 		this.text = null;
+		mTextFont = null;
 		this.mSubViewClickListener = null;
 	}
 	
@@ -75,24 +70,13 @@ public class STButton extends ViewGroup {
 	}
 	
 	public void setBackgroundImage(final String imagePath) {
-		
-//		Message msg = new Message();
-//		msg.what = 1;
-//		Bitmap bm = ImageUtils.getDiskBitmap(imagePath);
-//		msg.obj = bm;
-//		this.mHandler.sendMessage(msg);
-		
-//		UIKit.runOnMainThreadAsync(new Runnable() {
-//
-//			@Override
-//			public void run() {
-				Bitmap bm = ImageUtils.getDiskBitmap(imagePath);
-				if((null != bm) && (null != mImageView)) {
-					mImageView.setImageBitmap(bm);
-				}
-//			}
-//			
-//		});
+		if (!StringUtil.isNullOrEmpty(imagePath)) {
+			Bitmap bm = ImageUtils.getDiskBitmap(imagePath);
+			if ((null != bm) && (null != mImageView)) {
+//				mImageView.setImageBitmap(bm);
+				this.setBackground(new BitmapDrawable(bm));
+			}
+		}
 	}
 	
 	@Override
@@ -139,23 +123,16 @@ public class STButton extends ViewGroup {
     protected void onDraw(Canvas canvas) {
     	super.onDraw(canvas);
 
-    	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    	Paint paint = new Paint();
     	paint.setStyle(Paint.Style.FILL_AND_STROKE);	// 充满  
     	RectF oval3 = new RectF(0, 0, this.getWidth(), this.getHeight());
+		paint.setARGB((int)(this.alpha*0), Color.red(this.backColor), Color.green(this.backColor), Color.blue(this.backColor));
+		canvas.drawRoundRect(oval3, this.radius, this.radius, paint); //第二个参数是x半径，第三个参数是y半径
 
         if(null != this.text) {
-        	int x = 0;
-        	int y = 0;
-        	Rect bound = new Rect();
-        	paint.getTextBounds(this.text, 0, this.text.length(), bound);
-        	x = (getWidth() - 2 *x - bound.width())/2;
-            y = (getHeight()  + bound.height())/2;
-        	
-        	/* 绘制文本 */
-        	paint.reset();
-        	paint.setColor(this.fontColor);
-        	paint.setTextSize(this.fontSize);
-        	canvas.drawText(this.text, x, y, paint);
+			Paint textPaint = this.mTextFont.getTextPaint();
+			int baseY = (int) ((oval3.height() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
+			canvas.drawText(this.text, oval3.width()/2, baseY, textPaint);
         }
     	
     	switch (this.mEControlState) {
@@ -174,10 +151,14 @@ public class STButton extends ViewGroup {
     @SuppressLint("ClickableViewAccessibility")
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
-    	switch (event.getAction()) { 
+		if(KNXView.EBool.Yes != this.clickable) {
+			return true;
+		}
+
+    	switch (event.getAction()) {
     		case MotionEvent.ACTION_DOWN:
     			this.mEControlState = EControlState.Down;
-    			this.invalidate();
+    			invalidate();
     			if(null != this.mImageView) {
     				this.mImageView.setAlpha(0.6f);
     			}
@@ -187,7 +168,7 @@ public class STButton extends ViewGroup {
     			if(null != this.mSubViewClickListener) {
     				this.mSubViewClickListener.onClick(this);
     			}
-    			this.invalidate();
+    			invalidate();
     			if(null != this.mImageView) {
     				this.mImageView.setAlpha(1.0f);
     			}
@@ -196,7 +177,7 @@ public class STButton extends ViewGroup {
     			break;
     		case MotionEvent.ACTION_CANCEL:
     			this.mEControlState = EControlState.Up;
-    			this.invalidate();
+    			invalidate();
     			if(null != this.mImageView) {
     				this.mImageView.setAlpha(1.0f);
     			}

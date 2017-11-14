@@ -1,7 +1,24 @@
 package com.sation.knxcontroller.knxdpt;
 
-public class KNXDatapointType {
+import com.sation.knxcontroller.models.KNXGroupAddress;
 
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit1;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit112;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit16;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit2;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit24;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit3;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit32;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit4;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit48;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit5;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit6;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit64;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit7;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit8;
+import static com.sation.knxcontroller.knxdpt.KNXDataType.Bit80;
+
+public class KNXDatapointType {
     public final static String DPT_1 = "1";
     public final static String DPT_2 = "2";
     public final static String DPT_3 = "3";
@@ -161,4 +178,47 @@ public class KNXDatapointType {
     public final static String DPST_1003 = "1003";
     public final static String DPST_1010 = "1010";
 
+    public static int bytes2int(byte[] array, int type) {
+        KNXDataType dataType = KNXDataType.values()[type];
+        int value = 0;
+        switch(dataType){
+            case Bit1:
+            case Bit2:
+            case Bit3:
+            case Bit4:
+            case Bit5:
+            case Bit6:
+            case Bit7:
+            case Bit8:
+                value = array[0];
+                break;
+            case Bit16:
+                value = array[0]*100+array[1];
+                break;
+            case Bit24:
+                value = array[0]*10000+array[1]*100+array[2];
+                break;
+
+            case Bit32:
+                value = array[0]*1000000+array[1]*10000+array[2]*100+array[3];
+                break;
+
+            case Bit48:
+                break;
+
+            case Bit64:
+                break;
+
+            case Bit80:
+                break;
+
+            case Bit112:
+                break;
+
+            default:
+                break;
+        }
+
+        return value;
+    }
 }

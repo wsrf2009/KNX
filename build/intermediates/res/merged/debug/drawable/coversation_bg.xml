@@ -9,7 +9,7 @@
     <item android:top="10.0dip">
         <bitmap
             android:gravity="top|center"
-            android:src="@drawable/launcher" />
+            android:src="@mipmap/launcher" />
     </item>
 
 </layer-list>

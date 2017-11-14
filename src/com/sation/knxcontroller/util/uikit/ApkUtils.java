@@ -18,6 +18,12 @@ import java.util.List;
 
 public class ApkUtils {
 
+    /**
+     * 获取apk文件包名
+     * @param c
+     * @param fn
+     * @return
+     */
     public static String getPackageNameWithFileName(Context c, String fn) {
         try {
             PackageManager pm = c.getPackageManager();
@@ -76,6 +82,11 @@ public class ApkUtils {
         }
     }
 
+    /**
+     * 安装APK
+     * @param c
+     * @param fn
+     */
     public static void install(Context c, String fn) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -87,6 +98,11 @@ public class ApkUtils {
         }
     }
 
+    /**
+     * 卸载APK
+     * @param c
+     * @param pn
+     */
     public static void uninstal(Context c, String pn) {
         try {
             Uri packageURI = Uri.parse("package:"+pn);

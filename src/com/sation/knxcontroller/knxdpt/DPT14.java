@@ -37,9 +37,9 @@ public class DPT14 {
 	}
 	
 	public static float bytes2float(byte[] arr) {
-		if(4 != arr.length) {
-			return .0f;
-		}
+//		if(4 != arr.length) {
+//			return .0f;
+//		}
 		
 		int l;
 		l = arr[3];

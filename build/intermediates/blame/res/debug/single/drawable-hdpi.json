@@ -1,94 +1,30 @@
 [
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_btn_dialog_left.9.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_btn_dialog_left.9.png"
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_seekbar_display1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_seekbar_display1.png"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_screen_sms_close.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\ic_screen_sms_close.png"
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_seekbar_display_above.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_seekbar_display_above.9.png"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\companylogo.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\companylogo.png"
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_seekbar_display2.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_seekbar_display2.png"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\default_blinds_symbol_arrow_up.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\default_blinds_symbol_arrow_up.png"
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_seekbar_display_below.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_seekbar_display_below.9.png"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\default_blinds_symbol_light_down.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\default_blinds_symbol_light_down.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\switch_btn_bg_green.9.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\switch_btn_bg_green.9.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\cover_default_bg.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\cover_default_bg.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\switch_btn_bg_white.9.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\switch_btn_bg_white.9.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\default_blinds_symbol_volume_down.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\default_blinds_symbol_volume_down.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\default_blinds_symbol_volume_up.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\default_blinds_symbol_volume_up.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\switch_toggle_on.9.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\switch_toggle_on.9.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\switch_toggle_off.9.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\switch_toggle_off.9.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_btn_dialog_middle.9.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_btn_dialog_middle.9.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\switch_btn_pressed.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\switch_btn_pressed.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\room_list_bg.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\room_list_bg.png"
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon_seekbar_thumb.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\icon_seekbar_thumb.png"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\chevron_white.png",
         "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\chevron_white.png"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\default_blinds_symbol_light_up.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\default_blinds_symbol_light_up.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\divider.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\divider.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\default_blinds_symbol_arrow_down.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\default_blinds_symbol_arrow_down.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\switch_btn_normal.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\switch_btn_normal.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_dialog_new.9.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_dialog_new.9.png"
-    },
-    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\chevron_default.png",
         "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\chevron_default.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\launcher.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\launcher.png"
     }
 ]

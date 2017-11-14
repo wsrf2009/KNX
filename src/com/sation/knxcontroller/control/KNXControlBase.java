@@ -3,18 +3,26 @@ package com.sation.knxcontroller.control;
 import java.io.Serializable;
 import java.util.Map;
 
+import com.sation.knxcontroller.STKNXControllerApp;
+import com.sation.knxcontroller.models.KNXGroupAddress;
 import com.sation.knxcontroller.models.KNXSelectedAddress;
 import com.sation.knxcontroller.models.KNXView;
+import com.sation.knxcontroller.util.MapUtils;
+import com.sation.knxcontroller.util.StringUtil;
 import com.sation.knxcontroller.widget.STKNXBlinds;
 import com.sation.knxcontroller.widget.STKNXDigitalAdjustment;
+import com.sation.knxcontroller.widget.STKNXDimmer;
 import com.sation.knxcontroller.widget.STKNXGroupBox;
+import com.sation.knxcontroller.widget.STKNXImageButton;
 import com.sation.knxcontroller.widget.STKNXLabel;
 import com.sation.knxcontroller.widget.STKNXSceneButton;
+import com.sation.knxcontroller.widget.STKNXShutter;
 import com.sation.knxcontroller.widget.STKNXSliderSwitch;
 import com.sation.knxcontroller.widget.STKNXSwitch;
 import com.sation.knxcontroller.widget.STKNXTimerButton;
 import com.sation.knxcontroller.widget.STKNXValueDisplay;
 import com.sation.knxcontroller.widget.STKNXView;
+import com.sation.knxcontroller.widget.STKNXWebCamer;
 
 import android.content.Context;
 
@@ -22,53 +30,33 @@ public class KNXControlBase extends KNXView implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// 读地址
-	private Map<String ,KNXSelectedAddress> ReadAddressId; 
+	private Map<String ,KNXSelectedAddress> ReadAddressId;
 	public Map<String ,KNXSelectedAddress> getReadAddressId() {
 		return ReadAddressId;
 	} 
-//	public void setReadAddressId(Map<String ,KNXSelectedAddress> mReadAddressId) {
-//		ReadAddressId = mReadAddressId;
-//	}
-//		
-//	// ETS项目中该控件的ID 
+
+	// ETS项目中该控件的ID
 	private Map<String ,KNXSelectedAddress> WriteAddressIds; 
 	public Map<String ,KNXSelectedAddress> getWriteAddressIds() {
 		return WriteAddressIds;
-	} 
-//	public void setWriteAddressIds(Map<String ,KNXSelectedAddress> mWriteAddressIds) {
-//		WriteAddressIds = mWriteAddressIds;
-//	}
+	}
 	
 	//是否有提示
 	private int HasTip ;
 	public EBool getHasTip () {
 		return EBool.values()[this.HasTip];
-	} 
-//	public void setHasTip (int hasTip ) {
-//		HasTip  = hasTip;
-//	}
+	}
 	
 	//提示
 	private String Tip;
 	public String getTip() {
 		return Tip;
 	} 
-//	public void setTip (String tip) {
-//		Tip   = tip;
-//	}
+
 
 	public int Clickable;
 	public EBool getClickable() {
 		return EBool.values()[this.Clickable];
-	}
-	
-	private String Icon;
-	public String getIcon() {
-		if (null != this.Icon) {
-			return this.getImagePath() + this.Icon;
-		} else {
-			return null;
-		}
 	}
 	
 	///控件当前的值
@@ -101,8 +89,36 @@ public class KNXControlBase extends KNXView implements Serializable {
     	  knxView = new STKNXDigitalAdjustment(context, (KNXDigitalAdjustment)mKNXControlBase);
       } else if (mKNXControlBase instanceof KNXGroupBox) {
     	  knxView = new STKNXGroupBox(context, (KNXGroupBox)mKNXControlBase);
+      } else if (mKNXControlBase instanceof KNXImageButton){
+			knxView = new STKNXImageButton(context, (KNXImageButton)mKNXControlBase);
+      } else if (mKNXControlBase instanceof KNXShutter) {
+			knxView = new STKNXShutter(context, (KNXShutter)mKNXControlBase);
+      } else if (mKNXControlBase instanceof KNXDimmer) {
+			knxView = new STKNXDimmer(context, (KNXDimmer)mKNXControlBase);
+      } else if (mKNXControlBase instanceof KNXWebCamer) {
+			knxView = new STKNXWebCamer(context, (KNXWebCamer)mKNXControlBase);
+      } else if (mKNXControlBase instanceof KNXMediaButton) {
+
+      } else if (mKNXControlBase instanceof KNXAirCondition) {
+
+      } else if (mKNXControlBase instanceof KNXHVAC) {
+
       }
 
       return knxView; 
-   } 
+   }
+
+   public KNXGroupAddress getReadAddress() {
+	   try {
+		   KNXSelectedAddress addr = MapUtils.getFirstOrNull(this.getReadAddressId());
+		   if (null != addr) {
+			   String addressId = addr.getId();
+			   return STKNXControllerApp.getInstance().getGroupAddressIdMap().get(addressId);
+		   }
+	   } catch (Exception ex) {
+		   ex.printStackTrace();
+	   }
+
+	   return null;
+   }
 }

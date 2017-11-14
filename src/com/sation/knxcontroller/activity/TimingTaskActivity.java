@@ -2,10 +2,7 @@ package com.sation.knxcontroller.activity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import com.sation.knxcontroller.R;
@@ -39,7 +36,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -64,7 +60,6 @@ public class TimingTaskActivity extends BaseActivity {
     private TimingTaskItem currentTask;
     private ListView lvGroupAddressList;
     private Button bDeleteTask;
-//    private Button bCreateTask;
     private Button bAddOrRemoveGroupAddress;
     private TimingTaskListAdapter mTimingTaskListAdapter = null;
     private Button bSaveModify;
@@ -93,7 +88,7 @@ public class TimingTaskActivity extends BaseActivity {
 			int controlId = Integer.parseInt(fileName);
 			KNXControlBase control = STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().get(controlId);
 			if(control instanceof KNXTimerButton) {
-				tvTimerName.setText(control.getText());
+				tvTimerName.setText(control.getTitle());
 			} else {
 				tvTimerName.setText("");
 			}
@@ -119,7 +114,7 @@ public class TimingTaskActivity extends BaseActivity {
 		
 		etTaskName = (EditText)findViewById(R.id.timingTaskLayoutTaskItemEditTextName);
 
-		/* UITableView 定时任务执行方式 */
+		/* 定时任务执行方式 */
 		rbMonthly = (RadioButton)findViewById(R.id.timingTaskLayoutExecuteWayMonthly);
 		rbMonthly.setOnClickListener(new ExecuteWayMonthlyOnClickListener());
 		rbWeekly = (RadioButton)findViewById(R.id.timingTaskLayoutExecuteWayWeekly);
@@ -187,7 +182,7 @@ public class TimingTaskActivity extends BaseActivity {
 	public void finish() {
 		super.finish();
 
-		overridePendingTransition(R.anim.scale_from_center, R.anim.scale_to_center);
+		overridePendingTransition(R.anim.scale_from_center_600, R.anim.scale_to_center_600);
 	}
 
 	/**
@@ -415,7 +410,7 @@ public class TimingTaskActivity extends BaseActivity {
 				
 			});
 			dialogMonthly.setTitle(getMonthlyContent(currentTask));
-			dialogMonthly.setIcon(R.drawable.launcher);
+			dialogMonthly.setIcon(R.mipmap.launcher);
 			dialogMonthly.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL);
 			dialogMonthly.setButton1(R.string.confirm,  new PromptDialog.OnClickListener() {
 					
@@ -489,7 +484,7 @@ public class TimingTaskActivity extends BaseActivity {
 				
 			});
 			dialogWeekly.setTitle(getWeeklyContent(currentTask));
-			dialogWeekly.setIcon(R.drawable.launcher);
+			dialogWeekly.setIcon(R.mipmap.launcher);
 			dialogWeekly.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL);
 			dialogWeekly.setButton1(R.string.confirm,  new PromptDialog.OnClickListener() {
 							
@@ -548,7 +543,7 @@ public class TimingTaskActivity extends BaseActivity {
 				
 			});
 			dialogEveryday.setTitle(getEverydayContent(currentTask));
-			dialogEveryday.setIcon(R.drawable.launcher);
+			dialogEveryday.setIcon(R.mipmap.launcher);
 			dialogEveryday.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL);
 			dialogEveryday.setButton1(R.string.confirm,  new PromptDialog.OnClickListener() {
 							
@@ -609,7 +604,7 @@ public class TimingTaskActivity extends BaseActivity {
 				
 			});
 			dialogTime.setTitle(getCycleContent(currentTask));
-			dialogTime.setIcon(R.drawable.launcher);
+			dialogTime.setIcon(R.mipmap.launcher);
 			dialogTime.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL);
 			dialogTime.setButton1(R.string.confirm,  new PromptDialog.OnClickListener() {
 							
@@ -680,7 +675,7 @@ public class TimingTaskActivity extends BaseActivity {
 				
 			});
 			dialogOneOff.setTitle(getOneOffContent(currentTask));
-			dialogOneOff.setIcon(R.drawable.launcher);
+			dialogOneOff.setIcon(R.mipmap.launcher);
 			dialogOneOff.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL);
 			dialogOneOff.setButton1(R.string.confirm,  new PromptDialog.OnClickListener() {
 							
@@ -830,7 +825,18 @@ public class TimingTaskActivity extends BaseActivity {
 					String id = entry.getKey();
 					Integer index = groupAddressIndexMap.get(id);
 					KNXGroupAddress address = groupAddressMap.get(index);
-					groupList.add(address);
+
+					/* 去掉与写地址表中重复的地址 */
+					boolean exist = false;
+					for (KNXGroupAddress addr: groupList) {
+						if(addr.getStringKnxAddress().equals(address.getStringKnxAddress())) {
+							exist = true;
+							break;
+						}
+					}
+					if(!exist) {
+						groupList.add(address);
+					}
 				}
 			}
 
@@ -854,7 +860,7 @@ public class TimingTaskActivity extends BaseActivity {
 
 			new PromptDialog.Builder(context)
 					.setTitle(title)
-					.setIcon(R.drawable.launcher)
+					.setIcon(R.mipmap.launcher)
 					.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
 					.setView(lvGroupAddressList)
 					.setButton1(R.string.confirm, new PromptDialog.OnClickListener() {

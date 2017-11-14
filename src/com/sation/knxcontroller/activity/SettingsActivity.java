@@ -15,6 +15,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -87,7 +88,7 @@ public class SettingsActivity extends BaseActivity {
         this.mSBKNXGateway.setOnSettingButtonClickListener(new SettingButton.onSettingButtonClickListener() {
 
             @Override
-            public void onSettingButtonClick() {
+            public void onSettingButtonClick() { // KNX网关设置
                 final View view = LayoutInflater.from(SettingsActivity.this).inflate(R.layout.knx_gateway_setting, null);
                 final EditText txtIP = (EditText) view.findViewById(R.id.txtIP);
                 txtIP.setImeOptions(EditorInfo.IME_ACTION_NEXT);
@@ -132,7 +133,7 @@ public class SettingsActivity extends BaseActivity {
 
                 final PromptDialog mPromptDialog = new PromptDialog.Builder(SettingsActivity.this)
                         .setTitle(SettingsActivity.this.getResources().getString(R.string.setting_knx_gateway))
-                        .setIcon(R.drawable.launcher)
+                        .setIcon(R.mipmap.launcher)
                         .setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
                         .setView(view)
                         .setButton1(SettingsActivity.this.getResources().getString(R.string.cancel),  new PromptDialog.OnClickListener() {
@@ -214,7 +215,7 @@ public class SettingsActivity extends BaseActivity {
         this.mSBPhysicalAddress.setOnSettingButtonClickListener(new SettingButton.onSettingButtonClickListener() {
 
             @Override
-            public void onSettingButtonClick() {
+            public void onSettingButtonClick() { // 物理地址
 
                 final View view = LayoutInflater.from(SettingsActivity.this).inflate(R.layout.physical_address_setting, null);
                 final EditText txtFirst = (EditText) view.findViewById(R.id.txtFirst);
@@ -236,7 +237,7 @@ public class SettingsActivity extends BaseActivity {
 
                 final PromptDialog mPromptDialog = new PromptDialog.Builder(SettingsActivity.this)
                         .setTitle(SettingsActivity.this.getResources().getString(R.string.setting_physical_address))
-                        .setIcon(R.drawable.launcher)
+                        .setIcon(R.mipmap.launcher)
                         .setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
                         .setView(view)
                         .setButton1(SettingsActivity.this.getResources().getString(R.string.cancel),  new PromptDialog.OnClickListener() {
@@ -305,20 +306,158 @@ public class SettingsActivity extends BaseActivity {
         this.mSBScreenOff.setOnSettingButtonClickListener(new SettingButton.onSettingButtonClickListener() {
 
             @Override
-            public void onSettingButtonClick() {
+            public void onSettingButtonClick() { // 屏幕背光
                 try {
-                    final View view = LayoutInflater.from(SettingsActivity.this).inflate(R.layout.knx_refresh_status_setting, null);
-                    final EditText txtTimeSpan = (EditText) view.findViewById(R.id.txtTimeSpan);
-
+//                    final View view = LayoutInflater.from(SettingsActivity.this).inflate(R.layout.knx_refresh_status_setting, null);
+                    final View view = LayoutInflater.from(SettingsActivity.this).inflate(R.layout.system_sleep_setting, null);
+                    final RadioButton rb15s = (RadioButton) view.findViewById(R.id.systemsleepsetting_radioButton_fifteenseconds);
+                    final RadioButton rb30s = (RadioButton) view.findViewById(R.id.systemsleepsetting_radioButton_thirtyseconds);
+                    final RadioButton rb1m = (RadioButton) view.findViewById(R.id.systemsleepsetting_radioButton_oneminute);
+                    final RadioButton rb2m = (RadioButton) view.findViewById(R.id.systemsleepsetting_radioButton_twominutes);
+                    final RadioButton rb5m = (RadioButton) view.findViewById(R.id.systemsleepsetting_radioButton_fiveminutes);
+                    final RadioButton rb10m = (RadioButton) view.findViewById(R.id.systemsleepsetting_radioButton_tenminutes);
+                    final RadioButton rb30m = (RadioButton) view.findViewById(R.id.systemsleepsetting_radioButton_thirtyminutes);
+                    final RadioButton rbns = (RadioButton) view.findViewById(R.id.systemsleepsetting_radioButton_neversleep);
+//                    final EditText txtTimeSpan = (EditText) view.findViewById(R.id.txtTimeSpan);
+//
                     int knxSettingScreenOffTimespan = Settings.System.getInt(SettingsActivity.this.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT);
                     if(knxSettingScreenOffTimespan>1000) {
                         knxSettingScreenOffTimespan /= 1000;
                     }
-                    txtTimeSpan.setText(String.valueOf(knxSettingScreenOffTimespan));
+//                    txtTimeSpan.setText(String.valueOf(knxSettingScreenOffTimespan));
+                    if (knxSettingScreenOffTimespan <= 0) {
+                        rbns.setChecked(true);
+                    } else if (knxSettingScreenOffTimespan <= 15) {
+                        rb15s.setChecked(true);
+                    } else if (knxSettingScreenOffTimespan <= 30) {
+                        rb30s.setChecked(true);
+                    } else if (knxSettingScreenOffTimespan <= 60) {
+                        rb1m.setChecked(true);
+                    } else if (knxSettingScreenOffTimespan <= 120) {
+                        rb2m.setChecked(true);
+                    } else if (knxSettingScreenOffTimespan <= 300) {
+                        rb5m.setChecked(true);
+                    } else if (knxSettingScreenOffTimespan <= 600) {
+                        rb10m.setChecked(true);
+                    } else {
+                        rb30m.setChecked(true);
+                    }
+
+                    rb15s.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rb15s.setChecked(true);
+                            rb30s.setChecked(false);
+                            rb1m.setChecked(false);
+                            rb2m.setChecked(false);
+                            rb5m.setChecked(false);
+                            rb10m.setChecked(false);
+                            rb30m.setChecked(false);
+                            rbns.setChecked(false);
+                        }
+                    });
+
+                    rb30s.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rb30s.setChecked(true);
+                            rb15s.setChecked(false);
+                            rb1m.setChecked(false);
+                            rb2m.setChecked(false);
+                            rb5m.setChecked(false);
+                            rb10m.setChecked(false);
+                            rb30m.setChecked(false);
+                            rbns.setChecked(false);
+                        }
+                    });
+
+                    rb1m.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rb1m.setChecked(true);
+                            rb15s.setChecked(false);
+                            rb30s.setChecked(false);
+                            rb2m.setChecked(false);
+                            rb5m.setChecked(false);
+                            rb10m.setChecked(false);
+                            rb30m.setChecked(false);
+                            rbns.setChecked(false);
+                        }
+                    });
+
+                    rb2m.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rb2m.setChecked(true);
+                            rb15s.setChecked(false);
+                            rb30s.setChecked(false);
+                            rb1m.setChecked(false);
+                            rb5m.setChecked(false);
+                            rb10m.setChecked(false);
+                            rb30m.setChecked(false);
+                            rbns.setChecked(false);
+                        }
+                    });
+
+                    rb5m.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rb5m.setChecked(true);
+                            rb15s.setChecked(false);
+                            rb30s.setChecked(false);
+                            rb1m.setChecked(false);
+                            rb2m.setChecked(false);
+                            rb10m.setChecked(false);
+                            rb30m.setChecked(false);
+                            rbns.setChecked(false);
+                        }
+                    });
+
+                    rb10m.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rb10m.setChecked(true);
+                            rb15s.setChecked(false);
+                            rb30s.setChecked(false);
+                            rb1m.setChecked(false);
+                            rb2m.setChecked(false);
+                            rb5m.setChecked(false);
+                            rb30m.setChecked(false);
+                            rbns.setChecked(false);
+                        }
+                    });
+
+                    rb30m.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rb30m.setChecked(true);
+                            rb15s.setChecked(false);
+                            rb30s.setChecked(false);
+                            rb1m.setChecked(false);
+                            rb2m.setChecked(false);
+                            rb5m.setChecked(false);
+                            rb10m.setChecked(false);
+                            rbns.setChecked(false);
+                        }
+                    });
+
+                    rbns.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rbns.setChecked(true);
+                            rb15s.setChecked(false);
+                            rb30s.setChecked(false);
+                            rb1m.setChecked(false);
+                            rb2m.setChecked(false);
+                            rb5m.setChecked(false);
+                            rb10m.setChecked(false);
+                            rb30m.setChecked(false);
+                        }
+                    });
 
                     new PromptDialog.Builder(SettingsActivity.this)
                             .setTitle(SettingsActivity.this.getResources().getString(R.string.setting_back_light_time))
-                            .setIcon(R.drawable.launcher)
+                            .setIcon(R.mipmap.launcher)
                             .setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
                             .setView(view)
                             .setButton1(SettingsActivity.this.getResources().getString(R.string.cancel),  new PromptDialog.OnClickListener() {
@@ -333,7 +472,25 @@ public class SettingsActivity extends BaseActivity {
                                 @Override
                                 public void onClick(Dialog dialog, int which) {
                                     try {
-                                        int time = Integer.valueOf(txtTimeSpan.getText().toString());
+//                                        int time = Integer.valueOf(txtTimeSpan.getText().toString());
+                                        int time;
+                                        if (rbns.isChecked()) {
+                                            time = -1;
+                                        } else if (rb15s.isChecked()) {
+                                            time = 15;
+                                        } else if (rb30s.isChecked()) {
+                                            time = 30;
+                                        } else if (rb1m.isChecked()) {
+                                            time = 60;
+                                        } else if (rb2m.isChecked()) {
+                                            time = 120;
+                                        } else if (rb5m.isChecked()) {
+                                            time = 300;
+                                        } else if (rb10m.isChecked()) {
+                                            time = 600;
+                                        } else {
+                                            time = 1800;
+                                        }
                                         if (time > 0) {
                                             Settings.System.putInt(SettingsActivity.this.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 1000 * time);
                                         } else {
@@ -356,7 +513,7 @@ public class SettingsActivity extends BaseActivity {
         this.mSBLanguage.setOnSettingButtonClickListener(new SettingButton.onSettingButtonClickListener() {
 
             @Override
-            public void onSettingButtonClick() {
+            public void onSettingButtonClick() { // 语言选择
                 final View view = LayoutInflater.from(SettingsActivity.this).inflate(R.layout.setting_language, null);
                 final RadioButton chinese = (RadioButton) view.findViewById(R.id.settingLanguageRadioButtonChinese);
                 final RadioButton english = (RadioButton) view.findViewById(R.id.settingLanguageRadioButtonEnglish);
@@ -390,7 +547,7 @@ public class SettingsActivity extends BaseActivity {
 
                 new PromptDialog.Builder(SettingsActivity.this)
                         .setTitle(SettingsActivity.this.getResources().getString(R.string.setting_language))
-                        .setIcon(R.drawable.launcher)
+                        .setIcon(R.mipmap.launcher)
                         .setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
                         .setView(view)
                         .setButton1(SettingsActivity.this.getResources().getString(R.string.cancel), new PromptDialog.OnClickListener() {
@@ -439,7 +596,7 @@ public class SettingsActivity extends BaseActivity {
         this.mSBReboot.setOnSettingButtonClickListener(new SettingButton.onSettingButtonClickListener() {
 
             @Override
-            public void onSettingButtonClick() {
+            public void onSettingButtonClick() { // 定时重启
                 final View view = LayoutInflater.from(SettingsActivity.this).inflate(R.layout.reboot_layout, null);
                 final TextView txtRebootText = (TextView) view.findViewById(R.id.rebootlayout_textview_reboottext);
                 final CheckBox cbRebootEnable = (CheckBox) view.findViewById(R.id.rebootlayout_checkBox_rebootenable);
@@ -484,7 +641,7 @@ public class SettingsActivity extends BaseActivity {
 
                 new PromptDialog.Builder(SettingsActivity.this)
                         .setTitle(SettingsActivity.this.getResources().getString(R.string.setting_Reboot))
-                        .setIcon(R.drawable.launcher)
+                        .setIcon(R.mipmap.launcher)
                         .setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
                         .setView(view)
                         .setButton1(SettingsActivity.this.getResources().getString(R.string.cancel), new PromptDialog.OnClickListener() {
@@ -522,7 +679,7 @@ public class SettingsActivity extends BaseActivity {
         this.mSBChangePassword.setOnSettingButtonClickListener(new SettingButton.onSettingButtonClickListener() {
 
             @Override
-            public void onSettingButtonClick() {
+            public void onSettingButtonClick() { // 更改密码
                 final View view = LayoutInflater.from(SettingsActivity.this).inflate(R.layout.changepassword_layout, null);
                 final EditText etOriginal = (EditText) view.findViewById(R.id.changepasswordlayout_edittext_originalpassword);
                 final EditText etNew = (EditText) view.findViewById(R.id.changepasswordlayout_edittext_newpassword);
@@ -530,7 +687,7 @@ public class SettingsActivity extends BaseActivity {
 
                 new PromptDialog.Builder(SettingsActivity.this)
                         .setTitle(SettingsActivity.this.getResources().getString(R.string.change_password))
-                        .setIcon(R.drawable.launcher)
+                        .setIcon(R.mipmap.launcher)
                         .setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
                         .setView(view)
                         .setButton1(SettingsActivity.this.getResources().getString(R.string.cancel), new PromptDialog.OnClickListener() {
@@ -570,14 +727,14 @@ public class SettingsActivity extends BaseActivity {
 
         this.mSBUpgradeSoftware.setOnSettingButtonClickListener(new SettingButton.onSettingButtonClickListener() {
             @Override
-            public void onSettingButtonClick() {
+            public void onSettingButtonClick() { // 升级软件
             upgradeSoftware();
             }
         });
 
         this.mSBUpgradeProject.setOnSettingButtonClickListener(new SettingButton.onSettingButtonClickListener() {
             @Override
-            public void onSettingButtonClick() {
+            public void onSettingButtonClick() { // 升级工程文件
             upgradeProject();
             }
         });
@@ -585,7 +742,7 @@ public class SettingsActivity extends BaseActivity {
         this.mSBSystemStatus.setOnSettingButtonClickListener(new SettingButton.onSettingButtonClickListener(){
 
             @Override
-            public void onSettingButtonClick(){
+            public void onSettingButtonClick(){ // 系统状态
                 final View view = LayoutInflater.from(SettingsActivity.this).inflate(R.layout.system_status, null);
 
                 final CheckBox cbDisplaySystemTime = (CheckBox) view.findViewById(R.id.systemStatusCheckBoxDisplaySystemTime);
@@ -604,7 +761,7 @@ public class SettingsActivity extends BaseActivity {
 
                 new PromptDialog.Builder(SettingsActivity.this)
                         .setTitle(SettingsActivity.this.getResources().getString(R.string.system_status))
-                        .setIcon(R.drawable.launcher)
+                        .setIcon(R.mipmap.launcher)
                         .setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
                         .setView(view)
                         .setButton1(SettingsActivity.this.getResources().getString(R.string.cancel), new PromptDialog.OnClickListener() {
@@ -715,6 +872,4 @@ public class SettingsActivity extends BaseActivity {
         mItemViewData.setItemView(new ImageItemView(this));
         this.mSBSystemStatus.setAdapter(mItemViewData);
     }
-
-
 }

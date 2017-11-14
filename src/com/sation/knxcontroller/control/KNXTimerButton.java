@@ -21,4 +21,12 @@ public class KNXTimerButton extends KNXControlBase {
 //	}
 	
 //	public String Icon;
+
+	private String Symbol;
+	public String getSymbol() {
+		return Symbol;
+	}
+//	public String getSymbol() {
+//		return this.getImagePath() + "Symbol.png";
+//	}
 }

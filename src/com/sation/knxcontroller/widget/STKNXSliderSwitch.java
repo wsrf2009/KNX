@@ -1,11 +1,18 @@
 package com.sation.knxcontroller.widget;
 
+import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXSliderSwitch;
+import com.sation.knxcontroller.knxdpt.DPT5;
+import com.sation.knxcontroller.knxdpt.KNXDatapointType;
+import com.sation.knxcontroller.models.KNXGroupAddress;
+import com.sation.knxcontroller.models.KNXSelectedAddress;
 import com.sation.knxcontroller.models.KNXView;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
+import com.sation.knxcontroller.util.Log;
+import com.sation.knxcontroller.util.MapUtils;
 import com.sation.knxcontroller.util.MathUtils;
 import com.sation.knxcontroller.util.StringUtil;
 import com.sation.knxcontroller.util.uikit.UIKit;
@@ -25,12 +32,14 @@ import android.support.v4.widget.ViewDragHelper;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.lang.ref.WeakReference;
+
 
 public class STKNXSliderSwitch extends STKNXControl {
+	private static final String TAG = "STKNXSliderSwitch";
 	private static final int PADDING = 2;
 	private static final int SUBVIEW_WIDTH = 40;
     private final int SLIDER_EDGE_WIDTH = 3;
-//    private final int SLIDER_WIDTH = 40;
 	
     private KNXSliderSwitch mKNXSliderSwitch;
     private STSlider slider;
@@ -42,12 +51,11 @@ public class STKNXSliderSwitch extends STKNXControl {
     	Normal,
     }
     private ESliderState mSliderState;
-    private int sliderStartPos;
+	private int sliderStartPos;
     private int sliderWidth;
     private float progress;
     private int[] pos = new int[16];;
     private int curPos;
-//    private Handler mHandler;
 
 	public STKNXSliderSwitch(Context context, KNXSliderSwitch knxSliderSwitch) {
 		super(context, knxSliderSwitch);
@@ -73,8 +81,9 @@ public class STKNXSliderSwitch extends STKNXControl {
 		vLeft.backColor = Color.parseColor(this.mKNXSliderSwitch.BackgroundColor);
 		vLeft.radius = this.mKNXSliderSwitch.Radius;
 		vLeft.alpha = this.mKNXSliderSwitch.Alpha;
+		vLeft.clickable = this.mKNXSliderSwitch.getClickable();
 		vLeft.setSubViewClickListener(this.leftClicked);
-		if(!StringUtil.isEmpty(this.mKNXSliderSwitch.getLeftImage())) {
+		if(!StringUtil.isNullOrEmpty(this.mKNXSliderSwitch.getLeftImage())) {
 			vLeft.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getLeftImage());
 		}
 		this.addView(vLeft);
@@ -95,13 +104,14 @@ public class STKNXSliderSwitch extends STKNXControl {
 		vLeft.backColor = Color.parseColor(this.mKNXSliderSwitch.BackgroundColor);
 		vLeft.radius = this.mKNXSliderSwitch.Radius;
 		vLeft.alpha = this.mKNXSliderSwitch.Alpha;
+		vRight.clickable = this.mKNXSliderSwitch.getClickable();
 		vRight.setSubViewClickListener(this.rightClicked);
-		if(!StringUtil.isEmpty(this.mKNXSliderSwitch.getRightImage())) {
+		if(!StringUtil.isNullOrEmpty(this.mKNXSliderSwitch.getRightImage())) {
 			vRight.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXSliderSwitch.getRightImage());
 		}
 		this.addView(vRight);
 
-		if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+		if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) { // 控件为水平放置？
 			this.sliderStartPos = vLeft.left + vLeft.width + STKNXSliderSwitch.PADDING;
 			this.sliderWidth = this.mKNXSliderSwitch.Width - (vLeft.left + vLeft.width) - (vRight.width + STKNXSliderSwitch.PADDING) - STKNXSliderSwitch.PADDING * 2;
 		} else {
@@ -110,7 +120,7 @@ public class STKNXSliderSwitch extends STKNXControl {
 		}
 		this.sliderPositionX = this.sliderStartPos;
 		
-		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
+		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) { // 相对调光？
 			int range = getThumbScrollRange();
 			int interval = range/15;
 			if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
@@ -137,7 +147,6 @@ public class STKNXSliderSwitch extends STKNXControl {
 			
 			@Override
 	        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
-//	            invalidate();
 	        }
 
 	        @Override
@@ -157,7 +166,6 @@ public class STKNXSliderSwitch extends STKNXControl {
 				mSliderState = ESliderState.Dragging;
 				if (KNXView.EOrientation.Horizontal == mKNXSliderSwitch.getOrientation()) {
 					return sliderPositionX = getSliderPosX(left);
-//					return left;
 				} else {
 					return super.clampViewPositionHorizontal(child, left, dx);
 				}
@@ -170,7 +178,6 @@ public class STKNXSliderSwitch extends STKNXControl {
 					return super.clampViewPositionVertical(child, top, dy);
 				} else {
 					return sliderPositionX = getSliderPosX(top);
-//					return top;
 				}
 			}
 			
@@ -189,12 +196,6 @@ public class STKNXSliderSwitch extends STKNXControl {
 				slider.mEControlState = STSlider.EControlState.Up;
 				sliderChanged();
 				mSliderState = ESliderState.Normal;
-
-//				if(KNXView.EOrientation.Horizontal == mKNXSliderSwitch.getOrientation()) {
-//					sliderPositionX = getSliderPosX((int)xvel);
-//				} else {
-//					sliderPositionX = getSliderPosX((int)yvel);
-//				}
 			}
 			
 			@Override
@@ -224,39 +225,41 @@ public class STKNXSliderSwitch extends STKNXControl {
 		LayoutParams pageLayoutParams = new LayoutParams(this.mKNXSliderSwitch.getSliderWidth(), this.mKNXSliderSwitch.Height);
 		slider.setLayoutParams(pageLayoutParams);
 		this.addView(slider);
-		
-//		this.mHandler = new Handler() {
-//			@Override
-//			public void handleMessage(Message msg) {
-//				super.handleMessage(msg);
-//				
-//				if(1 == msg.what) {
-//					requestLayout();
-//				}
-//			}
-//		};
+	}
+
+	@Override
+	public void onSuspend() {
+
+	}
+
+	@Override
+	public void onResume() {
+		copyStatusAndRequest();
 	}
 	
 	@Override
 	public void onDestroy() {
-//		this.mKNXSliderSwitch = null;
-		this.mViewDragHelper = null;
-		
-		int count = getChildCount();
-		for(int i=0; i<count; i++) {
-			View v = (View)getChildAt(i);
-			if(v instanceof STButton) {
-				STButton stv = (STButton)v;
-				stv.onDestroy();
-				stv = null;
-			} else if (v instanceof STSlider) {
-				STSlider ssv = (STSlider)v;
-				ssv.onDestroy();
-				ssv = null;
-			}
+		super.onDestroy();
+	}
+
+	private static class STKNXSliderSwitchHandler extends Handler {
+		WeakReference<STKNXSliderSwitch> mSliderSwitch;
+
+		private STKNXSliderSwitchHandler(STKNXSliderSwitch ss) {
+			super(ss.getContext().getMainLooper());
+
+			mSliderSwitch = new WeakReference<STKNXSliderSwitch>(ss);
 		}
-		
-		this.slider = null;
+
+		@Override
+		public void handleMessage(Message msg) {
+			mSliderSwitch.get().requestLayout();
+		}
+	}
+
+	private void updateControlState() {
+		STKNXSliderSwitchHandler mHandler = new STKNXSliderSwitchHandler(STKNXSliderSwitch.this);
+		mHandler.sendEmptyMessage(0);
 	}
 	
 	private int getThumbScrollRange() {
@@ -290,17 +293,17 @@ public class STKNXSliderSwitch extends STKNXControl {
 	
 	private int getSliderPosX(int position) {
 		if (KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
-			this.sliderPositionX = Math.max(getSliderStartPos(), position);
-			this.sliderPositionX = Math.min(this.sliderPositionX, getSliderEndPos());
+			this.sliderPositionX = Math.max(getSliderStartPos(), position); // 上边界
+			this.sliderPositionX = Math.min(this.sliderPositionX, getSliderEndPos()); // 下边界
 			if (EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
 				this.curPos = MathUtils.getTheClosetIndex(this.sliderPositionX, pos);
 				this.sliderPositionX = this.pos[curPos];
 			}
-		} else {
+		} else { // 垂直布局
 			this.sliderPositionX = Math.min(getSliderStartPos(), position);
 			this.sliderPositionX = Math.max(this.sliderPositionX, getSliderEndPos());
 			if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
-				this.curPos = MathUtils.getTheClosetIndex(this.sliderPositionX, pos);
+				this.curPos = MathUtils.getTheClosetIndex(this.sliderPositionX, pos); //
 				this.sliderPositionX = this.pos[curPos];
 			}
 		}
@@ -308,33 +311,31 @@ public class STKNXSliderSwitch extends STKNXControl {
         return this.sliderPositionX;
 	}
 
-	public void setProgress(int p) {
-		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) { 
-			/* 相对调光 */
-//			this.sliderPositionX = this.pos[8];
-		} else {
-			/* 绝对调光 */
-			this.progress = (float)p/255;
-			this.sliderPositionX = getSliderPos(this.progress);
-			requestLayout();
-		}
-		
+	public void setProgress(byte[] array) {
+        KNXGroupAddress address = this.mKNXSliderSwitch.getReadAddress();
+        if (null != address) {
+			int value;
+            if (address.getKnxMainNumber().equals(KNXDatapointType.DPT_5)
+                    && address.getKnxSubNumber().equals(KNXDatapointType.DPST_1)) {
+                value = DPT5.byte2Scaling(array);
+			} else {
+				value = KNXDatapointType.bytes2int(array, address.getType());
+			}
 
-		
-//		UIKit.runOnMainThreadAsync(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//		Message message = new Message();
-//        message.what = 1;
-//        this.mHandler.sendMessage(message);
-				
-//			}
-//		});
-	}
+			if (EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
+			        /* 相对调光 */
+
+			} else {
+			        /* 绝对调光 */
+				this.progress = (float) value / 100;
+				this.sliderPositionX = getSliderPos(this.progress);
+				updateControlState();
+			}
+        }
+    }
 	
-	private void sliderChanged() {
-		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) {
+	private void sliderChanged() { // 滑块位置改变
+		if(EBool.Yes == this.mKNXSliderSwitch.getIsRelativeControl()) { // 相对调光？
 			int val = 0;
 			 if (this.curPos < 8) {
 				val = this.curPos;
@@ -342,7 +343,7 @@ public class STKNXSliderSwitch extends STKNXControl {
 				val = 8 +15-this.curPos;
 			}
 			
-			 sendCommandRequest(this.mKNXSliderSwitch.getWriteAddressIds(), val+"", false, null);
+			 sendCommandRequest(this.mKNXSliderSwitch.getWriteAddressIds(), val+"", false, null); // 发送命令
 		} else {
 			if (KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
 				progress = (float) (sliderPositionX - this.getSliderStartPos()) / this.getThumbScrollRange();
@@ -360,8 +361,8 @@ public class STKNXSliderSwitch extends STKNXControl {
 	STButton.SubViewClickListener leftClicked = new STButton.SubViewClickListener() {
 
 		@Override
-		public void onClick(STButton view) {
-			if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) {
+		public void onClick(STButton view) { // －键点击
+			if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) { // 相对调光？
 				curPos--;
 				if(curPos<0){
 					curPos = 0;
@@ -390,8 +391,8 @@ public class STKNXSliderSwitch extends STKNXControl {
 	STButton.SubViewClickListener rightClicked = new STButton.SubViewClickListener() {
 
 		@Override
-		public void onClick(STButton view) {
-			if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) {
+		public void onClick(STButton view) { // ＋键点击
+			if(EBool.Yes == mKNXSliderSwitch.getIsRelativeControl()) { // 相对控制
 				curPos++;
 				if(curPos<0){
 					curPos = 0;
@@ -414,8 +415,8 @@ public class STKNXSliderSwitch extends STKNXControl {
 			requestLayout();
 			
 			sliderChanged();
-		}
-};
+					}
+	};
 	
 	@Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
@@ -528,12 +529,16 @@ public class STKNXSliderSwitch extends STKNXControl {
     @SuppressLint("ClickableViewAccessibility")
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
+		if(EBool.Yes != this.mKNXSliderSwitch.getClickable()) {
+			return true;
+		}
+
     	if(null != this.mViewDragHelper) {
     		this.mViewDragHelper.processTouchEvent(event);
     	}
     	
     	final float x;
-		if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) {
+		if(KNXView.EOrientation.Horizontal == this.mKNXSliderSwitch.getOrientation()) { // 控件为水平放置？
 			x = event.getX();
 
 			if((x>=this.sliderStartPos) && (x<=(this.getSliderEndPos()+this.mKNXSliderSwitch.getSliderWidth())) &&
@@ -556,7 +561,7 @@ public class STKNXSliderSwitch extends STKNXControl {
 						break;
 				}
 			}
-		} else {
+		} else { // 垂直放置
 			x = event.getY();
 
 			if((x <= this.sliderStartPos) && (x >= (this.getSliderEndPos())) &&
@@ -583,5 +588,28 @@ public class STKNXSliderSwitch extends STKNXControl {
 
     	return true;
     }
+
+    @Override
+	public void copyStatusAndRequest() { // 复制、请求对象状态
+		super.copyStatusAndRequest();
+
+		byte[] bytes = getControlStatus(this.mKNXSliderSwitch.getReadAddressId(), true);
+		if (null != bytes) {
+			this.setProgress(bytes);
+		}
+	}
+
+	@Override
+	public void statusUpdate(int asp, KNXGroupAddress address) { // 复制对象状态
+		super.statusUpdate(asp, address);
+
+		KNXSelectedAddress readAddr = MapUtils.getFirstOrNull(this.mKNXSliderSwitch.getReadAddressId());
+		if (null != readAddr) {
+			if (address.getId().equals(readAddr.getId())) {
+				byte[] bytes = copyObjectStatus(asp);
+				this.setProgress(bytes);
+			}
+		}
+	}
 }
 

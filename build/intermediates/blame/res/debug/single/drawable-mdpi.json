@@ -1,10 +1,282 @@
 [
     {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\dimmer_min.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\dimmer_min.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\volumn_bg.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\volumn_bg.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_down_min_disable.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_down_min_disable.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\default_blinds_symbol_light_down.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\default_blinds_symbol_light_down.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\companylogo.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\companylogo.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\building_edit_128x128.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\building_edit_128x128.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_up_min_disable.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_up_min_disable.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_max_disable.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_max_disable.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\dimmer_on.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\dimmer_on.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_up_middle.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_up_middle.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_up_middle_disable.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_up_middle_disable.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\volumn_primary.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\volumn_primary.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\left1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\left1.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_up_min.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_up_min.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\switch_btn_pressed.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\switch_btn_pressed.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\seek.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\seek.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\dimmer_off.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\dimmer_off.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\switch_btn_normal.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\switch_btn_normal.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_down_middle.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_down_middle.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\dimmingcontrol_central.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\dimmingcontrol_central.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\seekbar_thumb_normal.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\seekbar_thumb_normal.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\shutter_on_off.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\shutter_on_off.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\default_blinds_symbol_volume_up.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\default_blinds_symbol_volume_up.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\setting_bright_seekbar_background.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\setting_bright_seekbar_background.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_max.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_max.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\switch_toggle_on.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\switch_toggle_on.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\right1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\right1.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\seekbar_thumb_pressed.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\seekbar_thumb_pressed.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\seek_bkg.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\seek_bkg.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\default_blinds_symbol_light_up.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\default_blinds_symbol_light_up.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_disable.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_disable.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_down_min.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_down_min.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\seek_bar.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\seek_bar.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\listview_item_horizontal_divider.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\listview_item_horizontal_divider.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\divider.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\divider.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\switch_btn_bg_white.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\switch_btn_bg_white.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\switch_btn_bg_green.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\switch_btn_bg_green.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\bg_btn_dialog_left.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\bg_btn_dialog_left.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\default_blinds_symbol_volume_down.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\default_blinds_symbol_volume_down.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\detail_icon_schedule_ball.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\detail_icon_schedule_ball.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\dimmer_relatively_background.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\dimmer_relatively_background.9.png"
+    },
+    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\chevron_white.png",
         "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\chevron_white.png"
     },
     {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\setting_bright_seekbar_progress.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\setting_bright_seekbar_progress.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\shutter_on.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\shutter_on.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\open_perecent_bg.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\open_perecent_bg.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\bg_dialog_new.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\bg_dialog_new.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\down.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\down.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\player_settings_bright_thumb.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\player_settings_bright_thumb.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_slat_down_middle_disable.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_slat_down_middle_disable.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\default_blinds_symbol_arrow_up.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\default_blinds_symbol_arrow_up.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\up1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\up1.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\seek_bar1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\seek_bar1.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\bg_btn_dialog_middle.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\bg_btn_dialog_middle.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\dimmingcontrol_thumb.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\dimmingcontrol_thumb.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\down1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\down1.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\default_blinds_symbol_arrow_down.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\default_blinds_symbol_arrow_down.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\up.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\up.png"
+    },
+    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\chevron_default.png",
         "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\chevron_default.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\switch_toggle_off.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\switch_toggle_off.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\blinds_up_down.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\blinds_up_down.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\listview_item_vertical_divider.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\listview_item_vertical_divider.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\volumn_front.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\volumn_front.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\seek_thumb.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\seek_thumb.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\dimmer_max.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\dimmer_max.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_screen_sms_close.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\ic_screen_sms_close.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\shutter_off.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\shutter_off.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\cover_default_bg.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\cover_default_bg.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\room_list_bg.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\room_list_bg.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\dimmingcontrol_tick.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-mdpi\\dimmingcontrol_tick.png"
     }
 ]

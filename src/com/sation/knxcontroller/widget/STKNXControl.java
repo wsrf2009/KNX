@@ -6,6 +6,7 @@ import com.sation.knxcontroller.R;
 import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.control.KNXControlBase;
 import com.sation.knxcontroller.knxdpt.DPT14;
+import com.sation.knxcontroller.knxdpt.DPT7;
 import com.sation.knxcontroller.knxdpt.DPT9;
 import com.sation.knxcontroller.knxdpt.KNXDataType;
 import com.sation.knxcontroller.knxdpt.KNXDatapointType;
@@ -17,11 +18,19 @@ import com.sation.knxcontroller.util.Log;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.AttributeSet;
+
+import static com.sation.knxcontroller.util.KNX0X01Lib.USetAndTransmitObject;
+import static com.sation.knxcontroller.util.MapUtils.getFirstOrNull;
 
 public class STKNXControl extends STKNXView {
 	private final static String TAG = "STKNXControl";
 	private KNXControlBase mKNXControlBase;
 	private Context mContext;
+
+	public STKNXControl(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
 	
 	public STKNXControl(Context context, KNXControlBase control) {
 		super(context, control);
@@ -30,20 +39,34 @@ public class STKNXControl extends STKNXView {
 		this.mKNXControlBase = control;
 	}
 
-	protected boolean sendCommandRequest(final Map<String ,KNXSelectedAddress> mETSID,final String pData,final boolean isSendDefaultValue,final ICallBack icallBack) {
+	public void copyStatusAndRequest() {
+
+	}
+
+//	public void copyStatus(int asp, KNXGroupAddress address) {
+//
+//	}
+
+	public void statusUpdate(int asp, KNXGroupAddress address) {
+
+	}
+
+	protected boolean sendCommandRequest(final Map<String, KNXSelectedAddress> mETSID,
+										 final String pData, final boolean isSendDefaultValue,
+										 final ICallBack icallBack) {
 		try  {
 			
 			if(EBool.Yes == this.mKNXControlBase.getHasTip()) { 
 				new PromptDialog.Builder(this.mContext)
 				.setTitle("提示")
-				.setIcon(R.drawable.launcher)
+				.setIcon(R.mipmap.launcher)
 				.setViewStyle(PromptDialog.VIEW_STYLE_NORMAL)
 				.setMessage(this.mKNXControlBase.getTip()) 
 				.setButton1("取消",  new PromptDialog.OnClickListener() {
 							
 					@Override
 					public void onClick(Dialog dialog, int which) {
-						dialog.dismiss();  
+						dialog.dismiss();
 					}
 				})
 				.setButton2("确认", new PromptDialog.OnClickListener() {
@@ -131,6 +154,8 @@ public class STKNXControl extends STKNXView {
 				case Bit16:
 					if(address.getKnxMainNumber().equals(KNXDatapointType.DPT_9)) {
 						byteArray = DPT9.float2bytes(Float.parseFloat(data));
+					} else if (address.getKnxMainNumber().equals(KNXDatapointType.DPT_7)) {
+						byteArray = DPT7.int2bytes(Integer.parseInt(data));
 					} else {
 						byteArray = new byte[2];
 						String valString = data;
@@ -188,9 +213,9 @@ public class STKNXControl extends STKNXView {
 			int index = mGroupAddressIndexMap.get(addressId);
 
 			try {
-				Log.i(TAG, address.getStringKnxAddress() + "===>" + data + " call");
+//				Log.i(TAG, address.getStringKnxAddress() + "===>" + data + " call");
 				KNX0X01Lib.USetAndTransmitObject(index, byteArray, byteArray.length, 0);
-				Log.i(TAG, address.getStringKnxAddress() + "===>" + data);
+//				Log.i(TAG, address.getStringKnxAddress() + "===>" + data);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -216,7 +241,86 @@ public class STKNXControl extends STKNXView {
 			}
 		}
 	}
-	
+
+	/**
+	 * 获取对象状态，并请求一次读操作，更新状态
+	 *
+	 * @param statusAddress
+	 *
+	 * @param reqRead
+	 *
+	 * @return 成功则返回获取的数组，否则返回null
+	 */
+	public byte[] getControlStatus(Map<String, KNXSelectedAddress> statusAddress, boolean reqRead) {
+		KNXSelectedAddress mKNXSelectedAddress = getFirstOrNull(statusAddress); // 获取对象的读地址
+
+		if (null != mKNXSelectedAddress) {
+			String mETSId = mKNXSelectedAddress.getId();
+			if ((null != mETSId) &&
+					(null != STKNXControllerApp.getInstance().getGroupAddressIndexMap()) &&
+					(STKNXControllerApp.getInstance().getGroupAddressIndexMap().containsKey(mETSId))) {
+				int asp = STKNXControllerApp.getInstance().getGroupAddressIndexMap().get(mETSId);
+				byte[] bytes = copyObjectStatus(asp);
+
+				if(reqRead) {
+					KNX0X01Lib.USetAndRequestObject(asp);
+				}
+
+				return bytes;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * 获取对象状态
+	 *
+	 * @param asp
+	 * @return
+	 */
+	public byte[] copyObjectStatus(int asp) {
+		byte[] contentBytes = new byte[32];
+		byte[] length = new byte[1];
+		KNX0X01Lib.UTestAndCopyObject(asp, contentBytes, length);
+
+		return contentBytes;
+	}
+
+	/**
+	 * 清除状态标志。仅支持1bit
+	 *
+	 * @param statusAddress  状态对象的地址
+	 *
+	 * @param val 写入的值
+	 */
+	public void resetControlStatus(Map<String, KNXSelectedAddress> statusAddress, int val) {
+		KNXSelectedAddress mKNXSelectedAddress = getFirstOrNull(statusAddress); // 获取对象的读地址
+
+		if (null != mKNXSelectedAddress) {
+			String mETSId = mKNXSelectedAddress.getId();
+			if ((null != mETSId) &&
+					(null != STKNXControllerApp.getInstance().getGroupAddressIndexMap()) &&
+					(STKNXControllerApp.getInstance().getGroupAddressIndexMap().containsKey(mETSId))) {
+				int asp = STKNXControllerApp.getInstance().getGroupAddressIndexMap().get(mETSId);
+				resetObjectStatus(asp, val);
+			}
+		}
+	}
+
+	/**
+	 * 清除状态标志。仅支持1bit
+	 *
+	 * @param asp 状态对象的地址索引
+	 *
+	 * @param val 写入的值
+	 */
+	public void resetObjectStatus(int asp, int val) {
+		byte[] bytes = new byte[1];
+		bytes[0] = (byte)val;
+		USetAndTransmitObject(asp, bytes, 1, 0);
+	}
+
 	/**
 	 * 一定一个接口
 	 */

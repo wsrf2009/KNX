@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@drawable/divider"
+    android:orientation="vertical"
+    android:showDividers="middle|end">
+
+    <RadioButton
+        android:id="@+id/systemsleepsetting_radioButton_fifteenseconds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fifteen_seconds" />
+
+    <RadioButton
+        android:id="@+id/systemsleepsetting_radioButton_thirtyseconds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/thirty_seconds" />
+
+    <RadioButton
+        android:id="@+id/systemsleepsetting_radioButton_oneminute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/one_minute" />
+
+    <RadioButton
+        android:id="@+id/systemsleepsetting_radioButton_twominutes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/two_minutes" />
+
+    <RadioButton
+        android:id="@+id/systemsleepsetting_radioButton_fiveminutes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/five_minutes" />
+
+    <RadioButton
+        android:id="@+id/systemsleepsetting_radioButton_tenminutes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ten_minutes" />
+
+    <RadioButton
+        android:id="@+id/systemsleepsetting_radioButton_thirtyminutes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/thirty_minutes" />
+
+    <RadioButton
+        android:id="@+id/systemsleepsetting_radioButton_neversleep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/never_sleep" />
+
+</LinearLayout>

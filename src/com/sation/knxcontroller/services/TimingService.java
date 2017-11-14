@@ -2,11 +2,13 @@ package com.sation.knxcontroller.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.FeatureInfo;
 import android.os.IBinder;
 
 import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.TimingTaskItem;
+import com.sation.knxcontroller.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TimingService extends Service {
+    final private String TAG = "TimingService";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -35,6 +38,7 @@ public class TimingService extends Service {
         boolean refreshUI = false;
 
         Map<String, List<TimingTaskItem>> timerTaskMap = STKNXControllerApp.getInstance().getTimerTaskMap();
+//        Log.i(TAG, "timerTaskMap:" + timerTaskMap);
         if(null != timerTaskMap) {
             for (Map.Entry<String, List<TimingTaskItem>> taskMap : timerTaskMap.entrySet()) { // 枚举定时任务按钮所对应的定时任务列表
                 List<TimingTaskItem> delList = new ArrayList<TimingTaskItem>();

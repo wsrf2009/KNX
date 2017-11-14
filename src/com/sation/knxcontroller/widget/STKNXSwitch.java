@@ -1,14 +1,5 @@
 package com.sation.knxcontroller.widget;
 
-import com.sation.knxcontroller.STKNXControllerConstant;
-import com.sation.knxcontroller.control.KNXSwitch;
-import com.sation.knxcontroller.models.KNXView.EBool;
-import com.sation.knxcontroller.models.KNXView.EFlatStyle;
-import com.sation.knxcontroller.util.ColorUtils;
-import com.sation.knxcontroller.util.ImageUtils;
-import com.sation.knxcontroller.util.Log;
-import com.sation.knxcontroller.util.StringUtil;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,20 +10,37 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.sation.knxcontroller.STKNXControllerApp;
+import com.sation.knxcontroller.STKNXControllerConstant;
+import com.sation.knxcontroller.control.KNXDigitalAdjustment;
+import com.sation.knxcontroller.control.KNXSwitch;
+import com.sation.knxcontroller.knxdpt.DPT1;
+import com.sation.knxcontroller.knxdpt.KNXDatapointType;
+import com.sation.knxcontroller.models.KNXGroupAddress;
+import com.sation.knxcontroller.models.KNXSelectedAddress;
+import com.sation.knxcontroller.models.KNXView.EBool;
+import com.sation.knxcontroller.models.KNXView.EFlatStyle;
+import com.sation.knxcontroller.util.ColorUtils;
+import com.sation.knxcontroller.util.ImageUtils;
+import com.sation.knxcontroller.util.Log;
+import com.sation.knxcontroller.util.MapUtils;
+import com.sation.knxcontroller.util.StringUtil;
+
+import java.lang.ref.WeakReference;
+
 public class STKNXSwitch extends STKNXControl {
 	private final static String TAG = "STKNXSwitch";
 	private final int PADDING = 2;
 
-	private String imageOn;
-    private String imageOff;
     private ImageView mImageView;
-
     private KNXSwitch mKNXSwitch;
     
     private enum ControlState {
@@ -47,7 +55,8 @@ public class STKNXSwitch extends STKNXControl {
     	Off,
     }
     private SwitchState mSwitchState;
-//    private Handler mHandler;
+	private Bitmap imageOn;
+	private Bitmap imageOff;
 
 	public STKNXSwitch(Context context, KNXSwitch knxswitch) {
 		super(context, knxswitch);
@@ -58,77 +67,104 @@ public class STKNXSwitch extends STKNXControl {
 		this.mControlState = ControlState.Normal;
 		this.mSwitchState = SwitchState.Off;
 
-		if(!StringUtil.isEmpty(this.mKNXSwitch.getImageOn())) {
-			this.imageOn = STKNXControllerConstant.ConfigResImgPath + this.mKNXSwitch.getImageOn();
-		}
-			
-		if(!StringUtil.isEmpty(mKNXSwitch.getImageOff())) {
-			this.imageOff = STKNXControllerConstant.ConfigResImgPath + this.mKNXSwitch.getImageOff();
-		}
-		
 		this.mImageView = new ImageView(context);
 		this.addView(this.mImageView);
-		
-//		this.mHandler = new Handler() {
-//			@Override
-//            public void handleMessage(Message msg){
-//                super.handleMessage(msg);
-//                
-//                if(1 == msg.what){
-//                	Bitmap bm = (Bitmap) msg.obj;
-//                	if((null != bm) && (null != mImageView)) {
-//                		mImageView.setImageBitmap(bm);
-//                	}
-//                }
-//            }
-//		};
-		
-		setControlImage();
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				if(!StringUtil.isNullOrEmpty(mKNXSwitch.getImageOn())) {
+					imageOn = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath +
+									mKNXSwitch.getImageOn(),
+							getImageViewLength(), getImageViewLength());
+				}
+
+				if(!StringUtil.isNullOrEmpty(mKNXSwitch.getImageOff())) {
+					imageOff = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath +
+									mKNXSwitch.getImageOff(),
+							getImageViewLength(), getImageViewLength());
+				}
+
+				updateControlState();
+			}
+		}).start();
+	}
+
+	@Override
+	public void onSuspend() {
+
+	}
+
+	@Override
+	public void onResume() {
+		copyStatusAndRequest();
 	}
 	
 	@Override
 	public void onDestroy() {
-		this.imageOn = null;
-		this.imageOff = null;
-//		this.mKNXSwitch = null;
-		this.mImageView = null;
+		super.onDestroy();
+	}
+
+	private static class STKNXSwitchHandler extends Handler {
+		WeakReference<STKNXSwitch> mSwitch;
+
+		private STKNXSwitchHandler(STKNXSwitch s) {
+			super(s.getContext().getMainLooper());
+
+			mSwitch = new WeakReference<STKNXSwitch>(s);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			setControlImage(mSwitch.get());
+		}
 	}
 	
-	private void setControlImage() {
-
-//		Message message = new Message();
-//        message.what = 1;
-
-		if(SwitchState.On == mSwitchState) {
-			Bitmap bm = ImageUtils.getDiskBitmap(imageOn);
-			if((null != bm) && (null != mImageView)) {
-						mImageView.setImageBitmap(bm);
-//				message.obj = bm;
-			}
-		} else if(SwitchState.Off == mSwitchState) {
-			Bitmap bm = ImageUtils.getDiskBitmap(imageOff);
-			if((null != bm) && (null != mImageView)) {
-						mImageView.setImageBitmap(bm);
-//				message.obj = bm;
+	private static void setControlImage(STKNXSwitch mSwitch) {
+		if(null != mSwitch.mImageView) {
+			if (SwitchState.On == mSwitch.mSwitchState) {
+				if (null != mSwitch.imageOn) {
+					mSwitch.mImageView.setImageBitmap(mSwitch.imageOn);
+				}
+			} else if (SwitchState.Off == mSwitch.mSwitchState) {
+				if (null != mSwitch.imageOff) {
+					mSwitch.mImageView.setImageBitmap(mSwitch.imageOff);
+				}
 			}
 		}
-				
-//		if(null != message.obj) {
-//			this.mHandler.sendMessage(message);
-//		}
+	}
+
+	private void updateControlState() {
+		STKNXSwitchHandler mHandler = new STKNXSwitchHandler(STKNXSwitch.this);
+		mHandler.sendEmptyMessage(0);
 	}
 	
-	 public void setValue(int controlCurrentValue) {
-		 
-		 Log.i(TAG, this.mKNXSwitch.getText() +"===>>"+controlCurrentValue);
-		 
-		 if(0 == controlCurrentValue) {
-			 this.mSwitchState = SwitchState.Off;
-		 } else {
-			 this.mSwitchState = SwitchState.On;
-		 }
+	 public void setValue(byte[] array) {
+		 KNXGroupAddress address = this.mKNXSwitch.getReadAddress();
+		 if (null != address) {
+			 int value;
 
-		 setControlImage();
+			 /* 根据组地址DPT解析数据 */
+			 if (address.getKnxMainNumber().equals(KNXDatapointType.DPT_1)) {
+				 value = DPT1.byteArray2int(array);
+			 } else {
+				 value = KNXDatapointType.bytes2int(array, address.getType());
+			 }
+
+			 if (0 == value) {
+				 this.mSwitchState = SwitchState.Off;
+			 } else {
+				 this.mSwitchState = SwitchState.On;
+			 }
+
+			 updateControlState();
+		 }
+	 }
+
+	 private int getImageViewLength(){
+		 int w = this.mKNXSwitch.Width - 2 * this.imgY;
+		 int h = this.mKNXSwitch.Height - 2 * this.imgY;
+		 return w > h ? h:w;
 	 }
     
     private void onClick() {
@@ -138,42 +174,20 @@ public class STKNXSwitch extends STKNXControl {
     	
     	int val;
     	if(SwitchState.Off == this.mSwitchState) {
-    		if(this.mKNXSwitch.getReadAddressId().isEmpty() ||
-    				this.mKNXSwitch.getWriteAddressIds().containsKey(
-    						this.mKNXSwitch.getReadAddressId().keySet().toArray()[0])) {
-
-    			this.mSwitchState = SwitchState.On;
-    			
-    			setControlImage();
-    		}
-    		
+			this.mSwitchState = SwitchState.On;
     		val = 1;
     	} else {
-    		if (this.mKNXSwitch.getReadAddressId().isEmpty() ||
-    				this.mKNXSwitch.getWriteAddressIds().containsKey(
-    						this.mKNXSwitch.getReadAddressId().keySet().toArray()[0])) {
-
-    			this.mSwitchState = SwitchState.Off;
-    			
-    			setControlImage();
-    		}
-    		
+			this.mSwitchState = SwitchState.Off;
     		val = 0;
     	}
-    	
+
+		setControlImage(STKNXSwitch.this);
     	sendCommandRequest(this.mKNXSwitch.getWriteAddressIds(), val+"", false, null);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     	measureChildren(widthMeasureSpec, heightMeasureSpec);
-    	
-//        /* 计算图片的显示位置和大小 */
-//    	this.imgX = this.PADDING;
-//    	this.imgY = this.PADDING;
-//    	int height = this.mKNXSwitch.Height - 2 * this.imgY;
-//    	this.imgRight = this.imgX + height;   // 计算出高度
-//        this.imgBottom = this.imgY + height;     // 计算出宽度
         
         /**
          * 最后调用父类方法,把View的大小告诉父布局。
@@ -193,12 +207,12 @@ public class STKNXSwitch extends STKNXControl {
 			
 			View view = getChildAt(i);
 			if(view instanceof ImageView) {
-				int imgHeight = this.mKNXSwitch.Height - 2 * this.imgY;
-				
-				cl = this.PADDING;
-				ct = this.PADDING;
-				cr = this.PADDING+imgHeight;
-				cb = this.PADDING+imgHeight;
+				int imgHeight = getImageViewLength();
+
+				cl = this.mKNXSwitch.getPadding().getLeft();
+				ct = this.mKNXSwitch.getPadding().getTop();
+				cr = this.mKNXSwitch.Width - this.mKNXSwitch.getPadding().getRight();
+				cb = this.mKNXSwitch.Height - this.mKNXSwitch.getPadding().getBottom();
 			}
 			view.layout(cl, ct, cr, cb);
 		}
@@ -243,24 +257,17 @@ public class STKNXSwitch extends STKNXControl {
     	}
     	canvas.drawRoundRect(oval3, this.mKNXSwitch.Radius, this.mKNXSwitch.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
 
-        if(null != this.mKNXSwitch.getText()) {
-        	int x = 0;
-        	int y = 0;
-        	Rect bound = new Rect();
-        	paint.getTextBounds(this.mKNXSwitch.getText(), 0, this.mKNXSwitch.getText().length(), bound);
-        	if(StringUtil.isEmpty(this.imageOn) && StringUtil.isEmpty(this.imageOff)) {
-        		x = (getWidth() - 2 *x - bound.width())/2;
-            	y = (getHeight()  + bound.height())/2;
-        	} else {
-        		x=(getWidth()- (this.imgRight+this.PADDING)-this.PADDING -bound.width())/2+this.imgRight+this.PADDING;
-        		y=(getHeight()  + bound.height())/2;
-        	} 
-
-        	/* 绘制文本 */
-        	paint.reset();
-        	paint.setColor(Color.parseColor(this.mKNXSwitch.FontColor));
-        	paint.setTextSize(this.mKNXSwitch.FontSize);
-        	canvas.drawText(this.mKNXSwitch.getText(), x, y, paint);
+        if(null != this.mKNXSwitch.getTitle()) {
+			Paint textPaint = this.mKNXSwitch.TitleFont.getTextPaint();
+			float x = 0;
+//			if (StringUtil.isNullOrEmpty(this.imageOn) && StringUtil.isNullOrEmpty(this.imageOff)) {
+			if((null == this.imageOn) && (null == this.imageOff)) {
+				x = oval3.width() / 2;
+			} else {
+				x = this.imgRight + this.PADDING + (oval3.width() - (this.imgRight + this.PADDING) )/2;
+			}
+			int baseY = (int) ((oval3.height() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
+			canvas.drawText(this.mKNXSwitch.getTitle(), oval3.width()/2, baseY, textPaint);
         }
         
         switch (mControlState) {
@@ -286,16 +293,20 @@ public class STKNXSwitch extends STKNXControl {
     @SuppressLint("ClickableViewAccessibility")
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
+		if(EBool.Yes != this.mKNXSwitch.getClickable()) {
+			return true;
+		}
+
     	switch (event.getAction()) { 
-    		case MotionEvent.ACTION_DOWN: 
+    		case MotionEvent.ACTION_DOWN:
+				onClick();
     			this.mControlState = ControlState.Down;
     			invalidate();
     			if(null != this.mImageView) {
-    				this.mImageView.setAlpha(0.6f);
-    			}
+					this.mImageView.setAlpha(0.6f);
+				}
     			break; 
-    		case MotionEvent.ACTION_UP: 
-    			onClick();
+    		case MotionEvent.ACTION_UP:
     			this.mControlState = ControlState.Normal;
     			invalidate();
     			if(null != this.mImageView) {
@@ -316,6 +327,29 @@ public class STKNXSwitch extends STKNXControl {
 
     	return true;
     }
+
+    @Override
+	public void copyStatusAndRequest() {
+		super.copyStatusAndRequest();
+
+		byte[] bytes = getControlStatus(this.mKNXSwitch.getReadAddressId(), true);
+		if (null != bytes) {
+			setValue(bytes);
+		}
+	}
+
+	@Override
+	public void statusUpdate(int asp, KNXGroupAddress address) {
+		super.statusUpdate(asp, address);
+
+		KNXSelectedAddress readAddr = MapUtils.getFirstOrNull(this.mKNXSwitch.getReadAddressId());
+		if (null != readAddr) {
+			if (address.getId().equals(readAddr.getId())) {
+				byte[] bytes = copyObjectStatus(asp);
+				this.setValue(bytes);
+			}
+		}
+	}
 }
 
 

@@ -59,12 +59,14 @@ public class STKNXPagerAdapter extends PagerAdapter {
 		/* 直接用适配器来完成标题的显示，所以从上面
 		 * 可以看到，我们没有使用PagerTitleStrip。
 		 * 当然你可以使用。 */
-		if(null != this.mPagerList) {
-			STKNXPage page = this.mPagerList.get(position);
-			return page.getKNXPage().getText(); 
-		} else {
-			return null;
-		}
+//		if(null != this.mPagerList) {
+//			STKNXPage page = this.mPagerList.get(position);
+//			return page.getKNXPage().getTitle();
+//		} else {
+//			return null;
+//		}
+
+		return "";
     }
 	
 	@Override  

@@ -1,5 +1,7 @@
 package com.sation.knxcontroller.control;
 
+import com.sation.knxcontroller.util.StringUtil;
+
 public class KNXSwitch extends KNXControlBase {
 	private static final long serialVersionUID = 1L;
 	
@@ -14,25 +16,41 @@ public class KNXSwitch extends KNXControlBase {
 //	}
 	
 	//开关开启时图片
+//	private String ImageOn;
+//	public String getImageOn() {
+//		if (!StringUtil.isNullOrEmpty(this.ImageOn)) {
+//			return this.getImagePath() + this.ImageOn;
+//		} else {
+//			return null;
+//		}
+//	}
+
 	private String ImageOn;
 	public String getImageOn() {
-		if (null != this.ImageOn) {
-			return this.getImagePath() + this.ImageOn;
-		} else {
-			return null;
-		}
+		return ImageOn;
 	}
+//	public String getImageOn() {
+//		return this.getImagePath() + "ImageOn.png";
+//	}
 	
 	public String ColorOn;
 
+//	private String ImageOff;
+//	public String getImageOff() {
+//		if (!StringUtil.isNullOrEmpty(this.ImageOff)) {
+//			return this.getImagePath() + this.ImageOff;
+//		} else {
+//			return null;
+//		}
+//	}
+
 	private String ImageOff;
 	public String getImageOff() {
-		if (null != this.ImageOff) {
-			return this.getImagePath() + this.ImageOff;
-		} else {
-			return null;
-		}
+		return ImageOff;
 	}
+//	public String getImageOff() {
+//		return this.getImagePath() + "ImageOff.png";
+//	}
 	
 	public String ColorOff;
 	
