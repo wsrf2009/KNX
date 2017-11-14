@@ -7,25 +7,27 @@ import java.util.List;
 public class KNXRoom extends KNXView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private String Symbol; 
+//	private String Symbol;
+//	public String getSymbol() {
+//		if (null != this.Symbol) {
+//			return this.getImagePath() + this.Symbol;
+//		} else {
+//			return null;
+//		}
+//	}
+
+	private String Symbol;
 	public String getSymbol() {
-		if (null != this.Symbol) {
-			return this.getImagePath() + this.Symbol;
-		} else {
-			return null;
-		}
-	} 
-//	public void setSymbol(String symbol) {
-//		Symbol = symbol;
+		return Symbol;
+	}
+//	public String getSymbol() {
+//		return this.getImagePath() + "Symbol.png";
 //	}
 	 
 	private String PinCode;
 	public String getPinCode() {
 		return PinCode;
-	} 
-//	public void setPinCode(String pinCode) {
-//		PinCode = pinCode;
-//	}
+	}
 	
 	private int DefaultRoom;
 	public EBool getDefaultRoom(){
@@ -35,8 +37,5 @@ public class KNXRoom extends KNXView implements Serializable {
 	private List<KNXPage> Pages; 
 	public List<KNXPage> getPages() {
 		return Pages;
-	} 
-//	public void setRoomPages(List<KNXPage> pages) {
-//		Pages = pages;
-//	}
+	}
 }

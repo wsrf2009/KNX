@@ -1,6 +1,7 @@
 package com.sation.knxcontroller.models;
 
 import com.sation.knxcontroller.STKNXControllerConstant;
+import com.sation.knxcontroller.util.StringUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -41,22 +42,18 @@ public class KNXView implements Serializable {
 	private int Id;  
 	public int getId() {
 		return Id;
-	} 
-//	public void setId(int id) {
-//		Id = id;
-//	}  
-	
-	/**
-	 * 界面元素需要显示在前端的文字
-	 */
-	private String Text; 
-	public String getText() {
-		return Text;
 	}
-//	public void setText(String text) {
-//		Text = text;
-//	}
-	
+
+	private String Title;
+	public String getTitle() {
+		return Title;
+	}
+
+	/**
+	 * Title的字体
+	 */
+	public KNXFont TitleFont;
+
 	/**
 	 * 控件的起始位置x
 	 * */
@@ -76,6 +73,11 @@ public class KNXView implements Serializable {
 	 * 控件高度 
 	 */
 	public int Height;
+
+	private KNXPadding Padding;
+	public KNXPadding getPadding() {
+		return this.Padding;
+	}
 	
 	private int DisplayBorder;
 	public EBool getDisplayBorder() {
@@ -87,7 +89,7 @@ public class KNXView implements Serializable {
 	/**
 	 * 控件的不透明度
 	 * */
-	public double Alpha;
+	public float Alpha;
 	
 	/**
 	 * 控件的圆角半径
@@ -101,41 +103,21 @@ public class KNXView implements Serializable {
 	public EFlatStyle getFlatStyle() {
 		return EFlatStyle.values()[this.FlatStyle];
 	}
-//	public void setFlatStyle(int style) {
-//		this.FlatStyle = style;
-//	}
 	
 	/**
 	 * 控件的背景色
 	 * */
 	public String BackgroundColor;
-	
-	/**
-	 * 控件的背景图片
-	 * */
+
 	private String BackgroundImage;
 	public String getBackgroundImage() {
-		if (null != this.BackgroundImage) {
-			return this.getImagePath() + this.BackgroundImage;
-		} else {
-			return null;
-		}
+		return BackgroundImage;
 	}
-	
-	/**
-	 * 控件的字体颜色
-	 * */
-	public String FontColor;
-	
-	/**
-	 * 控件的字体大小
-	 * */
-	public int FontSize;
 
-	/*
-	* 获得控件图片目录的相对路径
-	* */
-	protected String getImagePath() {
-		return STKNXControllerConstant.PrefixResImg + this.getId() + File.separator;
-	}
+//	/**
+//	* 获得控件图片目录的相对路径
+//	* */
+//	protected String getImagePath() {
+//		return STKNXControllerConstant.PrefixResImg + this.getId() + File.separator;
+//	}
 }

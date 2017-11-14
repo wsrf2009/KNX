@@ -1,69 +1,57 @@
 package com.sation.knxcontroller.control;
 
+import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
+import com.sation.knxcontroller.models.EDecimalDigit;
+import com.sation.knxcontroller.models.ERegulationStep;
+import com.sation.knxcontroller.models.KNXFont;
 import com.sation.knxcontroller.models.MeasurementUnit;
+import com.sation.knxcontroller.util.StringUtil;
 
 public class KNXDigitalAdjustment extends KNXControlBase {
 	private static final long serialVersionUID = 1L;
 
-	public enum EDigitalNumber {
-		OneDigit("1位数字"),
-		TwoDigit("2位数字"),
-		ThreeDigit("3位数字");
-		
-		private String description;
-		private EDigitalNumber(String str) {
-			description = str;
-		}
-		
-		public String getDescription() {
-			return description;
-		}
-	}
-	
-//	private Map<String ,KNXSelectedAddress> ReadAddressId; 
-//	public Map<String ,KNXSelectedAddress> getReadAddressId() {
-//		return ReadAddressId;
-//	}
-//
-//	private Map<String ,KNXSelectedAddress> WriteAddressIds; 
-//	public Map<String ,KNXSelectedAddress> getWriteAddressIds() {
-//		return WriteAddressIds;
-//	}
-
 	private String LeftImage;
 	public String getLeftImage() {
-		if(null != this.LeftImage) {
-			return this.getImagePath()+this.LeftImage;
-		} else {
-			return null;
-		}
+		return LeftImage;
 	}
 
 	private String RightImage;
 	public String getRightImage() {
-		if (null != this.RightImage) {
-			return this.getImagePath() + this.RightImage;
-		} else {
-			return null;
-		}
+		return RightImage;
 	}
-	
-	public int DigitalNumber;
-	public EDigitalNumber getDigitalNumber() {
-		return EDigitalNumber.values()[this.DigitalNumber];
+
+	private int DecimalDigit;
+	public int getDecimalDigitInt() {
+		return this.DecimalDigit;
 	}
-	public void setDigitalNumber(EDigitalNumber num) {
-		this.DigitalNumber = num.ordinal();
+	public EDecimalDigit getDecimalDigit() {
+		return EDecimalDigit.values()[this.DecimalDigit];
 	}
+	public String getDecimalDigitDescription() {
+		EDecimalDigit dd = EDecimalDigit.values()[this.DecimalDigit];
+		return dd.getDescription();
+	}
+
+	private float MaxValue;
+	public float getMaxValue() {
+		return this.MaxValue;
+	}
+
+	private float MinValue;
+	public float getMinValue(){
+		return this.MinValue;
+	}
+
+	private String RegulationStep;
+    public String getRegulationStep() {
+        return this.RegulationStep;
+    }
 	
-	public int MaxValue;
-	
-	public int MinValue;
-	
-	public int Unit;
+	private int Unit;
 	public String getUnit() {
 		MeasurementUnit eUnit = MeasurementUnit.values()[this.Unit];
 		return eUnit.getDescription();
 	}
-	
+
+    public KNXFont ValueFont;
 }

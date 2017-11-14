@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sation.knxcontroller"
     android:sharedUserLabel="@string/uid_label"
-    android:versionCode="20170310"
-    android:versionName="1.1.6" >
+    android:versionCode="2017102301"
+    android:versionName="2.3.2" >
 
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="16"
         android:targetSdkVersion="18" />
 
     <supports-screens
@@ -41,10 +41,10 @@
     <application
         android:name="com.sation.knxcontroller.STKNXControllerApp"
         android:allowBackup="true"
-        android:icon="@drawable/launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:logo="@drawable/launcher"
+        android:logo="@mipmap/ic_launcher"
         android:persistent="true"
         android:screenOrientation="landscape"
         android:theme="@style/DefaultTheme" >
@@ -57,13 +57,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-                <!-- <action android:name="android.intent.action.VIEW" /> -->
-                <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
-                <!-- <data -->
-                <!-- android:scheme="http" -->
-                <!-- android:host="www.sation.com" -->
-                <!-- android:pathPrefix="/knxcontroller" > -->
-                <!-- </data> -->
             </intent-filter>
         </activity>
         <activity
@@ -83,6 +76,7 @@
             android:name="com.sation.knxcontroller.services.RestartService"
             android:description="@null" />
         <service android:name="com.sation.knxcontroller.services.TimingService" />
+        <service android:name="com.sation.knxcontroller.third.webcamer.finder.CamerService" />
 
         <receiver
             android:name="com.sation.knxcontroller.broadcastreceiver.BootBroadcastReceiver"

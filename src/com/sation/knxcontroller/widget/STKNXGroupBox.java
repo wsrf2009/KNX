@@ -1,11 +1,5 @@
 package com.sation.knxcontroller.widget;
 
-import com.sation.knxcontroller.control.KNXGroupBox;
-import com.sation.knxcontroller.control.KNXSceneButton;
-import com.sation.knxcontroller.models.KNXView.EBool;
-import com.sation.knxcontroller.models.KNXView.EFlatStyle;
-import com.sation.knxcontroller.util.ColorUtils;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,7 +10,19 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.view.View;
 
+import com.sation.knxcontroller.control.KNXGroupBox;
+import com.sation.knxcontroller.control.KNXSceneButton;
+import com.sation.knxcontroller.knxdpt.KNXDatapointType;
+import com.sation.knxcontroller.models.KNXGroupAddress;
+import com.sation.knxcontroller.models.KNXSelectedAddress;
+import com.sation.knxcontroller.models.KNXView.EBool;
+import com.sation.knxcontroller.models.KNXView.EFlatStyle;
+import com.sation.knxcontroller.util.ColorUtils;
+import com.sation.knxcontroller.util.Log;
+import com.sation.knxcontroller.util.MapUtils;
+
 public class STKNXGroupBox extends STKNXViewContainer {
+	private final String TAG = "STKNXGroupBox";
 	public KNXGroupBox mKNXGroupBox;
 
 	public STKNXGroupBox(Context context, KNXGroupBox groupBox) {
@@ -25,33 +31,61 @@ public class STKNXGroupBox extends STKNXViewContainer {
 		this.mKNXGroupBox = groupBox; 
 		this.setId(this.mKNXGroupBox.getId());
 	}
-	
+
 	@Override
-	public void onDestroy() {
-//		this.mKNXGroupBox = null;
-		
+	public void onResume() { // 控件恢复
 		int count = getChildCount();
 		for(int i=0; i<count; i++) {
-			View v = (View)getChildAt(i);
+			View v = getChildAt(i);
 			if(v instanceof STKNXView) {
 				STKNXView sv = (STKNXView)v;
-				sv.onDestroy();
-				sv = null;
+				sv.onResume();
 			}
 		}
 	}
 
-	public void setSelectedValue(int value) {
-		for(int i=0; i<this.getChildCount(); i++) {
-			View v = this.getChildAt(i);
-			if(v instanceof STKNXSceneButton) {
-				STKNXSceneButton mSTKNXSceneButton = (STKNXSceneButton)v;
-				KNXSceneButton mKNXSceneButton = mSTKNXSceneButton.mKNXSceneButton;
-				if(EBool.Yes == mKNXSceneButton.getIsGroup()) {
-					if(value == mKNXSceneButton.DefaultValue) {
-						mSTKNXSceneButton.setSelected(true);
-					} else {
-						mSTKNXSceneButton.setSelected(false);
+	@Override
+	public void onSuspend() { // 控件挂起
+		int count = getChildCount();
+		for(int i=0; i<count; i++) {
+			View v = getChildAt(i);
+			if(v instanceof STKNXView) {
+				STKNXView sv = (STKNXView)v;
+				sv.onSuspend();
+			}
+		}
+	}
+	
+	@Override
+	public void onDestroy() { // 控件销毁
+		super.onDestroy();
+
+		Log.i(TAG, "");
+		int count = getChildCount();
+		for(int i=0; i<count; i++) {
+			View v = getChildAt(i);
+			if(v instanceof STKNXView) {
+				STKNXView sv = (STKNXView)v;
+				sv.onDestroy();
+			}
+		}
+	}
+
+	public void setSelectedValue(byte[] array) { // 组框与场景按钮工作于组模式时
+		KNXGroupAddress address = this.mKNXGroupBox.getReadAddress();
+		if (null != address) { // 组框的组地址有效？
+			int value = KNXDatapointType.bytes2int(array, address.getType()); // 解析状态值
+			for(int i=0; i<this.getChildCount(); i++) {
+				View v = this.getChildAt(i);
+				if(v instanceof STKNXSceneButton) { // 子控件，场景按钮？
+					STKNXSceneButton mSTKNXSceneButton = (STKNXSceneButton)v;
+					KNXSceneButton mKNXSceneButton = mSTKNXSceneButton.mKNXSceneButton;
+					if(EBool.Yes == mKNXSceneButton.getIsGroup()) { // 场景按钮属于组？
+						if(value == mKNXSceneButton.DefaultValue) {
+							mSTKNXSceneButton.setSelected(true); // 选中？
+						} else {
+							mSTKNXSceneButton.setSelected(false);
+						}
 					}
 				}
 			}
@@ -101,4 +135,27 @@ public class STKNXGroupBox extends STKNXViewContainer {
     		canvas.drawRoundRect(rect1, this.mKNXGroupBox.Radius, this.mKNXGroupBox.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
     	}
     }
+
+	@Override
+	public void copyStatusAndRequest() { // 请求对象最新状态
+		super.copyStatusAndRequest();
+
+		byte[] bytes = getControlStatus(this.mKNXGroupBox.getReadAddressId(), true);
+		if (null != bytes) {
+			this.setSelectedValue(bytes);
+		}
+	}
+
+	@Override
+	public void statusUpdate(int asp, KNXGroupAddress address) { // 拷贝对象状态
+		super.statusUpdate(asp, address);
+
+		KNXSelectedAddress readAddr = MapUtils.getFirstOrNull(this.mKNXGroupBox.getReadAddressId());
+		if (null != readAddr) {
+			if (address.getId().equals(readAddr.getId())) {
+				byte[] bytes = copyObjectStatus(asp);
+				this.setSelectedValue(bytes);
+			}
+		}
+	}
 }

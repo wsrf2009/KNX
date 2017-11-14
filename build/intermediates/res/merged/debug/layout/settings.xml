@@ -37,7 +37,8 @@
                 android:id="@+id/SettingButton_Language"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="20dp"
+                android:visibility="gone" />
 
             <com.sation.knxcontroller.widget.settingview.SettingButton
                 android:id="@+id/SettingButton_Reboot"

@@ -4,6 +4,7 @@ import com.sation.knxcontroller.control.KNXLabel;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
+import com.sation.knxcontroller.util.Log;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,8 +15,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.Typeface;
 
 public class STKNXLabel extends STKNXControl {
+	private final String TAG = "STKNXLabel";
+
 	private KNXLabel mKNXLabel;
 	
 	public STKNXLabel(Context context, KNXLabel label) {
@@ -27,7 +31,7 @@ public class STKNXLabel extends STKNXControl {
 	
 	@Override
 	public void onDestroy() {
-//		this.mKNXLabel = null;
+		super.onDestroy();
 	}
 	
 	@Override
@@ -70,16 +74,13 @@ public class STKNXLabel extends STKNXControl {
     	} else {	// 画扁平风格的圆角矩形
     		paint.setARGB((int)(this.mKNXLabel.Alpha*255), Color.red(backColor), Color.green(backColor), Color.blue(backColor));
     	}
-    	canvas.drawRoundRect(oval3, this.mKNXLabel.Radius, this.mKNXLabel.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
+    	canvas.drawRoundRect(oval3, this.mKNXLabel.Radius, this.mKNXLabel.Radius, paint);//第二个参数是x半径，第三个参数是y半径
 
-        if(null != this.mKNXLabel.getText()) {
+        if(null != this.mKNXLabel.getTitle()) {
         	/* 绘制文本 */
-        	paint.reset();
-        	paint.setColor(Color.parseColor(this.mKNXLabel.FontColor));
-        	paint.setTextSize(this.mKNXLabel.FontSize);
-        	Rect bound = new Rect();
-        	paint.getTextBounds(this.mKNXLabel.getText(), 0, this.mKNXLabel.getText().length(), bound);
-        	canvas.drawText(this.mKNXLabel.getText(), getWidth() / 2 - bound.width() / 2, getHeight() / 2 + bound.height() / 2, paint);
+			Paint textPaint = this.mKNXLabel.TitleFont.getTextPaint();
+			int baseY = (int) ((oval3.height() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
+			canvas.drawText(this.mKNXLabel.getTitle(), oval3.width()/2, baseY, textPaint);
         }
         
         if(EBool.Yes == this.mKNXLabel.getDisplayBorder()) {
@@ -89,5 +90,4 @@ public class STKNXLabel extends STKNXControl {
     		canvas.drawRoundRect(oval3, this.mKNXLabel.Radius, this.mKNXLabel.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
     	}
     }
-
 }

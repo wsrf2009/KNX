@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 
 import com.sation.knxcontroller.util.Log;
 
+/**
+ * 9.XXX 2-Octet Float Value
+ */
 public class DPT9 {
 	private static final String TAG = "DPT9";
 	
@@ -46,9 +49,9 @@ public class DPT9 {
 	}
 	
 	public static float bytes2float(byte[] arr) {
-		if(2 != arr.length) {
-			return .0f;
-		}
+//		if(2 != arr.length) {
+//			return .0f;
+//		}
 		
 		String h = Integer.toHexString(arr[0]);
 		String l = Integer.toHexString(arr[1]);
@@ -67,9 +70,25 @@ public class DPT9 {
 		}
 		
 		float f = (M * 0.01f) * (int)Math.pow(2, E);
-		Log.i(TAG, "arr[0] = "+Integer.toHexString(arr[0]&0xFF)+" "+"arr[1] = "+Integer.toHexString(arr[1]&0xFF) +" "+ f);
-		Log.i(TAG, "");
+//		Log.i(TAG, "arr[0] = "+Integer.toHexString(arr[0]&0xFF)+" "+"arr[1] = "+Integer.toHexString(arr[1]&0xFF) +" "+ f);
+//		Log.i(TAG, "");
 		return f;
 	}
 
+	/**
+	 * 9.001 DPT_Value_Temp
+	 *
+	 * @param array
+	 * @return -273 ℃ ... 670 760 ℃
+	 */
+	public static float byte2ValueTemp(byte[] array) {
+		float value = bytes2float(array);
+		if (value < -273) {
+			value = -273;
+		} else if (value > 670760) {
+			value = 670760;
+		}
+
+		return value;
+	}
 }

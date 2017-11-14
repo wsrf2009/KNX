@@ -11,8 +11,8 @@ public class UIKit {
                 if (mainPoster == null) {  
                     mainPoster = new HandlerPoster(Looper.getMainLooper(), 20);  
                 }  
-            }  
-        }  
+            }
+        }
         return mainPoster;  
     }  
   

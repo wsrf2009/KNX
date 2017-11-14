@@ -4,16 +4,12 @@
         "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_symbol_light_down.png"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\launcher.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\launcher.png"
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_button_background_normal.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_button_background_normal.9.png"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_background_down_pressed.9.png",
         "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_blinds_background_down_pressed.9.png"
-    },
-    {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_button_background_normal.9.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable-xhdpi\\default_button_background_normal.9.png"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\default_blinds_symbol_arrow_up.png",

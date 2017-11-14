@@ -1,7 +1,16 @@
 package com.sation.knxcontroller.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class MathUtils {
 
+	/**
+	 * 根据val值在arr中找与其最接近值得索引
+	 * @param val
+	 * @param arr
+	 * @return
+	 */
 	public static int getTheClosetIndex(int val, int[] arr){
 		if(arr.length <= 0) {
 			return 0;
@@ -22,6 +31,12 @@ public class MathUtils {
 		}
 		
 		return index;
+	}
+
+	public static  double Rounding(double d, int dg) {
+		BigDecimal b   =   new   BigDecimal(d);
+		double   v   =   b.setScale(dg,   RoundingMode.HALF_UP).doubleValue();
+		return v;
 	}
 
 }

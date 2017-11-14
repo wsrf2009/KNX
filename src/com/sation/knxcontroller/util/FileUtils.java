@@ -192,7 +192,7 @@ public class FileUtils {
 	 *
 	 * @param srcFileName
 	 *            待复制的文件名
-	 * @param descFileName
+	 * @param destFileName
 	 *            目标文件名
 	 * @param overlay
 	 *            如果目标文件存在，是否覆盖
@@ -207,7 +207,7 @@ public class FileUtils {
 		File srcFile = new File(srcFileName);
 		File destFile = new File(destFileName);
 		if (srcFile.equals(destFile)) {
-			return CopyStatus.SAME_FILE;
+//			return CopyStatus.SAME_FILE;
 		}
 
 		// 判断源文件是否存在

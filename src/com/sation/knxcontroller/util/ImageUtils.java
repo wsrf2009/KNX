@@ -21,7 +21,7 @@ public class ImageUtils {
 	public static Bitmap getDiskBitmap(String path) {
 		Bitmap bitmap = null;
 		
-		if(StringUtil.isEmpty(path)) {
+		if(StringUtil.isNullOrEmpty(path)) {
 			return bitmap;
 		}
 		
@@ -39,7 +39,7 @@ public class ImageUtils {
 		}
 		
 		try {
-			Log.i(TAG, "loading file:"+path);
+//			Log.i(TAG, "loading file:"+path);
 			File file = new File(path);
 			if(file.exists()) {
 				BitmapFactory.Options opts = new BitmapFactory.Options();
@@ -48,6 +48,7 @@ public class ImageUtils {
 				opts.inPurgeable = true;  
 				opts.inPreferredConfig = Bitmap.Config.RGB_565; 
 //				opts.inSampleSize = 2;
+//				Log.i(TAG, "path:"+path);
 				bitmap = BitmapFactory.decodeFile(path, opts);
 
 				STKNXControllerApp.getInstance().getImageMap().put(path, bitmap);
@@ -67,9 +68,12 @@ public class ImageUtils {
         opts.inJustDecodeBounds = true;
         opts.inPreferredConfig = Bitmap.Config.ARGB_8888;
         File file = new File(path);
-		if(file.exists()) {
-			  BitmapFactory.decodeFile(path, opts);
-		} 
+//		if(file.exists()) {
+//			  BitmapFactory.decodeFile(path, opts);
+//		}
+		if(!file.exists()) {
+			return null;
+		}
         int width = opts.outWidth;
         int height = opts.outHeight;
         float scaleWidth = 0.f, scaleHeight = 0.f;
@@ -81,6 +85,7 @@ public class ImageUtils {
         opts.inJustDecodeBounds = false;
         float scale = Math.max(scaleWidth, scaleHeight);
         opts.inSampleSize = (int)scale;
+//        Log.i(TAG, "path:"+path);
         WeakReference<Bitmap> weak = new WeakReference<Bitmap>(BitmapFactory.decodeFile(path, opts));
         return Bitmap.createScaledBitmap(weak.get(), w, h, true);
     }
@@ -93,7 +98,7 @@ public class ImageUtils {
 	 * @return
 	 */
 	public static Drawable getDrawable(Context ctx, String imageName) {
-		Drawable defaultIcon = ctx.getResources().getDrawable(R.drawable.launcher);
+		Drawable defaultIcon = ctx.getResources().getDrawable(R.mipmap.launcher);
 		try {
 			InputStream inputStream = ctx.getAssets().open(imageName);
 			return Drawable.createFromStream(inputStream, null);
@@ -105,7 +110,7 @@ public class ImageUtils {
 	}
 
 	public static Drawable getDrawable2(Context ctx, String imageName) {
-		Drawable defaultIcon = ctx.getResources().getDrawable(R.drawable.launcher);
+		Drawable defaultIcon = ctx.getResources().getDrawable(R.mipmap.launcher);
 		try {
 			InputStream is = FileUtils.getInputStream(ctx, imageName, FileUtils.IMAGE);
 			return Drawable.createFromStream(is, null);

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/stknx_dimmer_detail_relativelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#80000000"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/dimmer_detail_relativelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shutter_detail_background"
+        android:clickable="true"
+        android:padding="30dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/dimmer_detail_textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:text="调光控制器"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+        <RelativeLayout
+            android:id="@+id/dimmer_detail_relativelayout_dim_absolutely"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dimmer_detail_textview_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp">
+
+            <com.sation.knxcontroller.widget.WArcSeekBar
+                android:id="@+id/dimmer_detail_WArc_seekbar_dim_absolutely"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_centerInParent="true"
+                android:thumb="@drawable/detail_icon_schedule_ball"
+                app:arc_background_color="@android:color/darker_gray"
+                app:arc_front_color="@android:color/holo_blue_light"
+                app:arc_width="5dp"
+                app:max_drawable="@drawable/dimmer_max"
+                app:min_drawable="@drawable/dimmer_min"
+                app:seekbar_max_value="100"
+                app:show_text="true"
+                app:start_angle="135"
+                app:sweep_angle="270"
+                app:text_color="@android:color/holo_orange_dark"
+                app:text_size="30dp"
+                app:text_stroke_width="4dp"
+                app:text_suffix="%" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/dimmer_detail_relativelayout_switch_op"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dimmer_detail_relativelayout_dim_absolutely"
+            android:layout_centerHorizontal="true">
+
+            <ImageButton
+                android:id="@+id/dimmer_detail_imagebutton_off"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/circular_green_30dp"
+                android:src="@drawable/dimmer_off" />
+
+            <ImageButton
+                android:id="@+id/dimmer_detail_imagebutton_on"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="80dp"
+                android:layout_toRightOf="@+id/dimmer_detail_imagebutton_off"
+                android:background="@drawable/circular_green_30dp"
+                android:src="@drawable/dimmer_on" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/dimmer_detail_relativelayout_dim_relatively"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dimmer_detail_relativelayout_switch_op"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" >
+
+            <!--<SeekBar-->
+                <!--android:id="@+id/dimmer_detail_seekbar_dim_relatively"-->
+                <!--style="@style/dimmer_relatively"-->
+                <!--android:layout_width="400dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_toRightOf="@+id/imageView_relatively"-->
+                <!--android:max="100"-->
+                <!--android:paddingLeft="12dp"-->
+                <!--android:paddingRight="12dp"-->
+                <!--android:progress="0" />-->
+            <com.sation.knxcontroller.customview.DimmingControl
+                android:id="@+id/dimmer_detail_dimmingcontrol_dim_relatively"
+                android:layout_width="400dp"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:thumb="@drawable/dimmingcontrol_thumb"
+                app:bar="@drawable/listview_item_horizontal_divider"
+                app:barCentral="@drawable/dimmingcontrol_central"
+                app:barCentralHeight="16dp"
+                app:barCentralWidth="1dp"
+                app:barHeight="4dp"
+                app:decrease="@drawable/dimmer_min"
+                app:decreaseHeight="16dp"
+                app:decreasePrefix="@string/dimming_down"
+                app:decreaseWidth="16dp"
+                app:dimmingBreak="@string/dimming_break"
+                app:increase="@drawable/dimmer_max"
+                app:increaseHeight="16dp"
+                app:increasePrefix="@string/dimming_up"
+                app:increaseWidth="16dp"
+                app:thumbHeight="32dp"
+                app:thumbWidth="12dp"
+                app:tick="@drawable/dimmingcontrol_tick"
+                app:tickHeight="30dp"
+                app:tickWidth="1dp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -27,171 +27,179 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout.LayoutParams;
 
+import java.lang.ref.WeakReference;
+
 public class STKNXSceneButton extends STKNXControl {
 	private static final String TAG = "STKNXSceneButton";
 	private final int PADDING = 2;
 
-	private String imageOn;
-	private String imageOff;
 	private ImageView mImageView;
-    
+	private Bitmap imageOn;
+	private Bitmap imageOff;
+
 	public KNXSceneButton mKNXSceneButton;
-    
-    private enum ControlState {
-    	Down,
-    	Normal,
-    }
+
+	private enum ControlState {
+		Down,
+		Normal,
+	}
+
 	private ControlState mControlState;
 
 	private enum SceneState {
-    	On,
-    	Off,
-    }
-    private SceneState mSceneState;
-    
-    private int imgY = 0;
-    private int imgRight = 0;
-//    private Handler mHandler;
+		On,
+		Off,
+	}
+
+	private SceneState mSceneState;
+
+	private int imgY = 0;
 
 	public STKNXSceneButton(Context context, KNXSceneButton knxSceneButton) {
 		super(context, knxSceneButton);
-		
+
 		this.mKNXSceneButton = knxSceneButton;
 		this.setId(mKNXSceneButton.getId());
-		
+
 		this.mControlState = ControlState.Normal;
 		this.mSceneState = SceneState.Off;
-		
-		if(!StringUtil.isEmpty(this.mKNXSceneButton.getImageOn())) {
-			this.imageOn = STKNXControllerConstant.ConfigResImgPath + this.mKNXSceneButton.getImageOn();
-		}
-			
-		if(!StringUtil.isEmpty(this.mKNXSceneButton.getImageOff())) {
-			this.imageOff = STKNXControllerConstant.ConfigResImgPath + this.mKNXSceneButton.getImageOff();
-		}
-		
+
 		this.mImageView = new ImageView(context);
 		this.addView(this.mImageView);
 
-		
-		
-//		this.mHandler = new Handler() {
-//			@Override
-//			public void handleMessage(Message msg) {
-//				super.handleMessage(msg);
-//				
-//				if(1 == msg.what) {
-////					setStateSelected();
-//					Bitmap bm = (Bitmap) msg.obj;
-//                	if((null != bm) && (null != mImageView)) {
-//                		mImageView.setImageBitmap(bm);
-//                	}
-//				}
-////				else if(2 == msg.what) {
-////					setStateNotSelected();
-////				}
-//			}
-//		};
-		
-		this.selecte(false);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				if(!StringUtil.isNullOrEmpty(mKNXSceneButton.getImageOn())) {
+					imageOn = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath +
+									mKNXSceneButton.getImageOn(),
+							getImageViewLength(), getImageViewLength());
+				}
+
+				if(!StringUtil.isNullOrEmpty(mKNXSceneButton.getImageOff())) {
+					imageOff = ImageUtils.getDiskBitmap(STKNXControllerConstant.ConfigResImgPath +
+									mKNXSceneButton.getImageOff(),
+							getImageViewLength(), getImageViewLength());
+				}
+
+				updateControlState();
+			}
+		}).start();
 	}
-	
+
+	@Override
+	public void onSuspend() {
+
+	}
+
+	@Override
+	public void onResume() {
+
+	}
+
 	@Override
 	public void onDestroy() {
-		this.imageOn = null;
-		this.imageOff = null;
-		this.mImageView = null;
-//		this.mKNXSceneButton = null;
+		super.onDestroy();
 	}
-	
-	private void setStateSelected() {
-		Bitmap bm = ImageUtils.getDiskBitmap(imageOn);
-		if((null != bm) && (null != mImageView)) {
-			mImageView.setImageBitmap(bm);
-//			Message msg = new Message();
-//			msg.what = 1;
-//			msg.obj = bm;
-//			this.mHandler.sendMessage(msg);
+
+	private static class STKNXSceneButtonHandler extends Handler {
+		WeakReference<STKNXSceneButton> mSceneButton;
+
+		private STKNXSceneButtonHandler(STKNXSceneButton s) {
+			super(s.getContext().getMainLooper());
+
+			mSceneButton = new WeakReference<STKNXSceneButton>(s);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			setControlImage(mSceneButton.get());
 		}
 	}
-	
-	private void setStateNotSelected() {
-		Bitmap bm = ImageUtils.getDiskBitmap(imageOff);
-		if((null != bm) && (null != mImageView)) {
-			mImageView.setImageBitmap(bm);
-//			Message msg = new Message();
-//			msg.what = 1;
-//			msg.obj = bm;
-//			this.mHandler.sendMessage(msg);
+
+	private static void setControlImage(STKNXSceneButton mSceneButton) {
+		if(null != mSceneButton.mImageView) {
+			if (SceneState.On == mSceneButton.mSceneState) {
+				if (null != mSceneButton.imageOn) {
+					mSceneButton.mImageView.setImageBitmap(mSceneButton.imageOn);
+				}
+			} else if (SceneState.Off == mSceneButton.mSceneState) {
+				if (null != mSceneButton.imageOff) {
+					mSceneButton.mImageView.setImageBitmap(mSceneButton.imageOff);
+				}
+			}
 		}
+
+		mSceneButton.invalidate();
 	}
-	
-	private void selecte(boolean select) {
-		if(select) {
-			setStateSelected();
-		} else {
-			setStateNotSelected();
-		}
+
+	private void updateControlState() {
+		STKNXSceneButtonHandler mHandler = new STKNXSceneButtonHandler(STKNXSceneButton.this);
+		mHandler.sendEmptyMessage(0);
 	}
-	
+
 	public void setSelected(final boolean s) {
-//		Message msg = new Message();
-//		if(s) {
-//			msg.what = 1;
-//		} else {
-//			msg.what = 2;
-//		}
-//		this.mHandler.sendMessage(msg);
-		
-		selecte(s);
+		if (s) {
+			this.mSceneState = SceneState.On;
+		} else {
 
-//		invalidate();
+			this.mSceneState = SceneState.Off;
+		}
+		updateControlState();
 	}
-    
-    private void onClick() {
-    	if(null == this.mKNXSceneButton) {
-    		return;
-    	}
-    	  
-    	if(EBool.Yes == this.mKNXSceneButton.getIsGroup()) {
-    		if(this.getParent() instanceof STKNXGroupBox) {
-    			STKNXGroupBox mSTKNXGroupBox = (STKNXGroupBox)this.getParent();
-    			if((null != mSTKNXGroupBox) && (null != mSTKNXGroupBox.mKNXGroupBox)) {
-    				if(mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().isEmpty() ||
-    						mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds().containsKey(
-    							mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().keySet().toArray()[0])) {
-    					mSTKNXGroupBox.setSelectedValue(this.mKNXSceneButton.DefaultValue);
-    				}
 
-    				sendCommandRequest(mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds(), this.mKNXSceneButton.DefaultValue+"", false, null);
-    			}
-    		}
-    	} else {
-    		if(this.mKNXSceneButton.getReadAddressId().isEmpty() ||
-    				this.mKNXSceneButton.getWriteAddressIds().containsKey(
-    						this.mKNXSceneButton.getReadAddressId().keySet().toArray()[0])) {
-    			if(SceneState.On == this.mSceneState) {
-    				this.selecte(false);
-    			} else {
-    				this.selecte(true);
-    			}
-    		}
-    		
-    		sendCommandRequest(this.mKNXSceneButton.getWriteAddressIds(), "", true, null);
-    	}
-    }
+	private int getImageViewLength(){
+		int w = this.mKNXSceneButton.Width - 2 * this.imgY;
+		int h = this.mKNXSceneButton.Height - 2 * this.imgY;
+		return w > h ? h:w;
+	}
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    	measureChildren(widthMeasureSpec, heightMeasureSpec);
-    	
-        /**
-         * 最后调用父类方法,把View的大小告诉父布局。
-         */
-        setMeasuredDimension(this.mKNXSceneButton.Width, this.mKNXSceneButton.Height);
-    }
-    
-    @Override
+	private void onClick() {
+		if (null == this.mKNXSceneButton) {
+			return;
+		}
+
+		if (EBool.Yes == this.mKNXSceneButton.getIsGroup()) { // 若属于组？有互斥效果
+			if (this.getParent() instanceof STKNXGroupBox) { // 父视图必须为组框
+				STKNXGroupBox mSTKNXGroupBox = (STKNXGroupBox) this.getParent();
+				if ((null != mSTKNXGroupBox) && (null != mSTKNXGroupBox.mKNXGroupBox)) {
+					if (mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().isEmpty() ||
+							mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds().containsKey( // 组框的读写地址才有效
+									mSTKNXGroupBox.mKNXGroupBox.getReadAddressId().keySet().toArray()[0])) {
+						byte[] b = new byte[1];
+						b[0] = (byte)(this.mKNXSceneButton.DefaultValue & 0xFF);
+						mSTKNXGroupBox.setSelectedValue(b);
+					}
+
+					sendCommandRequest(mSTKNXGroupBox.mKNXGroupBox.getWriteAddressIds(), this.mKNXSceneButton.DefaultValue + "", false, null);
+				}
+			}
+		} else {
+			if (this.mKNXSceneButton.getReadAddressId().isEmpty() ||
+					this.mKNXSceneButton.getWriteAddressIds().containsKey(// 非组的工作模式下，场景按钮的读写地址才有效
+							this.mKNXSceneButton.getReadAddressId().keySet().toArray()[0])) {
+				if (SceneState.On == this.mSceneState) {
+					this.mSceneState = SceneState.Off;
+				} else {
+					this.mSceneState = SceneState.On;
+				}
+			}
+
+			sendCommandRequest(this.mKNXSceneButton.getWriteAddressIds(), "", true, null);
+		}
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		measureChildren(widthMeasureSpec, heightMeasureSpec);
+
+		/**
+		 * 最后调用父类方法,把View的大小告诉父布局。
+		 */
+		setMeasuredDimension(this.mKNXSceneButton.Width, this.mKNXSceneButton.Height);
+	}
+
+	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		int childViewCount = getChildCount();
 
@@ -200,127 +208,125 @@ public class STKNXSceneButton extends STKNXControl {
 		 */
 		for (int i = 0; i < childViewCount; i++) {
 			int cl = 0, ct = 0, cr = 0, cb = 0;
-			
+
 			View view = getChildAt(i);
-			if(view instanceof ImageView) {
-				int imgHeight = this.mKNXSceneButton.Height - 2 * this.imgY;
-				
-				cl = this.PADDING;
-				ct = this.PADDING;
-				cr = this.PADDING+imgHeight;
-				cb = this.PADDING+imgHeight;
+			if (view instanceof ImageView) {
+				int imgHeight = getImageViewLength();
+
+				cl = this.mKNXSceneButton.getPadding().getLeft();
+				ct = this.mKNXSceneButton.getPadding().getTop();
+				cr = this.mKNXSceneButton.Width - this.mKNXSceneButton.getPadding().getRight();
+				cb = this.mKNXSceneButton.Height - this.mKNXSceneButton.getPadding().getBottom();
 			}
 			view.layout(cl, ct, cr, cb);
 		}
 	}
 
-    @SuppressLint("DrawAllocation")
+	@SuppressLint("DrawAllocation")
 	@Override
-    protected void onDraw(Canvas canvas) {
-    	super.onDraw(canvas);
-  
-    	Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    	paint.setStyle(Paint.Style.FILL_AND_STROKE);	// 充满  
-    	paint.setAlpha((int)(this.mKNXSceneButton.Alpha*255));
-    	RectF oval3 = new RectF(0, 0, getWidth(), getHeight());// 设置个新的长方形  
-    	
-    	int backColor = Color.parseColor(this.mKNXSceneButton.BackgroundColor);
-    	if((SceneState.On == this.mSceneState) && (null != this.mKNXSceneButton.ColorOn)) {
-    		backColor = Color.parseColor(this.mKNXSceneButton.ColorOn);
-        } else if((SceneState.Off == this.mSceneState) && (null != this.mKNXSceneButton.ColorOff)) {
-        	backColor = Color.parseColor(this.mKNXSceneButton.ColorOff);
-       	}
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
 
-    	if(EFlatStyle.Stereo == this.mKNXSceneButton.getFlatStyle()) {	// 画立体感的圆角矩形 
+		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paint.setStyle(Paint.Style.FILL_AND_STROKE);    // 充满
+		paint.setAlpha((int) (this.mKNXSceneButton.Alpha * 255));
+		RectF oval3 = new RectF(0, 0, getWidth(), getHeight());// 设置个新的长方形
+
+		int backColor = Color.parseColor(this.mKNXSceneButton.BackgroundColor);
+		if ((SceneState.On == this.mSceneState) && (null != this.mKNXSceneButton.ColorOn)) {
+			backColor = Color.parseColor(this.mKNXSceneButton.ColorOn);
+		} else if ((SceneState.Off == this.mSceneState) && (null != this.mKNXSceneButton.ColorOff)) {
+			backColor = Color.parseColor(this.mKNXSceneButton.ColorOff);
+		}
+
+		if (EFlatStyle.Stereo == this.mKNXSceneButton.getFlatStyle()) {    // 画立体感的圆角矩形
         
     		/* 渐变色，颜色数组 */
-    		int colors[] = new int[3];
-    		colors[0] = ColorUtils.changeBrightnessOfColor(backColor, 100);
-    		colors[1] = backColor;
-    		colors[2] = ColorUtils.changeBrightnessOfColor(backColor, -50);
+			int colors[] = new int[3];
+			colors[0] = ColorUtils.changeBrightnessOfColor(backColor, 100);
+			colors[1] = backColor;
+			colors[2] = ColorUtils.changeBrightnessOfColor(backColor, -50);
     		
     		/* 各颜色所在的位置 */
-    		float positions[] = new float[3];
-    		positions[0] = .0f;
-    		positions[1] = .3f;
-    		positions[2] = 1.0f;
-    		
-    		Shader mShader = new LinearGradient(0, 0, 0, getHeight(), 
-    			colors, positions, Shader.TileMode.CLAMP); // 设置渐变色 这个正方形的颜色是改变的 , 一个材质,打造出一个线性梯度沿著一条线。  
-    		paint.setShader(mShader);  
-    	} else {	// 画扁平风格的圆角矩形
-    		paint.setARGB((int)(this.mKNXSceneButton.Alpha*255), Color.red(backColor), Color.green(backColor), Color.blue(backColor));
-    	}
-    	canvas.drawRoundRect(oval3, this.mKNXSceneButton.Radius, this.mKNXSceneButton.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
+			float positions[] = new float[3];
+			positions[0] = .0f;
+			positions[1] = .3f;
+			positions[2] = 1.0f;
 
-        if(null != this.mKNXSceneButton.getText()) {
-        	int x = 0;
-        	int y = 0;
-        	Rect bound = new Rect();
-        	paint.getTextBounds(this.mKNXSceneButton.getText(), 0, this.mKNXSceneButton.getText().length(), bound);
-        	if(StringUtil.isEmpty(this.imageOn) && StringUtil.isEmpty(this.imageOff)) {
-        		x = (getWidth() - 2 *x - bound.width())/2;
-            	y = (getHeight()  + bound.height())/2;
-        	} else {
-        		x=(getWidth()- (this.imgRight+this.PADDING)-this.PADDING -bound.width())/2+this.imgRight+this.PADDING;
-        		y=(getHeight()  + bound.height())/2;
-        	}
-        	
-        	/* 绘制文本 */
-        	paint.reset();
-        	paint.setColor(Color.parseColor(this.mKNXSceneButton.FontColor));
-        	paint.setTextSize(this.mKNXSceneButton.FontSize);
-        	canvas.drawText(this.mKNXSceneButton.getText(), x, y, paint);
-        }
+			Shader mShader = new LinearGradient(0, 0, 0, getHeight(),
+					colors, positions, Shader.TileMode.CLAMP); // 设置渐变色 这个正方形的颜色是改变的 , 一个材质,打造出一个线性梯度沿著一条线。
+			paint.setShader(mShader);
+		} else {    // 画扁平风格的圆角矩形
+			paint.setARGB((int) (this.mKNXSceneButton.Alpha * 255), Color.red(backColor), Color.green(backColor), Color.blue(backColor));
+		}
+		canvas.drawRoundRect(oval3, this.mKNXSceneButton.Radius, this.mKNXSceneButton.Radius, paint);//第二个参数是x半径，第三个参数是y半径
 
-        switch (mControlState) {
-        	case Down:
-        		paint.reset();
-        		paint.setStyle(Paint.Style.FILL);
-        		paint.setColor(Color.parseColor("#FF6100"));
-        		paint.setAlpha(0x60);
-        		canvas.drawRoundRect(oval3, this.mKNXSceneButton.Radius, this.mKNXSceneButton.Radius, paint);	//第二个参数是x半径，第三个参数是y半径  
-        		break;
-        	case Normal:
-        		break;
-        }
-        
-        if(EBool.Yes == this.mKNXSceneButton.getDisplayBorder()) {
-    		paint.reset();
-    		paint.setStyle(Paint.Style.STROKE);
-    		paint.setColor(Color.parseColor(this.mKNXSceneButton.BorderColor));
-    		canvas.drawRoundRect(oval3, this.mKNXSceneButton.Radius, this.mKNXSceneButton.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
-    	}
-    }
-      
-    @SuppressLint("ClickableViewAccessibility")
+		if (null != this.mKNXSceneButton.getTitle()) {
+			Paint textPaint = this.mKNXSceneButton.TitleFont.getTextPaint();
+
+			int baseY = (int) ((oval3.height() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
+			canvas.drawText(this.mKNXSceneButton.getTitle(), oval3.width()/2, baseY, textPaint);
+		}
+
+		switch (mControlState) {
+			case Down:
+				paint.reset();
+				paint.setStyle(Paint.Style.FILL);
+				paint.setColor(Color.parseColor("#FF6100"));
+				paint.setAlpha(0x60);
+				canvas.drawRoundRect(oval3, this.mKNXSceneButton.Radius, this.mKNXSceneButton.Radius, paint);    //第二个参数是x半径，第三个参数是y半径
+				break;
+			case Normal:
+				break;
+		}
+
+		if (EBool.Yes == this.mKNXSceneButton.getDisplayBorder()) {
+			paint.reset();
+			paint.setStyle(Paint.Style.STROKE);
+			paint.setColor(Color.parseColor(this.mKNXSceneButton.BorderColor));
+			canvas.drawRoundRect(oval3, this.mKNXSceneButton.Radius, this.mKNXSceneButton.Radius, paint);//第二个参数是x半径，第三个参数是y半径
+		}
+	}
+
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
-    public boolean onTouchEvent(MotionEvent event) {
-    	switch (event.getAction()) { 
-    		case MotionEvent.ACTION_DOWN: 
-    			this.mControlState = ControlState.Down;
-    			invalidate();
-    			if(null != this.mImageView) {
-    				this.mImageView.setAlpha(0.6f);
-    			}
-    			break; 
-    		case MotionEvent.ACTION_UP: 
-    			onClick();
-    			this.mControlState = ControlState.Normal;
-    			invalidate();
-    			if(null != this.mImageView) {
-    				this.mImageView.setAlpha(1.0f);
-    			}
-    			break;
-    		case MotionEvent.ACTION_CANCEL:
-    			this.mControlState = ControlState.Normal;
-    			invalidate();
-    			break;
-    			
-    		default:
-    			break;
-    	}
+	public boolean onTouchEvent(MotionEvent event) {
+		if(EBool.Yes != this.mKNXSceneButton.getClickable()) { // 是否可点击？
+			return true;
+		}
 
-    	return true;
-    }
+		try {
+			switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					this.mControlState = ControlState.Down;
+					invalidate(); // 重绘控件
+					if (null != this.mImageView) {
+						this.mImageView.setAlpha(0.6f);
+					}
+					break;
+				case MotionEvent.ACTION_UP:
+					onClick(); // 点击事件
+					this.mControlState = ControlState.Normal;
+					invalidate();
+					if (null != this.mImageView) {
+						this.mImageView.setAlpha(1.0f);
+					}
+					break;
+				case MotionEvent.ACTION_CANCEL:
+					this.mControlState = ControlState.Normal;
+					invalidate();
+					break;
+
+				default:
+					break;
+			}
+
+			return true;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return true;
+	}
 }

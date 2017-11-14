@@ -11,69 +11,42 @@ public class KNXApp extends KNXView implements Serializable {
 	public String getAbout() {
 		return About;
 	}
-//	public void setAbout(String about) {
-//		About = about;
-//	}
 	
 	//企业 Logo
-	private String Logo;  
-	public String getLogo() {
-		if (null != this.getLogo()) {
-			return this.getImagePath() + this.Logo;
-		} else {
-			return null;
-		}
-	}
-//	public void setLogo(String logo) {
-//		Logo = logo;
+//	private String Logo;
+//	public String getLogo() {
+//		if (null != this.getLogo()) {
+//			return this.getImagePath() + this.Logo;
+//		} else {
+//			return null;
+//		}
 //	}
 	
 	//应用程序图标
+//	private String Symbol;
+//	public String getSymbol() {
+//		if (null != this.Symbol) {
+//			return this.getImagePath() + this.Symbol;
+//		} else {
+//			return null;
+//		}
+//	}
+
+//	public String getAppBackgroundImage() {
+//		return this.getImagePath() + "AppBackgroundImage.png";
+//	}
+
 	private String Symbol;
-	public String getSymbol() {
-		if (null != this.Symbol) {
-			return this.getImagePath() + this.Symbol;
-		} else {
-			return null;
-		}
+	public String getSymbol(){
+		return Symbol;
 	}
-//	public void setSymbol(String symbol) {
-//		Symbol = symbol;
-//	} 
+//	public String getSymbol() {
+//		return this.getImagePath() + "Symbol.png";
+//	}
 	
 	//空间划分
 	private List<KNXArea> Areas;
 	public List<KNXArea> getAreas() {
 		return Areas;
 	}
-//	public void setAreas(List<KNXArea> areas) {
-//		Areas = areas;
-//	}
-	 
-	//默认语言
-//	private Language DefaultLanguage;  
-//	public Language getDefaultLanguage() {
-//		return DefaultLanguage;
-//	}
-//	public void setDefaultLanguage(Language defaultLanguage) {
-//		DefaultLanguage = defaultLanguage;
-//	} 
-	
-//	//屏幕宽度
-//	private int ScreenWidth;
-//	public int getScreenWidth() {
-//		return ScreenWidth;
-//	} 
-//	public void setScreenWidth(int screenWidth) {
-//		ScreenWidth = screenWidth;
-//	}
-//	
-//	//屏幕高度
-//	private int ScreenHeight;
-//	public int getScreenHeight() {
-//		return ScreenHeight;
-//	} 
-//	public void setScreenHeight(int screenHeight) {
-//		ScreenHeight = screenHeight;
-//	}
 }

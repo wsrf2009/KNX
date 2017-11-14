@@ -1,10 +1,12 @@
 package com.sation.knxcontroller.widget;
 
+import com.sation.knxcontroller.STKNXControllerApp;
 import com.sation.knxcontroller.STKNXControllerConstant;
 import com.sation.knxcontroller.control.KNXBlinds;
 import com.sation.knxcontroller.models.KNXView.EBool;
 import com.sation.knxcontroller.models.KNXView.EFlatStyle;
 import com.sation.knxcontroller.util.ColorUtils;
+import com.sation.knxcontroller.util.Log;
 import com.sation.knxcontroller.util.StringUtil;
 
 import android.annotation.SuppressLint;
@@ -13,15 +15,23 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 
 public class STKNXBlinds extends STKNXControl {
+	private final String TAG = "STKNXBlinds";
+
 	private static final int PADDING = 2;
 	private static final int SUBVIEW_WIDTH = 40;
 	private KNXBlinds mKNXBlinds;
+
+	private int txtLeft;
+	private int txtTop;
+	private int txtWidth;
+	private int txtHeight;
 	
 	public STKNXBlinds(Context context, KNXBlinds knxBlinds) {
 		super(context, knxBlinds);
@@ -38,10 +48,10 @@ public class STKNXBlinds extends STKNXControl {
 		vLeft.radius = this.mKNXBlinds.Radius;
 		vLeft.alpha = this.mKNXBlinds.Alpha;
 		vLeft.text = this.mKNXBlinds.LeftText;
-		vLeft.fontSize = this.mKNXBlinds.LeftTextFontSize;
-		vLeft.fontColor = Color.parseColor(this.mKNXBlinds.LeftTextFontColor);
+		vLeft.mTextFont = this.mKNXBlinds.LeftTextFont;
+		vLeft.clickable = this.mKNXBlinds.getClickable();
 		vLeft.setSubViewClickListener(this.leftClicked);
-		if(!StringUtil.isEmpty(this.mKNXBlinds.getLeftImage())) {
+		if(!StringUtil.isNullOrEmpty(this.mKNXBlinds.getLeftImage())) {
 			vLeft.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXBlinds.getLeftImage());
 		}
 		this.addView(vLeft);
@@ -55,28 +65,39 @@ public class STKNXBlinds extends STKNXControl {
 		vRight.radius = this.mKNXBlinds.Radius;
 		vRight.alpha = this.mKNXBlinds.Alpha;
 		vRight.text = this.mKNXBlinds.RightText;
-		vRight.fontSize = this.mKNXBlinds.RightTextFontSize;
-		vRight.fontColor = Color.parseColor(this.mKNXBlinds.RightTextFontColor);
+		vRight.mTextFont = this.mKNXBlinds.RightTextFont;
+		vRight.clickable = this.mKNXBlinds.getClickable();
 		vRight.setSubViewClickListener(this.rightClicked);
-		if(!StringUtil.isEmpty(this.mKNXBlinds.getRightImage())) {
+		if(!StringUtil.isNullOrEmpty(this.mKNXBlinds.getRightImage())) {
 			vRight.setBackgroundImage(STKNXControllerConstant.ConfigResImgPath + this.mKNXBlinds.getRightImage());
 		}
 		this.addView(vRight);
 	}
 
 	@Override
+	public void onSuspend() {
+
+	}
+
+	@Override
+	public void onResume() {
+
+	}
+
+	@Override
 	public void onDestroy() {
-//		this.mKNXBlinds = null;
-		
-		int count = getChildCount();
-		for(int i=0; i<count; i++) {
-			View v = (View)getChildAt(i);
-			if(v instanceof STButton) {
-				STButton stv = (STButton)v;
-				stv.onDestroy();
-				stv = null;
-			}
-		}
+		super.onDestroy();
+
+//		Log.i(TAG, "");
+//		int count = getChildCount();
+//		for(int i=0; i<count; i++) {
+//			View v = (View)getChildAt(i);
+//			if(v instanceof STButton) {
+//				STButton stv = (STButton)v;
+//				stv.onDestroy();
+//				stv = null;
+//			}
+//		}
 	}
 	
 	STButton.SubViewClickListener leftClicked = new STButton.SubViewClickListener() {
@@ -108,20 +129,31 @@ public class STKNXBlinds extends STKNXControl {
     @Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		int cCount = getChildCount();
+		int cl=0, ct=0, cr=0, cb=0;
 
 		/*
 		 * 遍历所有childView根据其宽和高，以及margin进行布局
 		 */
 		for (int i = 0; i < cCount; i++) {
-			STButton childView = (STButton)getChildAt(i);
+			View v = getChildAt(i);
+			if(v instanceof STButton) {
+				STButton childView = (STButton) getChildAt(i);
 
-			int cl = 0, ct = 0, cr = 0, cb = 0;
-			cl = childView.left;
-			ct = childView.top;
-			cr = childView.left+childView.width;
-			cb = childView.top+childView.height;
 
-			childView.layout(cl, ct, cr, cb);
+				cl = childView.left;
+				ct = childView.top;
+				cr = childView.left + childView.width;
+				cb = childView.top + childView.height;
+			} else if(v instanceof TextView) {
+				TextView txt = (TextView)v;
+
+				cl = this.txtLeft; // txt.getLeft(); // this.txtLeft;
+				ct = this.txtTop; // txt.getTop(); // this.txtTop;
+				cr = cl + this.txtWidth; // txt.getRight(); // cl + this.txtWidth;
+				cb = ct + this.txtHeight; //txt.getBottom(); // ct + this.txtHeight;
+			}
+
+			v.layout(cl, ct, cr, cb);
 		}
 	}
 
@@ -162,18 +194,11 @@ public class STKNXBlinds extends STKNXControl {
     	}
     	canvas.drawRoundRect(rect1, this.mKNXBlinds.Radius, this.mKNXBlinds.Radius, paint);//第二个参数是x半径，第三个参数是y半径  
 
-    	if(null != this.mKNXBlinds.getText()) {
+    	if(null != this.mKNXBlinds.getTitle()) {
         	/* 绘制文本 */
-        	Rect bound = new Rect();
-        	paint.getTextBounds(this.mKNXBlinds.getText(), 0, this.mKNXBlinds.getText().length(), bound);
-        	x = getWidth()/2;
-            y = (getHeight()  + bound.height())/2;
-            
-            paint.reset();
-        	paint.setTextSize(this.mKNXBlinds.FontSize);
-            paint.setColor(Color.parseColor(this.mKNXBlinds.FontColor));
-            paint.setTextAlign(Paint.Align.CENTER);
-        	canvas.drawText(this.mKNXBlinds.getText(), x, y, paint);
+			Paint textPaint = this.mKNXBlinds.TitleFont.getTextPaint();
+			int baseY = (int) ((rect1.height() / 2) - ((textPaint.descent() + textPaint.ascent()) / 2));
+			canvas.drawText(this.mKNXBlinds.getTitle(), rect1.width()/2, baseY, textPaint);
     	}
     	
     	if(EBool.Yes == this.mKNXBlinds.getDisplayBorder()) {

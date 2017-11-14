@@ -1,19 +1,55 @@
 [
     {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_to_center_600.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\scale_to_center_600.xml"
+    },
+    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_leftbottom_out.xml",
         "source": "D:\\workspace\\SKC\\res\\anim\\scale_leftbottom_out.xml"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\rotate.xml",
-        "source": "D:\\workspace\\SKC\\res\\anim\\rotate.xml"
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\rotate_anti_clockwise_180_degree.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\rotate_anti_clockwise_180_degree.xml"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_from_center.xml",
-        "source": "D:\\workspace\\SKC\\res\\anim\\scale_from_center.xml"
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\translate_up_down.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\translate_up_down.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\rotate_clockwise_180_degree.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\rotate_clockwise_180_degree.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_from_center_600.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\scale_from_center_600.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\alpha_50_100.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\alpha_50_100.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_zoom_out_100.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\scale_zoom_out_100.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_zoom_out_300.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\scale_zoom_out_300.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\background_animation_down.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\background_animation_down.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_to_center_300_bounce.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\scale_to_center_300_bounce.xml"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_righttop_in.xml",
         "source": "D:\\workspace\\SKC\\res\\anim\\scale_righttop_in.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\translate_bounce_down_up.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\translate_bounce_down_up.xml"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\push_left_in.xml",
@@ -24,12 +60,20 @@
         "source": "D:\\workspace\\SKC\\res\\anim\\push_right_in.xml"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_to_center.xml",
-        "source": "D:\\workspace\\SKC\\res\\anim\\scale_to_center.xml"
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\background_animation_up.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\background_animation_up.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_zoom_in_100.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\scale_zoom_in_100.xml"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\push_left_out.xml",
         "source": "D:\\workspace\\SKC\\res\\anim\\push_left_out.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\scale_from_center_bounce.xml",
+        "source": "D:\\workspace\\SKC\\res\\anim\\scale_from_center_bounce.xml"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\anim\\push_right_out.xml",

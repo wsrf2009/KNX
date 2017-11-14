@@ -1,6 +1,7 @@
 package com.sation.knxcontroller.util;
 
 import com.sation.knxcontroller.STKNXControllerConstant;
+import com.sation.knxcontroller.activity.RoomDetailsActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,21 +27,21 @@ public class KNX0X01Lib {
 	}
 	
 	public char SendGroupValue(int asap, int lenArray, byte[] Value) {
-	   	Intent intent = new Intent();
-		intent.setAction(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS);
-	    intent.putExtra(STKNXControllerConstant.GROUP_ADDRESS_INDEX, asap);
-	   	intent.putExtra(STKNXControllerConstant.GROUP_ADDRESS_NEW_VALUE_LENGTH, lenArray);
-	    intent.putExtra(STKNXControllerConstant.GROUP_ADDRESS_NEW_VALUE, Value);
-	    
-//	    Log.i(TAG, "Address Index = "+ asap);
-//	    Log.i(TAG, "lenArray = "+ lenArray);
-//	    for(int i=0; i<lenArray; i++) {
-//	    	Log.i(TAG, "Value["+i+"]"+" = " + Integer.toHexString(Value[i]&0xFF));
+//	   	Intent intent = new Intent();
+//		intent.setAction(STKNXControllerConstant.BROADCAST_UPDATE_DEVICE_STATUS);
+//	    intent.putExtra(STKNXControllerConstant.GROUP_ADDRESS_INDEX, asap);
+//	   	intent.putExtra(STKNXControllerConstant.GROUP_ADDRESS_NEW_VALUE_LENGTH, lenArray);
+//	    intent.putExtra(STKNXControllerConstant.GROUP_ADDRESS_NEW_VALUE, Value);
+//
+//	    if(null != mContext) {
+//	    	mContext.sendBroadcast(intent);
 //	    }
-	    
-	    if(null != mContext) {
-	    	mContext.sendBroadcast(intent);
-	    }
+
+//		Log.i(TAG, "mContext:"+mContext);
+		if (null != mContext) {
+			RoomDetailsActivity room = (RoomDetailsActivity)mContext;
+			room.addUpdatedAddress(asap);
+		}
 
     	return 1;
     }

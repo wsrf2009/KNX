@@ -1,45 +1,26 @@
 package com.sation.knxcontroller.control;
 
+import com.sation.knxcontroller.models.KNXFont;
+import com.sation.knxcontroller.util.StringUtil;
+
 public class KNXBlinds extends KNXControlBase {
 	private static final long serialVersionUID = 1L;
-	
-//	private Map<String ,KNXSelectedAddress> ReadAddressId; 
-//	public Map<String ,KNXSelectedAddress> getReadAddressId() {
-//		return ReadAddressId;
-//	}
-//
-//	private Map<String ,KNXSelectedAddress> WriteAddressIds; 
-//	public Map<String ,KNXSelectedAddress> getWriteAddressIds() {
-//		return WriteAddressIds;
-//	}
 
 	private String LeftImage;
 	public String getLeftImage() {
-		if (null != this.LeftImage) {
-			return this.getImagePath() + this.LeftImage;
-		} else {
-			return null;
-		}
+		return LeftImage;
 	}
 	
 	public String LeftText;
-	
-	public int LeftTextFontSize;
-	
-	public String LeftTextFontColor;
-	
+
+	public KNXFont LeftTextFont;
+
 	private String RightImage;
 	public String getRightImage() {
-		if (null != this.LeftImage) {
-			return this.getImagePath() + this.RightImage;
-		} else {
-			return null;
-		}
+		return RightImage;
 	}
 	
 	public String RightText;
-	
-	public int RightTextFontSize;
-	
-	public String RightTextFontColor;
+
+	public KNXFont RightTextFont;
 }

@@ -16,6 +16,10 @@
         "source": "D:\\workspace\\SKC\\res\\drawable\\switch_toggle.xml"
     },
     {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\position_of_shutter_thumb.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\position_of_shutter_thumb.xml"
+    },
+    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_button_background_focused_checked.xml",
         "source": "D:\\workspace\\SKC\\res\\drawable\\default_button_background_focused_checked.xml"
     },
@@ -92,6 +96,10 @@
         "source": "D:\\workspace\\SKC\\res\\drawable\\default_blinds_background_down_focused.xml"
     },
     {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\rectangle.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\rectangle.xml"
+    },
+    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\setting_view_item_selector.xml",
         "source": "D:\\workspace\\SKC\\res\\drawable\\setting_view_item_selector.xml"
     },
@@ -120,6 +128,10 @@
         "source": "D:\\workspace\\SKC\\res\\drawable\\default_blinds_background_up.xml"
     },
     {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\area_list_item_background.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\area_list_item_background.xml"
+    },
+    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\chevron.xml",
         "source": "D:\\workspace\\SKC\\res\\drawable\\chevron.xml"
     },
@@ -132,8 +144,20 @@
         "source": "D:\\workspace\\SKC\\res\\drawable\\horizontal_seekbar_progress.xml"
     },
     {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_seekbar_progress_drawable.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\bg_seekbar_progress_drawable.xml"
+    },
+    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_button_background_focused_checked_pressed.xml",
         "source": "D:\\workspace\\SKC\\res\\drawable\\default_button_background_focused_checked_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\shutter_detail_background.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\shutter_detail_background.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\dimmingcontrol_central.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\dimmingcontrol_central.xml"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_button_background.xml",
@@ -142,6 +166,10 @@
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\my_progress.xml",
         "source": "D:\\workspace\\SKC\\res\\drawable\\my_progress.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\circular_green_30dp.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\circular_green_30dp.xml"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_button_background_focused_pressed.xml",
@@ -164,12 +192,12 @@
         "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_left_selector.xml"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\shixun_roomlist_logo.png",
-        "source": "D:\\workspace\\SKC\\res\\drawable\\shixun_roomlist_logo.png"
-    },
-    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_right_pressed.xml",
         "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_right_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\shixun_roomlist_logo.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\shixun_roomlist_logo.png"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\logo.png",
@@ -184,8 +212,16 @@
         "source": "D:\\workspace\\SKC\\res\\drawable\\button_background.xml"
     },
     {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\seekbar_position_of_shutter_pro.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\seekbar_position_of_shutter_pro.xml"
+    },
+    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_center_pressed.xml",
         "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_center_pressed.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\seekbar_horizontal.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\seekbar_horizontal.xml"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\seek_thumb_normal.png",

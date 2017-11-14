@@ -11,8 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:text="@string/english" />
-    
+        android:text="@string/english"
+        android:visibility="gone" />
+
     <RadioButton
         android:id="@+id/settingLanguageRadioButtonChinese"
         android:layout_width="match_parent"

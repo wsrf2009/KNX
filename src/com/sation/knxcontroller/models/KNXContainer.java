@@ -12,8 +12,5 @@ public class KNXContainer  extends KNXControlBase implements Serializable {
 	private List<KNXControlBase> Controls;
     public List<KNXControlBase> getControls() {
 		return Controls;
-	} 
-//	public void setControls(List<KNXControlBase> controls) {
-//		Controls = controls;
-//	}
+	}
 }
