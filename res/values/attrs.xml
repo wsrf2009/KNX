@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SettingView">
@@ -115,4 +116,123 @@
         <attr name="increaseSuffix" format="string" />
         <attr name="dimmingBreak" format="string" />
     </declare-styleable>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SettingView">
+        <attr name="iOSStyle" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="SettingViewItem">
+        <attr name="title" format="string" />
+        <attr name="subTitle" format="string" />
+        <attr name="titleColor" format="reference" />
+        <attr name="subTitleColor" format="reference" />
+        <attr name="titleSize" format="reference|dimension" />
+        <attr name="subTitleSize" format="reference|dimension" />
+        <attr name="drawable" format="reference" />
+        <attr name="arrow" format="reference" />
+        <attr name="check" format="reference" />
+        <attr name="image" format="reference" />
+        <attr name="clickable" format="boolean" />
+        <attr name="checked" format="boolean" />
+        <attr name="background" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="MSeekBar">
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="textBackground" format="reference" />
+        <attr name="textOrientation" format="enum">
+            <enum name="top" value="1" />
+            <enum name="bottom" value="2" />
+        </attr>
+        <attr name="prefix" format="string" />
+        <attr name="suffix" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleSeekBar">
+        <attr name="android:thumb" />
+        <attr name="progress_width" format="dimension" />
+        <attr name="progress_background" format="color" />
+        <attr name="progress_front" format="color" />
+        <attr name="progress_max" format="integer" />
+        <attr name="show_progress_text" format="boolean" />
+        <attr name="progress_text_stroke_width" format="dimension" />
+        <attr name="progress_text_color" format="color" />
+        <attr name="progress_text_size" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="WArcSeekBar">
+        <attr name="android:thumb" />
+        <attr name="arc_width" format="dimension" />
+        <attr name="arc_background_color" format="color" />
+        <attr name="arc_front_color" format="color" />
+        <attr name="seekbar_max_value" format="integer" />
+        <attr name="show_text" format="boolean" />
+        <attr name="text_stroke_width" format="dimension" />
+        <attr name="text_color" format="color" />
+        <attr name="text_size" format="dimension" />
+        <attr name="start_angle" format="integer" />
+        <attr name="sweep_angle" format="integer" />
+        <attr name="min_drawable" format="reference" />
+        <attr name="max_drawable" format="reference" />
+        <attr name="text_prefix" format="string" />
+        <attr name="text_suffix" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="SectionalSeekBar">
+        <attr name="android:thumb" />
+        <attr name="up_min_disabled" format="reference" />
+        <attr name="up_min_enabled" format="reference" />
+        <attr name="up_middle_disabled" format="reference" />
+        <attr name="up_middle_enabled" format="reference" />
+        <attr name="max_disabled" format="reference" />
+        <attr name="max_enabled" format="reference" />
+        <attr name="down_middle_disabled" format="reference" />
+        <attr name="down_middle_enabled" format="reference" />
+        <attr name="down_min_disabled" format="reference" />
+        <attr name="down_min_enabled" format="reference" />
+        <attr name="disabled_text_color" format="color" />
+        <attr name="enabled_text_color" format="color" />
+        <attr name="android:textSize" />
+        <attr name="text_up_min" format="string" />
+        <attr name="text_up_middle" format="string" />
+        <attr name="text_max" format="string" />
+        <attr name="text_down_middle" format="string" />
+        <attr name="text_down_min" format="string" />
+        <attr name="seekbar_enabled" format="reference" />
+        <attr name="seekbar_disabled" format="reference" />
+        <attr name="seekbar_width" format="dimension" />
+        <attr name="max_value" format="integer" />
+        <attr name="seekbar_value" format="integer" />
+        <attr name="spacing" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="DimmingControl">
+        <attr name="bar" format="reference" />
+        <attr name="barHeight" format="dimension" />
+        <attr name="tick" format="reference" />
+        <attr name="tickWidth" format="dimension" />
+        <attr name="tickHeight" format="dimension" />
+        <attr name="barCentral" format="reference" />
+        <attr name="barCentralWidth" format="dimension" />
+        <attr name="barCentralHeight" format="dimension" />
+        <attr name="android:thumb" />
+        <attr name="thumbWidth" format="dimension" />
+        <attr name="thumbHeight" format="dimension" />
+        <attr name="decrease" format="reference" />
+        <attr name="decreaseWidth" format="dimension" />
+        <attr name="decreaseHeight" format="dimension" />
+        <attr name="increase" format="reference" />
+        <attr name="increaseWidth" format="dimension" />
+        <attr name="increaseHeight" format="dimension" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="decreasePrefix" format="string" />
+        <attr name="decreaseSuffix" format="string" />
+        <attr name="increasePrefix" format="string" />
+        <attr name="increaseSuffix" format="string" />
+        <attr name="dimmingBreak" format="string" />
+    </declare-styleable>
+>>>>>>> SationCentralControl(10inch)
 </resources>
