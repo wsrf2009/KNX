@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sation.knxcontroller"
     android:sharedUserLabel="@string/uid_label"
-    android:versionCode="2017102301"
-    android:versionName="2.3.2" >
+    android:versionCode="2017111401"
+    android:versionName="2.3.3" >
 
     <uses-sdk
         android:minSdkVersion="16"

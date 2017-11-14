@@ -60,12 +60,12 @@
         "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_center_selector.xml"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_left_normal.xml",
-        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_left_normal.xml"
-    },
-    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_dialog_header_raw.png",
         "source": "D:\\workspace\\SKC\\res\\drawable\\bg_dialog_header_raw.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_left_normal.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_left_normal.xml"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\bg_dialog_button_left.xml",
@@ -192,16 +192,16 @@
         "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_left_selector.xml"
     },
     {
-        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_right_pressed.xml",
-        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_right_pressed.xml"
-    },
-    {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\shixun_roomlist_logo.png",
         "source": "D:\\workspace\\SKC\\res\\drawable\\shixun_roomlist_logo.png"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\logo.png",
         "source": "D:\\workspace\\SKC\\res\\drawable\\logo.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\fynn_prompt_dialog_btn_right_pressed.xml",
+        "source": "D:\\workspace\\SKC\\res\\drawable\\fynn_prompt_dialog_btn_right_pressed.xml"
     },
     {
         "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable\\default_blinds_background_down_focused_pressed.xml",

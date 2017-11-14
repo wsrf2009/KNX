@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="com/sation/knxcontroller/widget/GridLayout.java|com/sation/knxcontroller/widget/Space.java|com/sation/knxcontroller/widget/BetterSeekBar.java|com/sation/knxcontroller/widget/BetterSeekBarData.java|com/sation/knxcontroller/widget/CustomSeekbar.java|com/sation/knxcontroller/widget/DoubleSeekView.java|com/sation/knxcontroller/widget/Blinds_Test.java|com/sation/knxcontroller/models/KNXControlBaseDeserializer.java|com/sation/knxcontroller/widget/MySwitch2.java|com/sation/knxcontroller/activity/SetttingActivity.java" kind="src" path="src"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="lib" path="D:/workspace/KNXWebServer/libs/zip4j_1.3.1.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/KNXWebServer/libs/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="D:/workspace/KNXWebServer/libs/volley.jar"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
