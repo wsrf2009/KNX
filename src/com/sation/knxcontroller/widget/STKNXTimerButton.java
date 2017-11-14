@@ -25,6 +25,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -108,10 +109,15 @@ public class STKNXTimerButton extends STKNXControl {
 			 if(view instanceof ImageView) {
 				 int imgHeight = this.mKNXTimerButton.Height - 2 * this.imgY;
 
-				 cl = this.mKNXTimerButton.getPadding().getLeft();
-				 ct = this.mKNXTimerButton.getPadding().getTop();
-				 cr = this.mKNXTimerButton.Width - this.mKNXTimerButton.getPadding().getRight();
-				 cb = this.mKNXTimerButton.Height - this.mKNXTimerButton.getPadding().getBottom();
+				 cl = this.PADDING;
+				 ct = this.PADDING;
+				 cr = this.PADDING+imgHeight;
+				 cb = this.PADDING+imgHeight;
+
+//				 cl = this.mKNXTimerButton.getPadding().getLeft();
+//				 ct = this.mKNXTimerButton.getPadding().getTop();
+//				 cr = this.mKNXTimerButton.Width - this.mKNXTimerButton.getPadding().getRight();
+//				 cb = this.mKNXTimerButton.Height - this.mKNXTimerButton.getPadding().getBottom();
 				}
 				view.layout(cl, ct, cr, cb);
 			}
@@ -235,6 +241,9 @@ public class STKNXTimerButton extends STKNXControl {
 	private void jumpToTimingTaskActivity(String id) {
 		Intent intent = new Intent(this.mContext, TimingTaskActivity.class);
 		intent.putExtra(STKNXControllerConstant.CONTROL_ID, id); // 将定时器ID作为参数传递
+        Bundle b = new Bundle();
+        b.putSerializable(STKNXControllerConstant.KNXTIMEROBJECT, mKNXTimerButton);
+        intent.putExtras(b);
 		this.mContext.startActivity(intent);
 
 		((RoomDetailsActivity)this.mContext).overridePendingTransition(R.anim.scale_from_center_600,

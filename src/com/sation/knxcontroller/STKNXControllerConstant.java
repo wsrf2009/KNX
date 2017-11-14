@@ -126,5 +126,6 @@ public class STKNXControllerConstant {
 	public static final String BROADCAST_REFRESH_TIMING_TASK_LIST = "com.sation.knxcontroller.services.refreshTimingTaskList";
 
 	public static final String CONTROL_ID = "ControlId";
+	public static final String KNXTIMEROBJECT = "KNXTimerObject";
 	public static final String TIMERTASKBUTTONOBJECT = "TimerTaskButtonObject";
 }

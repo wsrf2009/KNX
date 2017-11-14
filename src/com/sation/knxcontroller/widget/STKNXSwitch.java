@@ -209,10 +209,15 @@ public class STKNXSwitch extends STKNXControl {
 			if(view instanceof ImageView) {
 				int imgHeight = getImageViewLength();
 
-				cl = this.mKNXSwitch.getPadding().getLeft();
-				ct = this.mKNXSwitch.getPadding().getTop();
-				cr = this.mKNXSwitch.Width - this.mKNXSwitch.getPadding().getRight();
-				cb = this.mKNXSwitch.Height - this.mKNXSwitch.getPadding().getBottom();
+				cl = this.PADDING;
+				ct = this.PADDING;
+				cr = this.PADDING+imgHeight;
+				cb = this.PADDING+imgHeight;
+
+//				cl = this.mKNXSwitch.getPadding().getLeft();
+//				ct = this.mKNXSwitch.getPadding().getTop();
+//				cr = this.mKNXSwitch.Width - this.mKNXSwitch.getPadding().getRight();
+//				cb = this.mKNXSwitch.Height - this.mKNXSwitch.getPadding().getBottom();
 			}
 			view.layout(cl, ct, cr, cb);
 		}

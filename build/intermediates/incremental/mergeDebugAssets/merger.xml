@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="output"><source path="C:\Users\wangchunfeng.ZHSX\.android\build-cache\0469f3b55325d80226aea077f46d269425be3c79\output\assets"/></dataSet><dataSet config="main"><source path="D:\workspace\SKC\assets"/><source path="D:\workspace\SKC\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\workspace\SKC\build-types\debug\assets"/></dataSet></merger>

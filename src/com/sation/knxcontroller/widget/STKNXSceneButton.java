@@ -213,10 +213,15 @@ public class STKNXSceneButton extends STKNXControl {
 			if (view instanceof ImageView) {
 				int imgHeight = getImageViewLength();
 
-				cl = this.mKNXSceneButton.getPadding().getLeft();
-				ct = this.mKNXSceneButton.getPadding().getTop();
-				cr = this.mKNXSceneButton.Width - this.mKNXSceneButton.getPadding().getRight();
-				cb = this.mKNXSceneButton.Height - this.mKNXSceneButton.getPadding().getBottom();
+				cl = this.PADDING;
+				ct = this.PADDING;
+				cr = this.PADDING + imgHeight;
+				cb = this.PADDING + imgHeight;
+
+//				cl = this.mKNXSceneButton.getPadding().getLeft();
+//				ct = this.mKNXSceneButton.getPadding().getTop();
+//				cr = this.mKNXSceneButton.Width - this.mKNXSceneButton.getPadding().getRight();
+//				cb = this.mKNXSceneButton.Height - this.mKNXSceneButton.getPadding().getBottom();
 			}
 			view.layout(cl, ct, cr, cb);
 		}

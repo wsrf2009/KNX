@@ -64,9 +64,10 @@ public class TimingTaskActivity extends BaseActivity {
     private TimingTaskListAdapter mTimingTaskListAdapter = null;
     private Button bSaveModify;
     private List<TimingTaskItem> timingTaskList;
-    private String fileName;
+//    private String fileName;
     private AddressAndActionAdapter mAddressAndActionAdapter;
     private RefreshTimingTaskListReceiver mRefreshTimingTaskListReceiver;
+	private KNXTimerButton mKNXTimer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -74,24 +75,26 @@ public class TimingTaskActivity extends BaseActivity {
 		setContentView(R.layout.timing_task_layout);
 
 		/* 获取当前定时器的定时任务列表 */
-		fileName = getIntent().getStringExtra(STKNXControllerConstant.CONTROL_ID); // 获取当前定时器的ID
+//		fileName = getIntent().getStringExtra(STKNXControllerConstant.CONTROL_ID); // 获取当前定时器的ID
+		mKNXTimer = (KNXTimerButton) getIntent().getSerializableExtra(STKNXControllerConstant.KNXTIMEROBJECT);
 		Map<String, List<TimingTaskItem>> timerTaskMap = STKNXControllerApp.getInstance().getTimerTaskMap(); // 获取当前页面的定时器
-		timingTaskList = timerTaskMap.get(fileName); // 根据定时器ID获取定时任务列表
+//		timingTaskList = timerTaskMap.get(fileName); // 根据定时器ID获取定时任务列表
+		timingTaskList = timerTaskMap.get(String.valueOf(mKNXTimer.getId()));
 		if(null == timingTaskList) {
 			/* 如为新建的定时器 */
 			timingTaskList = new ArrayList<TimingTaskItem>();
-			timerTaskMap.put(fileName, timingTaskList);
+			timerTaskMap.put(String.valueOf(mKNXTimer.getId()), timingTaskList);
 		}
 		
 		TextView tvTimerName = (TextView)findViewById(R.id.timingTaskLayoutTimerName);
 		try {
-			int controlId = Integer.parseInt(fileName);
-			KNXControlBase control = STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().get(controlId);
-			if(control instanceof KNXTimerButton) {
-				tvTimerName.setText(control.getTitle());
-			} else {
-				tvTimerName.setText("");
-			}
+//			int controlId = Integer.parseInt(fileName);
+//			KNXControlBase control = STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap().get(controlId);
+//			if(control instanceof KNXTimerButton) {
+				tvTimerName.setText(mKNXTimer.getTitle());
+//			} else {
+//				tvTimerName.setText("");
+//			}
 		} catch (Exception e) {
 			Log.e(e.getLocalizedMessage());
 			tvTimerName.setText("");
@@ -807,11 +810,11 @@ public class TimingTaskActivity extends BaseActivity {
 		Map<Integer, KNXGroupAddress> groupAddressMap = STKNXControllerApp.getInstance().getGroupAddressMap();
 		Map<String, KNXGroupAddress> addrMap = STKNXControllerApp.getInstance().getGroupAddressIdMap();
 		
-		Map<Integer, KNXControlBase> controlBaseMap = STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap();
-		KNXControlBase control = controlBaseMap.get(Integer.parseInt(fileName));
-		if(null != control) {
-			Map<String, KNXSelectedAddress> writeAddressMap = control.getWriteAddressIds();
-			Map<String, KNXSelectedAddress> readAddressMap = control.getReadAddressId();
+//		Map<Integer, KNXControlBase> controlBaseMap = STKNXControllerApp.getInstance().getCurrentPageKNXControlBaseMap();
+//		KNXControlBase control = controlBaseMap.get(Integer.parseInt(fileName));
+//		if(null != control) {
+			Map<String, KNXSelectedAddress> writeAddressMap = mKNXTimer.getWriteAddressIds();
+			Map<String, KNXSelectedAddress> readAddressMap = mKNXTimer.getReadAddressId();
 			if (null != writeAddressMap) {
 				for (Map.Entry<String, KNXSelectedAddress> entry : writeAddressMap.entrySet()) {
 					String id = entry.getKey();
@@ -901,7 +904,7 @@ public class TimingTaskActivity extends BaseActivity {
 						}
 					})
 					.show();
-		}
+//		}
 	}
 
 	/**
