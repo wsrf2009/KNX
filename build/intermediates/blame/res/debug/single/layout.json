@@ -1,0 +1,174 @@
+[
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\stknx_dimmer_detail.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\stknx_dimmer_detail.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\fynn_prompt_dialog_normal.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\fynn_prompt_dialog_normal.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\date_time_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\date_time_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\my_dialog.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\my_dialog.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\group_address_item_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\group_address_item_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\setting_view_check_item_v.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\setting_view_check_item_v.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\settings.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\settings.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\webcamer_detail.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\webcamer_detail.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\password_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\password_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\setting_view_basic_item_v.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\setting_view_basic_item_v.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\setting_language.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\setting_language.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\room_tiles_list_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\room_tiles_list_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\listview_divider_line2.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\listview_divider_line2.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\task_item.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\task_item.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\setting_view_basic_item_h.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\setting_view_basic_item_h.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\physical_address_setting.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\physical_address_setting.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\custom_time_picker_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\custom_time_picker_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\setting_view_switch_item.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\setting_view_switch_item.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\room_list_item.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\room_list_item.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\st_knx_imagebutton.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\st_knx_imagebutton.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\stknx_shutter_detail.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\stknx_shutter_detail.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\knx_gateway_setting.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\knx_gateway_setting.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\room_list_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\room_list_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\system_status.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\system_status.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\listview_item_layout_subtitle_disclosure_indicator.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\listview_item_layout_subtitle_disclosure_indicator.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\webcamer_item.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\webcamer_item.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\listview_item_layout_detail.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\listview_item_layout_detail.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\timing_task_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\timing_task_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\action_item_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\action_item_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\room_details_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\room_details_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\fynn_prompt_dialog_titlebar_skyblue.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\fynn_prompt_dialog_titlebar_skyblue.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\setting_view_image_item.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\setting_view_image_item.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\reboot_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\reboot_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\fynn_prompt_dialog_titlebar.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\fynn_prompt_dialog_titlebar.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\changepassword_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\changepassword_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\knx_refresh_status_setting.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\knx_refresh_status_setting.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\system_sleep_setting.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\system_sleep_setting.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\list_item.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\list_item.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\time_and_weekday_layout.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\time_and_weekday_layout.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\setting_view_check_item_h.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\setting_view_check_item_h.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\view_null.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\view_null.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\listview_divider_line.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\listview_divider_line.xml"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\layout\\splash.xml",
+        "source": "D:\\workspace\\SKC\\res\\layout\\splash.xml"
+    }
+]

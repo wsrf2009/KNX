@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\up1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-ldpi\\up1.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\down1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-ldpi\\down1.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\right1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-ldpi\\right1.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\chevron_white.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-ldpi\\chevron_white.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\chevron_default.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-ldpi\\chevron_default.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\left1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-ldpi\\left1.png"
+    }
+]

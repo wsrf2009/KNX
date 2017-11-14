@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/stknx_shutter_detail_relativelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#80000000"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/shutter_detail_relativelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/shutter_detail_background"
+        android:clickable="true"
+        android:padding="30dp">
+
+        <TextView
+            android:id="@+id/shutter_detail_textview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:text="窗帘控制器"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+        <RelativeLayout
+            android:id="@+id/shutter_detail_relativelayout_shutter_op"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/shutter_detail_textview_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp">
+
+            <ImageButton
+                android:id="@+id/shutter_detail_imagebutton_up"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/circular_green_30dp"
+                android:src="@drawable/shutter_on" />
+
+            <ImageButton
+                android:id="@+id/shutter_detail_imagebutton_down"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="90dp"
+                android:layout_marginStart="90dp"
+                android:layout_toEndOf="@+id/shutter_detail_imagebutton_up"
+                android:layout_toRightOf="@+id/shutter_detail_imagebutton_up"
+                android:background="@drawable/circular_green_30dp"
+                android:src="@drawable/shutter_off" />
+
+            <ImageButton
+                android:id="@+id/shutter_detail_imagebutton_stop"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="80dp"
+                android:layout_toRightOf="@+id/shutter_detail_imagebutton_down"
+                android:background="@drawable/circular_green_30dp"
+                android:src="@drawable/rectangle" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/shutter_detail_relativelayout_position_of_shutter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/shutter_detail_relativelayout_shutter_op"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:id="@+id/imageView_shutter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@color/transparent"
+                android:src="@drawable/shutter_on_off" />
+
+            <SeekBar
+                android:id="@+id/shutter_detail_seekbar_position_of_shutter"
+                style="@style/Widget.SeekBar.Normal"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/imageView_shutter"
+                android:max="100"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/shutter_detail_textview_postition_of_shutter"
+                android:layout_width="61dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/shutter_detail_seekbar_position_of_shutter"
+                android:text="100%"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/shutter_detail_relativelayout_position_of_blinds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/shutter_detail_relativelayout_position_of_shutter"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:id="@+id/imageView_blinds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@color/transparent"
+                android:src="@drawable/blinds" />
+
+            <!--<SeekBar-->
+            <!--android:id="@+id/shutter_detail_seekbar_position_of_blinds"-->
+            <!--style="@style/Widget.SeekBar.Normal"-->
+            <!--android:layout_width="400dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_toRightOf="@+id/imageView_blinds"-->
+            <!--android:max="100"-->
+            <!--android:paddingLeft="12dp"-->
+            <!--android:paddingRight="12dp"-->
+            <!--android:progress="0" />-->
+            <com.sation.knxcontroller.customview.SectionalSeekBar
+                android:id="@+id/shutter_detail_sectionalseekbar_position_of_slat"
+                android:layout_width="400dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/imageView_blinds"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:textSize="20sp"
+                android:thumb="@drawable/detail_icon_schedule_ball"
+                app:disabled_text_color="@android:color/darker_gray"
+                app:down_middle_disabled="@drawable/blinds_slat_disable"
+                app:down_middle_enabled="@drawable/blinds_slat_down_middle"
+                app:down_min_disabled="@drawable/blinds_slat_disable"
+                app:down_min_enabled="@drawable/blinds_slat_down_min"
+                app:enabled_text_color="@android:color/holo_blue_light"
+                app:max_disabled="@drawable/blinds_slat_disable"
+                app:max_enabled="@drawable/blinds_slat_max"
+                app:max_value="100"
+                app:seekbar_disabled="@drawable/seek_bkg"
+                app:seekbar_enabled="@drawable/seek"
+                app:seekbar_value="0"
+                app:seekbar_width="8dp"
+                app:spacing="2dp"
+                app:text_down_middle="4"
+                app:text_down_min="5"
+                app:text_max="3"
+                app:text_up_middle="2"
+                app:text_up_min="1"
+                app:up_middle_disabled="@drawable/blinds_slat_disable"
+                app:up_middle_enabled="@drawable/blinds_slat_up_middle"
+                app:up_min_disabled="@drawable/blinds_slat_disable"
+                app:up_min_enabled="@drawable/blinds_slat_up_min" />
+
+            <TextView
+                android:id="@+id/shutter_detail_textview_postition_of_blinds"
+                android:layout_width="61dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/shutter_detail_sectionalseekbar_position_of_slat"
+                android:text="100%"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

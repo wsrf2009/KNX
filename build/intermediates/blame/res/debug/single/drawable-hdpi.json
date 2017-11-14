@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_seekbar_display1.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_seekbar_display1.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_seekbar_display_above.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_seekbar_display_above.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_seekbar_display2.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_seekbar_display2.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\bg_seekbar_display_below.9.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\bg_seekbar_display_below.9.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon_seekbar_thumb.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\icon_seekbar_thumb.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\chevron_white.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\chevron_white.png"
+    },
+    {
+        "merged": "D:\\workspace\\SKC\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\chevron_default.png",
+        "source": "D:\\workspace\\SKC\\res\\drawable-hdpi\\chevron_default.png"
+    }
+]

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_frame"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_new"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/dialog_title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:background="@drawable/bg_dialog_header"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <View
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:id="@+id/dialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="20.0sp" />
+
+        <LinearLayout
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:gravity="right" >
+
+            <ImageView
+                android:id="@+id/closeBtn"
+                android:layout_width="50.0dip"
+                android:layout_height="50.0dip"
+                android:layout_marginRight="3.0dip"
+                android:scaleType="center"
+                android:src="@drawable/ic_screen_sms_close" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:gravity="center_vertical" >
+
+        <ScrollView
+            android:id="@+id/dialog_msg_panel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5.0dip"
+            android:layout_marginTop="5.0dip"
+            android:layout_weight="1.0" >
+
+            <FrameLayout
+                android:id="@+id/dialogContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <ProgressBar
+                        android:id="@+id/dialogProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:indeterminateDrawable="@drawable/my_progress"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/dialogTips" 
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="10.0dip"
+                        android:paddingLeft="10.0dip"
+                        android:paddingRight="10.0dip"
+                        android:paddingTop="10.0dip" />
+                </LinearLayout>
+            </FrameLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/iv_divider_line_top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4.0dip"
+        android:layout_marginRight="4.0dip" >
+
+        <include layout="@layout/listview_divider_line" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="55.0dip"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/dialogConfirmBtn"
+            android:layout_width="50.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/bg_dialog_button_left"
+            android:maxLines="1"
+            android:textColor="@color/default_text"
+            android:textSize="16.0sp" />
+
+        <LinearLayout
+            android:id="@+id/iv_divider_line_left"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" >
+
+            <include layout="@layout/listview_divider_line2" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/dialogNeutralBtn"
+            android:layout_width="50.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/bg_dialog_button_middle"
+            android:maxLines="1"
+            android:textColor="@color/default_text"
+            android:textSize="16.0sp" />
+
+        <LinearLayout
+            android:id="@+id/iv_divider_line_right"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" >
+
+            <include layout="@layout/listview_divider_line2" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/dialogCancelBtn"
+            android:layout_width="50.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/bg_dialog_button_middle"
+            android:maxLines="1"
+            android:textColor="@color/default_text"
+            android:textSize="16.0sp" />
+    </LinearLayout>
+
+</LinearLayout>

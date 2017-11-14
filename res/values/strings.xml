@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SKC2</string>
+    <string name="uid_label">SATIONControl</string>
+    <string name="all_rights_reserved"> <![CDATA[Copyright © 2012-2017 SATION. All Rights Reserved.]]></string>
+    <string name="browserUrl"><![CDATA[SATION Science & Technology]]></string>
+
+    <string name="confirm">确定</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="go">Go</string>
+    <string name="save">Save</string>
+
+    <string name="create_task">创建任务</string>
+    <string name="delete_task">删除任务</string>
+
+    <string name="monthly">每月</string>
+    <string name="weekly">每周</string>
+    <string name="everyday">每天</string>
+    <string name="cycle">循环</string>
+    <string name="oneoff">一次性</string>
+    <string name="cycle_interval">循环间隔</string>
+
+    <string name="monday">MON</string>
+    <string name="tuesday">TUE</string>
+    <string name="wednesday">WED</string>
+    <string name="thursday">THU</string>
+    <string name="friday">FRI</string>
+    <string name="saturday">SAT</string>
+    <string name="sunday">SUN</string>
+
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+    <string name="second">秒</string>
+
+    <string name="unit_hour">小时</string>
+    <string name="unit_minute">分钟</string>
+
+    <string name="fifteen_seconds">15 Seconds</string>
+    <string name="thirty_seconds">30 Seconds</string>
+    <string name="one_minute">1 Minute</string>
+    <string name="two_minutes">2 Minutes</string>
+    <string name="five_minutes">5 Minutes</string>
+    <string name="ten_minutes">10 Minutes</string>
+    <string name="thirty_minutes">30 Minutes</string>
+    <string name="never_sleep">Never Sleep</string>
+
+    <string name="task_list___">任务列表———</string>
+    <string name="task_detail">任务详情</string>
+    <string name="task_execution_way">任务执行方式</string>
+    <string name="task_execution_object">任务执行对象</string>
+
+    <string name="open">打开</string>
+    <string name="close">Close</string>
+    <string name="prompt">提示</string>
+    <string name="error">错误</string>
+
+
+    <string name="get_status">获取状态</string>
+    <string name="set_action">设置行为</string>
+    <string name="default_action">默认行为</string>
+    <string name="custom_action">自定义行为</string>
+    <string name="action_name">行为名称</string>
+    <string name="action_parameter">行为参数</string>
+    <string name="set_date_and_time">设置日期和时间</string>
+    <string name="set_time_and_weekday">设置时间和星期</string>
+    <string name="set_loop_way">设置循环方式</string>
+    <string name="set_day_and_time">设置日期和时间</string>
+    <string name="set_time">设置时间</string>
+
+    <string name="add_or_remove_group_address">添加/移除组地址</string>
+    <string name="add_address_to_task">给任务添加地址</string>
+    <string name="save_modify">保存修改</string>
+    <string name="execute_action">执行行为</string>
+    <string name="nothing">无</string>
+
+    <string name="you_are_not_set_action_yet">您没有设置该对象的行为哦~</string>
+    <string name="action_name_already_exits">行为名称已存在，取别的名字吧</string>
+    <string name="input_value_is_invalid">输入的参数无效，请重新输入</string>
+    <string name="are_you_sure_to_delete_the_task">您确定要删除当前的任务吗？</string>
+    <string name="the_current_task_time_has_expired">当前任务的时间已过期</string>
+    <string name="hint_for_action_name">如“打开客厅灯”，“关闭客厅灯”</string>
+    <string name="hint_for_action_value">只能是数字，如打开客厅灯时可以输入1，关闭客厅灯时可以输入0</string>
+
+    <string name="access_restriction">Access Restriction</string>
+    <string name="password_error">password was wrong</string>
+
+    <string name="setting">Setting</string>
+
+    <string name="setting_knx_gateway">Setting KNX Gateway</string>
+    <string name="gateway_address">网关地址</string>
+    <string name="gateway_port">网关端口</string>
+    <string name="textview_title_udp_work_way">UDP工作方式</string>
+    <string name="radiobutton_title_groupbroadcast">组播</string>
+    <string name="radiobutton_title_peertopeer">点对点</string>
+
+    <string name="setting_physical_address">Setting Physical Address</string>
+    <string name="physical_address">Physical Address</string>
+
+    <string name="setting_language">Setting Language</string>
+    <string name="english">English</string>
+    <string name="chinese">中文（简体）</string>
+
+    <string name="setting_Reboot">定时重启</string>
+
+    <string name="change_password">更改密码</string>
+    <string name="original_password">原密码</string>
+    <string name="new_password">新密码</string>
+    <string name="confirm_new_password">确认新密码</string>
+    <string name="modify">修改</string>
+    <string name="originalpassword_not_right">原密码不正确</string>
+    <string name="newpassword_not_match">新密码不一致</string>
+
+    <string name="system_status">Others</string>
+    <string name="local_ip">本机IP</string>
+    <string name="network_disconnect">网络未连接</string>
+    <string name="display_system_time">显示系统时间</string>
+    <string name="software_version">软件版本</string>
+    <string name="Record_last_interface">记住最后界面</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    
+    <string name="please_input_password">please input password</string>
+
+    <string name="dimming_down">De</string>
+    <string name="dimming_up">Inc</string>
+    <string name="dimming_break">Break</string>
+
+</resources>
